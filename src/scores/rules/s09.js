@@ -101,5 +101,107 @@ export default [
       "minDurationMs": 120000,
       "maxDurationMs": 120000
     }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "rune-rebound",
+    "source": "src/feature-games24.js",
+    "metric": "pinball rune and board awards in 120 active seconds",
+    "units": "points",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 1000000,
+      "integer": true,
+      "minDurationMs": 120000,
+      "maxDurationMs": 120000
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "pocket-regatta",
+    "source": "src/feature-games24.js",
+    "metric": "mark, course, duel and layline awards in 120 active seconds",
+    "units": "points",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 1000000,
+      "integer": true,
+      "minDurationMs": 120000,
+      "maxDurationMs": 120000
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "willow-dam",
+    "source": "src/feature-games25.js",
+    "metric": "build, repair and habitat awards in 120 active seconds",
+    "units": "points",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 1000000,
+      "integer": true,
+      "minDurationMs": 120000,
+      "maxDurationMs": 120000
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "storm-roundup",
+    "source": "src/feature-games25.js",
+    "metric": "animals corralled and delivered in 120 active seconds",
+    "units": "animals",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 10000,
+      "integer": true,
+      "minDurationMs": 120000,
+      "maxDurationMs": 120000
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "drift-divers",
+    "source": "src/feature-games26.js",
+    "metric": "recovered and pressure-locked relic awards in 120 active seconds",
+    "units": "points",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 1000000,
+      "integer": true,
+      "minDurationMs": 120000,
+      "maxDurationMs": 120000
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "lantern-lift",
+    "source": "src/feature-games26.js",
+    "metric": "delivery, rescue and cornice awards in 120 active seconds",
+    "units": "points",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 1000000,
+      "integer": true,
+      "minDurationMs": 120000,
+      "maxDurationMs": 120000
+    }
   }
 ];
