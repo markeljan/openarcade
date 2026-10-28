@@ -67,4 +67,3 @@ try {
   }
   console.log(`Captured ${selected.length} games${ids.length ? ' (partial run; no manifest written)' : ''}`);
 } finally { await browser.close(); }
-

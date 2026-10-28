@@ -1,4 +1,5 @@
-import {writeFile} from 'node:fs/promises';
+import {mkdir, writeFile} from 'node:fs/promises';
+import {join} from 'node:path';
 import {launchBrowser} from './s12-browser.mjs';
 
 // The helper blocks all /api and non-loopback traffic. This is a smoke check,
@@ -10,6 +11,7 @@ const arg = process.argv.indexOf('--output');
 if (arg >= 0 && !process.argv[arg + 1]) throw Error('--output requires a path');
 const output = arg >= 0 ? process.argv[arg + 1] : null;
 const representativeOnly = process.argv.includes('--representative-only');
+const screenshots = process.argv.find(value=>value.startsWith('--screenshots='))?.slice(14);
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const result = {url, revision: process.argv.find(value=>value.startsWith('--revision='))?.slice(11)||'unspecified', startedAt: new Date().toISOString(), catalog: [], checks: [], limitations: ['API and external traffic blocked', 'Canvas smoke does not establish gameplay, scoring, fidelity, or social metadata', 'Mobile checks use emulation', 'AudioContext instrumentation does not cover HTML media or offline audio', 'Player draw counter covers common 2D methods, not WebGL or all canvas APIs']};
 const browser = await launchBrowser({origin: target.origin});
@@ -22,6 +24,12 @@ async function until(expression, label, timeout = 12000) {
 async function check(name, fn) {
   try { const details = await fn(); result.checks.push({name, status: 'pass', ...(details === undefined ? {} : {details})}); }
   catch (e) { result.checks.push({name, status: 'fail', error: String(e.message || e)}); }
+}
+async function snapshot(name) {
+  if (!screenshots) return;
+  await mkdir(screenshots, {recursive:true});
+  const {data} = await call('Page.captureScreenshot', {format:'png', captureBeyondViewport:false});
+  await writeFile(join(screenshots, name+'.png'), Buffer.from(data,'base64'));
 }
 const mode = value => until(`document.querySelector('#dialog')?.dataset.mode === ${JSON.stringify(value)}`, `mode ${value}`);
 const click = selector => run(`document.querySelector(${JSON.stringify(selector)}).click()`);
@@ -79,6 +87,7 @@ try {
     await until("document.querySelectorAll('[data-preview=playing]').length===0",'modal pauses previews');
     if(await run('window.__s12audio')!==0)throw Error('Muted watch created audio');
     await click('#feed-play'); await mode('playing');
+    await snapshot('desktop-player');
     await run(`document.querySelector('#play-canvas').addEventListener('keydown',e=>__s12keys.push('down:'+e.key));document.querySelector('#play-canvas').addEventListener('keyup',e=>__s12keys.push('up:'+e.key))`);
     await call('Input.dispatchKeyEvent',{type:'keyDown',key:'ArrowRight',code:'ArrowRight'});
     await call('Input.dispatchKeyEvent',{type:'keyUp',key:'ArrowRight',code:'ArrowRight'});
@@ -103,6 +112,7 @@ try {
   await check('mobile touch and pointer cancellation', async () => {
     await call('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
     await call('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:2}); await openIndex(0); await click('#feed-play'); await mode('playing');
+    await snapshot('mobile-player');
     const metrics=await run(`(() => {const c=document.querySelector('#play-canvas').getBoundingClientRect();const b=[...document.querySelectorAll('.touch-controls [data-key]:not([hidden])')].filter(e=>getComputedStyle(e).display!=='none').map(e=>{const r=e.getBoundingClientRect();return {key:e.dataset.key,disabled:e.disabled,x:r.x,y:r.y,w:r.width,h:r.height}});return {canvas:{w:c.width,h:c.height},buttons:b}})()`);
     if(!metrics.buttons.length || metrics.buttons.some(b=>b.disabled||b.x<0||b.y<0||b.x+b.w>390||b.y+b.h>844))throw Error('Touch controls missing, disabled, or outside viewport');
     await run(`window.__s12keys=[];document.querySelector('#play-canvas').addEventListener('keydown',e=>__s12keys.push('down:'+e.key));document.querySelector('#play-canvas').addEventListener('keyup',e=>__s12keys.push('up:'+e.key))`);
@@ -125,6 +135,3 @@ result.finishedAt=new Date().toISOString();
 result.mode=representativeOnly?'representative-only':'full';
 result.status = result.fatal || result.cleanupError || result.catalog.some(x=>x.status==='fail'||x.closeError) || result.checks.some(x=>x.status==='fail') || result.browserErrors?.length ? 'fail' : 'pass';
 const json=JSON.stringify(result,null,2)+'\n'; if(output) await writeFile(output,json); else process.stdout.write(json); if(result.status==='fail') process.exitCode=1;
-
-
-
