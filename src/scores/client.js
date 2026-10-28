@@ -44,9 +44,9 @@ export function createScoreClient({fetch: request = globalThis.fetch?.bind(globa
   function problem(runId, error) {
     return emit(runId, error.status === 401 ? 'queued-auth' : error.status === 410 ? 'expired' : error.status === 503 ? 'unavailable' : 'retry', {error: error.message});
   }
-  async function leaderboard(gameId, {filter = 'players'} = {}) {
-    const token = await getToken();
-    if (!token && getAuthState()?.status !== 'signed-out') throw authFailure();
+  async function leaderboard(gameId, {filter = 'players', includePersonalBest = true} = {}) {
+    let token = null;
+    if (includePersonalBest) { try { token = await getToken(); } catch {} }
     const url = endpoint + '?gameId=' + encodeURIComponent(gameId) + '&filter=' + encodeURIComponent(filter);
     const {response, data: board} = await requestJson(url, {credentials: 'omit', headers: token ? {Authorization: 'Bearer ' + token} : {}});
     if (!response.ok) throw Object.assign(Error(board.error || 'scores-unavailable'), {status: response.status});
@@ -58,17 +58,11 @@ export function createScoreClient({fetch: request = globalThis.fetch?.bind(globa
       if (previous?.epoch !== board.epoch) thresholds.delete(key);
       thresholds.set(key, {epoch: board.epoch, threshold: board.threshold, order: board.order});
     }
-    return board;
+    return {...board, personalBestStatus: token ? 'available' : getAuthState()?.status === 'signed-out' ? 'signed-out' : 'unavailable'};
   }
   async function enqueue(run, {guestName, attribution} = {}) {
     if (abandoned.has(run?.runId)) return states.get(run.runId);
     if (!run?.submissionEligible || run.context === 'gallery-preview') return emit(run?.runId, 'ignored');
-    if (run.actor === 'ai') {
-      try {
-        const board = await leaderboard(run.gameId, {filter: 'ai'});
-        if (board.ruleVersion !== run.ruleVersion) return emit(run.runId, 'unavailable', {error: 'score-rule-changed'});
-      } catch (error) { return problem(run.runId, error); }
-    }
     if (abandoned.has(run.runId)) return states.get(run.runId);
     // This completes before any caller is permitted to start a redirect login.
     const saved = await queue.enqueue({...run, claimNonce: run.actor === 'human' && !guestName ? makeNonce() : undefined, guestName, attribution});
@@ -112,6 +106,11 @@ export function createScoreClient({fetch: request = globalThis.fetch?.bind(globa
             return emit(runId, 'queued-auth', {receipt: {runId: receipt.runId, expiresAt: receipt.expiresAt}, durability: queue.durability, redirectSafe: queue.durability === 'persistent'});
           }
           return await performClaim(item);
+        }
+        if (item.actor === 'ai') {
+          const board = await leaderboard(item.gameId, {filter: 'ai', includePersonalBest: false});
+          if (abandoned.has(runId)) return states.get(runId);
+          if (board.ruleVersion !== item.ruleVersion) return emit(runId, 'unavailable', {error: 'score-rule-changed'});
         }
         emit(runId, 'saving');
         const result = await send({action: item.actor === 'ai' ? 'ai' : 'guest', run: wireRun(item), ...(item.guestName ? {guestName: item.guestName} : {}), ...(item.attribution ? {attribution: item.attribution} : {})});
