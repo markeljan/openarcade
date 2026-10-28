@@ -111,7 +111,7 @@ const factories={'tower-panic':tower,'burrow-boss':burrow};
 export function createFeatureGame11(canvas,id,options={}){
  const ctx=canvas.getContext('2d');if(!ctx||!factories[id])throw Error(`Unknown game: ${id}`);
  const audioEnabled=!!options.audioEnabled,audio=createGameAudio(audioEnabled&&!options.paused);
- let game,interactive=!!options.interactive,context=options.context??(interactive?'manual-player':'gallery-preview'),paused=!!options.paused,disposed=false,frame,last=0,result=null,resultTime=0,best=0,generation=0;
+ let game,interactive=!!options.interactive,context=options.context??(interactive?'manual-player':'gallery-preview'),paused=!!options.paused,disposed=false,frame=null,loopEpoch=0,last=0,result=null,resultTime=0,best=0,generation=0;
  const storageKey=`miniarcade:best:${id}`;try{const n=Number(window.localStorage?.getItem(storageKey));if(Number.isFinite(n)&&n>0)best=n}catch{}
  const reports=createRunReporter({gameId:id,ruleVersion:1,actor:interactive?'human':'ai',context,onResult:options.onResult,onError:options.onError});reports.setPaused(paused);
  const accepted=['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','w','a','s','d','x','z','Shift','Enter'],held=new Set();
@@ -130,19 +130,25 @@ export function createFeatureGame11(canvas,id,options={}){
  function key(e,down){if(!interactive||disposed||paused)return;const k=e.key.length===1?e.key.toLowerCase():e.key;if(!accepted.includes(k))return;e.preventDefault();if(result){if(down&&k==='Enter')fresh();return}if(down){held.add(k);if(audioEnabled&&e.isTrusted)unlockSound()}else held.delete(k);game.input?.(k,down)}
  const kd=e=>key(e,true),ku=e=>key(e,false),pointer=()=>{if(interactive)canvas.focus?.({preventScroll:true})};
  canvas.addEventListener('keydown',kd);canvas.addEventListener('keyup',ku);canvas.addEventListener('blur',release);canvas.addEventListener('pointerdown',pointer);
- function tick(t){
-  if(disposed||paused)return;if(!interactive&&last&&t-last<32){frame=requestAnimationFrame(tick);return}
+ // Only the current ticket may clear the pending slot. Canceled callbacks may
+ // arrive after resume, so both ticket identity and lifecycle epoch must match.
+ function invalidateFrames(){loopEpoch++;if(frame!==null){cancelAnimationFrame(frame.id);frame=null}}
+ function schedule(){if(disposed||paused||frame!==null)return;const ticket={epoch:loopEpoch,id:null};frame=ticket;ticket.id=requestAnimationFrame(t=>{if(frame!==ticket||ticket.epoch!==loopEpoch||disposed||paused)return;frame=null;tick(t,ticket.epoch)})}
+ function tick(t,epoch){
+  if(disposed||paused||epoch!==loopEpoch)return;if(!interactive&&last&&t-last<32){schedule();return}
   let dt=last?Math.min((t-last)/1000,.05):0;last=t;
   if(result){resultTime+=dt;if(resultTime>=(interactive?12:1.2)){const returnAI=interactive;fresh(returnAI?{interactive:false,context:context==='embed'?'embed':'watch-player'}:{});if(returnAI)options.onAttract?.()}}
   else{dt=Math.min(dt,game.remainingRunTime?.()??dt);reports.advance(dt);game.update(dt,!interactive)}
+  if(disposed||paused||epoch!==loopEpoch)return;
   ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#10151c';ctx.fillRect(0,0,canvas.width,canvas.height);const scale=Math.min(canvas.width/W,canvas.height/H);ctx.setTransform(scale,0,0,scale,(canvas.width-W*scale)/2,(canvas.height-H*scale)/2);game.draw(ctx);
+  if(disposed||paused||epoch!==loopEpoch)return;
   if(result&&id!=='burrow-boss'){rect(ctx,W*.08,H*.36,W*.84,H*.2,'#211b1a');text(ctx,result.result,W/2,H*.41,'#f6d09d',14,'center');text(ctx,`RUN ${result.score}  BEST ${best}`,W/2,H*.46,'#ead2aa',11,'center');text(ctx,interactive?'ENTER TO PLAY AGAIN':'NEW RUN SOON',W/2,H*.51,'#ead2aa',10,'center')}
-  frame=requestAnimationFrame(tick);
+  if(!disposed&&!paused&&epoch===loopEpoch)schedule();
  }
- if(!paused)frame=requestAnimationFrame(tick);
+ schedule();
  return {beginRun:fresh,getSessionState:()=>result?'result':'playing',restart(){fresh()},setInteractive(v){const next=!!v;if(next!==interactive)fresh({interactive:next});else release()},
-  pause(){if(!paused&&!disposed){reports.setPaused(true);paused=true;release();audio.setActive(false);cancelAnimationFrame(frame);last=0}},
-  resume(){if(paused&&!disposed){paused=false;reports.setPaused(false);audio.setActive(audioEnabled);last=0;frame=requestAnimationFrame(tick)}},resize,
-  destroy(){if(disposed)return;reports.destroy();disposed=true;release();game?.destroy?.();audio.destroy();cancelAnimationFrame(frame);observer?.disconnect();canvas.removeEventListener('keydown',kd);canvas.removeEventListener('keyup',ku);canvas.removeEventListener('blur',release);canvas.removeEventListener('pointerdown',pointer)}
+  pause(){if(!paused&&!disposed){reports.setPaused(true);paused=true;invalidateFrames();release();audio.setActive(false);last=0}},
+  resume(){if(paused&&!disposed){paused=false;reports.setPaused(false);audio.setActive(audioEnabled);last=0;schedule()}},resize,
+  destroy(){if(disposed)return;reports.destroy();disposed=true;invalidateFrames();release();game?.destroy?.();audio.destroy();observer?.disconnect();canvas.removeEventListener('keydown',kd);canvas.removeEventListener('keyup',ku);canvas.removeEventListener('blur',release);canvas.removeEventListener('pointerdown',pointer)}
  };
 }
