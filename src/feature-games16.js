@@ -49,20 +49,31 @@ export function createFeatureGame16(canvas,id,options={}){
  const ctx=canvas.getContext('2d');if(!ctx||!factories[id])throw new Error(`Unknown game: ${id}`);
 
  const audioEnabled=!!options.audioEnabled,audio=createGameAudio(audioEnabled&&!options.paused);
- let game,interactive=!!options.interactive,context=options.context??(interactive?'manual-player':'gallery-preview'),paused=!!options.paused,disposed=false,frame,last=0,result=null,resultTime=0,generation=0;
+ let game,interactive=!!options.interactive,context=options.context??(interactive?'manual-player':'gallery-preview'),paused=!!options.paused,disposed=false,frame=null,frameEpoch=0,last=0,result=null,resultTime=0,generation=0;
  const held=new Set(),reports=createRunReporter({gameId:id,ruleVersion:1,actor:interactive?'human':'ai',context,onResult:options.onResult,onError:options.onError});
  reports.setPaused(paused);
  canvas.setAttribute('aria-label',`${featureGames16.find(g=>g.id===id).name} game`);
  function resize(){const b=canvas.getBoundingClientRect(),r=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.max(1,Math.round(b.width*r));canvas.height=Math.max(1,Math.round(b.height*r))}
  const observer=typeof ResizeObserver!=='undefined'?new ResizeObserver(resize):null;observer?.observe(canvas);resize();
  function release(){for(const k of held)game?.input?.(k,false);held.clear()}
+ // A canceled callback may still arrive. Its ticket must never consume a newer slot.
+ function cancelTick(){frameEpoch++;const pending=frame;frame=null;if(pending!==null)cancelAnimationFrame(pending.id)}
+ function schedule(){
+  if(disposed||paused||frame!==null)return;
+  const ticket={epoch:frameEpoch,id:null};frame=ticket;
+  ticket.id=requestAnimationFrame(t=>{
+   if(frame!==ticket||ticket.epoch!==frameEpoch||disposed||paused)return;
+   frame=null;tick(t,ticket.epoch);
+  });
+ }
  function beginRun(next={}){
   if(disposed)return;
   const mode=next.interactive??interactive,nextContext=next.context??(mode===interactive||context==='embed'?context:mode?'manual-player':'watch-player');
-  reports.abandon();generation++;release();game?.destroy?.();interactive=!!mode;context=nextContext;result=null;resultTime=0;last=0;canvas.tabIndex=interactive?0:-1;
+  reports.abandon();generation++;cancelTick();release();game?.destroy?.();interactive=!!mode;context=nextContext;result=null;resultTime=0;last=0;canvas.tabIndex=interactive?0:-1;
   const bound=reports.beginRun({actor:interactive?'human':'ai',context}),version=generation;
   const finish=payload=>{const record=bound(payload);if(record&&version===generation&&!disposed){result=record;resultTime=0}return record};
   game=factories[id](audio.emit,finish);
+  schedule();
  }
  beginRun();
  function key(e,down){
@@ -73,20 +84,22 @@ export function createFeatureGame16(canvas,id,options={}){
   if(down)held.add(k);else held.delete(k);game.input?.(k,down);
  }
  const kd=e=>key(e,true),ku=e=>key(e,false);canvas.addEventListener('keydown',kd);canvas.addEventListener('keyup',ku);canvas.addEventListener('blur',release);
- function tick(t){
-  if(disposed||paused)return;if(!interactive&&last&&t-last<32){frame=requestAnimationFrame(tick);return}
+ function tick(t,epoch){
+  if(disposed||paused||epoch!==frameEpoch)return;if(!interactive&&last&&t-last<32){schedule();return}
   const dt=last?Math.min((t-last)/1000,.05):0;last=t;
   if(result){resultTime+=dt;if(!interactive&&resultTime>=(id==='gravity-claw'?2:.8))beginRun()}
   else{reports.advance(dt);game.update(dt,!interactive)}
+  if(disposed||paused||epoch!==frameEpoch)return;
   ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#10151c';ctx.fillRect(0,0,canvas.width,canvas.height);const scale=Math.min(canvas.width/W,canvas.height/H);ctx.setTransform(scale,0,0,scale,(canvas.width-W*scale)/2,(canvas.height-H*scale)/2);game.draw(ctx);
+  if(disposed||paused||epoch!==frameEpoch)return;
   if(result&&id!=='gravity-claw'){rect(ctx,16,H/2-50,W-32,100,'#192632');text(ctx,result.result,W/2,H/2-15,'#fff',12,'center');text(ctx,`SCORE ${result.score}`,W/2,H/2+9,'#e9ca90',12,'center');text(ctx,interactive?'ENTER TO PLAY AGAIN':'NEXT RUN...',W/2,H/2+32,'#d2d9d7',10,'center')}
-  if(!disposed&&!paused)frame=requestAnimationFrame(tick);
+  if(epoch===frameEpoch)schedule();
  }
- if(!paused)frame=requestAnimationFrame(tick);
+ schedule();
  return {beginRun,restart(){beginRun()},setInteractive(value){const mode=!!value;if(mode!==interactive)beginRun({interactive:mode});else{release();last=0}},getSessionState(){return result?'result':'playing'},resize,
-  pause(){if(!paused&&!disposed){paused=true;reports.setPaused(true);release();audio.setActive(false);cancelAnimationFrame(frame);last=0}},
-  resume(){if(paused&&!disposed){paused=false;reports.setPaused(false);audio.setActive(audioEnabled);last=0;frame=requestAnimationFrame(tick)}},
-  destroy(){if(disposed)return;reports.destroy();generation++;disposed=true;release();game?.destroy?.();audio.destroy();cancelAnimationFrame(frame);observer?.disconnect();canvas.removeEventListener('keydown',kd);canvas.removeEventListener('keyup',ku);canvas.removeEventListener('blur',release)}};
+  pause(){if(!paused&&!disposed){paused=true;reports.setPaused(true);cancelTick();release();audio.setActive(false);last=0}},
+  resume(){if(paused&&!disposed){paused=false;reports.setPaused(false);audio.setActive(audioEnabled);last=0;schedule()}},
+  destroy(){if(disposed)return;reports.destroy();generation++;disposed=true;cancelTick();release();game?.destroy?.();audio.destroy();observer?.disconnect();canvas.removeEventListener('keydown',kd);canvas.removeEventListener('keyup',ku);canvas.removeEventListener('blur',release)}};
 }
 
 // Scored sessions use active simulation time; legacy factory callers remain endless.
