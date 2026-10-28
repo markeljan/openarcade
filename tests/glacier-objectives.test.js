@@ -26,7 +26,7 @@ test('manual catch, feed and stranded-chick reunion are separate outcomes',()=>{
 
 test('AI feeds multiple chicks, reunites the stranded chick and raises nursery stage',()=>{
  const g=createGlacierGame();for(let i=0;i<4500&&(g.snapshot().fed<4||g.snapshot().rescues<1);i++)g.update(.033,true);
- const state=g.snapshot();assert.ok(state.fed>=4);assert.equal(state.rescues,1);assert.equal(state.stranded.state,'reunited');assert.ok(state.warmth>=5);assert.ok(state.stage>=1);assert.ok(state.score>=725);
+ const state=g.snapshot();assert.ok(state.fed>=4);assert.equal(state.rescues,1);assert.equal(state.stranded.state,'reunited');assert.equal(state.warmth,state.slideFeedings+state.rescues,'only committed feedings and reunions raise warmth');assert.ok(state.stage>=1);assert.ok(state.score>=725);
 });
 
 test('bridge rescue requires a belly slide to begin the crossing',()=>{

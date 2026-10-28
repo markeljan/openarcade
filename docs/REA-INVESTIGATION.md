@@ -1140,3 +1140,7 @@ Glacier Glide now prioritizes an active bridge rescue while carrying fish and pe
 Rulebound now retains undo and restart taps through animations, gives restart priority, clears dead at the beginning of automatic undo, and runs fixed 60 Hz simulation. Source-based manual and AI timing tests pass, including both tap orders. Broader audio, visual and feedback fixtures were updated to hold input through a sampled frame; 131 Rulebound/Hex tests pass. Wash chalk colors and clean-wet sparkle now match retained source in local canvas tests. No new REA browser scenario was started.
 
 The settled integrated suite passed 2,648/2,648 and production build passed. A subsequent read-only review identified Glacier's unsupported first-hole/home AI overrides and Wash's missing J/K/Shift aliases; those remain open at this checkpoint.
+
+## Release preparation
+
+OpenArcade's public release adds visible attribution to miniarcade.dev, a contributor README, root agent guidance and a project add-game skill. The latest source-based changes also align Glacier AI's scored-hole choice, danger priority and dive/feed thresholds; Neon AI takes the open exit instead of focusing on lingering shots; Wash accepts J/K and Shift aliases. Focused manual and AI tests passed. These do not establish full reference parity: visual detail, some AI routing, session behavior and other game-specific comparisons remain incomplete. The prior integrated checkpoint passed 2,648 tests; release validation is in progress. REA browser cleanup remains unconfirmed.

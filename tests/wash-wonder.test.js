@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {applyWashJet,createWashWonder} from '../src/feature-games40.js';
+import {applyWashJet,createWashWonder,createFeatureGame40} from '../src/feature-games40.js';
 
 test('fan cleans chalk faster while narrow cleans rust faster, and weak pressure cleans more slowly',()=>{
  const make=material=>[{x:0,y:60,hp:100,material}];
@@ -79,3 +79,8 @@ test('nozzle samples held input and changes before same-tick spraying',()=>{
  const cues=[],g=createWashWonder(c=>cues.push(c));g.input('x',true);g.input('x',false);g.update(1/60,false);assert.equal(g.snapshot().nozzle,'fan');assert.ok(!cues.includes('wash-nozzle'));
  const before=g.snapshot().water;g.input('x',true);g.input(' ',true);g.update(1/60,false);const s=g.snapshot();assert.equal(s.nozzle,'narrow');assert.equal(s.jet.nozzle,'narrow');assert.ok(s.water<before);assert.ok(cues.includes('wash-nozzle'));g.input('x',false);g.input(' ',false);
 });
+
+
+for(const key of ['j','k'])test(`${key.toUpperCase()} holds the nozzle control for the reference cadence`,()=>{const cues=[],g=createWashWonder(c=>cues.push(c));g.input(key,true);g.update(1/60,false);assert.equal(g.snapshot().nozzle,'narrow');for(let i=0;i<17;i++)g.update(1/60,false);assert.equal(g.snapshot().nozzle,'narrow');g.update(1/60,false);assert.equal(g.snapshot().nozzle,'fan');assert.equal(cues.filter(c=>c==='wash-nozzle').length,2);g.input(key,false)});
+test('held Shift refills at the tap and suppresses simultaneous spray',()=>{const g=createWashWonder();g.input(' ',true);for(let i=0;i<20;i++)g.update(1/60,false);g.input(' ',false);const water=g.snapshot().water;assert.ok(water<168);g.input('Shift',true);g.input(' ',true);g.update(1/60,false);assert.equal(g.snapshot().water,Math.min(168,water+9));assert.equal(g.snapshot().jet,null);g.input('Shift',false);g.input(' ',false)});
+test('Wash wrapper forwards J and K while preserving shared key handling',()=>{const old={window:globalThis.window,ResizeObserver:globalThis.ResizeObserver,requestAnimationFrame:globalThis.requestAnimationFrame,cancelAnimationFrame:globalThis.cancelAnimationFrame},handlers=new Map(),labels=[],noop=()=>{};let next,frame=0;try{globalThis.window={devicePixelRatio:1};globalThis.ResizeObserver=class{observe(){}disconnect(){}};globalThis.requestAnimationFrame=f=>(next=f,1);globalThis.cancelAnimationFrame=noop;const ctx=new Proxy({fillText(s){labels.push(s)}},{get:(o,k)=>o[k]??noop,set:(o,k,v)=>(o[k]=v,true)}),canvas={getContext:()=>ctx,getBoundingClientRect:()=>({width:320,height:720}),setAttribute:noop,addEventListener:(k,v)=>handlers.set(k,v),removeEventListener:noop},g=createFeatureGame40(canvas,'wash-wonder',{interactive:true});const key=(k,down)=>handlers.get(down?'keydown':'keyup')({key:k,preventDefault:noop});const tick=()=>{labels.length=0;next(++frame*1000/60)};tick();key('j',true);tick();key('j',false);assert.ok(labels.some(s=>s.startsWith('NARROW/RUST')));for(let i=0;i<18;i++)tick();key('k',true);tick();key('k',false);assert.ok(labels.some(s=>s.startsWith('FAN/CHALK')));g.destroy()}finally{Object.assign(globalThis,old)}});

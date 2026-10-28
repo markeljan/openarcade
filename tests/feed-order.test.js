@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {sortGamesByVotes} from '../src/feed-order.js';
+test('games sort by shared upvotes and preserve original order on ties',()=>{const games=[{id:'a'},{id:'b'},{id:'c'},{id:'d'}];assert.deepEqual(sortGamesByVotes(games,{b:{upvotes:2},d:{upvotes:2},c:{upvotes:4}}).map(g=>g.id),['c','b','d','a']);assert.deepEqual(games.map(g=>g.id),['a','b','c','d']);assert.deepEqual(sortGamesByVotes(games).map(g=>g.id),['a','b','c','d'])});

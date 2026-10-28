@@ -1,0 +1,4 @@
+interface:
+  display_name: "Add Arcade Game"
+  short_description: "Build a game for the local arcade"
+  default_prompt: "Add a playable game to OpenArcade using the project scaffold and shared player lifecycle."

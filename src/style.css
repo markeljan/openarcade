@@ -55,3 +55,35 @@
  .touch-controls{position:absolute;left:0;right:0;bottom:0;padding:3px 10px 5px;pointer-events:none}
  .touch-controls button{pointer-events:auto}
 }
+
+.brand p a{color:#b5d9d9;text-decoration:underline;text-underline-offset:3px}.brand p a:focus-visible{outline:2px solid #2de2e6;outline-offset:3px}
+/* One active game at a time, with navigation separate from game input. */
+.feed-body{display:flex;flex:1;min-height:0;justify-content:center;gap:18px;padding:12px clamp(12px,3vw,40px)}
+.feed-body .game-stage{flex:1;min-width:0;max-width:760px;border:1px solid #28394b;border-radius:12px;touch-action:pan-y}
+.feed-body .play-canvas{height:min(calc(100dvh - 160px),850px)}
+.feed-rail{width:min(300px,29vw);min-width:210px;display:flex;flex-direction:column;gap:14px;min-height:0;padding:4px}
+.feed-navigation{display:flex;align-items:center;gap:8px}.feed-navigation button,.feed-votes button,.feed-play,#comment-form button{background:#18212d;border:1px solid #334456;border-radius:8px;min-height:44px;padding:8px 12px;font-weight:700}.feed-navigation button{flex:1}.feed-navigation span{font-size:10px;color:#9aabba;white-space:nowrap}.feed-navigation button span{font-size:10px;color:inherit}.feed-play{background:#2de2e6;border-color:#2de2e6;color:#071014}.feed-stats{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;color:#bccbd2}.feed-votes{display:flex;gap:6px}.feed-votes button[aria-pressed=true]{border-color:#2de2e6;color:#2de2e6;background:#19383c}.comments{display:flex;flex-direction:column;min-height:0;flex:1;border-top:1px solid #2b3948;padding-top:10px}.comments h3{font-size:11px;letter-spacing:.1em;margin:4px 0 10px}.comments h3 span{color:#84a3a8}.comment-list{overflow:auto;flex:1;min-height:50px;overscroll-behavior:contain}.comment p,.comment-empty{font-size:11px;line-height:1.5;overflow-wrap:anywhere;color:#c6d1d8;margin:4px 0}.comment{padding:8px 0;border-bottom:1px solid #24313d}.comment time{font-size:9px;color:#8c9ba9}#comment-form{display:grid;gap:6px}#comment-form label{font-size:10px;color:#9fb2bb}#comment-input{resize:vertical;min-height:48px;width:100%;background:#101820;border:1px solid #3b4c5b;border-radius:6px;color:#edf1f8;padding:8px;font:inherit;font-size:12px}#comment-form button{justify-self:end;min-height:36px}#engagement-status{font-size:10px;color:#a8bbc2;margin:4px 0;min-height:1em}
+@media(max-width:760px){.feed-body{position:relative;gap:4px;padding:4px;overflow:hidden}.feed-body .game-stage{border:0;border-radius:0;max-width:none}.feed-rail{width:92px;min-width:92px;gap:6px;padding:0;overflow:auto}.feed-navigation{flex-direction:column;gap:2px}.feed-navigation button{min-height:38px;width:100%;padding:3px}.feed-navigation button span{display:block;font-size:8px}.feed-play{padding:5px;min-height:42px;font-size:10px}.feed-stats{flex-direction:column;gap:3px;text-align:center;font-size:9px}.feed-votes button{padding:4px 7px;min-height:36px}.comments{overflow:visible;flex:0 0 auto}.comments h3{font-size:9px}.comment-list{max-height:100px;min-height:25px}.comment p,.comment-empty{font-size:9px}#comment-form label{font-size:9px}#comment-input{font-size:11px;min-height:46px}#comment-form button{font-size:9px;padding:5px}.feed-body .play-canvas{height:auto;width:auto;max-height:100%;max-width:100%}.play-header>div:first-child{display:block!important;min-width:0}.play-header h2{font-size:10px}.play-header p{display:none}.play-header .actions{width:auto!important;flex:1}.play-header .action{font-size:8px}.touch-controls{z-index:2}.intro .toolbar{flex-wrap:wrap;justify-content:flex-end}}
+.swipe-handle{display:none}@media(pointer:coarse){.swipe-handle{display:block;position:absolute;z-index:2;bottom:4px;left:50%;transform:translateX(-50%);padding:8px 12px;border-radius:20px;background:#0a131bd9;border:1px solid #91b9b6;color:#d8eeeb;font-size:9px;letter-spacing:.05em;white-space:nowrap;touch-action:none;user-select:none}.feed-body .game-stage{touch-action:none}}@media(max-width:760px) and (pointer:coarse){.touch-controls{right:96px}}
+.feed-help{font-size:10px;color:#c4d4d7}.feed-help summary{cursor:pointer;font-weight:700;color:#a6e3d1;min-height:32px;padding:8px 0}.feed-help p{line-height:1.5;margin:0 0 8px;overflow-wrap:anywhere}
+@media(max-width:760px){.feed-rail{width:78px;min-width:78px}}@media(max-width:760px) and (pointer:coarse){.touch-controls{right:82px}}
+@media(orientation:landscape) and (pointer:coarse){.feed-body .play-canvas{height:100%;width:auto;max-height:100%}}
+#retry-activity{align-self:flex-start;min-height:36px;padding:6px 8px;background:#18212d;border:1px solid #536777;border-radius:6px;font-size:9px}#retry-activity[hidden]{display:none}
+.comments-toggle,.comments-close{display:none}
+@media(max-width:760px), (pointer:coarse) and (orientation:landscape){
+ .feed-rail{width:78px;min-width:78px;overflow-y:auto;overscroll-behavior:contain}
+ .feed-votes{flex-direction:column;align-items:center;gap:6px}.feed-votes button{min-width:44px;min-height:44px;padding:6px}
+ .comments-toggle{display:block;min-width:44px;min-height:44px;width:100%;background:#18212d;border:1px solid #536777;border-radius:8px;font-size:9px;font-weight:700}
+ .comments{display:none}.comments.open{display:flex;position:fixed;z-index:20;left:0;right:0;bottom:0;height:min(70dvh,520px);min-height:260px;background:#111b26;border:1px solid #425969;border-radius:16px 16px 0 0;padding:18px 20px;box-shadow:0 -12px 40px #000a}
+ .comments.open h3{font-size:14px;margin:2px 45px 12px 0}.comments.open .comment-list{max-height:none;min-height:70px;flex:1}.comments.open .comment p,.comments.open .comment-empty{font-size:14px}.comments.open .comment time{font-size:11px}.comments.open #comment-form label{font-size:12px}.comments.open #comment-input{font-size:16px;min-height:60px}.comments.open #comment-form button{font-size:12px;min-width:64px;min-height:44px}.comments-close{display:block;position:absolute;right:14px;top:10px;min-width:44px;min-height:44px;background:#18212d;border:1px solid #536777;border-radius:8px}
+}
+/* Keep the feed rail separate from game controls in touch landscape. */
+@media(orientation:landscape) and (pointer:coarse){
+ .feed-body{gap:4px;padding:4px}.feed-rail{width:clamp(160px,27vw,230px);min-width:160px;gap:4px;overflow-y:auto}
+ .feed-navigation{flex-direction:row;gap:4px}.feed-navigation button{width:auto;min-width:44px;min-height:44px;padding:4px}.feed-navigation button span{display:inline;font-size:11px}
+ .feed-stats{flex-direction:row;justify-content:space-between}.feed-votes{flex-direction:row;gap:4px}.feed-votes button{min-width:44px;min-height:44px}
+ .touch-controls{right:clamp(164px,calc(27vw + 4px),234px)}
+ .play-header>div:first-child{display:block!important;min-width:0}.play-header h2{font-size:12px}
+}
+@media(max-width:760px){.feed-navigation button span{font-size:11px}.play-header h2{font-size:12px}}
+@media(max-width:760px){.feed-navigation button{min-height:44px}}

@@ -1,0 +1,9 @@
+# Shared game feedback
+
+OpenArcade uses the server-side `/api/feedback` Vercel Function and a dedicated Neon Postgres database for shared play counts, upvotes, downvotes, and comments. `src/engagement.js` is the browser client. An anonymous, randomly generated browser ID is stored locally to associate a vote with a game; it is not an account or a guarantee against duplicate voting. Comments are public, anonymous text and are limited to 280 characters. The API returns an unavailable error if the database is not configured; it does not invent shared counts.
+
+The Vercel project needs a sensitive `DATABASE_URL` pointing to the intended database. Apply [`db/feedback-schema.sql`](../db/feedback-schema.sql) once to that dedicated database using its SQL editor. The statements create the three feedback tables and an index if absent; review the target database before running them. The current OpenArcade Vercel project has a dedicated Neon Free database linked to Preview and Production, with the schema applied. Preview and production share feedback unless the database integration is configured with separate branches.
+
+`npm run dev` and `npm run preview` serve the Vite frontend only; they do not execute Vercel Functions, so feedback is unavailable there. To test the function locally, use `vercel dev` with the project linked and a Development-targeted database connection supplied through Vercel's environment workflow. Use an isolated test database for development when practical. Never commit credentials or print connection strings in logs. A new deployment is required for environment variable changes to reach a deployed function.
+
+Run `node --test tests/feedback-api.test.js tests/engagement-client.test.js` for the local contract tests. These tests use a simulated query layer; a deployed endpoint connected to Postgres needs a separate end-to-end check across distinct browser identities.

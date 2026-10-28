@@ -1,0 +1,1 @@
+export function sortGamesByVotes(games,stats={}){return games.map((game,index)=>({game,index,votes:Number(stats[game.id]?.upvotes)||0})).sort((a,b)=>b.votes-a.votes||a.index-b.index).map(({game})=>game)}

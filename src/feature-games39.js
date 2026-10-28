@@ -37,11 +37,11 @@ export function duel(play=()=>{}){
   t+=dt;
   if(complete){phaseTime-=dt;if(complete==='boarding'){p.x+=clamp(width-19.5-p.x,-67.5*dt,67.5*dt);p.y+=clamp(floor-22.5-p.y,-22.5*dt,22.5*dt);if(advanceBullets(dt,p.crouch))return;camera+=clamp(width-175.5-camera,-423*dt,423*dt);if(phaseTime<=0){complete='departed';phaseTime=1.5;wins++;play('neon-depart');say('HOMEWARD')}}else{const travel=(54+(1.5-phaseTime)*118.8)*dt;trainTravel+=travel;p.x+=travel;camera=p.x-156;if(phaseTime<=0)reset()}return;}
   if(rewind){rewind-=dt;const pose=history.pop();if(pose){p.x=pose.x;p.y=pose.y;p.face=pose.face}if(rewind<=0)room();else cameraStep(dt);return;}
-  noticeT=Math.max(0,noticeT-dt);const incoming=bullets.some(b=>!b.returned&&b.vx*(p.x-b.x)>0&&Math.abs(b.y-(p.y-7.5))<78&&Math.abs(b.x-p.x)<102),focusing=focus>0&&(auto?incoming&&focus>2:!!keys.z),worldDt=dt*(focusing?.35:1);focusActive=focusing;cool=Math.max(0,cool-worldDt-1e-10);attack=Math.max(0,attack-worldDt);parryTime=Math.max(0,parryTime-worldDt-1e-10);rollCd=Math.max(0,rollCd-worldDt-1e-10);
+  noticeT=Math.max(0,noticeT-dt);const cleared=enemies.every(e=>!e.hp),incoming=bullets.some(b=>!b.returned&&b.vx*(p.x-b.x)>0&&Math.abs(b.y-(p.y-7.5))<78&&Math.abs(b.x-p.x)<102),focusing=focus>0&&(auto?!cleared&&incoming&&focus>2:!!keys.z),worldDt=dt*(focusing?.35:1);focusActive=focusing;cool=Math.max(0,cool-worldDt-1e-10);attack=Math.max(0,attack-worldDt);parryTime=Math.max(0,parryTime-worldDt-1e-10);rollCd=Math.max(0,rollCd-worldDt-1e-10);
   let dx=(keys.ArrowRight||keys.d?1:0)-(keys.ArrowLeft||keys.a?1:0),crouch=!!(keys.ArrowDown||keys.s);
   if(!auto){if(dx)p.face=dx;if(keys.ArrowUp||keys.w)jump(dx);if(keys.x)dash();if(keys[' '])cut()}
-  if(auto){const e=enemies.filter(duelCanTarget).sort((a,b)=>Math.abs(a.x-p.x)-Math.abs(b.x-p.x))[0];const shot=bullets.filter(b=>!b.returned&&b.vx*(p.x-b.x)>0&&Math.abs(b.y-(p.y-7.5))<78).sort((a,b)=>Math.abs(a.x-p.x)-Math.abs(b.x-p.x))[0];
-   const facing=e?(Math.sign(e.x-p.x)||p.face):1,d=e?Math.abs(e.x-p.x):Infinity;dx=facing;if(e)p.face=facing;
+  if(auto){const e=enemies.filter(duelCanTarget).sort((a,b)=>Math.abs(a.x-p.x)-Math.abs(b.x-p.x))[0];const shot=cleared?null:bullets.filter(b=>!b.returned&&b.vx*(p.x-b.x)>0&&Math.abs(b.y-(p.y-7.5))<78).sort((a,b)=>Math.abs(a.x-p.x)-Math.abs(b.x-p.x))[0];
+   const facing=e?(Math.sign(e.x-p.x)||p.face):1,d=e?Math.abs(e.x-p.x):Infinity;dx=facing;if(e||cleared)p.face=facing;
    if(e&&d<45)cut();if(e?.kind==='guard'&&d<55.5&&!rollCd){cut();dash()}
    if(e&&e.kind!=='guard'){const spacing=duelGunSpacing(d,p.x,facing,width,p.spacing);p.spacing=spacing.spacing;dx=spacing.dx}
    if(shot&&Math.abs(shot.x-p.x)<142.5){dx=facing*.35;p.face=Math.sign(shot.x-p.x)||p.face}if(shot&&Math.abs(shot.x-p.x)<48){cut();p.face=Math.sign(shot.x-p.x)||p.face;if(p.ground)dx=p.face*.2}
