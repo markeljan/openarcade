@@ -91,7 +91,10 @@ export async function capture(id, frames = 240) {
     ctx.drawImage(gameplay, 870 - w/2, 315 - h/2, w, h);
     return {png: card.toDataURL('image/png'), canvasWidth: width, canvasHeight: height, colors: colors.size, frames, selectedFrame:selected.frame, samples:snapshots.map(({frame,lastDrawFrame,signature,labels}) => ({frame,lastDrawFrame,signature,labels}))};
   } finally {
-    instance?.destroy(); Math.random = oldRandom; window.requestAnimationFrame = oldRAF;
-    window.cancelAnimationFrame = oldCancel; Storage.prototype.setItem = oldSet;
+    try { instance?.destroy(); }
+    finally {
+      Math.random = oldRandom; window.requestAnimationFrame = oldRAF;
+      window.cancelAnimationFrame = oldCancel; Storage.prototype.setItem = oldSet;
+    }
   }
 }

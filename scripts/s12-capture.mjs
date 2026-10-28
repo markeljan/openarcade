@@ -25,6 +25,12 @@ for (const file of await sourceFiles('src')) sourceHashes[file.replaceAll('\\','
 for (const file of ['scripts/s12-capture-page.js','scripts/s12-capture.mjs']) sourceHashes[file] = hash(await readFile(file));
 const browser = await launchBrowser({url: new URL('/scripts/s12-capture.html',url).href});
 try {
+  // Vite raw imports bind the browser's source checkout to this process's hashes.
+  // A separately running server must not silently capture another worker's files.
+  for (const [file, expected] of Object.entries(sourceHashes)) {
+    const served = await browser.run(`import(${JSON.stringify('/' + file + '?raw')}).then(module => module.default)`);
+    if (typeof served !== 'string' || hash(served) !== expected) throw Error(`Capture source differs from local checkout: ${file}`);
+  }
   await browser.run("import('/scripts/s12-capture-page.js').then(module => { window.captureHarness = module; return true; })");
   const catalog = await browser.run('window.captureHarness.catalog()');
   const selected = ids.length ? catalog.filter(game => ids.includes(game.id)) : catalog;
