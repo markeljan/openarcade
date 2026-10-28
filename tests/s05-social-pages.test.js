@@ -1,0 +1,48 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync,mkdtempSync,mkdirSync,writeFileSync,rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {gameCatalog} from '../src/catalog.js';
+import {socialMetadata,readImageManifest,withMetadata,notFoundHtml} from '../scripts/social-pages.mjs';
+
+test('every game gets specific metadata in raw initial HTML with a real fallback image',()=>{
+  const template=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  for(const game of gameCatalog) {
+    const html=withMetadata(template,game,{origin:'https://example.com'});
+    assert.match(html,new RegExp(`<title>${game.name} — OpenArcade</title>`));
+    assert.ok(html.includes(`href="https://example.com/games/${game.id}"`));
+    assert.ok(html.includes(`property="og:url" content="https://example.com/games/${game.id}"`));
+    assert.match(html,/property="og:image" content="https:\/\/example.com\/social\/site-card-v1.png"/);
+    assert.match(html,/property="og:image:type" content="image\/png"/);
+    assert.match(html,/name="twitter:card" content="summary_large_image"/);
+    assert.doesNotMatch(html,/og:video|twitter:player/);
+  }
+  assert.equal(readFileSync(new URL('../public/social/site-card-v1.png',import.meta.url)).subarray(1,4).toString(),'PNG');
+  assert.match(notFoundHtml(),/noindex/);
+  assert.doesNotMatch(notFoundHtml(),/src\/main|id="app"/);
+});
+test('versioned real capture manifest and opt-in Player Card keep one HTML representation',()=>{
+  const game=gameCatalog[0],manifest={games:{[game.id]:{path:`/social/games/${game.id}.png`,version:'abc123',width:1200,height:630,alt:'Actual <game> & capture'}}};
+  const html=socialMetadata(game,{origin:'https://example.com',manifest,playerEnabled:true});
+  assert.ok(html.includes(`https://example.com/social/games/${game.id}.png?v=abc123`));
+  assert.match(html,/Actual &lt;game&gt; &amp; capture/);
+  assert.match(html,/name="twitter:card" content="player"/);
+  assert.ok(html.includes(`name="twitter:player" content="https://example.com/embed/${game.id}"`));
+  assert.match(html,/twitter:player:width" content="720"/);
+  assert.match(html,/twitter:player:height" content="720"/);
+});
+test('image manifest fails the build for missing, unknown or unsafe assets',()=>{
+  const root=mkdtempSync(join(tmpdir(),'s05-manifest-'));
+  try {
+    assert.deepEqual(readImageManifest(root),{games:{}});
+    mkdirSync(join(root,'public/social/games'),{recursive:true});
+    const manifest={version:1,games:{snake:{path:'/social/games/snake.png',width:1200,height:630,version:'v1'}}};
+    const save=()=>writeFileSync(join(root,'public/social/manifest.json'),JSON.stringify(manifest));save();
+    assert.throws(()=>readImageManifest(root),/missing social image/);
+    writeFileSync(join(root,'public/social/games/snake.png'),'fixture');
+    assert.deepEqual(readImageManifest(root),manifest);
+    manifest.games.snake.path='/social/games/../../../secret.png';save();
+    assert.throws(()=>readImageManifest(root));
+  }finally{rmSync(root,{recursive:true,force:true})}
+});
