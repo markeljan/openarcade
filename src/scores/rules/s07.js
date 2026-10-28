@@ -22,7 +22,7 @@ const rows = [
   ['pico-cap',10,'glade objective and combat awards through first restoration','points',1000000,86400],
   ['frog-convoy',10,'crossings, pickups, deliveries and migration outcome bonus','points',1000000,86400],
 ];
-const ready = new Set(['machine-hunt','meat-lad','turbo-arena','jelly-dash','side-surfers','word-fall']);
+const ready = new Set(rows.slice(0,12).map(([id])=>id));
 export default rows.map(([gameId,module,metric,units,maxScore,seconds]) => ({
   schemaVersion:1,gameId,source:`src/feature-games${module===1?'':module}.js`,
   metric,units,order:'desc',version:1,status:ready.has(gameId)?'complete':'pending',
