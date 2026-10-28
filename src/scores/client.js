@@ -79,6 +79,9 @@ export function createScoreClient({fetch: request = globalThis.fetch?.bind(globa
   async function performClaim(item) {
     if (abandoned.has(item.runId)) return states.get(item.runId);
     emit(item.runId, 'saving');
+    const token = await getToken();
+    if (abandoned.has(item.runId)) return states.get(item.runId);
+    if (!token) throw authFailure();
     const receipt = await pendingReceipt(item);
     if (abandoned.has(item.runId)) return states.get(item.runId);
     const result = await send({action: 'claim', runId: item.runId, claimToken: receipt.claimToken}, true);
