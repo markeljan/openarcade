@@ -110,7 +110,7 @@ export function race(options={},run={}) {
  }
  function reset(){episode++;manualScore=0;recorded=false;spectating=false;lastManualScore=0;resultHold=0;resultReason='';attract=false;round=0;const first=options.firstCourse??Math.floor(rand(0,3));plan=[courses[first],courses[(first+1)%3],courses[3]];beans=colors.map((color,i)=>({color,player:i===0}));startRound()}
  reset();
- function finishManual(auto,reason){if(auto&&run.finish&&!pendingAIResult)pendingAIResult={score:runScore,result:reason||"Eliminated"};if(!auto&&!reported&&run.finish){reported=true;run.finish({score:runScore,result:reason||"Eliminated"});}if(!auto&&!recorded){recorded=true;lastManualScore=manualScore;spectating=true;resultHold=12;resultReason=reason||`ROUND ${round+1}`;options.records?.finish?.(manualScore)}}
+ function finishManual(auto,reason){if(auto&&run.finish&&!pendingAIResult)pendingAIResult={score:runScore,result:reason||"Eliminated"};if(!auto&&!recorded){recorded=true;lastManualScore=manualScore;spectating=true;resultHold=12;resultReason=reason||`ROUND ${round+1}`;options.records?.finish?.(manualScore)}if(!auto&&!reported&&run.finish){reported=true;run.finish({score:runScore,result:reason||"Eliminated"});}}
  function jump(b){if(b?.ground){b.vy=-333;b.ground=false;cue('jelly-jump',.14)}}
  function dive(b){if(b&&!b.ground&&!b.stun&&!b.dive){b.vx=b.face*243;b.vy=Math.min(b.vy,36);b.dive=true;b.dives=(b.dives||0)+1;cue('jelly-dive',.18)}}
  function cameraStep(dt){const focus=(round===2&&winner)||(!spectating&&beans.find(b=>b.player&&!b.eliminated))||beans.filter(b=>!b.done&&!b.eliminated).sort((a,b)=>a.y-b.y)[0];if(focus){const target=clamp(340-focus.y,0,Math.max(0,110-finishY));camera=jellyCameraOffset(camera,target,dt)}}
