@@ -1,0 +1,796 @@
+{
+  "version": 1,
+  "games": {
+    "machine-hunt": {
+      "path": "/social/games/machine-hunt.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Machine Hunt gameplay in OpenArcade",
+      "version": "69105fd08eb6f481301ff445136117bddc90a3f560e3adf350cb34c76d306e3f"
+    },
+    "meat-lad": {
+      "path": "/social/games/meat-lad.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Meat Lad gameplay in OpenArcade",
+      "version": "d9aa835dbd012886035002f389700596896a03053523a7210b5e1b2558b8907e"
+    },
+    "turbo-arena": {
+      "path": "/social/games/turbo-arena.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Turbo Arena gameplay in OpenArcade",
+      "version": "99e6efd31fd2591f3bb1992400468ae74f8a999f22da6331cdff6790988a996d"
+    },
+    "jelly-dash": {
+      "path": "/social/games/jelly-dash.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Jelly Dash gameplay in OpenArcade",
+      "version": "b807a563d654f783291f75b11d3f3024aa292fd32297603164686f40d082c8e4"
+    },
+    "side-surfers": {
+      "path": "/social/games/side-surfers.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Side Surfers gameplay in OpenArcade",
+      "version": "dc59c6fcc86ecf10aeacb7fe90d76c71339ea1d84a720b5f0584a17e15d7ee6a"
+    },
+    "word-fall": {
+      "path": "/social/games/word-fall.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Word Fall gameplay in OpenArcade",
+      "version": "ea29722f78d52287c0321a69c43292d3bcb94333bd6a7a7e7a832b52a9b74ac0"
+    },
+    "rune-swarm": {
+      "path": "/social/games/rune-swarm.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Rune Swarm gameplay in OpenArcade",
+      "version": "aa062ee365ebfac4153a3e27afa8f6dfdbd443b43b62b057048429b1c1f332dc"
+    },
+    "deep-digger": {
+      "path": "/social/games/deep-digger.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Deep Digger gameplay in OpenArcade",
+      "version": "f5d804f9bfbdbd23fa7cd9d0427cb397cabb3fb5503f338ef24bb515b301dee7"
+    },
+    "web-slam": {
+      "path": "/social/games/web-slam.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Web Slam gameplay in OpenArcade",
+      "version": "caf74c6268ac0d3faf52a57a1c8d038e02f637ee6644828b4b7043321bc873e2"
+    },
+    "deadline-deck": {
+      "path": "/social/games/deadline-deck.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Deadline Deck gameplay in OpenArcade",
+      "version": "a90fa59f11282fe038cd649be985e21876429b7b4fffc95ef979f6c64ef1c8ad"
+    },
+    "scrap-arena": {
+      "path": "/social/games/scrap-arena.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Scrap Arena gameplay in OpenArcade",
+      "version": "6033c6fd22ba6c7a4230f9490f3da8af5c77f16a13f6c3794d485c75806111cc"
+    },
+    "gridiron-rush": {
+      "path": "/social/games/gridiron-rush.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Gridiron Rush gameplay in OpenArcade",
+      "version": "3c7330913f573e227499b23a24237fad416a50e70dc63d0b15621248cdd90c7c"
+    },
+    "ghost-shift": {
+      "path": "/social/games/ghost-shift.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Ghost Shift gameplay in OpenArcade",
+      "version": "13c48126605d6c182ecd0cc73f642a905f3db86ec7603da6d9d9a0dd80be1f1f"
+    },
+    "wingrush": {
+      "path": "/social/games/wingrush.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Wingrush gameplay in OpenArcade",
+      "version": "a1b23e6f7e84852eeaf245e416e365c1a87befd5f1956499c641661886eedbfc"
+    },
+    "grave-garden": {
+      "path": "/social/games/grave-garden.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Grave Garden gameplay in OpenArcade",
+      "version": "0469604d5362832f5dc8e9c994b7e3558417913addaa5b87a9fe8454e487aa55"
+    },
+    "swarm-keeper": {
+      "path": "/social/games/swarm-keeper.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Swarm Keeper gameplay in OpenArcade",
+      "version": "1581ef10b5e2c77ef38613d047956747f4d3f0481c3b085bf501c42dfd69b1ab"
+    },
+    "cosmic-haul": {
+      "path": "/social/games/cosmic-haul.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Cosmic Haul gameplay in OpenArcade",
+      "version": "34405836bcebadc56cb289e1f08f2b5bdc4f9edb42e298f02a61150f4aec7b5f"
+    },
+    "midnight-pursuit": {
+      "path": "/social/games/midnight-pursuit.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Midnight Pursuit gameplay in OpenArcade",
+      "version": "029fc6515278b01fabf636d682b5e42544a2bc93f7523fbe209dc2f2b851bb69"
+    },
+    "pico-cap": {
+      "path": "/social/games/pico-cap.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Pico Cap gameplay in OpenArcade",
+      "version": "bdc8577f98f8a34ee996e50b9445e34db28a04c04089e15eadb8b3bedc39c37f"
+    },
+    "frog-convoy": {
+      "path": "/social/games/frog-convoy.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Frog Convoy gameplay in OpenArcade",
+      "version": "e5bf37c8877c6a854468e4a12c4cecc42e9b4614899dd00e4dccd43dc779fbdc"
+    },
+    "tower-panic": {
+      "path": "/social/games/tower-panic.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Tower Panic gameplay in OpenArcade",
+      "version": "0958f4a85798ac3f7bf9afe7a18560522d99f1a7717a762f8ba6ca9f8edc26d3"
+    },
+    "burrow-boss": {
+      "path": "/social/games/burrow-boss.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Burrow Boss gameplay in OpenArcade",
+      "version": "b8918ae539674ca93dc5fd9d54d0aceb52c18e7387c8620d3fb695cc34860e7f"
+    },
+    "idol-escape": {
+      "path": "/social/games/idol-escape.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Idol Escape gameplay in OpenArcade",
+      "version": "17e3deb007023c97c6fb5b037d5bd4215ab995fba352376077390410abdb0997"
+    },
+    "robot-register": {
+      "path": "/social/games/robot-register.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Robot Register gameplay in OpenArcade",
+      "version": "459e144f15653e262f77b775e8f85613a543c70669c21654ec8675bb222de644"
+    },
+    "castle-crasher": {
+      "path": "/social/games/castle-crasher.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Castle Crasher gameplay in OpenArcade",
+      "version": "0327f20c569848b95b6e50f9ae4db4c33bc0e280ad2948507534203932254b25"
+    },
+    "hotel-haunt": {
+      "path": "/social/games/hotel-haunt.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Hotel Haunt gameplay in OpenArcade",
+      "version": "009c3ca245a9375fd21f88cd0bed5031246724d58f66709036d42c0973e57b4f"
+    },
+    "kaiju-control": {
+      "path": "/social/games/kaiju-control.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Kaiju Control gameplay in OpenArcade",
+      "version": "e4aef1961fc24c8f107eff497b6e4cf9b251e2f41137b2bf47a789bd2c501407"
+    },
+    "moonshine-valley": {
+      "path": "/social/games/moonshine-valley.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Moonshine Valley gameplay in OpenArcade",
+      "version": "abbe949c751f5c381afd432488e9d96e12999439fbd3f04d2b3f1672872197f2"
+    },
+    "dungeon-relay": {
+      "path": "/social/games/dungeon-relay.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Dungeon Relay gameplay in OpenArcade",
+      "version": "1ece007ea44d97ec802e72f9bc1de3f623b35eeb77291bee1c6d75742abbcb86"
+    },
+    "gravity-claw": {
+      "path": "/social/games/gravity-claw.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Gravity Claw gameplay in OpenArcade",
+      "version": "72da4608d12fee5f70d839531f8c286285da1540e164399b0832a79096e769b0"
+    },
+    "ricochet-foundry": {
+      "path": "/social/games/ricochet-foundry.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Ricochet Foundry gameplay in OpenArcade",
+      "version": "57f31edb3eb72a23fe26ca50f12299ba3281e0489e709d344931a60fa0a556f9"
+    },
+    "lantern-line": {
+      "path": "/social/games/lantern-line.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Lantern Line gameplay in OpenArcade",
+      "version": "87e7c003b5d5b1c25565d87f0c90659d81b0643818de865087e2a40d0e83569c"
+    },
+    "ashen-rage": {
+      "path": "/social/games/ashen-rage.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Ashen Rage gameplay in OpenArcade",
+      "version": "f0df08c1d2bd72f7e8976023444e0df00821cf1f87a6738ad73c2673abd80fe2"
+    },
+    "star-roller": {
+      "path": "/social/games/star-roller.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Star Roller gameplay in OpenArcade",
+      "version": "a0a54c2bb332ab9d11d02077b81d267b35b013a2cca863942be85b518f28bb80"
+    },
+    "dragon-lock": {
+      "path": "/social/games/dragon-lock.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Dragon Lock gameplay in OpenArcade",
+      "version": "ea3d7236a482cf11f16a629fa11a19668c16f00d25904a43e80c222af8b60480"
+    },
+    "cursed-fist": {
+      "path": "/social/games/cursed-fist.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Cursed Fist gameplay in OpenArcade",
+      "version": "b9ba5f568cbee51d510f860bd4e952242348a6a6c0bc419bfb28f17be2ed880d"
+    },
+    "coral-courier": {
+      "path": "/social/games/coral-courier.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Coral Courier gameplay in OpenArcade",
+      "version": "d18ad3f5d94195a5858a69bd41ac86edb2b12214be8b821bd70b10f8348c4996"
+    },
+    "beacon-bay": {
+      "path": "/social/games/beacon-bay.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Beacon Bay gameplay in OpenArcade",
+      "version": "702fb4a960a2263bf6bc9a640240d835cc731c67af192da858308781a3e59708"
+    },
+    "railway-rush": {
+      "path": "/social/games/railway-rush.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Railway Rush gameplay in OpenArcade",
+      "version": "0b4b55f4e6fbcfe58d53100c9d5d2b6eca4c6564764675bf5295cc4bf87fc0a9"
+    },
+    "pottery-house": {
+      "path": "/social/games/pottery-house.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Pottery House gameplay in OpenArcade",
+      "version": "b84edbe058f6f6ab01aebb6f1d199e104eb1d099c556ca9d3e5bcd5bd4a529e4"
+    },
+    "hive-heist": {
+      "path": "/social/games/hive-heist.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Hive Heist gameplay in OpenArcade",
+      "version": "c464c50fcf1ce5904ecbde54755bdd9ead2c1f5274e868f5289ae9bade4418b6"
+    },
+    "cloud-caravan": {
+      "path": "/social/games/cloud-caravan.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Cloud Caravan gameplay in OpenArcade",
+      "version": "6a7191e2b02631ad4f10584503f4b2b6b49fd9200e39f9724d9c1f69b01b1e82"
+    },
+    "orchard-wardens": {
+      "path": "/social/games/orchard-wardens.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Orchard Wardens gameplay in OpenArcade",
+      "version": "5be4ec33566f7f8a172314ce5ac2b908f52f9d58b4b8228bf988acd9a993b134"
+    },
+    "avalanche-post": {
+      "path": "/social/games/avalanche-post.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Avalanche Post gameplay in OpenArcade",
+      "version": "8cffdf313f9eeda025b874fd49eb117b911ebb018d3845cb547910939ff6e31e"
+    },
+    "orbit-kitchen": {
+      "path": "/social/games/orbit-kitchen.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Orbit Kitchen gameplay in OpenArcade",
+      "version": "21ae5807571b8de243651ee9e18fcc99ad597bccea60a92ddfb791eb353e8ac9"
+    },
+    "hearth-conductor": {
+      "path": "/social/games/hearth-conductor.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Hearth Conductor gameplay in OpenArcade",
+      "version": "58c23c239d4661484a1295b9a6e4dc56c5229fbbb52065f55874028cb2f0227c"
+    },
+    "rune-rebound": {
+      "path": "/social/games/rune-rebound.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Rune Rebound gameplay in OpenArcade",
+      "version": "7a9485a7d7aa60aed8842b712199995be27b97602dcbcb867f2d95a893bed4d2"
+    },
+    "pocket-regatta": {
+      "path": "/social/games/pocket-regatta.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Pocket Regatta gameplay in OpenArcade",
+      "version": "b5e8c5f5f0b310b330b06a113773ef9d66f2e2fe2e3b8c35af6ec296cc2aae07"
+    },
+    "willow-dam": {
+      "path": "/social/games/willow-dam.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Willow Dam gameplay in OpenArcade",
+      "version": "9ad9e8e8cc6622ef08858d269f1463fbadf395972292a6940b8f215f463bbf75"
+    },
+    "storm-roundup": {
+      "path": "/social/games/storm-roundup.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Storm Roundup gameplay in OpenArcade",
+      "version": "09a201a14b1f287c98bd4c23ad991bf6b3da0a85a17559f8c6dec1467badfce7"
+    },
+    "drift-divers": {
+      "path": "/social/games/drift-divers.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Drift Divers gameplay in OpenArcade",
+      "version": "74458d2963578596b8199da1e162f1966ac92ff1fc02aa2664322ce806ff7b17"
+    },
+    "lantern-lift": {
+      "path": "/social/games/lantern-lift.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Lantern Lift gameplay in OpenArcade",
+      "version": "d63d7ee03800fb24073fba0db6ae763b78207a348ec49beeceb944b53fa9d9b3"
+    },
+    "dune-delivery": {
+      "path": "/social/games/dune-delivery.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Dune Delivery gameplay in OpenArcade",
+      "version": "9e0490672485c50a17d6b397f52904b1a84332f667904728e0ff915ddcded736"
+    },
+    "fossil-frontier": {
+      "path": "/social/games/fossil-frontier.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Fossil Frontier gameplay in OpenArcade",
+      "version": "5ea1fa951fc92e48e174ccb384e68c0a6156c2989be50ba259da16b067b296a8"
+    },
+    "starlight-ward": {
+      "path": "/social/games/starlight-ward.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Starlight Ward gameplay in OpenArcade",
+      "version": "324b80a2d27396bd74cf5578aa80d6ae7386b3fa35133ca43f19c073c1167964"
+    },
+    "rooftop-post": {
+      "path": "/social/games/rooftop-post.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Rooftop Post gameplay in OpenArcade",
+      "version": "121ca82c75ebaaf1833ebde5c4a2a84722f3ad7bffd23c582a22882f085d345e"
+    },
+    "bakery-blitz": {
+      "path": "/social/games/bakery-blitz.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Bakery Blitz gameplay in OpenArcade",
+      "version": "17d0bcccdd5ae4879a59529e9c77bd84dfc54e6f3ea559a0f1bd1b0c7d009fd6"
+    },
+    "starfall-station": {
+      "path": "/social/games/starfall-station.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Starfall Station gameplay in OpenArcade",
+      "version": "ac35c7b548a7349ca877d85aaca943f69d0ce651bceabd9d74bbd50010b81dbd"
+    },
+    "greenhouse-guardians": {
+      "path": "/social/games/greenhouse-guardians.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Greenhouse Guardians gameplay in OpenArcade",
+      "version": "6fdeb7617c33f91b935d7b7aed67222c03bed7038e3767f936dfe61b0327de07"
+    },
+    "harbor-hoist": {
+      "path": "/social/games/harbor-hoist.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Harbor Hoist gameplay in OpenArcade",
+      "version": "5c77f7ab5b1175a91d5869d9c2cd8dabe6c203508091afc7bffb97871a86bdc5"
+    },
+    "tower-heist": {
+      "path": "/social/games/tower-heist.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Tower Heist gameplay in OpenArcade",
+      "version": "fa6c44fe6a23572832ae58d94b78193e07a14b6b0a34e753efeabbb12bf23d3c"
+    },
+    "storm-slot": {
+      "path": "/social/games/storm-slot.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Storm Slot gameplay in OpenArcade",
+      "version": "18b860a22cebecbc49418e957da33ece5d1c4c8812b3e98507cf166227fde3f1"
+    },
+    "glacier-glide": {
+      "path": "/social/games/glacier-glide.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Glacier Glide gameplay in OpenArcade",
+      "version": "d02070e45b39456a7dcb0472223a70cbd7746fc1ff6153cc7bdde17f0c5ccc0d"
+    },
+    "cloud-shepherd": {
+      "path": "/social/games/cloud-shepherd.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Cloud Shepherd gameplay in OpenArcade",
+      "version": "640478d44e336f52e96a4d5a4c269ff9a9b9d453b19bd12289feea3156ddb85d"
+    },
+    "essence-workshop": {
+      "path": "/social/games/essence-workshop.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Essence Workshop gameplay in OpenArcade",
+      "version": "79d5fc9975c96e0122d135303881bbef1de50e7b04aede14bfd9a3e137902eb6"
+    },
+    "mill-mechanic": {
+      "path": "/social/games/mill-mechanic.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Mill Mechanic gameplay in OpenArcade",
+      "version": "5ccb6b898087efc00fc42f17a23bf1c7f3fb177c388cb3d42615ca273d52ea81"
+    },
+    "wobble-war": {
+      "path": "/social/games/wobble-war.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Wobble War gameplay in OpenArcade",
+      "version": "0fecb70c56d1f050fdc60267683f96f8e7fe12c56b30a2bb8714978bf3320d5e"
+    },
+    "void-gambit": {
+      "path": "/social/games/void-gambit.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Void Gambit gameplay in OpenArcade",
+      "version": "5891ebe42e66d180cffec53b36560f580046723e2c09c7f2d231b91ca01df7be"
+    },
+    "rulebound": {
+      "path": "/social/games/rulebound.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Rulebound gameplay in OpenArcade",
+      "version": "abe1804f27abd7c2c837d361e4ff5732e5d9c9e42458bfc0af264508c5c3652c"
+    },
+    "hex-hamlet": {
+      "path": "/social/games/hex-hamlet.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Hex Hamlet gameplay in OpenArcade",
+      "version": "5d579311e16514291bbb9a43bedd765c74aea2d6cc02c78076487aa3cf7aea8c"
+    },
+    "ashen-courier": {
+      "path": "/social/games/ashen-courier.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Ashen Courier gameplay in OpenArcade",
+      "version": "2705381dcce69f229d4741f1fcc9fe7b197f1ff001d62f6df7a738fd3f43d1de"
+    },
+    "icebound-ascent": {
+      "path": "/social/games/icebound-ascent.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Icebound Ascent gameplay in OpenArcade",
+      "version": "94bdab7a3d5231ba68ef71b6b9a869fe6a5a4bc1d9e9ff67e3c76488a8c29c6e"
+    },
+    "phase-foundry": {
+      "path": "/social/games/phase-foundry.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Phase Foundry gameplay in OpenArcade",
+      "version": "1660e6e247d26903c91743fc0790b44136da455d3add6222929048d595517fcd"
+    },
+    "hearthbound": {
+      "path": "/social/games/hearthbound.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Hearthbound gameplay in OpenArcade",
+      "version": "ae6940c13a29d99321cb92cf16d829661b81e26f5d4edb850bf6f842d327da7a"
+    },
+    "gloam-trawler": {
+      "path": "/social/games/gloam-trawler.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Gloam Trawler gameplay in OpenArcade",
+      "version": "9eb306bb2fb2856cc819943234bdd538993a1103f7879a7e0fb32f9ae17ed361"
+    },
+    "reef-to-rice": {
+      "path": "/social/games/reef-to-rice.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Reef to Rice gameplay in OpenArcade",
+      "version": "53a3339b2f7526813a3a2b705241f75f38f5d6e4dac0daae54ee8215654b458e"
+    },
+    "neon-duelist": {
+      "path": "/social/games/neon-duelist.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Neon Duelist gameplay in OpenArcade",
+      "version": "53dae9248bbb79ffcc72d9133bd9307f400b099876d61e8e97c6f531b81ea50e"
+    },
+    "street-crew": {
+      "path": "/social/games/street-crew.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Street Crew gameplay in OpenArcade",
+      "version": "24a3936ef708a805791dabf154b7dcf1860cca9cb2ea6150c19938014051f1bb"
+    },
+    "stamp-harbor": {
+      "path": "/social/games/stamp-harbor.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Stamp Harbor gameplay in OpenArcade",
+      "version": "9a670094e23c885478651639ef638568bb45a1c74a504a51564003968dc57a7a"
+    },
+    "wash-wonder": {
+      "path": "/social/games/wash-wonder.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Wash Wonder gameplay in OpenArcade",
+      "version": "70dff93eeb8e5badd48a8218d1d478c127b4ed34e7a47cc27cca22c80e93f53e"
+    },
+    "snake": {
+      "path": "/social/games/snake.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Snake gameplay in OpenArcade",
+      "version": "9c33c9227d71728123c670988fb749d1ee88cdeff0ab79bc372a4282bca33acf"
+    },
+    "breakout": {
+      "path": "/social/games/breakout.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Breakout gameplay in OpenArcade",
+      "version": "c1f1e305ef2502f430546ad687b2235409376c41638f8ba677a12689cf920118"
+    },
+    "pong": {
+      "path": "/social/games/pong.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Pong gameplay in OpenArcade",
+      "version": "c5848255ece9c713e22c6fe45ba1b804d6659d6470fc92ca35aee5a12113e886"
+    },
+    "orbit": {
+      "path": "/social/games/orbit.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Orbit gameplay in OpenArcade",
+      "version": "20eab74b756375d6fd6d110aad5a2b5cb87bee395fa996008ef665486472b1f5"
+    },
+    "flappy": {
+      "path": "/social/games/flappy.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Flappy gameplay in OpenArcade",
+      "version": "eaeb10b8ec7b9853e31da5a7517fb48982a16fb8c8c4fba3f12b3700a449fec2"
+    },
+    "dodge": {
+      "path": "/social/games/dodge.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Dodge gameplay in OpenArcade",
+      "version": "727ed7415a79de6af435391815ef43b80cad813bad70786a2a055a1da376b549"
+    },
+    "star-defender": {
+      "path": "/social/games/star-defender.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Star Defender gameplay in OpenArcade",
+      "version": "39290d1683fe120d467a3b5386fb667d49b23f9c0e852f57f2079937248b3223"
+    },
+    "road-runner": {
+      "path": "/social/games/road-runner.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Road Runner gameplay in OpenArcade",
+      "version": "1fcf81c1af07103e5aea1a4e015d12f26fabbbe6f796b63e48aaaa5c4c545692"
+    },
+    "frog-crossing": {
+      "path": "/social/games/frog-crossing.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Frog Crossing gameplay in OpenArcade",
+      "version": "32a8ce060870d577c761b275f3b483e426ce563493a73df874e59a3990eca9f0"
+    },
+    "meteor-field": {
+      "path": "/social/games/meteor-field.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Meteor Field gameplay in OpenArcade",
+      "version": "dfc7e467e6dd3a4743089f375f09b4d8f0a834a8339be18b4fe64e833f12036e"
+    },
+    "coin-maze": {
+      "path": "/social/games/coin-maze.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Coin Maze gameplay in OpenArcade",
+      "version": "91b6cdb66faf5c3a58b9e6f682441cab30c7559b107d4d4165276eca9fc2d424"
+    },
+    "jump-dash": {
+      "path": "/social/games/jump-dash.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Jump Dash gameplay in OpenArcade",
+      "version": "66f920f17a9dde77bdcc08d2d0fef591a008ef3733a496463760e21df87f8822"
+    },
+    "harvest-catch": {
+      "path": "/social/games/harvest-catch.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Harvest Catch gameplay in OpenArcade",
+      "version": "f524b6e2fef47a9365180dc6670c9f8b88b649f75fb21ba69216953718c627db"
+    },
+    "bumper-ball": {
+      "path": "/social/games/bumper-ball.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Bumper Ball gameplay in OpenArcade",
+      "version": "78a1a5d0fb17d79785dd0371bf0a89921239f1f7760987533d71cd36e38ce2a4"
+    },
+    "tunnel-flight": {
+      "path": "/social/games/tunnel-flight.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Tunnel Flight gameplay in OpenArcade",
+      "version": "c6d4aab9153b1accb1ebcdb889c24aa46ea1c3ffd7012ae27773589c4cdf92f0"
+    },
+    "target-practice": {
+      "path": "/social/games/target-practice.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Target Practice gameplay in OpenArcade",
+      "version": "af10c747f0cba5fbb966a8b3a354fe21d0ebc7b86aa68027376a97f148decc4e"
+    },
+    "parcel-sort": {
+      "path": "/social/games/parcel-sort.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Parcel Sort gameplay in OpenArcade",
+      "version": "f773e615f840f00204ee9a64fdcf5285a18be56ebff5cbe783b4dda97713f011"
+    },
+    "balance-box": {
+      "path": "/social/games/balance-box.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Balance Box gameplay in OpenArcade",
+      "version": "aa38114313cff9d007c1b0a8326f05571b0669cce6bc8ef32d737c9c27809d37"
+    },
+    "laser-dodge": {
+      "path": "/social/games/laser-dodge.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Laser Dodge gameplay in OpenArcade",
+      "version": "e5ac580d906cf4f020f3f475de9ec09096af1837ea93d8d6c8d109d1aec2da0f"
+    },
+    "bubble-pop": {
+      "path": "/social/games/bubble-pop.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Bubble Pop gameplay in OpenArcade",
+      "version": "d48c63a313d63b480d1cfbb8ba27b3f862c01868f9dc7871f2894e2c05b096a8"
+    },
+    "tiny-fishing": {
+      "path": "/social/games/tiny-fishing.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Tiny Fishing gameplay in OpenArcade",
+      "version": "bb5803a476f0a86da2f85e77e8f38a59d921066115ebdf3679993aeff6b69e14"
+    },
+    "lander": {
+      "path": "/social/games/lander.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Moon Lander gameplay in OpenArcade",
+      "version": "e6858162885ef10f9936e16b8baf79ab8b0bf40d823b81f85521fb4ccfdc7665"
+    },
+    "maze": {
+      "path": "/social/games/maze.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Maze Runner gameplay in OpenArcade",
+      "version": "2508e0bc1d4d11a93481a9068a6070304a7873f38d4308949c8878189911589d"
+    },
+    "asteroids": {
+      "path": "/social/games/asteroids.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Starship gameplay in OpenArcade",
+      "version": "c6e3d68b8d6233a1ac40a2c39f6b5fc5181b7215a31e6553a99e66c4d56c69af"
+    },
+    "catch": {
+      "path": "/social/games/catch.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Fruit Catch gameplay in OpenArcade",
+      "version": "0c337faa8c54685ad738751bb7f5f05d716de4048860f39c5bfafe6b75a67ada"
+    },
+    "runner": {
+      "path": "/social/games/runner.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Little Runner gameplay in OpenArcade",
+      "version": "7ddfdcec34a683d65a661c0b7aa8642a4085f2e09ee118285bb0be9d70d9a33a"
+    },
+    "invaders": {
+      "path": "/social/games/invaders.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Invaders gameplay in OpenArcade",
+      "version": "57903ac39b6285ec6bc4225ce3ef56a141c43ef2420915e10f697a5ff1eb43ee"
+    },
+    "target": {
+      "path": "/social/games/target.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Crosshair gameplay in OpenArcade",
+      "version": "6da4cb503795a156c2350d38498ebfc11b93f1bf35e4aa1f299d16121fd7789b"
+    },
+    "racer": {
+      "path": "/social/games/racer.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Road Trip gameplay in OpenArcade",
+      "version": "3ff3c5d84c59acc2a88fc2d492662281ccc2690fe3875d490e4cd46e9f6d4499"
+    },
+    "puzzle": {
+      "path": "/social/games/puzzle.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Slide Puzzle gameplay in OpenArcade",
+      "version": "4513859cdba156e132e9ec66408f446cc1001183b43a63f43ab492591794ac5b"
+    },
+    "bubbles": {
+      "path": "/social/games/bubbles.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Bubble Chase gameplay in OpenArcade",
+      "version": "da0879f7c3ebe31fc6c47d1f3a750361dd6935d53f29cdf8ecda4ca6b00668e1"
+    },
+    "platform": {
+      "path": "/social/games/platform.png",
+      "width": 1200,
+      "height": 630,
+      "alt": "Sky Steps gameplay in OpenArcade",
+      "version": "54c0c6dfe311db9ed710a9882bddb68162064c3ae98b6634fbe669982122c969"
+    }
+  },
+  "homepage": {
+    "path": "/social/homepage.png",
+    "width": 1200,
+    "height": 630,
+    "alt": "OpenArcade gameplay from a selection of games",
+    "version": "832575e62a34d8a4ec59db12dd43a44d7cf73dcdd1def0880192a5855c34e9e8"
+  }
+}
