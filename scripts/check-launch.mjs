@@ -61,10 +61,12 @@ export async function checkLaunch(originValue, {fetchImpl = fetch, canonicalOrig
     const image = tags.find(tag => tag.property?.toLowerCase() === 'og:image')?.content;
     if (!image) throw new ProbeError('Missing og:image in initial HTML.');
     const url = new URL(image);
-    if (url.origin !== canonical || url.username || url.password || url.search || url.hash) {
-      throw new ProbeError('Expected a public canonical image URL without credentials/query.');
+    const version = [...url.searchParams];
+    const validQuery = !version.length || (version.length === 1 && version[0][0] === 'v' && /^[a-f0-9]{64}$/i.test(version[0][1]));
+    if (url.origin !== canonical || url.username || url.password || !validQuery || url.hash) {
+      throw new ProbeError('Expected a canonical image URL with only an optional content-hash version.');
     }
-    imagePath = url.pathname;
+    imagePath = url.pathname + url.search;
   });
   await check('game social image', async () => {
     if (!imagePath) throw new ProbeError('Image check blocked by missing/invalid metadata.');

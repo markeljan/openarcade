@@ -57,3 +57,13 @@ test('probe rejects credentials, query strings, paths and insecure public origin
   for (const value of ['https://user:password@arcade.example', `${origin}?token=private`, `${origin}/some-path`, 'http://arcade.example']) assert.throws(() => siteOrigin(value));
   assert.equal(siteOrigin('http://localhost:3000'), 'http://localhost:3000');
 });
+
+test('probe accepts content-versioned social assets and rejects other image queries', async () => {
+  for (const [query, expected] of [['?v=' + 'a'.repeat(64), true], ['?token=private', false]]) {
+    const {calls, fetchImpl} = fixture({'/games/snake': () => new Response(`<link rel="canonical" href="${origin}/games/snake"><meta property="og:image" content="${origin}/social/snake.png${query}">`, {headers: {'content-type': 'text/html'}})});
+    const results = await checkLaunch(origin, {fetchImpl});
+    assert.equal(results.find(result => result.name === 'game initial metadata').ok, expected);
+    assert.equal(results.find(result => result.name === 'game social image').ok, expected);
+    assert.equal(calls.some(call => call.url.includes('/social/snake.png' + query)), expected);
+  }
+});
