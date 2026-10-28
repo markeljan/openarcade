@@ -95,11 +95,18 @@ export function createGame(canvas, id, options = {}) {
   const bestKey = `tiny-arcade.best.${id}`;
   try { const stored=Number(globalThis.localStorage?.getItem(bestKey)); if(Number.isFinite(stored)&&stored>0)best=stored; } catch {}
   let interactive = !!options.interactive, context = options.context ?? (interactive ? 'manual-player' : 'gallery-preview'), game, aiFinished = false, disposed = false, generation = 0;
-  const reports = id === 'snake' ? createRunReporter({gameId:id, ruleVersion:1, actor:interactive?'human':'ai', context, onResult:options.onResult, onError:options.onError}) : null;
+  function saveBest(score) {
+    const safeScore=Number.isFinite(score) ? Math.max(0,Math.floor(score)) : 0;
+    if(safeScore>best){best=safeScore;try{globalThis.localStorage?.setItem(bestKey,String(best))}catch{}}
+  }
+  const reports = id === 'snake' ? createRunReporter({gameId:id, ruleVersion:1, actor:interactive?'human':'ai', context, onResult(record){
+    if(record.actor==='human')saveBest(record.score);
+    return options.onResult?.(record);
+  }, onError:options.onError}) : null;
   const end = (message, score=0) => {
     const safeScore=Number.isFinite(score) ? Math.max(0,Math.floor(score)) : 0;
     result={message,score:safeScore};
-    if(safeScore>best){best=safeScore;try{globalThis.localStorage?.setItem(bestKey,String(best))}catch{}}
+    saveBest(safeScore);
   };
   function fresh() {
     game?.destroy?.();
@@ -120,11 +127,11 @@ export function createGame(canvas, id, options = {}) {
   canvas.setAttribute('aria-label', `${games.find(g => g.id === id).name} game`);
   function resize() { const bounds=canvas.getBoundingClientRect(); const ratio=Math.min(window.devicePixelRatio||1,2); canvas.width=Math.max(1,Math.round(bounds.width*ratio));canvas.height=Math.max(1,Math.round(bounds.height*ratio)); }
   const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(resize) : null; observer?.observe(canvas); resize();
-  function key(event, down) { if(!interactive || result) return; const k=event.key.length===1?event.key.toLowerCase():event.key; if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','w','a','s','d'].includes(k)){event.preventDefault();game.input?.(k,down);} }
+  function key(event, down) { if(disposed || paused || !interactive || result) return; const k=event.key.length===1?event.key.toLowerCase():event.key; if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','w','a','s','d'].includes(k)){event.preventDefault();game.input?.(k,down);} }
   const keydown=e=>key(e,true), keyup=e=>key(e,false);
   function point(e){const b=canvas.getBoundingClientRect();const scale=Math.min(b.width/W,b.height/H);return {x:(e.clientX-b.left-(b.width-W*scale)/2)/scale,y:(e.clientY-b.top-(b.height-H*scale)/2)/scale};}
-  function pointer(e){if(!interactive||result)return;canvas.focus({preventScroll:true});const p=point(e);game.pointer?.(p.x,p.y);}
-  function move(e){if(interactive && !result && (e.pointerType==='mouse'||e.buttons)) {const p=point(e);game.pointerMove?.(p.x,p.y); if(id==='breakout'||id==='pong'||id==='dodge')game.pointer?.(p.x,p.y);}}
+  function pointer(e){if(disposed||paused||!interactive||result)return;canvas.focus({preventScroll:true});const p=point(e);game.pointer?.(p.x,p.y);}
+  function move(e){if(!disposed && !paused && interactive && !result && (e.pointerType==='mouse'||e.buttons)) {const p=point(e);game.pointerMove?.(p.x,p.y); if(id==='breakout'||id==='pong'||id==='dodge')game.pointer?.(p.x,p.y);}}
   const clearKeys=()=>['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','w','a','s','d'].forEach(k=>game.input?.(k,false));
   canvas.addEventListener('blur',clearKeys);
   canvas.addEventListener('keydown',keydown);canvas.addEventListener('keyup',keyup);canvas.addEventListener('pointerdown',pointer);canvas.addEventListener('pointermove',move);
