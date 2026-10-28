@@ -23,7 +23,7 @@ const definitions = [
   ['pottery-house',20,'Displayed pottery quality points through the third gallery piece','points',86400000,1200],
 ];
 
-const enabledModules = new Set([11,12,13]);
+const enabledModules = new Set([11,12,13,14,15,16]);
 
 export default definitions.map(([gameId,module,metric,units,maxDurationMs,maxScore]) => ({
   schemaVersion:1, gameId, source:`src/feature-games${module}.js`,
