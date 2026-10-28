@@ -21,8 +21,8 @@ test('representative scored wrappers run on browser canvas',{skip:!browser,timeo
   await send('Runtime.enable');await send('Page.enable');await send('Page.navigate',{url:`http://127.0.0.1:${port}/__s08`});
   for(let i=0;i<100;i++){if(await evaluate("document.readyState==='complete'"))break;await sleep(50)}
   const result=await evaluate(`(async()=>{
-   const mods=await Promise.all([11].map(n=>import('/src/feature-games'+n+'.js')));
-   const cases=[[11,'tower-panic']];
+   const mods=await Promise.all([11,15,17,20].map(n=>import('/src/feature-games'+n+'.js')));
+   const cases=[[11,'tower-panic'],[15,'gravity-claw'],[17,'star-roller'],[20,'railway-rush']];
    const originalRaf=window.requestAnimationFrame,originalCancel=window.cancelAnimationFrame;
    let clock=0,serial=0;const tasks=new Map(),channel=new MessageChannel();
    channel.port1.onmessage=()=>{const batch=[...tasks];tasks.clear();clock+=50;for(const [,fn] of batch)fn(clock)};
@@ -44,6 +44,6 @@ test('representative scored wrappers run on browser canvas',{skip:!browser,timeo
    }}finally{window.requestAnimationFrame=originalRaf;window.cancelAnimationFrame=originalCancel;channel.port1.close();channel.port2.close()}
    return results;
   })()`,true);
-  assert.deepEqual(result.map(r=>r.id),['tower-panic']);assert.ok(result[0].records.some(r=>r.actor==='ai'));assert.ok(result[0].records.some(r=>r.actor==='human'));assert.deepEqual(errors,[]);
+  assert.deepEqual(result.map(r=>r.id),['tower-panic','gravity-claw','star-roller','railway-rush']);assert.ok(result[0].records.some(r=>r.actor==='ai'));assert.ok(result[0].records.some(r=>r.actor==='human'));assert.deepEqual(errors,[]);
  }finally{ws?.close();proc.kill();await server.close();await sleep(200);try{rmSync(profile,{recursive:true,force:true})}catch{}}
 });

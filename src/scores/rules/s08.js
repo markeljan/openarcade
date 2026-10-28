@@ -14,7 +14,7 @@ const definitions = [
   ['ricochet-foundry',16,'Charge processing and installed part points in 120 active seconds','points',120100,100000],
   ['lantern-line',16,'Lantern, chain, scrub and purge points in 120 active seconds','points',120100,100000],
   ['ashen-rage',17,'Rival knockout points plus finish bonus at race completion','points',900100,1000000],
-  ['star-roller',17,'Pickup, sweeper and finale points at time limit or star completion','points',86400000,1000000000],
+  ['star-roller',17,'Pickup, sweeper and finale points at time limit or star completion','points',307500,1000000000],
   ['dragon-lock',18,'Flight session award points after the gate finale','points',727100,10000000],
   ['cursed-fist',18,'Normal foe and boss defeat points after the final encounter','defeat points',637100,100000],
   ['coral-courier',19,'Reef rescue, transplant, companion and biome points through first full restoration','points',86400000,1000000000],
@@ -23,7 +23,7 @@ const definitions = [
   ['pottery-house',20,'Displayed pottery quality points through the third gallery piece','points',86400000,1200],
 ];
 
-const enabledModules = new Set([11,12,13,14,15,16]);
+const enabledModules = new Set([11,12,13,14,15,16,17,18,19,20]);
 
 export default definitions.map(([gameId,module,metric,units,maxDurationMs,maxScore]) => ({
   schemaVersion:1, gameId, source:`src/feature-games${module}.js`,

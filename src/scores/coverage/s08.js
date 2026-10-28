@@ -24,6 +24,7 @@ export default rules.map(rule => {
     metric:rule.metric,units:rule.units,order:rule.order,ruleVersion:rule.version,
     status:rule.status,browser:{status:rule.gameId==='tower-panic'?'passed':'not-run'}};
   if(rule.gameId==='tower-panic')entry.browser.evidence='tests/s08-wrapper-browser.test.js: real 120-second human and watch-AI terminals, result/Enter and lifecycle';
+  if(['gravity-claw','star-roller','railway-rush'].includes(rule.gameId))entry.browser={status:'limited',evidence:'tests/s08-wrapper-browser.test.js: real canvas preview/manual transitions, held key, pause/resume, restart and destroy; terminal not exercised'};
   if(rule.status==='pending')return entry;
   const terminal=terminals[rule.gameId]??'120 active simulation seconds, with the final event tally captured before result freeze';
   entry.human={terminal,provenance:'fresh human factory; actor-bound callback; client-reported',tests:evidence(module)};
