@@ -35,5 +35,12 @@ test('built embed loads a game and provides accessible player controls', {skip: 
   const pos=await evaluate("(()=>{let f=document.querySelector('iframe'),r=f.contentDocument.querySelector('[data-key=ArrowUp]').getBoundingClientRect(),a=f.getBoundingClientRect();return {x:a.left+r.left+r.width/2,y:a.top+r.top+r.height/2,w:r.width,h:r.height}})()"); assert.ok(pos.w>=44&&pos.h>=44);
   await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:pos.x,y:pos.y}]}); await send('Input.dispatchTouchEvent',{type:'touchCancel',touchPoints:[]}); assert.equal(await evaluate("window.frameKeys.includes('ArrowUp')"),true);
   await evaluate("document.querySelector('iframe').contentDocument.querySelector('#pause').click()"); assert.equal(await evaluate("document.querySelector('iframe').contentDocument.querySelector('#pause').textContent"),'Resume');
+  await send('Page.addScriptToEvaluateOnNewDocument',{source:"Object.defineProperty(window,'localStorage',{configurable:true,get(){throw new DOMException('Storage denied','SecurityError')}});"});
+  await send('Page.navigate',{url:`http://127.0.0.1:${port}/embed/machine-hunt`});
+  for(let i=0;i<400;i++){if(await evaluate("document.querySelector('#start') && !document.querySelector('#start').disabled"))break;await sleep(25)}
+  assert.equal(await evaluate("document.querySelector('h1')?.textContent"),'Machine Hunt');
+  assert.equal(await evaluate("document.querySelector('#start')?.disabled"),false,'storage denial must not prevent play');
+  await evaluate("document.querySelector('#start').click()");
+  assert.equal(await evaluate("document.activeElement===document.querySelector('canvas')"),true);
  } finally {ws?.close();proc.kill();await new Promise(resolve=>server.httpServer.close(resolve));await sleep(200);try{rmSync(profile,{recursive:true,force:true})}catch{}}
 });

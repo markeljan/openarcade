@@ -34,7 +34,9 @@ export function createAudioManager({storage,createContext}={}){
  }
  return {getEnabled:()=>enabled,setEnabled,subscribe,unlock,session};
 }
-const manager=createAudioManager({storage:typeof localStorage==='undefined'?undefined:localStorage,createContext:typeof window==='undefined'?undefined:()=>{const C=window.AudioContext||window.webkitAudioContext;return C?new C():null}});
+let soundStorage;
+try { soundStorage=globalThis.localStorage; } catch { /* Storage can be denied in third-party frames. */ }
+const manager=createAudioManager({storage:soundStorage,createContext:typeof window==='undefined'?undefined:()=>{const C=window.AudioContext||window.webkitAudioContext;return C?new C():null}});
 export const getSoundEnabled=manager.getEnabled;
 export const setSoundEnabled=manager.setEnabled;
 export const subscribeSound=manager.subscribe;
