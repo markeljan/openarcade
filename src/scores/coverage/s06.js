@@ -137,5 +137,350 @@ export default [
         "tests/s06-classics-callback-pause.test.js"
       ]
     }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "star-defender",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "road-runner",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "frog-crossing",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "meteor-field",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "ship/rock collision",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "ship/rock collision; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "coin-maze",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "successful solve only",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "successful solve only; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "jump-dash",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "harvest-catch",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "bumper-ball",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "tunnel-flight",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "gate collision",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "gate collision; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "target-practice",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "parcel-sort",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "balance-box",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "laser-dodge",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "beam collision",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "beam collision; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "bubble-pop",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "tiny-fishing",
+    "source": "src/more-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-more-terminals.test.js",
+        "tests/s06-more-lifecycle.test.js"
+      ]
+    }
   }
 ];
