@@ -225,3 +225,5 @@ Recent source-backed work corrected Stamp Harbor station geometry, physical comp
 Since the prior checkpoint, Wash carousel grime masks, Stamp departure and AI tracking, Grave Garden's verdict/result lifecycle, and Deep trap fortifications and retreat were revised using retained source. Focused local manual and AI tests pass; Grave's manual window uses simulation time, Deep retreat scoring is approximate, and full fidelity remains open. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
 
 Recent changes align Void input queues, Neon rooftop landing/cover edges, and Wash observatory masks with retained source; focused manual and AI tests and the integrated suite pass. Glacier rescue priority and Wash wet sparkle remain open, as does full reference fidelity. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Recent source-backed work corrected Rulebound queued actions and timing, Glacier bridge rescue with fish, and Wash chalk/wet sparkle visuals. Local focused and integrated tests pass; Glacier AI hole targeting and Wash input aliases remain open. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md).

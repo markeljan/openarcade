@@ -1134,3 +1134,9 @@ Wash Wonder's carousel, engine and observatory masks now match independently gen
 Void Gambit now queues keyboard and pointer actions through animations, coalesces same-key taps, prioritizes queued pointers and uses fixed 60 Hz steps while preserving residual time across automatic resets. Focused tests cover queued input and 30/60 Hz replay; autoplay takeover source interpretation is being independently rechecked. These bounded comparisons do not establish complete game parity.
 
 The combined suite passed 2,633/2,633 and production build passed. Independent review found Glacier bridge rescue should take priority even with a carried fish, and Wash clean wet cells lack a periodic sparkle and use different chalk colors; these remain open.
+
+Glacier Glide now prioritizes an active bridge rescue while carrying fish and permits picking up the stranded chick without discarding fish; source-scaled feeding reach is corrected. Controlled manual and AI fish-held reunion tests pass; an independent review also checked existing natural manual reunion and sustained AI runs. A naturally acquired fish-held rescue remains unverified.
+
+Rulebound now retains undo and restart taps through animations, gives restart priority, clears dead at the beginning of automatic undo, and runs fixed 60 Hz simulation. Source-based manual and AI timing tests pass, including both tap orders. Broader audio, visual and feedback fixtures were updated to hold input through a sampled frame; 131 Rulebound/Hex tests pass. Wash chalk colors and clean-wet sparkle now match retained source in local canvas tests. No new REA browser scenario was started.
+
+The settled integrated suite passed 2,648/2,648 and production build passed. A subsequent read-only review identified Glacier's unsupported first-hole/home AI overrides and Wash's missing J/K/Shift aliases; those remain open at this checkpoint.

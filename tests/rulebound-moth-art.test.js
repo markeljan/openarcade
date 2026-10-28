@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {createRuleboundPuzzle} from '../src/feature-games35.js';
 function colors(g){const out=[],noop=()=>{},c=new Proxy({fillRect(){out.push(c.fillStyle)},fill(){out.push(c.fillStyle)}},{get:(o,k)=>o[k]??noop,set:(o,k,v)=>(o[k]=v,true)});g.draw(c);return out}
-function press(g,k){g.input(k,true);g.update(.001,false);g.input(k,false);g.update(22/60-.001,false)}
+function press(g,k){g.input(k,true);g.update(1/60,false);g.input(k,false);g.update(21/60,false)}
 test('manual moth warning becomes an ink blot on the strike turn',()=>{const g=createRuleboundPuzzle({page:1,seed:0});press(g,'ArrowRight');assert.ok(colors(g).includes('#ff7490'));press(g,'ArrowLeft');press(g,'ArrowLeft');assert.equal(g.snapshot().mothPhase,3);assert.ok(colors(g).includes('#8e6374'));assert.equal(g.snapshot().dead,false)});
 test('AI sees the same warning and strike artwork',()=>{const g=createRuleboundPuzzle({page:1,seed:0});let warning=false,strike=false;for(let i=0;i<300&&!strike;i++){g.update(1/60,true);const c=colors(g);warning||=c.includes('#ff7490');strike||=c.includes('#8e6374')}assert.ok(warning&&strike)});

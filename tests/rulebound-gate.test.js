@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createRuleboundPuzzle,ruleboundRules,ruleboundTransition} from '../src/feature-games35.js';
-const press=(game,key)=>{game.input(key,true);game.update(.001,false);game.input(key,false);game.update(22/60-.001,false)};
+const press=(game,key)=>{game.input(key,true);game.update(1/60,false);game.input(key,false);game.update(21/60,false)};
 
 test('Orchard Gate opens only after pushing OPEN, supports undo and completes at the star',()=>{
  const game=createRuleboundPuzzle({seed:0});let state=game.snapshot();assert.ok(ruleboundRules(state).has('STAR_WIN'));assert.ok(!ruleboundRules(state).has('GATE_OPEN'));
