@@ -102,7 +102,7 @@ export function createWashWonder(sound=()=>{}){
  const shape=(job,x,y)=>{
   if(job===0){x/=2;y/=2;return inside(roof,x,y)||(y>=144&&y<157&&x>=20&&x<140)||(y>=151&&y<226&&x>=74&&x<86)||(y>=149&&y<226&&((x>=32&&x<37)||(x>=122&&x<127)))||(y>=155&&y<220&&((x>=53&&x<55)||(x>=106&&x<108)))||horseParts.some(p=>inside(p,x-53,y-204)||inside(p,x-106,y-204))||(y>=227&&y<240&&x>=24&&x<137)||(y>=225&&y<231&&x>=27&&x<134)}
   if(job===1)return (y>=224&&y<=282&&x>=90&&x<=116)||(y>=264&&y<=418&&x>=194&&x<=264)||(y>=318&&y<=418&&x>=58&&x<=206)||(y>=410&&y<=438&&x>=40&&x<=278)||(y>=422&&y<=478&&[96,160,226].some(cx=>(x-cx)**2+(y-446)**2<900));
-  return (y<=306&&((x-160)/112)**2+((y-300)/124)**2<=1)||(y>=304&&y<=342&&x>=44&&x<=276)||(y>=342&&y<=478&&x>=70&&x<=252);
+  return (y<=306&&((x-160)/112)**2+((y-300)/124)**2<=1)||(y>=304&&y<=342&&x>=44&&x<=276)||(y>=342&&y<=482&&x>=70&&x<=252);
  };
  function jobCells(job){
   // Each eight-pixel cell carries a 4x4 silhouette mask, matching the reference's
@@ -171,14 +171,7 @@ export function createWashWonder(sound=()=>{}){
   if(job===0){rect(c,48,448,224,28,'#b8794f');rect(c,148,224,24,224,'#e8bb65');c.fillStyle='#e6b762';c.beginPath();c.moveTo(160,174);c.lineTo(38,294);c.lineTo(282,294);c.closePath();c.fill();for(const x of [40,80,120,160,200,240]){c.fillStyle=(x/40)%2?'#fff0cf':'#d46d5e';c.beginPath();c.moveTo(160,176);c.lineTo(x,294);c.lineTo(x+40,294);c.closePath();c.fill()}rect(c,40,292,240,18,'#fff0cf');for(const x of [68,106,214,250])rect(c,x,294,6,154,'#e6b762');for(const x of [106,212]){const lift=motorOn?Math.sin(motorSpin+(x===106?0:Math.PI))*10:0;c.save();c.translate(x,408+lift);for(let i=0;i<horseParts.length;i++){const points=horseParts[i];c.fillStyle=i===3?'#bb784d':'#fff2d3';c.beginPath();c.moveTo(points[0][0]*2,points[0][1]*2);for(const point of points.slice(1))c.lineTo(point[0]*2,point[1]*2);c.closePath();c.fill()}rect(c,-10,-12,20,6,'#3c71b5');c.restore()}}
   else if(job===1){rect(c,58,318,150,100,'#4176af');rect(c,192,264,72,154,'#d87764');rect(c,90,224,26,65,'#bb784d');for(const x of [96,160,226]){dot(c,x,446,24,'#263e42');const a=motorOn?motorSpin:0;for(let i=0;i<4;i++){const t=a+i*Math.PI/2;rect(c,x+Math.cos(t)*14-3,446+Math.sin(t)*14-3,6,6,'#e6b762')}dot(c,x,446,4,'#b6d5d3')}}
   else {dot(c,160,300,110,'#5f9dba');rect(c,44,304,232,38,'#e6b762');rect(c,70,342,180,130,'#79a8dd');for(let x=90;x<250;x+=40)rect(c,x,350,6,110,'#fff2d3');const tx=160+(motorOn?Math.sin(motorSpin)*44:0);rect(c,tx-4,264,8,52,'#fff2d3');rect(c,tx-22,252,44,14,'#e6b762');rect(c,tx-22,252,8,14,'#263e42')}
-  for(const cell of jobs[job])if(cell.hp>0){
-   // Only painted mask pixels cover the landmark; damage breaks the patch up.
-   const ratio=cell.hp/cell.max;for(let bit=0;bit<16;bit++)if((cell.mask&(1<<bit))&&((bit*7%16)/16<ratio)){
-    const px=cell.left+(bit%4)*2,py=cell.top+Math.floor(bit/4)*2;
-    rect(c,px,py,2,2,cell.material==='rust'?(bit%5?'#825b47':'#a17955'):(bit%5?'#a99d84':'#c4b79c'));
-   }
-  }
-  for(const cell of jobs[job])if(cell.wet>0)rect(c,cell.x-2,cell.y+2,4,2,'#76d2e5');
+  for(let i=0;i<jobs[job].length;i++){const cell=jobs[job][i],ratio=cell.hp/cell.max,wet=cell.wet>0&&!(motorOn&&cell.motor);if(cell.hp<=0&&!wet)continue;for(let bit=0;bit<16;bit++){if(!(cell.mask&(1<<bit)))continue;const px=bit%4,py=Math.floor(bit/4),texture=(px*3+py*5+i)%11,x=cell.left+px*2,y=cell.top+py*2;if(cell.hp>0&&(ratio>.55||ratio>.25&&texture<7||texture<3))rect(c,x,y,2,2,cell.material==='rust'?(texture%4===0?'#a17955':'#825b47'):(texture%4===0?'#c4b79c':'#a99d84'));if(wet&&py===3&&px<2)rect(c,x,y,2,2,'#76d2e5')}}
   rect(c,tap.x-18,tap.y-20,36,40,'#3c71b5');text(c,'TAP',tap.x,625,'#263e42',10,'center');rect(c,gate.x-14,540,4,58,'#bb784d');rect(c,gate.x+10,540,4,58,'#bb784d');if(phase!=='pack')rect(c,gate.x-12,552,24,5,'#d97765');
   dot(c,player.x,player.y-13,8,'#f1d1a5');rect(c,player.x-8,player.y-5,16,20,'#3c71b5');
   if(jet){c.strokeStyle='#eaffff';c.lineWidth=nozzle==='fan'?7:3;c.beginPath();c.moveTo(jet.x,jet.y);c.lineTo(jet.x+jet.dx*jet.range,jet.y+jet.dy*jet.range);c.stroke()}

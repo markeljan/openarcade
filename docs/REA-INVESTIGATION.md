@@ -1126,3 +1126,11 @@ Grave Garden's later follow-up preserves pre-finale Enter and verdict inputs, re
 Deep trap shoulders are now a mineable fort material distinct from bedrock; AI places panic traps and physically retreats. A controlled encounter observed a creeper trigger AI-placed TNT while the miner survived. Five sampled seeds completed the tower; seed 42's new route did not quarry or use a gate, while seed 1 retained natural cycle escape and resource-trip checks. The focused Deep/Rune suite passed 165/165 in 130 seconds versus 86 seconds at the prior checkpoint; bounded retreat search may contribute, but load was not controlled. Retreat destination scoring remains approximate.
 
 The settled integrated suite passed 2,615/2,615 and the production build passed after the above changes. Further read-only review found Void Gambit drops taps during animations and Wash Wonder's observatory has 23 incorrect bottom-edge masks; both remain open at this checkpoint.
+
+## Later bounded comparisons
+
+Wash Wonder's carousel, engine and observatory masks now match independently generated retained-source goldens (701, 641 and 911 cells respectively); grime texture and wet highlights were also adjusted from source. Manual and AI cleaning/rendering tests pass. Neon Duelist now uses source landing order at the far edge of the rooftop gap and source-scaled cover-body collision and top tolerance; local manual and AI progression tests pass, without a new reference runtime capture.
+
+Void Gambit now queues keyboard and pointer actions through animations, coalesces same-key taps, prioritizes queued pointers and uses fixed 60 Hz steps while preserving residual time across automatic resets. Focused tests cover queued input and 30/60 Hz replay; autoplay takeover source interpretation is being independently rechecked. These bounded comparisons do not establish complete game parity.
+
+The combined suite passed 2,633/2,633 and production build passed. Independent review found Glacier bridge rescue should take priority even with a carried fish, and Wash clean wet cells lack a periodic sparkle and use different chalk colors; these remain open.

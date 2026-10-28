@@ -52,11 +52,11 @@ export function duel(play=()=>{}){
   history.push({x:p.x,y:p.y,face:p.face});if(history.length>42)history.shift();
   const gateOpen=enemies.every(e=>!e.hp),vx=roll?p.face*423:dx*(crouch?72:153),nx=clamp(p.x+vx*worldDt,12,width-12),oldY=p.y;
   const lockedGate=!gateOpen&&nx+6>width-43.5&&p.y+16.5>316.5;
-  if(!lockedGate&&!(nx+6>cover.x&&nx-6<cover.x+cover.w&&p.y+18>cover.y&&oldY+18>cover.y)){p.x=nx}
+  if(!lockedGate&&!(nx+6>cover.x&&nx-6<cover.x+cover.w&&p.y+16.5>cover.y&&p.y-16.5<cover.y+cover.h)){p.x=nx}
   p.vy+=1566*worldDt;p.y+=p.vy*worldDt;p.ground=false;
   let ground=gap&&p.x>gap.x&&p.x<gap.x+gap.w?510:floor;
-  if(p.x+6>cover.x&&p.x-6<cover.x+cover.w&&oldY+18<=cover.y&&p.vy>=0)ground=cover.y;
-  if(p.y+18>=ground&&p.vy>=0&&oldY+18<=ground){p.y=ground-18;p.vy=0;p.ground=true}if(p.y>468){kill();return}
+  if(p.x+6>cover.x&&p.x-6<cover.x+cover.w&&oldY+18<=cover.y+.15&&p.vy>=0)ground=cover.y;
+  if(p.y+18>=ground&&p.vy>=0){p.y=ground-18;p.vy=0;p.ground=true}if(p.y>468){kill();return}
   if(attack>0)for(const e of enemies){const x=(e.x-p.x)*p.face;if(duelCanTarget(e)&&duelSlashReaches(x,(e.y??(floor-18))-p.y)&&!p.hit.includes(e)){p.hit.push(e);if(e.kind==='captain')say('CAPTAIN BLOCKS');else{e.hp=0;e.state='dead';e.flash=8/60;focus=Math.min(100,focus+27);play('neon-blade-hit');say('BLADE CUT')}}}
   roll=Math.max(0,roll-worldDt-1e-10);
   for(const e of enemies){e.flash=Math.max(0,(e.flash||0)-worldDt);if(!e.hp)continue;if(e.state==='waiting'){if(enemies.every(other=>other===e||!other.hp)&&Math.abs(p.x-e.x)<156){e.state='watch';e.timer=12/60;say('CAPTAIN DUEL')}else continue;}e.timer-=worldDt;const delta=p.x-e.x,dist=Math.abs(delta);
