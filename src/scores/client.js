@@ -4,12 +4,23 @@ function privateNonce() {
   const bytes = globalThis.crypto.getRandomValues(new Uint8Array(32));
   return btoa(String.fromCharCode(...bytes)).replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
 }
-export function createScoreClient({fetch: request = globalThis.fetch?.bind(globalThis), getToken = async () => null, getAuthState = () => ({status: 'signed-out'}), queue = createPendingQueue(), endpoint = '/api/scores', makeNonce = privateNonce} = {}) {
+export function createScoreClient({fetch: request = globalThis.fetch?.bind(globalThis), getToken = async () => null, getAuthState = () => ({status: 'signed-out'}), queue = createPendingQueue(), endpoint = '/api/scores', makeNonce = privateNonce, timeoutMs = 10000} = {}) {
   const listeners = new Set(), states = new Map(), inflight = new Map(), thresholds = new Map(), abandoned = new Set();
   function emit(runId, status, extra = {}) {
     const state = Object.freeze({runId, status, ...extra}); states.set(runId, state);
     for (const listener of listeners) { try { listener(state); } catch {} }
     return state;
+  }
+  async function requestJson(url, options) {
+    const controller = new AbortController();
+    let timer;
+    const duration = Number.isFinite(timeoutMs) && timeoutMs > 0 ? Math.min(timeoutMs, 60000) : 10000;
+    try {
+      return await Promise.race([
+        Promise.resolve().then(() => request(url, {...options, signal: controller.signal})).then(async response => ({response, data: await response.json()})),
+        new Promise((_, reject) => { timer = setTimeout(() => { controller.abort(); reject(Error('network-timeout')); }, duration); }),
+      ]);
+    } finally { clearTimeout(timer); }
   }
   async function send(body, authenticated = false) {
     const runId = body.runId ?? body.run?.runId;
@@ -17,8 +28,7 @@ export function createScoreClient({fetch: request = globalThis.fetch?.bind(globa
     if (abandoned.has(runId)) throw Error('run-abandoned');
     if (authenticated && !token) throw authFailure();
     if (!request) throw Error('network-unavailable');
-    const response = await request(endpoint, {method: 'POST', credentials: 'omit', headers: {'Content-Type': 'application/json', ...(token ? {Authorization: 'Bearer ' + token} : {})}, body: JSON.stringify(body)});
-    const data = await response.json();
+    const {response, data} = await requestJson(endpoint, {method: 'POST', credentials: 'omit', headers: {'Content-Type': 'application/json', ...(token ? {Authorization: 'Bearer ' + token} : {})}, body: JSON.stringify(body)});
     if (abandoned.has(runId)) throw Error('run-abandoned');
     if (!response.ok) throw Object.assign(Error(data.error || 'scores-unavailable'), {status: response.status});
     if (data.runId !== (body.runId ?? body.run?.runId)) throw Error('invalid-acknowledgment');
@@ -38,8 +48,7 @@ export function createScoreClient({fetch: request = globalThis.fetch?.bind(globa
     const token = await getToken();
     if (!token && getAuthState()?.status !== 'signed-out') throw authFailure();
     const url = endpoint + '?gameId=' + encodeURIComponent(gameId) + '&filter=' + encodeURIComponent(filter);
-    const response = await request(url, {credentials: 'omit', headers: token ? {Authorization: 'Bearer ' + token} : {}});
-    const board = await response.json();
+    const {response, data: board} = await requestJson(url, {credentials: 'omit', headers: token ? {Authorization: 'Bearer ' + token} : {}});
     if (!response.ok) throw Object.assign(Error(board.error || 'scores-unavailable'), {status: response.status});
     if (filter === 'ai') {
       // Hints support UI only. Atomic qualification remains in Postgres because
