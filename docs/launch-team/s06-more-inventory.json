@@ -1,0 +1,249 @@
+[
+  {
+    "id": "star-defender",
+    "metric": "enemies destroyed",
+    "units": "enemies destroyed",
+    "order": "higher",
+    "version": 1,
+    "terminal": "no terminal; waves continue",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper",
+      "requires agreed finite run boundary"
+    ]
+  },
+  {
+    "id": "road-runner",
+    "metric": "cars passed",
+    "units": "cars passed",
+    "order": "higher",
+    "version": 1,
+    "terminal": "collision",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper"
+    ]
+  },
+  {
+    "id": "frog-crossing",
+    "metric": "crossings",
+    "units": "crossings",
+    "order": "higher",
+    "version": 1,
+    "terminal": "no terminal; collision respawns",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper",
+      "requires agreed finite run boundary"
+    ]
+  },
+  {
+    "id": "meteor-field",
+    "metric": "rocks destroyed",
+    "units": "rocks destroyed",
+    "order": "higher",
+    "version": 1,
+    "terminal": "collision",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper"
+    ]
+  },
+  {
+    "id": "coin-maze",
+    "metric": "coins collected",
+    "units": "coins collected",
+    "order": "higher",
+    "version": 1,
+    "terminal": "all coins collected",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper"
+    ]
+  },
+  {
+    "id": "jump-dash",
+    "metric": "obstacles passed",
+    "units": "obstacles passed",
+    "order": "higher",
+    "version": 1,
+    "terminal": "collision",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper"
+    ]
+  },
+  {
+    "id": "harvest-catch",
+    "metric": "net harvest",
+    "units": "net harvest",
+    "order": "higher",
+    "version": 1,
+    "terminal": "no terminal; fruit +1 stones -2",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper",
+      "requires agreed finite run boundary"
+    ]
+  },
+  {
+    "id": "bumper-ball",
+    "metric": "bumper hits",
+    "units": "bumper hits",
+    "order": "higher",
+    "version": 1,
+    "terminal": "ball lost",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper"
+    ]
+  },
+  {
+    "id": "tunnel-flight",
+    "metric": "gates passed",
+    "units": "gates passed",
+    "order": "higher",
+    "version": 1,
+    "terminal": "collision",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper"
+    ]
+  },
+  {
+    "id": "target-practice",
+    "metric": "targets hit",
+    "units": "targets hit",
+    "order": "higher",
+    "version": 1,
+    "terminal": "no terminal",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper",
+      "requires agreed finite run boundary"
+    ]
+  },
+  {
+    "id": "parcel-sort",
+    "metric": "net parcels",
+    "units": "net parcels",
+    "order": "higher",
+    "version": 1,
+    "terminal": "no terminal; correct +1 incorrect -1",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper",
+      "requires agreed finite run boundary"
+    ]
+  },
+  {
+    "id": "balance-box",
+    "metric": "seconds balanced",
+    "units": "seconds balanced",
+    "order": "higher",
+    "version": 1,
+    "terminal": "box lost",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper"
+    ]
+  },
+  {
+    "id": "laser-dodge",
+    "metric": "beams dodged",
+    "units": "beams dodged",
+    "order": "higher",
+    "version": 1,
+    "terminal": "collision",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper"
+    ]
+  },
+  {
+    "id": "bubble-pop",
+    "metric": "bubbles popped",
+    "units": "bubbles popped",
+    "order": "higher",
+    "version": 1,
+    "terminal": "no terminal",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper",
+      "requires agreed finite run boundary"
+    ]
+  },
+  {
+    "id": "tiny-fishing",
+    "metric": "fish caught",
+    "units": "fish caught",
+    "order": "higher",
+    "version": 1,
+    "terminal": "no terminal",
+    "reset": "restart creates factory; auto resets after 2s for terminal games",
+    "localBestKey": null,
+    "human": "manual inputs",
+    "ai": "update(dt, true) uses same rules",
+    "risks": [
+      "takeover currently retains AI state",
+      "held inputs released by wrapper",
+      "requires agreed finite run boundary"
+    ]
+  }
+]
