@@ -1,0 +1,5686 @@
+{
+  "version": 1,
+  "method": "Seeded real game factory autoplay rendered in Chromium canvas",
+  "frames": 240,
+  "sources": {
+    "src/analytics.js": "937fe1269cf46ea8f4ad4101834314fbfe138a01ff3202193c56781d3f4683f5",
+    "src/async-game.js": "62eecde6ae3e435558a8ad66b39890f2dd38571526fa5bd7113f40d59f8d96cb",
+    "src/audio.js": "3adbf89ae1224fdbef70304bd9191bca731ca7c8ccbcdd21bfc569b634360e3a",
+    "src/custom/canvas-game.js": "dd85af490a672658f75d5bf7b1e1e8832193903eca936d02a21b2a2d4ba6780a",
+    "src/custom/runtime.js": "1bf6472aa6ee6416e4cc4512c0ec0c83d404f17faad7374b57c91c144bcf9c2c",
+    "src/engagement.js": "e0acd8b5bb4adb42f44488728df2600a53c832bed7302dfe76ad746dc8f50ed8",
+    "src/extra-additions.js": "ff0ca04af39c3543325978ee3a6aa38e8b19b634de892450a243b901c3ec5998",
+    "src/extra-games.js": "01d971b8cba2138e37bbd23cdb5ed83847ff6d84c9f4e60bb72ba4b63296b1be",
+    "src/feature-games.js": "fbe39580b37b5b7dc2cb52637b19d418950b281617deabba32b3d57d1db97773",
+    "src/feature-games10.js": "356290f0bc2c64a504ca1e04b442aaa650d29449dfce195c07ad44ec449cef45",
+    "src/feature-games11.js": "2e1cb0223a786352482ef8a5f9bf15991ea48d219e79a0fe40a8dccc8844daaa",
+    "src/feature-games12.js": "c7da74ddacafd4d9e2620f7d821a1f9ff050b366049108648ed85a1af6f42a82",
+    "src/feature-games13.js": "8ef6641487ee6fbde51b070ae7429b875b61d583bf326023922e478a6a8658ad",
+    "src/feature-games14.js": "e641cf99016f78aca215f8400725bbe3900e9214d843aad089ec8c3b9bc089ae",
+    "src/feature-games15.js": "edc3dc03502bef91b8e9b3dd1c5e098881ef384350ac02b4d26050a276fefc56",
+    "src/feature-games16.js": "2e39f49f98ab7bdba99705a79435440ea121e1174a0ead7616bd7adfe35efcff",
+    "src/feature-games17.js": "cb2b411ca767fb372bf6a1ff43018b7ab3cfa9fcfabd71200f6253a5fff4f8fb",
+    "src/feature-games18.js": "61f0bda80a678ccc3bb6aa01f98e7567867dd50d68c5399b2d682516123fe094",
+    "src/feature-games19.js": "fec10d2de20e72548d8ab5f892497cf52331825ea331c1229b42812cf06fee98",
+    "src/feature-games2.js": "3b7ed01118cd162fe8792075f8cca26396e62905735ce13fa9ca59f5ef47dcd8",
+    "src/feature-games20.js": "2faf4e830507b6ace4befab60a319de1a9439f04a6409670df66c25fcb720ee1",
+    "src/feature-games21.js": "0c42b6536eecb8415360a09e3d17365ca9a88dd59a02d93d3f707d4bfbccb793",
+    "src/feature-games22.js": "4239db3d2f722015bb940c176dc4221900d9b47ca993f5d02b1c07169da8bc87",
+    "src/feature-games23.js": "e8ccb2de549c3f2176c1eb53096bad665999e49aea7373b8eb5fa0f3a55fbe3b",
+    "src/feature-games24.js": "ed91052bd282a3ab2c795055caf8f0438964c49b4e291ee03412a79c7dd0a174",
+    "src/feature-games25.js": "385a66a3685ae3aabde0f68fdbb4acded34d19bbfaacffc583ca94680de86993",
+    "src/feature-games26.js": "87ce4220f01781d79e7bab26010ba0913b5a066c428a9c03f24b6014a6cb3cfc",
+    "src/feature-games27.js": "695793e7c78861c40465b63b4931c27f4651db28810d7b8721fd3b0f7354ac21",
+    "src/feature-games28.js": "3305d49f839f74d63c957a33c2f93410b6d284fd0dc5a021d769ac5c25da1781",
+    "src/feature-games29.js": "9d4079f17b8c523c62cfcb78885a9a35f56ba9fdc18b780781f510ba040adb78",
+    "src/feature-games3.js": "e9b7948250a9bba32739a3bfc6d3f70138fdcbd82eb0788bfdecb6542887f4c2",
+    "src/feature-games30.js": "595870b5a5a7621ade642b76fcd9aa3de1f736209b11efbbb8049a30dc1436ea",
+    "src/feature-games31.js": "aeed968f609d2e6309e3b280b9dad7bcc7080fbcbc38f186041c928efb85918b",
+    "src/feature-games32.js": "14b948a5523e6e461715cdcde9a0832a97c3fad1c3af38697a59a7e150c8ea70",
+    "src/feature-games33.js": "968df735eddc8c3c64b911b28be5118e38c98c3608cefa9567f4aa49a524dc20",
+    "src/feature-games34.js": "bb8d9f55d4807200813091c92241d57a70029f354feea4468c8ae88821c729bb",
+    "src/feature-games35.js": "c5923b4e2e1e0afd876031a5db4e8c8cc8710e93458a4bb12ea9fe1f780cb61d",
+    "src/feature-games36.js": "72e85bcc3dd3d50b6e7ecdc31799bb7575bea0011eac4268b3a6d14865e19562",
+    "src/feature-games37.js": "66dec9777dc0b3bfca256658de7adc7bb5ea50fc08fae38103318ece666ec031",
+    "src/feature-games38.js": "b5bd19126fe2e768659b4056cd4511434f676e4b479f7e7d7f7826047ef70414",
+    "src/feature-games39.js": "3980c6e46345838e2795c5796d7bf10e6a076f80088e90fe2d39342ef4688111",
+    "src/feature-games4.js": "370cf0fc5e968ea232b48099b646dfc1e63ab45f2c0039b0f86d4f20f773fb37",
+    "src/feature-games40.js": "9e43b144cc28766887b1ef8f172d7977d903e1917e00e11e5b5ba5fb1e795909",
+    "src/feature-games5.js": "eaeffe7d29121e83f2d69bac963873d246c55b6f6b98420a3c619acbe79007e6",
+    "src/feature-games6.js": "5d1ec370ee6f10435930e2ddbe26ddf750be841459cccab717f8b9f86c058e27",
+    "src/feature-games7.js": "02e066b08e034b36906d8f15ac274a058b8a496c124a84102e6c58e6a0be5b24",
+    "src/feature-games8.js": "826ceffb9b2dd7083907d7474a4d6a43f915eef718865d9b1a7020a75f3e191e",
+    "src/feature-games9.js": "30a731cd3ea13a0d84f7c2505ed24214657fc6320af9c8f6270fe6748ea0d0c4",
+    "src/feature-registry.js": "354e5be5fc823e99990afe712236b6a9fb2cc32247566d12805e110f2ee6439f",
+    "src/feed-activity.js": "cc34e8c45aa9adfdedbc329d2f31350438aa00974699a1f25668aa7b5b0bcaae",
+    "src/feed-order.js": "eccc90feba522ad76bcdd750a94a68a73ecc7444bdfc296b30d5f77087fb6d66",
+    "src/gallery-controls.js": "d2e603a49727b97fd288e2735eeb015ef723d84691e83f8356194e5427573a2d",
+    "src/games.js": "7597396478abe695bf7d0e44d1abe16fc0b2764585912a8ef9cbc12f77bf4452",
+    "src/main.js": "a9794ada96884fcb0693d0fe91094275fdb2986bb319fa074a027b821a88f742",
+    "src/more-games.js": "d455b235941ea5e2f0f0c50b5d90d4135384e4401488e6526191386f5cec23ce",
+    "src/player-session.js": "e98e6e326d580c413f833e0773ed9ac97eafc2b348e368afe8fcb2d5eea60ea4",
+    "src/preview-priority.js": "177ab7d5f074b5d57b8b8e96c9db4d60eeeb208fba87d6deb45f7e11dba20564",
+    "scripts/s12-capture-page.js": "2d06ff0d7b2da375a3468d561bafc2eb61bbcfc6393b33f84d09e6745aed7080",
+    "scripts/s12-capture.mjs": "80adbdc57d83d123df0a601bfbc464c42fe7f490857d3d7f96ba6167b4828b85"
+  },
+  "games": {
+    "machine-hunt": {
+      "source": "../src/feature-games.js",
+      "sha256": "69105fd08eb6f481301ff445136117bddc90a3f560e3adf350cb34c76d306e3f",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 183,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "d1673b02",
+          "labels": [
+            "MACHINE HUNT",
+            "♥ 5  5M  KOs 0",
+            "POWER 0  SCORE 5",
+            "HIDDEN IN COVER"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "adfc4418",
+          "labels": [
+            "MACHINE HUNT",
+            "♥ 5  9M  KOs 0",
+            "POWER 0  SCORE 9"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "6784838e",
+          "labels": [
+            "MACHINE HUNT",
+            "♥ 5  10M  KOs 0",
+            "POWER 0  SCORE 10",
+            "HIDDEN IN COVER"
+          ]
+        }
+      ]
+    },
+    "meat-lad": {
+      "source": "../src/feature-games.js",
+      "sha256": "d9aa835dbd012886035002f389700596896a03053523a7210b5e1b2558b8907e",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 108,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "05b67402",
+          "labels": [
+            "MEAT LAD",
+            "LVL 1  SCORE 120  LIVES 5",
+            "0M"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "4ada6a1a",
+          "labels": [
+            "MEAT LAD",
+            "LVL 1  SCORE 220  LIVES 5",
+            "0M"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "d622a0d7",
+          "labels": [
+            "MEAT LAD",
+            "LVL 1  SCORE 220  LIVES 5",
+            "0M"
+          ]
+        }
+      ]
+    },
+    "turbo-arena": {
+      "source": "../src/feature-games2.js",
+      "sha256": "99e6efd31fd2591f3bb1992400468ae74f8a999f22da6331cdff6790988a996d",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 234,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "c10415f4",
+          "labels": [
+            "0  BLUE",
+            "2:58",
+            "ORANGE  0",
+            "BOOST"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "e304b50c",
+          "labels": [
+            "0  BLUE",
+            "2:57",
+            "ORANGE  0",
+            "BOOST"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "e43fe5e1",
+          "labels": [
+            "0  BLUE",
+            "2:56",
+            "ORANGE  0",
+            "BOOST"
+          ]
+        }
+      ]
+    },
+    "jelly-dash": {
+      "source": "../src/feature-games2.js",
+      "sha256": "b807a563d654f783291f75b11d3f3024aa292fd32297603164686f40d082c8e4",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 147,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "42623aeb",
+          "labels": [
+            "▼",
+            "R1 SLIME CLIMB",
+            "Q 0/6",
+            "SLIME CLIMB",
+            "FIRST 6 QUALIFY"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "01547cab",
+          "labels": [
+            "▼",
+            "R1 SLIME CLIMB",
+            "Q 0/6"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "5364057d",
+          "labels": [
+            "▼",
+            "R1 SLIME CLIMB",
+            "Q 0/6"
+          ]
+        }
+      ]
+    },
+    "side-surfers": {
+      "source": "../src/feature-games3.js",
+      "sha256": "dc59c6fcc86ecf10aeacb7fe90d76c71339ea1d84a720b5f0584a17e15d7ee6a",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 342,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "2f6c196b",
+          "labels": [
+            "METRO",
+            "SIDE SURFERS",
+            "COINS 0",
+            "SCORE 19  71M"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "40b8a5c5",
+          "labels": [
+            "METRO",
+            "SIDE SURFERS",
+            "COINS 1",
+            "SCORE 34  109M"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "3d082157",
+          "labels": [
+            "METRO",
+            "SIDE SURFERS",
+            "COINS 8",
+            "SCORE 87  146M",
+            "MAGNET 9s "
+          ]
+        }
+      ]
+    },
+    "word-fall": {
+      "source": "../src/feature-games3.js",
+      "sha256": "ea29722f78d52287c0321a69c43292d3bcb94333bd6a7a7e7a832b52a9b74ac0",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 57,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "4bffb99a",
+          "labels": [
+            "F1",
+            "x1",
+            "P1",
+            "H1.4"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "67ac8b83",
+          "labels": [
+            "F1",
+            "x2",
+            "P1",
+            "H1.4"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "d32283a0",
+          "labels": [
+            "F1",
+            "x3",
+            "P1",
+            "H1.4"
+          ]
+        }
+      ]
+    },
+    "rune-swarm": {
+      "source": "../src/feature-games4.js",
+      "sha256": "aa062ee365ebfac4153a3e27afa8f6dfdbd443b43b62b057048429b1c1f332dc",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 248,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "bbca604a",
+          "labels": [
+            "RUNE SWARM  1s",
+            "MATCH TO CAST",
+            "RUNES 102    POWER 2"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "344754f1",
+          "labels": [
+            "RUNE SWARM  2s",
+            "MATCH TO CAST",
+            "RUNES 138    POWER 3"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "cf7bb722",
+          "labels": [
+            "RUNE SWARM  3s",
+            "MATCH TO CAST",
+            "RUNES 174    POWER 4"
+          ]
+        }
+      ]
+    },
+    "deep-digger": {
+      "source": "../src/feature-games4.js",
+      "sha256": "f5d804f9bfbdbd23fa7cd9d0427cb397cabb3fb5503f338ef24bb515b301dee7",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 150,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "42c5db1a",
+          "labels": [
+            "DEPTH 0 HP 5 ARM 0 KILLS 0",
+            "W0 S0 C0 I0 D0 O0 PICK 0",
+            "TORCH 4  TRAPS 0",
+            "FOOD 2  SEED 0  TOWER 0",
+            "MINING",
+            "MINING"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "dbae2150",
+          "labels": [
+            "DEPTH 0 HP 5 ARM 0 KILLS 0",
+            "W1 S0 C0 I0 D0 O0 PICK 0",
+            "TORCH 4  TRAPS 0",
+            "FOOD 2  SEED 0  TOWER 0",
+            "MINING",
+            "MINING"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "c2ed88d0",
+          "labels": [
+            "DEPTH 0 HP 5 ARM 0 KILLS 0",
+            "W2 S0 C0 I0 D0 O0 PICK 0",
+            "TORCH 4  TRAPS 0",
+            "FOOD 2  SEED 0  TOWER 0",
+            "MINING",
+            "MINING"
+          ]
+        }
+      ]
+    },
+    "web-slam": {
+      "source": "../src/feature-games5.js",
+      "sha256": "caf74c6268ac0d3faf52a57a1c8d038e02f637ee6644828b4b7043321bc873e2",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 178,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "3fb0dec1",
+          "labels": [
+            "BLUE 0     WEB SLAM     0 RED",
+            "BREAK THE WALL       120s",
+            "SERVE 1",
+            "0%",
+            "0%"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "b0da2ef2",
+          "labels": [
+            "BLUE 0     WEB SLAM     0 RED",
+            "BREAK THE WALL       120s",
+            "8%",
+            "0%"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "69c0cc3e",
+          "labels": [
+            "BLUE 0     WEB SLAM     0 RED",
+            "BREAK THE WALL       119s",
+            "8%",
+            "0%"
+          ]
+        }
+      ]
+    },
+    "deadline-deck": {
+      "source": "../src/feature-games5.js",
+      "sha256": "a90fa59f11282fe038cd649be985e21876429b7b4fffc95ef979f6c64ef1c8ad",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 79,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "2db288ed",
+          "labels": [
+            "DEADLINE DECK     89s",
+            "SCORE 0  PAPERS 9",
+            "♥ 3  DELIVERED 0  MISS 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "d10a723f",
+          "labels": [
+            "DEADLINE DECK     88s",
+            "SCORE 0  PAPERS 8",
+            "♥ 3  DELIVERED 1  MISS 0",
+            "COMBO 220 x1"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "fb84c43d",
+          "labels": [
+            "DEADLINE DECK     87s",
+            "SCORE 220  PAPERS 8",
+            "♥ 3  DELIVERED 1  MISS 0"
+          ]
+        }
+      ]
+    },
+    "scrap-arena": {
+      "source": "../src/feature-games6.js",
+      "sha256": "6033c6fd22ba6c7a4230f9490f3da8af5c77f16a13f6c3794d485c75806111cc",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 277,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "4da4626f",
+          "labels": [
+            "W",
+            "W",
+            "+",
+            "+",
+            "N",
+            "N",
+            "▼",
+            "SCRAP ARENA",
+            "RIGS 4/4",
+            "HP 64  L3 DISC 1 N74",
+            "OPEN SHIFT - 119S"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "47186bf1",
+          "labels": [
+            "W",
+            "+",
+            "+",
+            "N",
+            "N",
+            "▼",
+            "SCRAP ARENA",
+            "RIGS 4/4",
+            "HP 64  L3 DISC 3 N72",
+            "OPEN SHIFT - 118S"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "e5e3adb9",
+          "labels": [
+            "W",
+            "+",
+            "+",
+            "N",
+            "N",
+            "▼",
+            "SCRAP ARENA",
+            "RIGS 4/4",
+            "HP 52  L3 DISC 3 N73",
+            "OPEN SHIFT - 117S"
+          ]
+        }
+      ]
+    },
+    "gridiron-rush": {
+      "source": "../src/feature-games6.js",
+      "sha256": "3c7330913f573e227499b23a24237fad416a50e70dc63d0b15621248cdd90c7c",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 106,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "2a554864",
+          "labels": [
+            "80",
+            "80",
+            "70",
+            "60",
+            "60",
+            "50",
+            "50",
+            "40",
+            "30",
+            "»",
+            "»",
+            "DOWN 1  34 YD  TO 35",
+            "MATCH 0-0  RUN 0",
+            "HEAT"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "b4be6f9f",
+          "labels": [
+            "90",
+            "90",
+            "80",
+            "80",
+            "70",
+            "60",
+            "60",
+            "50",
+            "50",
+            "»",
+            "»",
+            "DOWN 1  45 YD  TO 35",
+            "MATCH 0-0  RUN 0",
+            "HEAT"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "cd7067df",
+          "labels": [
+            "110",
+            "100",
+            "90",
+            "90",
+            "80",
+            "80",
+            "70",
+            "60",
+            "60",
+            "»",
+            "»",
+            "DOWN 1  56 YD  TO 35",
+            "MATCH 0-0  RUN 0",
+            "HEAT"
+          ]
+        }
+      ]
+    },
+    "ghost-shift": {
+      "source": "../src/feature-games7.js",
+      "sha256": "13c48126605d6c182ecd0cc73f642a905f3db86ec7603da6d9d9a0dd80be1f1f",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 71,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "3f41098f",
+          "labels": [
+            "GHOST SHIFT",
+            "NIGHT DEPOSIT",
+            "SHIFT 1    SCORE 0",
+            "1",
+            "2",
+            "SIGILS 0/2 CASES 0 RELAYS 0/2",
+            "PULSE 1.3"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "21f075bb",
+          "labels": [
+            "GHOST SHIFT",
+            "NIGHT DEPOSIT",
+            "SHIFT 1    SCORE 25",
+            "2",
+            "SIGILS 1/2 CASES 0 RELAYS 0/2",
+            "PULSE 0.3"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "a90b1273",
+          "labels": [
+            "GHOST SHIFT",
+            "NIGHT DEPOSIT",
+            "SHIFT 1    SCORE 110",
+            "SIGILS 2/2 CASES 0 RELAYS 0/2",
+            "PULSE READY"
+          ]
+        }
+      ]
+    },
+    "wingrush": {
+      "source": "../src/feature-games7.js",
+      "sha256": "a1b23e6f7e84852eeaf245e416e365c1a87befd5f1956499c641661886eedbfc",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 190,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "5d2e4c6f",
+          "labels": [
+            "WINGRUSH",
+            "FORTS 0 MISSED 0",
+            "LIFT LAUNCH!",
+            "LIFT"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "5aad0832",
+          "labels": [
+            "WINGRUSH",
+            "FORTS 0 MISSED 0",
+            "LIFT LAUNCH!",
+            "LIFT"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "79f3dac4",
+          "labels": [
+            "WINGRUSH",
+            "FORTS 0 MISSED 1",
+            "LIFT"
+          ]
+        }
+      ]
+    },
+    "grave-garden": {
+      "source": "../src/feature-games8.js",
+      "sha256": "0469604d5362832f5dc8e9c994b7e3558417913addaa5b87a9fe8454e487aa55",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 345,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "44a4a79d",
+          "labels": [
+            "GRAVE GARDEN",
+            "WAVE 01/60",
+            "KEEP THE GREENHOUSE ALIVE",
+            "GLASS 100%",
+            "FORMATION HOLDS",
+            "ROWAN",
+            "x2 4s",
+            "x1 4s",
+            "x1 4s",
+            "25",
+            "SUN",
+            "50",
+            "PEA",
+            "40",
+            "THORN",
+            "70",
+            "MOON",
+            "SUN 132  SCORE 0",
+            "PLANT THORN WALL · BREACHES 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "ed6f6f25",
+          "labels": [
+            "GRAVE GARDEN",
+            "WAVE 01/60",
+            "KEEP THE GREENHOUSE ALIVE",
+            "GLASS 100%",
+            "FORMATION HOLDS",
+            "ROWAN",
+            "x2 3s",
+            "x1 3s",
+            "x1 3s",
+            "25",
+            "SUN",
+            "50",
+            "PEA",
+            "40",
+            "THORN",
+            "70",
+            "MOON",
+            "SUN 94  SCORE 11",
+            "PLANT THORN WALL · BREACHES 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "e0fec346",
+          "labels": [
+            "GRAVE GARDEN",
+            "WAVE 01/60",
+            "KEEP THE GREENHOUSE ALIVE",
+            "GLASS 100%",
+            "FORMATION HOLDS",
+            "ROWAN",
+            "x2 2s",
+            "x1 2s",
+            "x1 2s",
+            "25",
+            "SUN",
+            "50",
+            "PEA",
+            "40",
+            "THORN",
+            "70",
+            "MOON",
+            "SUN 114  SCORE 13",
+            "PLANT THORN WALL · BREACHES 0"
+          ]
+        }
+      ]
+    },
+    "swarm-keeper": {
+      "source": "../src/feature-games8.js",
+      "sha256": "1581ef10b5e2c77ef38613d047956747f4d3f0481c3b085bf501c42dfd69b1ab",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 191,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "27be27a2",
+          "labels": [
+            "CARRY",
+            "SWARM KEEPER",
+            "CREW 12 DOWN 0  DEW MEADOW",
+            "KEEP THE SWARM TOGETHER",
+            "ROADS 0/20  SAVED 0  LOST 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "c62d5f8c",
+          "labels": [
+            "CARRY",
+            "SWARM KEEPER",
+            "CREW 12 DOWN 0  DEW MEADOW",
+            "KEEP THE SWARM TOGETHER",
+            "ROADS 0/20  SAVED 0  LOST 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "3bf10f62",
+          "labels": [
+            "CARRY",
+            "SWARM KEEPER",
+            "CREW 12 DOWN 0  DEW MEADOW",
+            "CARRY THE SUNSEED",
+            "ROADS 0/20  SAVED 0  LOST 0"
+          ]
+        }
+      ]
+    },
+    "cosmic-haul": {
+      "source": "../src/feature-games9.js",
+      "sha256": "34405836bcebadc56cb289e1f08f2b5bdc4f9edb42e298f02a61150f4aec7b5f",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 159,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "6df5d024",
+          "labels": [
+            "ARK",
+            "ARK 0/260",
+            "HULL 100",
+            "RUN 0",
+            "BREAK · TETHER · HAUL"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "f8aaf872",
+          "labels": [
+            "ARK",
+            "ARK 0/260",
+            "HULL 100",
+            "RUN 0",
+            "BREAK · TETHER · HAUL"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "729ee7c7",
+          "labels": [
+            "ARK",
+            "ARK 0/260",
+            "HULL 100",
+            "RUN 0",
+            "BREAK · TETHER · HAUL"
+          ]
+        }
+      ]
+    },
+    "midnight-pursuit": {
+      "source": "../src/feature-games9.js",
+      "sha256": "029fc6515278b01fabf636d682b5e42544a2bc93f7523fbe209dc2f2b851bb69",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 68,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "124bdf74",
+          "labels": [
+            "DIST 18m",
+            "WANTED 1",
+            "SWAPS 0",
+            "JUMPS 0  PAINT 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "0a5db510",
+          "labels": [
+            "DIST 30m",
+            "WANTED 1",
+            "SWAPS 0",
+            "JUMPS 0  PAINT 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "b1722c3d",
+          "labels": [
+            "DIST 42m",
+            "WANTED 1",
+            "SWAPS 0",
+            "JUMPS 0  PAINT 0"
+          ]
+        }
+      ]
+    },
+    "pico-cap": {
+      "source": "../src/feature-games10.js",
+      "sha256": "bdc8577f98f8a34ee996e50b9445e34db28a04c04089e15eadb8b3bedc39c37f",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 200,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "91253469",
+          "labels": [
+            "PICO CAP",
+            "PUZZLE GATE II   DANGER 0   BIG",
+            "GLADE 1  SCORE 50  KEYS 1/3  BIG",
+            "ROUTE: FIND A SUN KEY",
+            "BIG: CHOP BRIARS · SPACE AT RINGS"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "c4edaa1e",
+          "labels": [
+            "PICO CAP",
+            "PUZZLE GATE II   DANGER 0   PICO",
+            "GLADE 1  SCORE 50  KEYS 1/3  PICO",
+            "ROUTE: FIND A SUN KEY",
+            "PICO: PASS THROUGH CRACKS"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "2c8b213f",
+          "labels": [
+            "PICO CAP",
+            "PUZZLE GATE II   DANGER 0   PICO",
+            "GLADE 1  SCORE 50  KEYS 1/3  PICO",
+            "ROUTE: FIND A SUN KEY",
+            "PICO: PASS THROUGH CRACKS"
+          ]
+        }
+      ]
+    },
+    "frog-convoy": {
+      "source": "../src/feature-games10.js",
+      "sha256": "e5bf37c8877c6a854468e4a12c4cecc42e9b4614899dd00e4dccd43dc779fbdc",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 117,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "452d226f",
+          "labels": [
+            "FROG CONVOY · SPRING",
+            "FAMILY 1/5  HOME 0  LOST 0  GUARD",
+            "HOP TO GATHER  -  SPACE TO GUARD"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "7c66b5ce",
+          "labels": [
+            "FROG CONVOY · SPRING",
+            "FAMILY 1/5  HOME 0  LOST 0  GUARD",
+            "HOP TO GATHER  -  SPACE TO GUARD"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "f95b4a1b",
+          "labels": [
+            "FROG CONVOY · SPRING",
+            "FAMILY 2/5  HOME 0  LOST 0  GUARD",
+            "HOP TO GATHER  -  SPACE TO GUARD"
+          ]
+        }
+      ]
+    },
+    "tower-panic": {
+      "source": "../src/feature-games11.js",
+      "sha256": "0958f4a85798ac3f7bf9afe7a18560522d99f1a7717a762f8ba6ca9f8edc26d3",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 117,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "bc9fa671",
+          "labels": [
+            "TOWER PANIC",
+            "R9 · CRANE CROWN",
+            "CREW 0/4  RAIL 3/3  SCORE 0",
+            "EXTRACTED 0",
+            "REACH THE CREW"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "83ea282f",
+          "labels": [
+            "TOWER PANIC",
+            "R9 · CRANE CROWN",
+            "CREW 1/4  RAIL 3/3  SCORE 0",
+            "EXTRACTED 0",
+            "RESCUE",
+            "WORKER JOINED"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "166581f6",
+          "labels": [
+            "TOWER PANIC",
+            "R9 · CRANE CROWN",
+            "CREW 1/4  RAIL 3/3  SCORE 0",
+            "EXTRACTED 0",
+            "WORKER JOINED"
+          ]
+        }
+      ]
+    },
+    "burrow-boss": {
+      "source": "../src/feature-games11.js",
+      "sha256": "b8918ae539674ca93dc5fd9d54d0aceb52c18e7387c8620d3fb695cc34860e7f",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 102,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "886191da",
+          "labels": [
+            "BURROW BOSS",
+            "MUDHORN 3/3  ARENA 1",
+            "SCORE 1",
+            "SET A SHORING CHARGE"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "6b9ef1d2",
+          "labels": [
+            "BURROW BOSS",
+            "MUDHORN 3/3  ARENA 1",
+            "SCORE 13",
+            "CAVE-IN ARMED"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "f8ff1759",
+          "labels": [
+            "BURROW BOSS",
+            "MUDHORN 3/3  ARENA 1",
+            "SCORE 13",
+            "MONSTER TAUNTED"
+          ]
+        }
+      ]
+    },
+    "idol-escape": {
+      "source": "../src/feature-games12.js",
+      "sha256": "17e3deb007023c97c6fb5b037d5bd4215ab995fba352376077390410abdb0997",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 139,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "1bc78a0a",
+          "labels": [
+            "CHAMBER 1",
+            "0 M",
+            "DIG · PUSH · DIVERT",
+            "SUPPORT DUG",
+            "HOLD ACTION AT STATION"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "fa6a1d56",
+          "labels": [
+            "CHAMBER 1",
+            "0 M",
+            "DIG · PUSH · DIVERT",
+            "ROCK RIDES THE CART",
+            "HOLD ACTION AT STATION"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "9b9c7857",
+          "labels": [
+            "CHAMBER 1",
+            "0 M",
+            "DIG · PUSH · DIVERT",
+            "ROCK RIDES THE CART",
+            "VALVE 39%",
+            "HOLD ACTION AT STATION"
+          ]
+        }
+      ]
+    },
+    "robot-register": {
+      "source": "../src/feature-games12.js",
+      "sha256": "459e144f15653e262f77b775e8f85613a543c70669c21654ec8675bb222de644",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 210,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "da75cec2",
+          "labels": [
+            "ROBO RALLY",
+            "EMBER FOUNDRY",
+            "REVEAL 5/5  FLAGS 0/8",
+            "♥♥♥",
+            "0",
+            "♥♥♥",
+            "0",
+            "♥♥♥",
+            "0",
+            "♥♥♥",
+            "0",
+            "BRASS",
+            "↑",
+            "1",
+            "*",
+            "2",
+            "↑↑",
+            "3",
+            "↑",
+            "4",
+            "↑",
+            "5",
+            "NOVA",
+            "*",
+            "1",
+            "↑↑",
+            "2",
+            "↑",
+            "3",
+            "↑",
+            "4",
+            "←",
+            "5",
+            "PATCH",
+            "*",
+            "1",
+            "↑↑",
+            "2",
+            "↑",
+            "3",
+            "↑",
+            "4",
+            "↑",
+            "5",
+            "VEX",
+            "↑↑",
+            "1",
+            "↑",
+            "2",
+            "↑",
+            "3",
+            "*",
+            "4",
+            "↑",
+            "5",
+            "NOVA MISREADS SLOT 5",
+            "SCORE 0  ·  ARROWS COMMAND · SPACE FIRE"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "9ef5de94",
+          "labels": [
+            "ROBO RALLY",
+            "EMBER FOUNDRY",
+            "REVEAL 5/5  FLAGS 0/8",
+            "♥♥♥",
+            "0",
+            "♥♥♥",
+            "0",
+            "♥♥♥",
+            "0",
+            "♥♥♥",
+            "0",
+            "BRASS",
+            "↑",
+            "1",
+            "*",
+            "2",
+            "↑↑",
+            "3",
+            "↑",
+            "4",
+            "↑",
+            "5",
+            "NOVA",
+            "*",
+            "1",
+            "↑↑",
+            "2",
+            "↑",
+            "3",
+            "↑",
+            "4",
+            "←",
+            "5",
+            "PATCH",
+            "*",
+            "1",
+            "↑↑",
+            "2",
+            "↑",
+            "3",
+            "↑",
+            "4",
+            "↑",
+            "5",
+            "VEX",
+            "↑↑",
+            "1",
+            "↑",
+            "2",
+            "↑",
+            "3",
+            "*",
+            "4",
+            "↑",
+            "5",
+            "NOVA MISREADS SLOT 5",
+            "SCORE 0  ·  ARROWS COMMAND · SPACE FIRE"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "94b92aa5",
+          "labels": [
+            "ROBO RALLY",
+            "EMBER FOUNDRY",
+            "EXECUTE 2/5  FLAGS 0/8",
+            "♥♥♥",
+            "0",
+            "♥♥♥",
+            "0",
+            "♥♥♥",
+            "0",
+            "♥♥♥",
+            "0",
+            "BRASS",
+            "↑",
+            "1",
+            "*",
+            "2",
+            "↑↑",
+            "3",
+            "↑",
+            "4",
+            "↑",
+            "5",
+            "NOVA",
+            "*",
+            "1",
+            "↑↑",
+            "2",
+            "↑",
+            "3",
+            "↑",
+            "4",
+            "←",
+            "5",
+            "PATCH",
+            "*",
+            "1",
+            "↑↑",
+            "2",
+            "↑",
+            "3",
+            "↑",
+            "4",
+            "↑",
+            "5",
+            "VEX",
+            "↑↑",
+            "1",
+            "↑",
+            "2",
+            "↑",
+            "3",
+            "*",
+            "4",
+            "↑",
+            "5",
+            "FIRE",
+            "SCORE 0  ·  ARROWS COMMAND · SPACE FIRE"
+          ]
+        }
+      ]
+    },
+    "castle-crasher": {
+      "source": "../src/feature-games13.js",
+      "sha256": "0327f20c569848b95b6e50f9ae4db4c33bc0e280ad2948507534203932254b25",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 261,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "ab7a71d1",
+          "labels": [
+            "CASTLE CRASHER  CH 1",
+            "ORCHARD BORDER",
+            "APPLE TREBUCHET",
+            "SCORE 0",
+            "RED BUILD   AIM 46°  PWR 300 WIND 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "0d839179",
+          "labels": [
+            "CASTLE CRASHER  CH 1",
+            "ORCHARD BORDER",
+            "APPLE TREBUCHET",
+            "SCORE 0",
+            "CUT THE LOAD PATH / EXPECT 5",
+            "RED ANNOUNCE   AIM 67°  PWR 330 WIND 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "0d839179",
+          "labels": [
+            "CASTLE CRASHER  CH 1",
+            "ORCHARD BORDER",
+            "APPLE TREBUCHET",
+            "SCORE 0",
+            "CUT THE LOAD PATH / EXPECT 5",
+            "RED ANNOUNCE   AIM 67°  PWR 330 WIND 0"
+          ]
+        }
+      ]
+    },
+    "hotel-haunt": {
+      "source": "../src/feature-games13.js",
+      "sha256": "009c3ca245a9375fd21f88cd0bed5031246724d58f66709036d42c0973e57b4f",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 76,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "ce5b7601",
+          "labels": [
+            "HOTEL HAUNT",
+            "FLOOR 1  SWEPT 1/6  SCORE 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "3089d2ca",
+          "labels": [
+            "HOTEL HAUNT",
+            "FLOOR 1  SWEPT 2/6  SCORE 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "a2e9d442",
+          "labels": [
+            "HOTEL HAUNT",
+            "FLOOR 1  SWEPT 2/6  SCORE 0"
+          ]
+        }
+      ]
+    },
+    "kaiju-control": {
+      "source": "../src/feature-games14.js",
+      "sha256": "e4aef1961fc24c8f107eff497b6e4cf9b251e2f41137b2bf47a789bd2c501407",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 127,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "ec0a11db",
+          "labels": [
+            "S",
+            "C",
+            "3",
+            "4",
+            "S",
+            "3",
+            "4",
+            "W",
+            "3",
+            "4",
+            "G",
+            "3",
+            "B",
+            "3",
+            "KAIJU CONTROL",
+            "DISTRICT 1  SAFE 0  ABOARD 0",
+            "EVACUATE THE WARDS",
+            "LOST 0  99S  SCORE 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "2eb84d38",
+          "labels": [
+            "S",
+            "C",
+            "3",
+            "4",
+            "S",
+            "3",
+            "W",
+            "3",
+            "4",
+            "G",
+            "3",
+            "B",
+            "3",
+            "KAIJU CONTROL",
+            "DISTRICT 1  SAFE 0  ABOARD 4",
+            "WARD ABOARD",
+            "LOST 0  98S  SCORE 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "63e0e3b7",
+          "labels": [
+            "S",
+            "C",
+            "3",
+            "4",
+            "S",
+            "3",
+            "W",
+            "3",
+            "4",
+            "G",
+            "3",
+            "B",
+            "3",
+            "KAIJU CONTROL",
+            "DISTRICT 1  SAFE 0  ABOARD 4",
+            "WARD ABOARD",
+            "LOST 0  97S  SCORE 0"
+          ]
+        }
+      ]
+    },
+    "moonshine-valley": {
+      "source": "../src/feature-games14.js",
+      "sha256": "abbe949c751f5c381afd432488e9d96e12999439fbd3f04d2b3f1672872197f2",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 146,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "5ad89e07",
+          "labels": [
+            "MOONSHINE VALLEY",
+            "DAY 1 DAY  $8  CARRY 2/4",
+            "WILLOW · PLANT 3/6",
+            "PLANT · WATER · HARVEST · SHIP"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "6f3c9525",
+          "labels": [
+            "MOONSHINE VALLEY",
+            "DAY 1 DAY  $8  CARRY 2/4",
+            "WILLOW · PLANT 3/6",
+            "PLANT · WATER · HARVEST · SHIP"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "1bef9eeb",
+          "labels": [
+            "MOONSHINE VALLEY",
+            "DAY 1 DAY  $8  CARRY 3/4",
+            "WILLOW · PLANT 4/6",
+            "PLANT · WATER · HARVEST · SHIP"
+          ]
+        }
+      ]
+    },
+    "dungeon-relay": {
+      "source": "../src/feature-games15.js",
+      "sha256": "1ece007ea44d97ec802e72f9bc1de3f623b35eeb77291bee1c6d75742abbcb86",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 124,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "39b0f671",
+          "labels": [
+            "DUNGEON 1 LAP 1/3",
+            "SCORE 0",
+            "♥ 3",
+            "SCOUT 2.0  ---- ---",
+            "?",
+            "?",
+            "?",
+            "✦",
+            "!",
+            "3",
+            "SUNKEN SCRIPTORIUM",
+            "DODGE THE TELL"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "d2469948",
+          "labels": [
+            "DUNGEON 1 LAP 1/3",
+            "SCORE 0",
+            "♥ 3",
+            "SCOUT 3.0  ---- ---",
+            "?",
+            "?",
+            "?",
+            "✦",
+            "!",
+            "3",
+            "SUNKEN SCRIPTORIUM",
+            "DODGE THE TELL"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "e2a08b5a",
+          "labels": [
+            "DUNGEON 1 LAP 1/3",
+            "SCORE 0",
+            "♥ 3",
+            "SCOUT 4.0  ---- ---",
+            "?",
+            "?",
+            "?",
+            "✦",
+            "✦",
+            "3",
+            "SUNKEN SCRIPTORIUM",
+            "DODGE THE TELL"
+          ]
+        }
+      ]
+    },
+    "gravity-claw": {
+      "source": "../src/feature-games15.js",
+      "sha256": "72da4608d12fee5f70d839531f8c286285da1540e164399b0832a79096e769b0",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 126,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "4b904deb",
+          "labels": [
+            "HEIGHT 0M  ZONE 1",
+            "HULL 100",
+            "SCORE 0  CELLS 0  BOSSES 0",
+            "ANOMALY LABS · ASCEND THE SHAFT"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "54b3ff6c",
+          "labels": [
+            "HEIGHT 0M  ZONE 1",
+            "HULL 100",
+            "SCORE 5  CELLS 0  BOSSES 0",
+            "ANOMALY LABS · ASCEND THE SHAFT"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "57d80a0c",
+          "labels": [
+            "HEIGHT 58M  ZONE 1",
+            "HULL 100",
+            "SCORE 5  CELLS 0  BOSSES 0",
+            "ANOMALY LABS · ASCEND THE SHAFT"
+          ]
+        }
+      ]
+    },
+    "ricochet-foundry": {
+      "source": "../src/feature-games16.js",
+      "sha256": "57f31edb3eb72a23fe26ca50f12299ba3281e0489e709d344931a60fa0a556f9",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 158,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "c4845145",
+          "labels": [
+            "HEAT",
+            "STAMP",
+            "QUENCH",
+            "DIE",
+            "DEPENDENCY",
+            "VALVE",
+            "1",
+            "2",
+            "3",
+            "DIRECTOR ↖",
+            "RICOCHET FOUNDRY",
+            "DRIVE GEAR  PARTS 0  SCORE 0",
+            "RAW  NEXT HEAT  PRESSURE 24",
+            "ROUTE: HEAT"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "ef387a05",
+          "labels": [
+            "HEAT",
+            "STAMP",
+            "QUENCH",
+            "DIE",
+            "DEPENDENCY",
+            "VALVE",
+            "1",
+            "2",
+            "3",
+            "DIRECTOR ↖",
+            "RICOCHET FOUNDRY",
+            "DRIVE GEAR  PARTS 0  SCORE 0",
+            "HEATED  NEXT STAMP  PRESSURE 22",
+            "CHARGE HEATED"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "690e87fa",
+          "labels": [
+            "HEAT",
+            "STAMP",
+            "QUENCH",
+            "DIE",
+            "DEPENDENCY",
+            "VALVE",
+            "1",
+            "2",
+            "3",
+            "DIRECTOR ↖",
+            "RICOCHET FOUNDRY",
+            "DRIVE GEAR  PARTS 0  SCORE 0",
+            "HEATED  NEXT STAMP  PRESSURE 22",
+            "CHARGE HEATED"
+          ]
+        }
+      ]
+    },
+    "lantern-line": {
+      "source": "../src/feature-games16.js",
+      "sha256": "87e7c003b5d5b1c25565d87f0c90659d81b0643818de865087e2a40d0e83569c",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 89,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "779f8808",
+          "labels": [
+            "LANTERN LINE",
+            "DISTRICTS 0/4  EXACT 0  SCORE 0",
+            "1",
+            "F",
+            "IN",
+            "0",
+            "F",
+            "IN",
+            "0",
+            "F",
+            "IN",
+            "R",
+            "PURGE",
+            "ORDER 1:",
+            "□1",
+            "□1",
+            "NEXT",
+            "PRISM ROTATED"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "c407a617",
+          "labels": [
+            "LANTERN LINE",
+            "DISTRICTS 0/4  EXACT 0  SCORE 0",
+            "1",
+            "F",
+            "IN",
+            "0",
+            "F",
+            "IN",
+            "0",
+            "F",
+            "IN",
+            "R",
+            "PURGE",
+            "ORDER 1:",
+            "□1",
+            "□1",
+            "NEXT",
+            "PRISM ROTATED"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "d3dba548",
+          "labels": [
+            "LANTERN LINE",
+            "DISTRICTS 0/4  EXACT 0  SCORE 0",
+            "1",
+            "F",
+            "IN",
+            "1",
+            "F",
+            "IN",
+            "0",
+            "F",
+            "IN",
+            "R",
+            "PURGE",
+            "ORDER 1:",
+            "□1",
+            "□1",
+            "NEXT",
+            "PRISM ROTATED"
+          ]
+        }
+      ]
+    },
+    "ashen-rage": {
+      "source": "../src/feature-games17.js",
+      "sha256": "f0df08c1d2bd72f7e8976023444e0df00821cf1f87a6738ad73c2673abd80fe2",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 106,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "a14c0284",
+          "labels": [
+            "ASHEN RAGE",
+            "RANK 5/8  HP 5  BAT  N 2",
+            "DISTRICT 1/5  K.O. 0  899s"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "ecfd1d3e",
+          "labels": [
+            "ASHEN RAGE",
+            "RANK 4/8  HP 4  BAT  N 18",
+            "DISTRICT 1/5  K.O. 0  898s"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "84bd9146",
+          "labels": [
+            "W",
+            "ASHEN RAGE",
+            "RANK 4/8  HP 3  BAT  N 18",
+            "DISTRICT 1/5  K.O. 0  897s"
+          ]
+        }
+      ]
+    },
+    "star-roller": {
+      "source": "../src/feature-games17.js",
+      "sha256": "a0a54c2bb332ab9d11d02077b81d267b35b013a2cca863942be85b518f28bb80",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 100,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "03d8b0b2",
+          "labels": [
+            "STAR ROLLER",
+            "KITCHEN FLOOR  SIZE 14  299s",
+            "",
+            "SCORE 0    DASH 100"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "dfa37e56",
+          "labels": [
+            "STAR ROLLER",
+            "KITCHEN FLOOR  SIZE 14  298s",
+            "",
+            "SCORE 0    DASH 100"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "072c2397",
+          "labels": [
+            "STAR ROLLER",
+            "KITCHEN FLOOR  SIZE 14  297s",
+            "",
+            "SCORE 61    DASH 100"
+          ]
+        }
+      ]
+    },
+    "dragon-lock": {
+      "source": "../src/feature-games18.js",
+      "sha256": "ea3d7236a482cf11f16a629fa11a19668c16f00d25904a43e80c222af8b60480",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 97,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "d90acec8",
+          "labels": [
+            "SKY 0",
+            "HULL 100  SH 45",
+            "DUNE SEA · LOCKS 0/2",
+            "HOLD · LOCK · RELEASE"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "a1202295",
+          "labels": [
+            "SKY 0",
+            "HULL 100  SH 45",
+            "DUNE SEA · LOCKS 0/2",
+            "HOLD · LOCK · RELEASE"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "f3ce1be7",
+          "labels": [
+            "SKY 0",
+            "HULL 100  SH 45",
+            "DUNE SEA · LOCKS 2/2",
+            "HOLD · LOCK · RELEASE"
+          ]
+        }
+      ]
+    },
+    "cursed-fist": {
+      "source": "../src/feature-games18.js",
+      "sha256": "b9ba5f568cbee51d510f860bd4e952242348a6a6c0bc419bfb28f17be2ed880d",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 96,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "dc18a7ae",
+          "labels": [
+            "BLOCK 1   KOs 1",
+            "HP 60",
+            "COMBO 2",
+            "JAB · LAUNCH · SWEEP"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "e9f21b5c",
+          "labels": [
+            "BLOCK 1   KOs 2",
+            "HP 60",
+            "COMBO 4",
+            "JAB · LAUNCH · SWEEP"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "9f04b5d6",
+          "labels": [
+            "BLOCK 1   KOs 2",
+            "HP 60",
+            "COMBO 4",
+            "JAB · LAUNCH · SWEEP"
+          ]
+        }
+      ]
+    },
+    "coral-courier": {
+      "source": "../src/feature-games19.js",
+      "sha256": "d18ad3f5d94195a5858a69bd41ac86edb2b12214be8b821bd70b10f8348c4996",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 549,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "93c1a451",
+          "labels": [
+            "CORAL COURIER",
+            "O2",
+            "REEF 2",
+            "FREE · GROW CORAL",
+            "FRIEND BLOOMS REEF",
+            "SCORE 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "b540b237",
+          "labels": [
+            "CORAL COURIER",
+            "O2",
+            "REEF 2",
+            "FREE · GROW CORAL",
+            "FRIEND BLOOMS REEF",
+            "SCORE 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "a43ebcf8",
+          "labels": [
+            "CORAL COURIER",
+            "O2",
+            "REEF 2",
+            "FREE · GROW CORAL",
+            "FRIEND BLOOMS REEF",
+            "SCORE 0"
+          ]
+        }
+      ]
+    },
+    "beacon-bay": {
+      "source": "../src/feature-games19.js",
+      "sha256": "702fb4a960a2263bf6bc9a640240d835cc731c67af192da858308781a3e59708",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 435,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "f6b8d50d",
+          "labels": [
+            "⚙",
+            "ESCORT",
+            "BEACON BAY",
+            "SHIPS 1",
+            "NIGHT WATCH",
+            "SCORE 0",
+            "SAVED 0  LOST 0  CONVOYS 0",
+            "TIDE HIGH · GUIDE WITH LIGHT"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "7af4e5d2",
+          "labels": [
+            "⚙",
+            "CLEAR",
+            "BEACON BAY",
+            "SHIPS 2",
+            "NIGHT WATCH",
+            "SCORE 0",
+            "SAVED 0  LOST 0  CONVOYS 0",
+            "TIDE HIGH · GUIDE WITH LIGHT"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "5d68bf6b",
+          "labels": [
+            "⚙",
+            "CLEAR",
+            "BEACON BAY",
+            "SHIPS 2",
+            "NIGHT WATCH",
+            "SCORE 0",
+            "SAVED 0  LOST 0  CONVOYS 0",
+            "TIDE HIGH · GUIDE WITH LIGHT"
+          ]
+        }
+      ]
+    },
+    "railway-rush": {
+      "source": "../src/feature-games20.js",
+      "sha256": "0b4b55f4e6fbcfe58d53100c9d5d2b6eca4c6564764675bf5295cc4bf87fc0a9",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 297,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "a1a6d791",
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "│",
+            "│",
+            "│",
+            "│",
+            "│",
+            "│",
+            "DELIVERED 0  SCORE 0",
+            "MISSES 0",
+            "CINDER YARD",
+            "WAGON COUPLED"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "ddad17af",
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "│",
+            "│",
+            "│",
+            "│",
+            "│",
+            "│",
+            "DELIVERED 0  SCORE 0",
+            "MISSES 0",
+            "CINDER YARD",
+            "WAGON COUPLED"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "9dda4a21",
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "│",
+            "│",
+            "│",
+            "│",
+            "│",
+            "│",
+            "DELIVERED 0  SCORE 0",
+            "MISSES 0",
+            "CINDER YARD",
+            "OPPOSING SIGNAL"
+          ]
+        }
+      ]
+    },
+    "pottery-house": {
+      "source": "../src/feature-games20.js",
+      "sha256": "b84edbe058f6f6ab01aebb6f1d199e104eb1d099c556ca9d3e5bcd5bd4a529e4",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 187,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "ffa10732",
+          "labels": [
+            "66°",
+            "WATER",
+            "+",
+            "POTTERY HOUSE",
+            "ACT 1",
+            "PITCHER TAKES SHAPE",
+            "GALLERY 0    WOOD 2",
+            "SHAPED VESSEL"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "27a682f9",
+          "labels": [
+            "64°",
+            "WATER",
+            "+",
+            "+",
+            "POTTERY HOUSE",
+            "ACT 1",
+            "WOOD ASH GLAZE LOADED",
+            "GALLERY 0    WOOD 2",
+            "GLAZED VESSEL"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "4cc2f8bd",
+          "labels": [
+            "66°",
+            "WATER",
+            "POTTERY HOUSE",
+            "ACT 1",
+            "DRAFT HITS KILN",
+            "GALLERY 0    WOOD 1",
+            "GLAZED VESSEL"
+          ]
+        }
+      ]
+    },
+    "hive-heist": {
+      "source": "../src/feature-games21.js",
+      "sha256": "c464c50fcf1ce5904ecbde54755bdd9ead2c1f5274e868f5289ae9bade4418b6",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 211,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "c4bd59b1",
+          "labels": [
+            "HIVE HEIST",
+            "HONEY 0 CELLS 1 BEES 0 SCORE 0",
+            "BROOD HUNGRY NECTAR 0 SCOUT  SCENT 2"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "47420e55",
+          "labels": [
+            "HIVE HEIST",
+            "HONEY 0 CELLS 1 BEES 0 SCORE 0",
+            "BROOD HUNGRY NECTAR 0 SCOUT  SCENT 2"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "7490ec56",
+          "labels": [
+            "HIVE HEIST",
+            "HONEY 0 CELLS 1 BEES 0 SCORE 0",
+            "BROOD HUNGRY NECTAR 1 POLLEN 1  SCENT 2"
+          ]
+        }
+      ]
+    },
+    "cloud-caravan": {
+      "source": "../src/feature-games21.js",
+      "sha256": "6a7191e2b02631ad4f10584503f4b2b6b49fd9200e39f9724d9c1f69b01b1e82",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 184,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "75c09afa",
+          "labels": [
+            "SUPPLIED 0",
+            "WIND",
+            "CLOUD CARAVAN",
+            "ROUTES 0  CARGO 3  HULL 4",
+            "BALLAST 3 SHIFT 0.4 WIND →"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "1a27e66e",
+          "labels": [
+            "SUPPLIED 0",
+            "CLOUD CARAVAN",
+            "ROUTES 0  CARGO 3  HULL 4",
+            "BALLAST 3 SHIFT 0.7 WIND →"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "bf7d73a3",
+          "labels": [
+            "SUPPLIED 0",
+            "WIND",
+            "CLOUD CARAVAN",
+            "ROUTES 0  CARGO 3  HULL 4",
+            "BALLAST 3 SHIFT 0.3 WIND →"
+          ]
+        }
+      ]
+    },
+    "orchard-wardens": {
+      "source": "../src/feature-games22.js",
+      "sha256": "5be4ec33566f7f8a172314ce5ac2b908f52f9d58b4b8228bf988acd9a993b134",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 250,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "0c551eff",
+          "labels": [
+            "SCION",
+            "CRATE",
+            "WATER",
+            "SMUDGE",
+            "ORCHARD WARDENS",
+            "CRATES 0  BASKET 0/3  WATER 0/3  SCORE 0",
+            "CLEAR · FUEL 0 · SCION 2 · TERRACE 1"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "7f4edab7",
+          "labels": [
+            "SCION",
+            "CRATE",
+            "WATER",
+            "SMUDGE",
+            "ORCHARD WARDENS",
+            "CRATES 0  BASKET 1/3  WATER 3/3  SCORE 0",
+            "CLEAR · FUEL 0 · SCION 2 · TERRACE 1"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "64a40a04",
+          "labels": [
+            "SCION",
+            "CRATE",
+            "WATER",
+            "SMUDGE",
+            "ORCHARD WARDENS",
+            "CRATES 0  BASKET 1/3  WATER 2/3  SCORE 0",
+            "CLEAR · FUEL 0 · SCION NONE · TERRACE 1"
+          ]
+        }
+      ]
+    },
+    "avalanche-post": {
+      "source": "../src/feature-games22.js",
+      "sha256": "8cffdf313f9eeda025b874fd49eb117b911ebb018d3845cb547910939ff6e31e",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 182,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "be3dd5d3",
+          "labels": [
+            "▲",
+            "▲",
+            "▲",
+            "▲",
+            "▲",
+            "▲",
+            "!",
+            "!",
+            "AVALANCHE POST",
+            "DIST 565  POST 1  HELP 1  SCORE 0",
+            "RIDGE SKIER SHELTERED"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "6d5efad5",
+          "labels": [
+            "▲",
+            "▲",
+            "▲",
+            "▲",
+            "▲",
+            "▲",
+            "!",
+            "AVALANCHE POST",
+            "DIST 864  POST 2  HELP 2  SCORE 0",
+            "CORNICE CRACKING"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "f3ef69c6",
+          "labels": [
+            "▲",
+            "▲",
+            "▲",
+            "▲",
+            "▲",
+            "▲",
+            "!",
+            "AVALANCHE POST",
+            "DIST 1141  POST 2  HELP 2  SCORE 0",
+            "CORNICE CRACKING"
+          ]
+        }
+      ]
+    },
+    "orbit-kitchen": {
+      "source": "../src/feature-games23.js",
+      "sha256": "21ae5807571b8de243651ee9e18fcc99ad597bccea60a92ddfb791eb353e8ac9",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 306,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "35f8e771",
+          "labels": [
+            "☀",
+            "CHOP",
+            "MIX",
+            "ORDER",
+            "TABLE",
+            "O",
+            "T",
+            "MEALS 0  LOST 0",
+            "BOOTS ON",
+            "NEBULA SOUP ORB+TOM 0/2 FLARE SHIELD UP",
+            "FLARE STRIKE · SAFE 0 · SCORE 0",
+            "PAN 67  PRESSURE 2"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "b903d649",
+          "labels": [
+            "☀",
+            "CHOP",
+            "MIX",
+            "ORDER",
+            "TABLE",
+            "O",
+            "T",
+            "O",
+            "MEALS 0  LOST 0",
+            "BOOTS ON",
+            "NEBULA SOUP ORB+TOM 0/2 FLARE SHIELD UP",
+            "FLARE STRIKE · SAFE 0 · SCORE 0",
+            "PAN 2  PRESSURE 3"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "c4083100",
+          "labels": [
+            "☀",
+            "CHOP",
+            "MIX",
+            "ORDER",
+            "TABLE",
+            "T",
+            "O",
+            "L",
+            "MEALS 0  LOST 0",
+            "ZERO-G",
+            "NEBULA SOUP ORB+TOM 0/2 ORB CAUGHT - CHOP",
+            "FLARE COOLING · SAFE 0 · SCORE 0",
+            "PAN 71  PRESSURE 4"
+          ]
+        }
+      ]
+    },
+    "hearth-conductor": {
+      "source": "../src/feature-games23.js",
+      "sha256": "58c23c239d4661484a1295b9a6e4dc56c5229fbbb52065f55874028cb2f0227c",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 299,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "b64c127b",
+          "labels": [
+            "STR",
+            "BRASS",
+            "DRUM",
+            "LAMPS 0",
+            "NEXT BRASS",
+            "OVATION 18",
+            "COMBO 1",
+            "HARMONY 6 DISCORD 0",
+            "CANDLE SALON  PHRASES 0",
+            "CELLO ANSWERS"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "ea350cb6",
+          "labels": [
+            "STR",
+            "BRASS",
+            "DRUM",
+            "LAMPS 0",
+            "NEXT BRASS",
+            "OVATION 39",
+            "COMBO 2",
+            "HARMONY 7 DISCORD 0",
+            "CANDLE SALON  PHRASES 0",
+            "VOICES ENTWINED"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "d0640a44",
+          "labels": [
+            "STR",
+            "BRASS",
+            "DRUM",
+            "LAMPS 0",
+            "NEXT DRUM",
+            "OVATION 63",
+            "COMBO 3",
+            "HARMONY 8 DISCORD 0",
+            "CANDLE SALON  PHRASES 0",
+            "Z: CRESCENDO"
+          ]
+        }
+      ]
+    },
+    "rune-rebound": {
+      "source": "../src/feature-games24.js",
+      "sha256": "7a9485a7d7aa60aed8842b712199995be27b97602dcbcb867f2d95a893bed4d2",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 229,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "f1c217e0",
+          "labels": [
+            "RUNE REBOUND",
+            "STAGE 2  SCORE 0  MANA 5  x2",
+            "CRESTS 1  RIFTS 1  DRAINS 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "b08b20d0",
+          "labels": [
+            "RUNE REBOUND",
+            "STAGE 2  SCORE 0  MANA 5  x4",
+            "CRESTS 1  RIFTS 1  DRAINS 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "5341ad2e",
+          "labels": [
+            "RUNE REBOUND",
+            "STAGE 3  SCORE 0  MANA 5  x3",
+            "CRESTS 2  RIFTS 1  DRAINS 0"
+          ]
+        }
+      ]
+    },
+    "pocket-regatta": {
+      "source": "../src/feature-games24.js",
+      "sha256": "b5e8c5f5f0b310b330b06a113773ef9d66f2e2fe2e3b8c35af6ec296cc2aae07",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 120,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "474400e3",
+          "labels": [
+            "CEDAR SOUND",
+            "COURSE 1  MARK 2/4  SAIL 55%",
+            "SCORE 75 PEN 0 LAYLINE TACK"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "010795a0",
+          "labels": [
+            "CEDAR SOUND",
+            "COURSE 1  MARK 2/4  SAIL 45%",
+            "SCORE 75 PEN 0 LAYLINE TACK"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "ccf40087",
+          "labels": [
+            "CEDAR SOUND",
+            "COURSE 1  MARK 2/4  SAIL 45%",
+            "SCORE 75 PEN 0 YIELDED"
+          ]
+        }
+      ]
+    },
+    "willow-dam": {
+      "source": "../src/feature-games25.js",
+      "sha256": "9ad9e8e8cc6622ef08858d269f1463fbadf395972292a6940b8f215f463bbf75",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 94,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "8b4a2ecb",
+          "labels": [
+            "!",
+            "!",
+            "BAYS 0/6  BUILT 0",
+            "POND 7  HAB 0  KITS 0  SCORE 0",
+            ""
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "a5f8c351",
+          "labels": [
+            "!",
+            "!",
+            "BAYS 0/6  BUILT 0",
+            "POND 7  HAB 0  KITS 0  SCORE 0",
+            ""
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "bb896dba",
+          "labels": [
+            "!",
+            "!",
+            "BAYS 0/6  BUILT 0",
+            "POND 7  HAB 0  KITS 0  SCORE 0",
+            "LOG FLOATED"
+          ]
+        }
+      ]
+    },
+    "storm-roundup": {
+      "source": "../src/feature-games25.js",
+      "sha256": "09a201a14b1f287c98bd4c23ad991bf6b3da0a85a17559f8c6dec1467badfce7",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 117,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "21070478",
+          "labels": [
+            "ϟ",
+            "ϟ",
+            "CORRALLED 0  HP 5  STAGE 1",
+            "FIND AN ANIMAL",
+            "LIGHTNING INCOMING"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "58995474",
+          "labels": [
+            "ϟ",
+            "ϟ",
+            "CORRALLED 0  HP 5  STAGE 1",
+            "GROUND AT POST",
+            "LASSOED"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "1bf4030c",
+          "labels": [
+            "ϟ",
+            "ϟ",
+            "ϟ",
+            "CORRALLED 0  HP 5  STAGE 1",
+            "GROUND AT POST",
+            "LIGHTNING INCOMING"
+          ]
+        }
+      ]
+    },
+    "drift-divers": {
+      "source": "../src/feature-games26.js",
+      "sha256": "74458d2963578596b8199da1e162f1966ac92ff1fc02aa2664322ce806ff7b17",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 120,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "197f344a",
+          "labels": [
+            "VALVE · X",
+            "DRIFT DIVERS",
+            "SCORE 0  BATT 74  HULL 3",
+            "SONAR · TETHER · SURFACE"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "0161cf31",
+          "labels": [
+            "VALVE · X",
+            "◇",
+            "DRIFT DIVERS",
+            "SCORE 0  BATT 72  HULL 3",
+            "SONAR · TETHER · SURFACE"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "abf6d474",
+          "labels": [
+            "VALVE · X",
+            "◇",
+            "DRIFT DIVERS",
+            "SCORE 0  BATT 70  HULL 3",
+            "CABLE 39  STRAIN 0"
+          ]
+        }
+      ]
+    },
+    "lantern-lift": {
+      "source": "../src/feature-games26.js",
+      "sha256": "d63d7ee03800fb24073fba0db6ae763b78207a348ec49beeceb944b53fa9d9b3",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 314,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "57a420df",
+          "labels": [
+            "1",
+            "1",
+            "2",
+            "0",
+            "LANTERN LIFT",
+            "SCORE 0  RESCUED 0  LIGHTS 1/4  HULL 5",
+            "WIND WARNING  BALANCE -0.0  LOAD 1",
+            "SHEAVE CLEARED · SKIER STRANDED"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "bb03d2aa",
+          "labels": [
+            "1",
+            "0",
+            "2",
+            "0",
+            "LANTERN LIFT",
+            "SCORE 0  RESCUED 1  LIGHTS 2/4  HULL 5",
+            "WIND GUST  BALANCE -0.0  LOAD 1",
+            "SHEAVE CLEARED · SKIER ARMED"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "0df7e221",
+          "labels": [
+            "1",
+            "0",
+            "2",
+            "0",
+            "LANTERN LIFT",
+            "SCORE 0  RESCUED 1  LIGHTS 2/4  HULL 5",
+            "WIND CALM  BALANCE -0.1  LOAD 1",
+            "SHEAVE CLEARED · SKIER ARMED"
+          ]
+        }
+      ]
+    },
+    "dune-delivery": {
+      "source": "../src/feature-games27.js",
+      "sha256": "9e0490672485c50a17d6b397f52904b1a84332f667904728e0ff915ddcded736",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 375,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "ee9a42d9",
+          "labels": [
+            "REVIVED",
+            "DUNE DELIVERY",
+            "WATER 11.5  CARGO 3  COINS 3",
+            "DELIVERIES 1  WELLS 1  SCORE 0",
+            "OASIS WELL RESTORED"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "3bac8c90",
+          "labels": [
+            "REVIVED",
+            "SHELTERED",
+            "DUNE DELIVERY",
+            "WATER 11.7  CARGO 3  COINS 3",
+            "DELIVERIES 1  WELLS 1  SCORE 0",
+            "CARAVAN OASIS WATER"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "8f42b778",
+          "labels": [
+            "REVIVED",
+            "0%",
+            "DUNE DELIVERY",
+            "WATER 12.0  CARGO 3  COINS 4",
+            "DELIVERIES 2  WELLS 1  SCORE 0",
+            "CARAVAN SUPPLIED THE WELL"
+          ]
+        }
+      ]
+    },
+    "fossil-frontier": {
+      "source": "../src/feature-games27.js",
+      "sha256": "5ea1fa951fc92e48e174ccb384e68c0a6156c2989be50ba259da16b067b296a8",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 304,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "5e932995",
+          "labels": [
+            "RED MESA · RIDGEBACK",
+            "TAIL",
+            "RIB",
+            "SKULL",
+            "REPAIR",
+            "SUPPLY",
+            "ROCKFALL!",
+            "FOSSIL FRONTIER",
+            "SITE 1  MUSEUM 0/9  ♥ 4",
+            "SCORE 0",
+            "COLLAPSE PREVENTED",
+            "CARRY foreleg  BRACES 1"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "dba237e2",
+          "labels": [
+            "RED MESA · RIDGEBACK",
+            "TAIL",
+            "RIB",
+            "SKULL",
+            "REPAIR",
+            "SUPPLY",
+            "FOSSIL FRONTIER",
+            "SITE 1  MUSEUM 1/9  ♥ 4",
+            "SCORE 0",
+            "BONE MOUNTED",
+            "CARRY NONE  BRACES 1"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "2a578c83",
+          "labels": [
+            "RED MESA · RIDGEBACK",
+            "TAIL",
+            "RIB",
+            "SKULL",
+            "REPAIR",
+            "SUPPLY",
+            "FOSSIL FRONTIER",
+            "SITE 1  MUSEUM 1/9  ♥ 4",
+            "SCORE 0",
+            "SKULL RECOVERED",
+            "CARRY skull  BRACES 0"
+          ]
+        }
+      ]
+    },
+    "starlight-ward": {
+      "source": "../src/feature-games28.js",
+      "sha256": "324b80a2d27396bd74cf5578aa80d6ae7386b3fa35133ca43f19c073c1167964",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 96,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "c1dafc93",
+          "labels": [
+            "LENS VAULT",
+            "ORRERY",
+            "STAR DOME",
+            "LOCKED",
+            "!",
+            "SEALED 0 SCORE 0",
+            "SHADOWS 0",
+            "PRISM TURNED"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "95082480",
+          "labels": [
+            "LENS VAULT",
+            "ORRERY",
+            "STAR DOME",
+            "LOCKED",
+            "SEALED 1 SCORE 0",
+            "SHADOWS 1",
+            "BREACH SEALED"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "18366216",
+          "labels": [
+            "LENS VAULT",
+            "ORRERY",
+            "STAR DOME",
+            "LOCKED",
+            "SEALED 1 SCORE 0",
+            "SHADOWS 1",
+            "BREACH SEALED"
+          ]
+        }
+      ]
+    },
+    "rooftop-post": {
+      "source": "../src/feature-games28.js",
+      "sha256": "121ca82c75ebaaf1833ebde5c4a2a84722f3ad7bffd23c582a22882f085d345e",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 136,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "30a92c50",
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "SORT",
+            "MAIL",
+            "MAIL 0 SCORE 0",
+            "POWER SWITCH",
+            "WIND RISING"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "ae53f3dd",
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "SORT",
+            "MAIL",
+            "MAIL 0 SCORE 0",
+            "COLLECT MAIL",
+            "FIRE ESCAPES POWERED"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "ef432863",
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "SORT",
+            "MAIL",
+            "MAIL 0 SCORE 0",
+            "COLLECT MAIL",
+            "FIRE ESCAPES POWERED"
+          ]
+        }
+      ]
+    },
+    "bakery-blitz": {
+      "source": "../src/feature-games29.js",
+      "sha256": "17d0bcccdd5ae4879a59529e9c77bd84dfc54e6f3ea559a0f1bd1b0c7d009fd6",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 142,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "26ffe3fa",
+          "labels": [
+            "MIX",
+            "KNEAD",
+            "PROOF",
+            "OVEN",
+            "DISPLAY",
+            "FLOUR",
+            "BAKERY BLITZ",
+            "SCORE 0 HEAT 36 RACK 0/3 OVEN 0/2",
+            "RACK: EMPTY",
+            "OVEN: EMPTY",
+            "SHOWCASE: EMPTY",
+            "FLOUR 5 WATER 4 STEAM 0",
+            "BOULE: MIXED",
+            "KNEAD 2/3"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "b6bb0bc5",
+          "labels": [
+            "MIX",
+            "KNEAD",
+            "PROOF",
+            "OVEN",
+            "DISPLAY",
+            "FLOUR",
+            "BAKERY BLITZ",
+            "SCORE 0 HEAT 33 RACK 1/3 OVEN 0/2",
+            "RACK: BOULE 1.5s",
+            "OVEN: EMPTY",
+            "SHOWCASE: EMPTY",
+            "FLOUR 5 WATER 4 STEAM 0",
+            "HANDS FREE",
+            "DOUGH STILL PROOFING"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "a5353cc6",
+          "labels": [
+            "MIX",
+            "KNEAD",
+            "PROOF",
+            "OVEN",
+            "DISPLAY",
+            "FLOUR",
+            "BAKERY BLITZ",
+            "SCORE 0 HEAT 31 RACK 1/3 OVEN 0/2",
+            "RACK: BOULE 0.4s",
+            "OVEN: EMPTY",
+            "SHOWCASE: EMPTY",
+            "FLOUR 5 WATER 4 STEAM 0",
+            "HANDS FREE",
+            "DOUGH STILL PROOFING"
+          ]
+        }
+      ]
+    },
+    "starfall-station": {
+      "source": "../src/feature-games29.js",
+      "sha256": "ac35c7b548a7349ca877d85aaca943f69d0ce651bceabd9d74bbd50010b81dbd",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 206,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "227eff41",
+          "labels": [
+            "STARFALL STATION",
+            "HULL 83  ENERGY 73",
+            "OXY 36%  EVA 1/3  SALVAGE 13",
+            "RINGS 0/3 BREACHES 0 SCORE 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "cea677de",
+          "labels": [
+            "STARFALL STATION",
+            "HULL 83  ENERGY 77",
+            "OXY 35%  EVA 2/3  SALVAGE 12",
+            "RINGS 0/3 BREACHES 0 SCORE 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "4ab30f49",
+          "labels": [
+            "STARFALL STATION",
+            "HULL 83  ENERGY 70",
+            "OXY 34%  EVA 2/3  SALVAGE 19",
+            "RINGS 0/3 BREACHES 0 SCORE 45"
+          ]
+        }
+      ]
+    },
+    "greenhouse-guardians": {
+      "source": "../src/feature-games30.js",
+      "sha256": "6fdeb7617c33f91b935d7b7aed67222c03bed7038e3767f936dfe61b0327de07",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 121,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "a213f201",
+          "labels": [
+            "GREENHOUSE GUARDIANS",
+            "BLOOMS 0  WATER 88  SCORE 0",
+            "CUTTING NO  GRAFTS 0 · X: VALVES / SHUTTERS"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "400eda4c",
+          "labels": [
+            "GREENHOUSE GUARDIANS",
+            "BLOOMS 0  WATER 88  SCORE 0",
+            "CUTTING NO  GRAFTS 0 · X: VALVES / SHUTTERS"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "bf7c8e94",
+          "labels": [
+            "GREENHOUSE GUARDIANS",
+            "BLOOMS 0  WATER 88  SCORE 0",
+            "CUTTING NO  GRAFTS 0 · X: VALVES / SHUTTERS"
+          ]
+        }
+      ]
+    },
+    "harbor-hoist": {
+      "source": "../src/feature-games30.js",
+      "sha256": "5c77f7ab5b1175a91d5869d9c2cd8dabe6c203508091afc7bffb97871a86bdc5",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 133,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "099103ed",
+          "labels": [
+            "HARBOR HOIST",
+            "SHIP 1  LOAD 0  AT BERTH",
+            "BALANCE 0  TIDE MOVING",
+            "HOOK  •  STACK  •  LAUNCH"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "4646b7b8",
+          "labels": [
+            "HARBOR HOIST",
+            "SHIP 1  LOAD 0  AT BERTH",
+            "BALANCE 0  SLACK TIDE",
+            "HOOK  •  STACK  •  LAUNCH"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "75553a27",
+          "labels": [
+            "!",
+            "!",
+            "HARBOR HOIST",
+            "SHIP 1  LOAD 0  AT BERTH",
+            "BALANCE 0  TIDE MOVING",
+            "HOOK  •  STACK  •  LAUNCH"
+          ]
+        }
+      ]
+    },
+    "tower-heist": {
+      "source": "../src/feature-games31.js",
+      "sha256": "fa6c44fe6a23572832ae58d94b78193e07a14b6b0a34e753efeabbb12bf23d3c",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 159,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "51a17e9b",
+          "labels": [
+            "ESCAPES 0",
+            "KEY Y JEWEL 0 BELL N",
+            "GEAR LIFT CHIME",
+            "LOOSE GEAR FOUND"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "e3c372d8",
+          "labels": [
+            "ESCAPES 0",
+            "KEY Y JEWEL 0 BELL N",
+            "GEAR LIFT CHIME",
+            "LANTERN SLIPPED"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "d4443123",
+          "labels": [
+            "ESCAPES 0",
+            "KEY Y JEWEL 0 BELL N",
+            "GEAR ✓ LIFT CHIME",
+            "GEAR TRAIN RESTORED"
+          ]
+        }
+      ]
+    },
+    "storm-slot": {
+      "source": "../src/feature-games31.js",
+      "sha256": "18b860a22cebecbc49418e957da33ece5d1c4c8812b3e98507cf166227fde3f1",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 499,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "f9930142",
+          "labels": [
+            "BREAKWATER  1/2",
+            "CUPS 0",
+            "BATTERY 31/72  SCORE 0",
+            "DRAFT RECHARGE",
+            "JUNCTIONS · BOOST · DRAFT"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "438c113d",
+          "labels": [
+            "!",
+            "BREAKWATER  1/2",
+            "CUPS 0",
+            "BATTERY 30/72  SCORE 0",
+            "DRAFT RECHARGE",
+            "JUNCTIONS · BOOST · DRAFT"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "174e277a",
+          "labels": [
+            "BREAKWATER  1/2",
+            "CUPS 0",
+            "BATTERY 57/72  SCORE 0",
+            "DRAFT RECHARGE",
+            "JUNCTIONS · BOOST · DRAFT"
+          ]
+        }
+      ]
+    },
+    "glacier-glide": {
+      "source": "../src/feature-games32.js",
+      "sha256": "d02070e45b39456a7dcb0472223a70cbd7746fc1ff6153cc7bdde17f0c5ccc0d",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 290,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "14be3a20",
+          "labels": [
+            "GLACIER GLIDE",
+            "SCORE 0",
+            "FISH 1  FED 0  RESCUED 0",
+            "NURSERY WARMTH 0 · STONES 0 · STAGE 0",
+            "FISH CAUGHT · FEED A CHICK"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "f1432ffe",
+          "labels": [
+            "GLACIER GLIDE",
+            "SCORE 0",
+            "FISH 1  FED 0  RESCUED 0",
+            "NURSERY WARMTH 0 · STONES 0 · STAGE 0",
+            "SEAL WINDUP!"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "48cbd66a",
+          "labels": [
+            "GLACIER GLIDE",
+            "SCORE 125",
+            "FISH 0  FED 1  RESCUED 0",
+            "NURSERY WARMTH 1 · STONES 1 · STAGE 0",
+            "SLIDE ACROSS THE BRIDGE"
+          ]
+        }
+      ]
+    },
+    "cloud-shepherd": {
+      "source": "../src/feature-games32.js",
+      "sha256": "640478d44e336f52e96a4d5a4c269ff9a9b9d453b19bd12289feea3156ddb85d",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 125,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "d02c591f",
+          "labels": [
+            "SHELTER",
+            "STITCH",
+            "CLOUD SHEPHERD",
+            "SHELTERED 0  PASTURE 1  SCORE 0",
+            "FIBER 2  FLOCK CALLED"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "27400d2d",
+          "labels": [
+            "SHELTER",
+            "CLOUD SHEPHERD",
+            "SHELTERED 0  PASTURE 1  SCORE 0",
+            "FIBER 1  FLOCK CALLED"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "c93e5c01",
+          "labels": [
+            "SHELTER",
+            "CLOUD SHEPHERD",
+            "SHELTERED 5  PASTURE 1  SCORE 825",
+            "FIBER 1  FLOCK SAFE: STORM OUTSIDE"
+          ]
+        }
+      ]
+    },
+    "essence-workshop": {
+      "source": "../src/feature-games33.js",
+      "sha256": "79d5fc9975c96e0122d135303881bbef1de50e7b04aede14bfd9a3e137902eb6",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 97,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "16583055",
+          "labels": [
+            "LEAF",
+            "EMBER",
+            "TIDE",
+            "STILL",
+            "STILL",
+            "MIX",
+            "VALVE",
+            "ALTAR",
+            "MOON",
+            "MOTH",
+            "RESTORED 0 SCORE 0",
+            "PRESSURE 20",
+            "RECIPE LEAF+EMBER 0/2",
+            "CURSE 0  IDLE",
+            "LEAF GATHERED"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "38708de1",
+          "labels": [
+            "LEAF",
+            "EMBER",
+            "TIDE",
+            "STILL",
+            "STILL",
+            "MIX",
+            "VALVE",
+            "ALTAR",
+            "MOON",
+            "MOTH",
+            "RESTORED 0 SCORE 0",
+            "PRESSURE 20",
+            "RECIPE LEAF+EMBER 0/2",
+            "CURSE 0  IDLE",
+            "PURE LEAF"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "50779dc1",
+          "labels": [
+            "LEAF",
+            "EMBER",
+            "TIDE",
+            "STILL",
+            "STILL",
+            "MIX",
+            "VALVE",
+            "ALTAR",
+            "MOON",
+            "MOTH",
+            "RESTORED 0 SCORE 0",
+            "PRESSURE 20",
+            "RECIPE LEAF+EMBER 1/2",
+            "CURSE 0  IDLE",
+            "ESSENCE ADDED"
+          ]
+        }
+      ]
+    },
+    "mill-mechanic": {
+      "source": "../src/feature-games33.js",
+      "sha256": "5ccb6b898087efc00fc42f17a23bf1c7f3fb177c388cb3d42615ca273d52ea81",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 159,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "f3a4649a",
+          "labels": [
+            "WIND 6  SAIL 6",
+            "CLUTCH",
+            "MILL",
+            "BELT",
+            "MILL",
+            "PUMP",
+            "BROKEN",
+            "PUMP",
+            "LAMPS",
+            "BELT",
+            "LAMPS",
+            "MILL - PUMP - LAMPS -",
+            "SAIL TURNED",
+            "SERVICES 0 GRID 0/6"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "fdb456c3",
+          "labels": [
+            "WIND 6  SAIL 6",
+            "CLUTCH",
+            "MILL",
+            "BELT",
+            "MILL",
+            "PUMP",
+            "BELT",
+            "PUMP",
+            "LAMPS",
+            "BELT",
+            "LAMPS",
+            "MILL - PUMP - LAMPS -",
+            "PUMP BELT REPAIRED",
+            "SERVICES 0 GRID 0/6"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "3958db35",
+          "labels": [
+            "WIND 6  SAIL 6",
+            "CLUTCH",
+            "MILL",
+            "BELT",
+            "MILL",
+            "PUMP",
+            "BELT",
+            "PUMP",
+            "LAMPS",
+            "BELT",
+            "LAMPS",
+            "MILL - PUMP - LAMPS -",
+            "PUMP GEAR ENGAGED",
+            "SERVICES 0 GRID 0/6"
+          ]
+        }
+      ]
+    },
+    "wobble-war": {
+      "source": "../src/feature-games34.js",
+      "sha256": "0fecb70c56d1f050fdc60267683f96f8e7fe12c56b30a2bb8714978bf3320d5e",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 406,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "41768abb",
+          "labels": [
+            "6",
+            "6",
+            "WOBBLE WAR",
+            "DRAFT CLUB 3  BUDGET 3",
+            "MILL MEADOW  WINS 0  SCORE 0",
+            "SHLD",
+            "5",
+            "PIKE",
+            "5",
+            "BOW",
+            "LOCK",
+            "CLUB",
+            "3",
+            "GIANT",
+            "LOCK",
+            "CLUB PLACED"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "3bdcc1c7",
+          "labels": [
+            "6",
+            "6",
+            "!",
+            "WOBBLE WAR",
+            "BATTLE  ROUND 1",
+            "MILL MEADOW  WINS 0  SCORE 0",
+            "SHLD",
+            "5",
+            "PIKE",
+            "5",
+            "BOW",
+            "LOCK",
+            "CLUB",
+            "3",
+            "GIANT",
+            "LOCK",
+            "BATTLE"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "1c88e165",
+          "labels": [
+            "6",
+            "6",
+            "!",
+            "!",
+            "!",
+            "WOBBLE WAR",
+            "BATTLE  ROUND 1",
+            "MILL MEADOW  WINS 0  SCORE 0",
+            "SHLD",
+            "5",
+            "PIKE",
+            "5",
+            "BOW",
+            "LOCK",
+            "CLUB",
+            "3",
+            "GIANT",
+            "LOCK",
+            "FLANK THE REAR"
+          ]
+        }
+      ]
+    },
+    "void-gambit": {
+      "source": "../src/feature-games34.js",
+      "sha256": "5891ebe42e66d180cffec53b36560f580046723e2c09c7f2d231b91ca01df7be",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 370,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "8d63930b",
+          "labels": [
+            "VOID GAMBIT",
+            "GLASS MANTA",
+            "HULL 13/13  ENEMY 10  ENERGY 3",
+            "SHIELD 0",
+            "2",
+            "2",
+            "STAR 2",
+            "MOVE +2",
+            "WARD",
+            "BLOCK 3",
+            "BOLT",
+            "HIT 2",
+            "BOLT",
+            "HIT 2",
+            "PORT",
+            "MOVE -1",
+            "USE",
+            "END",
+            "AUTO",
+            "BATTLE 1  WINS 0",
+            "DRAW 7  DISCARD 0  AUTO"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "b38bcd22",
+          "labels": [
+            "VOID GAMBIT",
+            "GLASS MANTA",
+            "HULL 13/13  ENEMY 10  ENERGY 1",
+            "SHIELD 3",
+            "2",
+            "2",
+            "STAR 2",
+            "MOVE +2",
+            "BOLT",
+            "HIT 2",
+            "PORT",
+            "MOVE -1",
+            "BOLT",
+            "USE",
+            "END",
+            "AUTO",
+            "BATTLE 1  WINS 0",
+            "DRAW 7  DISCARD 1  AUTO"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "61d64b2e",
+          "labels": [
+            "VOID GAMBIT",
+            "GLASS MANTA",
+            "HULL 13/13  ENEMY 8  ENERGY 1",
+            "SHIELD 3",
+            "2",
+            "2",
+            "STAR 2",
+            "MOVE +2",
+            "BOLT",
+            "HIT 2",
+            "PORT",
+            "MOVE -1",
+            "USE",
+            "END",
+            "AUTO",
+            "BATTLE 1  WINS 0",
+            "DRAW 7  DISCARD 2  AUTO"
+          ]
+        }
+      ]
+    },
+    "rulebound": {
+      "source": "../src/feature-games35.js",
+      "sha256": "abe1804f27abd7c2c837d361e4ff5732e5d9c9e42458bfc0af264508c5c3652c",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 196,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "4b963d4a",
+          "labels": [
+            "STAR",
+            "IS",
+            "WIN",
+            "GATE",
+            "IS",
+            "OPEN",
+            "RULEBOUND",
+            "A FOX REWRITES THE STORY",
+            "THE ORCHARD GATE",
+            "PUSH WORDS. CHANGE RULES.",
+            "PAGE 1/6 · READ 0",
+            "X UNDO · Z RESTART"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "57b4bc1a",
+          "labels": [
+            "STAR",
+            "IS",
+            "WIN",
+            "GATE",
+            "IS",
+            "OPEN",
+            "RULEBOUND",
+            "A FOX REWRITES THE STORY",
+            "THE ORCHARD GATE",
+            "PUSH WORDS. CHANGE RULES.",
+            "PAGE 1/6 · READ 0",
+            "X UNDO · Z RESTART"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "64bd148b",
+          "labels": [
+            "STAR",
+            "IS",
+            "WIN",
+            "GATE",
+            "IS",
+            "OPEN",
+            "RULEBOUND",
+            "A FOX REWRITES THE STORY",
+            "THE ORCHARD GATE",
+            "THE STORY CHANGED!",
+            "PAGE 1/6 · READ 0",
+            "X UNDO · Z RESTART"
+          ]
+        }
+      ]
+    },
+    "hex-hamlet": {
+      "source": "../src/feature-games35.js",
+      "sha256": "5d579311e16514291bbb9a43bedd765c74aea2d6cc02c78076487aa3cf7aea8c",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 510,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "c78088f0",
+          "labels": [
+            "WATCH A VALLEY GROW",
+            "HEX HAMLET",
+            "HOMES",
+            "1/3",
+            "WOODS",
+            "2/3",
+            "RIVER",
+            "3/5",
+            "APPLE VALE",
+            "TILES 19",
+            "LAND 6/25",
+            "PLACE",
+            "UP NEXT",
+            "WHEAT",
+            "2 EDGE JOINS",
+            "PERFECT JOIN!",
+            "APPLE VALE"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "b1f4f2df",
+          "labels": [
+            "WATCH A VALLEY GROW",
+            "HEX HAMLET",
+            "HOMES",
+            "1/3",
+            "WOODS",
+            "2/3",
+            "RIVER",
+            "3/5",
+            "APPLE VALE",
+            "TILES 18",
+            "LAND 7/25",
+            "PLACE",
+            "UP NEXT",
+            "HAMLET",
+            "1 EDGE JOIN",
+            "PERFECT JOIN!",
+            "APPLE VALE"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "ed372f52",
+          "labels": [
+            "WATCH A VALLEY GROW",
+            "HEX HAMLET",
+            "HOMES",
+            "2/3",
+            "WOODS",
+            "2/3",
+            "RIVER",
+            "3/5",
+            "APPLE VALE",
+            "TILES 17",
+            "LAND 8/25",
+            "PLACE",
+            "UP NEXT",
+            "MEADOW",
+            "1 EDGE JOIN",
+            "THE VALLEY GROWS",
+            "APPLE VALE"
+          ]
+        }
+      ]
+    },
+    "ashen-courier": {
+      "source": "../src/feature-games36.js",
+      "sha256": "2705381dcce69f229d4741f1fcc9fe7b197f1ff001d62f6df7a738fd3f43d1de",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 176,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "c5c4599c",
+          "labels": [
+            "ARENA 1  KOs 0",
+            "ASH COURT",
+            "DEFEAT 2 GUARDS",
+            "NO BOONS YET",
+            "X DASH READY  SPACE CUT"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "95aa0737",
+          "labels": [
+            "ARENA 1  KOs 1",
+            "ASH COURT",
+            "DEFEAT 1 GUARDS",
+            "NO BOONS YET",
+            "X DASH: 47f TO READY"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "acedacf3",
+          "labels": [
+            "✦",
+            "◆",
+            "ARENA 1  KOs 2",
+            "Z NEAR A SHRINE",
+            "SUN AVAILABLE",
+            "+8 SWORD REACH",
+            "+2 SWORD DAMAGE",
+            "TIDE AVAILABLE",
+            "DASH: 52 TO 34f",
+            "END: 3 DAMAGE WAVE"
+          ]
+        }
+      ]
+    },
+    "icebound-ascent": {
+      "source": "../src/feature-games36.js",
+      "sha256": "94bdab7a3d5231ba68ef71b6b9a869fe6a5a4bc1d9e9ff67e3c76488a8c29c6e",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 184,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "e1c189ee",
+          "labels": [
+            "SUMMIT 1  CRYSTALS 2",
+            "DASH 0 GRIP 91",
+            "PINE REFUGE",
+            "FACE 1/3: REACH THE FLAG",
+            "FIND A CRYSTAL",
+            "AIR DASH"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "22abad29",
+          "labels": [
+            "SUMMIT 1  CRYSTALS 3",
+            "DASH 0 GRIP 100",
+            "PINE REFUGE",
+            "FACE 1/3: REACH THE FLAG",
+            "FIND A CRYSTAL",
+            "AIR DASH"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "d50f3a0f",
+          "labels": [
+            "SUMMIT 2  CRYSTALS 4",
+            "DASH 0 GRIP 98",
+            "BELL SANCTUARY",
+            "FACE 2/3: REACH THE FLAG",
+            "FIND A CRYSTAL",
+            "AIR DASH"
+          ]
+        }
+      ]
+    },
+    "phase-foundry": {
+      "source": "../src/feature-games37.js",
+      "sha256": "1660e6e247d26903c91743fc0790b44136da455d3add6222929048d595517fcd",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 118,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "bc6eaff9",
+          "labels": [
+            "BUILD SPEED",
+            "EXIT →",
+            "PHASE FOUNDRY",
+            "MOMENTUM WELL 1/3",
+            "ENTER CYAN"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "8f503133",
+          "labels": [
+            "BUILD SPEED",
+            "EXIT →",
+            "PHASE FOUNDRY",
+            "MOMENTUM WELL 1/3",
+            "ENTER CYAN"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "8ebd71ed",
+          "labels": [
+            "BUILD SPEED",
+            "EXIT →",
+            "PHASE FOUNDRY",
+            "MOMENTUM WELL 1/3",
+            "ENTER CYAN"
+          ]
+        }
+      ]
+    },
+    "hearthbound": {
+      "source": "../src/feature-games37.js",
+      "sha256": "ae6940c13a29d99321cb92cf16d829661b81e26f5d4edb850bf6f842d327da7a",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 172,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "5eba9aea",
+          "labels": [
+            "WOOD",
+            "FOOD",
+            "HEARTH",
+            "AID",
+            "SHELTER",
+            "0/3",
+            "CLINIC",
+            "0/2",
+            "LEVEE",
+            "0/3",
+            "BEACON",
+            "0/3",
+            "HEARTHBOUND",
+            "CRASHWOOD  MEALS 2/3  TENDED 0",
+            "FOOD CARRIED"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "611f54c0",
+          "labels": [
+            "WOOD",
+            "FOOD",
+            "HEARTH",
+            "AID",
+            "SHELTER",
+            "0/3",
+            "CLINIC",
+            "0/2",
+            "LEVEE",
+            "0/3",
+            "BEACON",
+            "0/3",
+            "HEARTHBOUND",
+            "CRASHWOOD  MEALS 3/3  TENDED 0",
+            "MEAL COOKED"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "f4768b63",
+          "labels": [
+            "WOOD",
+            "FOOD",
+            "HEARTH",
+            "AID",
+            "SHELTER",
+            "1/3",
+            "CLINIC",
+            "0/2",
+            "LEVEE",
+            "0/3",
+            "BEACON",
+            "0/3",
+            "HEARTHBOUND",
+            "CRASHWOOD  MEALS 3/3  TENDED 0",
+            "FOOD CARRIED"
+          ]
+        }
+      ]
+    },
+    "gloam-trawler": {
+      "source": "../src/feature-games38.js",
+      "sha256": "9eb306bb2fb2856cc819943234bdd538993a1103f7879a7e0fb32f9ae17ed361",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 561,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "cff4d330",
+          "labels": [
+            "NET",
+            "VENT",
+            "CURRENT",
+            "1",
+            "2",
+            "3",
+            "GLOAM TRAWLER",
+            "BELL MARSH",
+            "DAY",
+            "FIT BOTH TOOLS AT HARBOR",
+            "BRAKE BEFORE UNLOADING",
+            "CARGO 0/6 COINS 8 RELICS 0/3",
+            "HULL 6  TACKLE 1/3  LIGHT 0/3  PANIC 0",
+            "X LANTERN $8 READY"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "5472db25",
+          "labels": [
+            "NET",
+            "VENT",
+            "CURRENT",
+            "1",
+            "2",
+            "3",
+            "GLOAM TRAWLER",
+            "BELL MARSH",
+            "DAY",
+            "RECOVER THE ISLAND BELL",
+            "BRAKE BEFORE UNLOADING",
+            "CARGO 0/6 COINS 0 RELICS 0/3",
+            "HULL 6  TACKLE 1/3  LIGHT 1/3  PANIC 0",
+            "SPACE CAST  •  X LANTERN  •  Z BRAKE"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "b49bb012",
+          "labels": [
+            "NET",
+            "VENT",
+            "CURRENT",
+            "1",
+            "2",
+            "3",
+            "GLOAM TRAWLER",
+            "BELL MARSH",
+            "DAY",
+            "RECOVER THE ISLAND BELL",
+            "CAST • STOW • SELL",
+            "CARGO 0/6 COINS 0 RELICS 0/3",
+            "HULL 6  TACKLE 1/3  LIGHT 1/3  PANIC 0",
+            "SPACE CAST  •  X LANTERN  •  Z BRAKE"
+          ]
+        }
+      ]
+    },
+    "reef-to-rice": {
+      "source": "../src/feature-games38.js",
+      "sha256": "53a3339b2f7526813a3a2b705241f75f38f5d6e4dac0daae54ee8215654b458e",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 206,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "41504de3",
+          "labels": [
+            "FAN CORAL",
+            "OXYGEN 80  BAG 0/3",
+            "CATCH FISH AND RETURN"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "262ab961",
+          "labels": [
+            "FAN CORAL",
+            "OXYGEN 72  BAG 3/3",
+            "CATCH FISH AND RETURN"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "c8364e08",
+          "labels": [
+            "FAN CORAL",
+            "OXYGEN 63  BAG 3/3",
+            "CATCH FISH AND RETURN"
+          ]
+        }
+      ]
+    },
+    "neon-duelist": {
+      "source": "../src/feature-games39.js",
+      "sha256": "53dae9248bbb79ffcc72d9133bd9307f400b099876d61e8e97c6f531b81ea50e",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 270,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "516b6cf2",
+          "labels": [
+            "VELVET",
+            "AFTER HOURS",
+            "EXIT",
+            "ROOM 1  PARRIES 2  WINS 0",
+            "FOCUS 100",
+            "AMBUSHERS 0  REWINDS 0",
+            "ROOM CLEAR - EXIT LIT",
+            "FOCUS",
+            "100%",
+            "Z HOLD: SPEND SLOW FOCUS",
+            "BLADE RECOVERING",
+            "RETURNED SHOT"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "39f6a164",
+          "labels": [
+            "LOCKED",
+            "!",
+            "ROOM 2  PARRIES 2  WINS 0",
+            "FOCUS 100",
+            "AMBUSHERS 2  REWINDS 0",
+            "CLEAR 2 AMBUSHERS",
+            "FOCUS",
+            "100%",
+            "Z HOLD: SPEND SLOW FOCUS",
+            "SPACE READY  X ROLL READY",
+            "GUN LOCK"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "1809cfa0",
+          "labels": [
+            "LOCKED",
+            "ROOM 2  PARRIES 3  WINS 0",
+            "FOCUS 100",
+            "AMBUSHERS 1  REWINDS 0",
+            "CLEAR 1 AMBUSHERS",
+            "FOCUS",
+            "100%",
+            "Z HOLD: SPEND SLOW FOCUS",
+            "SPACE READY  X ROLL READY",
+            "RETURNED SHOT"
+          ]
+        }
+      ]
+    },
+    "street-crew": {
+      "source": "../src/feature-games39.js",
+      "sha256": "24a3936ef708a805791dabf154b7dcf1860cca9cb2ea6150c19938014051f1bb",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 277,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "412110a7",
+          "labels": [
+            "JUNCTION JOY",
+            "OLD TOWN",
+            "CONNECT HOMES TO BAKERY",
+            "SPACE: PAVE 1",
+            "ASPHALT 16  BRIDGE 0",
+            "BAKERY",
+            "0/12",
+            "CINEMA",
+            "0/14",
+            "HOSPITAL",
+            "0/16"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "c571ab69",
+          "labels": [
+            "JUNCTION JOY",
+            "OLD TOWN",
+            "CONNECT HOMES TO BAKERY",
+            "DRIVE TO STAKES: PAVE 1",
+            "ASPHALT 14  BRIDGE 0",
+            "BAKERY",
+            "0/12",
+            "CINEMA",
+            "0/14",
+            "HOSPITAL",
+            "0/16"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "1629b81e",
+          "labels": [
+            "JUNCTION JOY",
+            "OLD TOWN",
+            "CONNECT HOMES TO BAKERY",
+            "SPACE: PAVE 1",
+            "ASPHALT 14  BRIDGE 0",
+            "BAKERY",
+            "0/12",
+            "CINEMA",
+            "0/14",
+            "HOSPITAL",
+            "0/16"
+          ]
+        }
+      ]
+    },
+    "stamp-harbor": {
+      "source": "../src/feature-games40.js",
+      "sha256": "9a670094e23c885478651639ef638568bb45a1c74a504a51564003968dc57a7a",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 270,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "fb98890d",
+          "labels": [
+            "PORT RULES",
+            "DAY 12  ·  EXPIRY 12+  ·  FACE = ID",
+            "PERMIT NOT REQUIRED",
+            "MAY",
+            "EXP 17",
+            "ID",
+            "PERMIT",
+            "WORK",
+            "MAY",
+            "SEAL A",
+            "PASS",
+            "BELL",
+            "ID",
+            "PASS",
+            "BOOK",
+            "X ✓",
+            "Z ✕",
+            "STAMP HARBOR   SHIFT 1/3",
+            "PAY 0  CASE 1/4",
+            "TRAVELER APPROACHING",
+            "ID/PASS: SPACE · X ADMIT · Z REFUSE"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "b5929c79",
+          "labels": [
+            "PORT RULES",
+            "DAY 12  ·  EXPIRY 12+  ·  FACE = ID",
+            "PERMIT NOT REQUIRED",
+            "MAY",
+            "EXP 17",
+            "ID",
+            "PERMIT",
+            "WORK",
+            "MAY",
+            "SEAL A",
+            "PASS",
+            "BELL",
+            "ID",
+            "PASS",
+            "BOOK",
+            "X ✓",
+            "Z ✕",
+            "STAMP HARBOR   SHIFT 1/3",
+            "PAY 0  CASE 1/4",
+            "POSTED RULES READ",
+            "ID/PASS: SPACE · X ADMIT · Z REFUSE"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "577882e1",
+          "labels": [
+            "PORT RULES",
+            "DAY 12  ·  EXPIRY 12+  ·  FACE = ID",
+            "PERMIT NOT REQUIRED",
+            "MAY",
+            "EXP 17",
+            "ID",
+            "PERMIT",
+            "WORK",
+            "MAY",
+            "SEAL A",
+            "PASS",
+            "BELL",
+            "ID",
+            "PASS",
+            "BOOK",
+            "X ✓",
+            "Z ✕",
+            "STAMP HARBOR   SHIFT 1/3",
+            "PAY 0  CASE 1/4",
+            "BRING PASSPORT CLOSE",
+            "COMPARING DOCUMENT",
+            "COMPARING"
+          ]
+        }
+      ]
+    },
+    "wash-wonder": {
+      "source": "../src/feature-games40.js",
+      "sha256": "70dff93eeb8e5badd48a8218d1d478c127b4ed34e7a47cc27cca22c80e93f53e",
+      "canvasWidth": 320,
+      "canvasHeight": 720,
+      "sampledColors": 229,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "9eed2e03",
+          "labels": [
+            "TAP",
+            "WASH WONDER",
+            "1/3",
+            "STRIPED CAROUSEL",
+            "NARROW: RUST",
+            "NARROW/RUST  WATER 106"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "b51f2cd3",
+          "labels": [
+            "TAP",
+            "WASH WONDER",
+            "1/3",
+            "STRIPED CAROUSEL",
+            "NARROW: RUST",
+            "NARROW/RUST  WATER 78"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "e2d2ffab",
+          "labels": [
+            "TAP",
+            "WASH WONDER",
+            "1/3",
+            "STRIPED CAROUSEL",
+            "NARROW: RUST",
+            "NARROW/RUST  WATER 46"
+          ]
+        }
+      ]
+    },
+    "snake": {
+      "source": "../src/games.js",
+      "sha256": "9c33c9227d71728123c670988fb749d1ee88cdeff0ab79bc372a4282bca33acf",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 15,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "4f439133",
+          "labels": [
+            "SCORE  00"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "73289268",
+          "labels": [
+            "SCORE  01"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "12429264",
+          "labels": [
+            "SCORE  01"
+          ]
+        }
+      ]
+    },
+    "breakout": {
+      "source": "../src/games.js",
+      "sha256": "c1f1e305ef2502f430546ad687b2235409376c41638f8ba677a12689cf920118",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 31,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "1442403d",
+          "labels": [
+            "SCORE  01"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "be92ac2e",
+          "labels": [
+            "SCORE  01"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "be1b0b92",
+          "labels": [
+            "SCORE  07"
+          ]
+        }
+      ]
+    },
+    "pong": {
+      "source": "../src/games.js",
+      "sha256": "c5848255ece9c713e22c6fe45ba1b804d6659d6470fc92ca35aee5a12113e886",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 14,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "1cb5e896",
+          "labels": [
+            "00",
+            "01"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "5f4928fb",
+          "labels": [
+            "00",
+            "01"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "33fa3f5c",
+          "labels": [
+            "01",
+            "01"
+          ]
+        }
+      ]
+    },
+    "orbit": {
+      "source": "../src/games.js",
+      "sha256": "20eab74b756375d6fd6d110aad5a2b5cb87bee395fa996008ef665486472b1f5",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 101,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "55132076",
+          "labels": [
+            "SPARKS  03"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "5c1e8816",
+          "labels": [
+            "SPARKS  00"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "074ca116",
+          "labels": [
+            "SPARKS  01"
+          ]
+        }
+      ]
+    },
+    "flappy": {
+      "source": "../src/games.js",
+      "sha256": "eaeb10b8ec7b9853e31da5a7517fb48982a16fb8c8c4fba3f12b3700a449fec2",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 25,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "a01fd70b",
+          "labels": [
+            "FLIGHT  00"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "6cd8332f",
+          "labels": [
+            "FLIGHT  00"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "7a838b14",
+          "labels": [
+            "FLIGHT  00"
+          ]
+        }
+      ]
+    },
+    "dodge": {
+      "source": "../src/games.js",
+      "sha256": "727ed7415a79de6af435391815ef43b80cad813bad70786a2a055a1da376b549",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 34,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "8ce6f7e0",
+          "labels": [
+            "DODGED  00"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "41aaef29",
+          "labels": [
+            "DODGED  02"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "4050daf2",
+          "labels": [
+            "DODGED  02"
+          ]
+        }
+      ]
+    },
+    "star-defender": {
+      "source": "../src/more-games.js",
+      "sha256": "39290d1683fe120d467a3b5386fb667d49b23f9c0e852f57f2079937248b3223",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 26,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "648c9e8b",
+          "labels": [
+            "WAVE 01   SCORE 3"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "23460f66",
+          "labels": [
+            "WAVE 01   SCORE 5"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "0837285c",
+          "labels": [
+            "WAVE 01   SCORE 5"
+          ]
+        }
+      ]
+    },
+    "road-runner": {
+      "source": "../src/more-games.js",
+      "sha256": "1fcf81c1af07103e5aea1a4e015d12f26fabbbe6f796b63e48aaaa5c4c545692",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 21,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "35a4ee7b",
+          "labels": [
+            "PASSED 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "ce0c3a9b",
+          "labels": [
+            "PASSED 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "f3ceb1d3",
+          "labels": [
+            "PASSED 1"
+          ]
+        }
+      ]
+    },
+    "frog-crossing": {
+      "source": "../src/more-games.js",
+      "sha256": "32a8ce060870d577c761b275f3b483e426ce563493a73df874e59a3990eca9f0",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 25,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "fc9e412d",
+          "labels": [
+            "CROSSINGS 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "2ea4a569",
+          "labels": [
+            "CROSSINGS 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "f7dcbc7e",
+          "labels": [
+            "CROSSINGS 0"
+          ]
+        }
+      ]
+    },
+    "meteor-field": {
+      "source": "../src/more-games.js",
+      "sha256": "dfc7e467e6dd3a4743089f375f09b4d8f0a834a8339be18b4fe64e833f12036e",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 30,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "77d78fd8",
+          "labels": [
+            "CLEARED 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "16a7838f",
+          "labels": [
+            "CLEARED 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "76cdfcda",
+          "labels": [
+            "CLEARED 0"
+          ]
+        }
+      ]
+    },
+    "coin-maze": {
+      "source": "../src/more-games.js",
+      "sha256": "91b6cdb66faf5c3a58b9e6f682441cab30c7559b107d4d4165276eca9fc2d424",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 30,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "ae682f71",
+          "labels": [
+            "COINS 14"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "ae35289c",
+          "labels": [
+            "COINS 22"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "b9016b3a",
+          "labels": [
+            "COINS 29"
+          ]
+        }
+      ]
+    },
+    "jump-dash": {
+      "source": "../src/more-games.js",
+      "sha256": "66f920f17a9dde77bdcc08d2d0fef591a008ef3733a496463760e21df87f8822",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 18,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "74c967e8",
+          "labels": [
+            "JUMPS 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "f66ab2a9",
+          "labels": [
+            "JUMPS 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "b8016f27",
+          "labels": [
+            "JUMPS 1"
+          ]
+        }
+      ]
+    },
+    "harvest-catch": {
+      "source": "../src/more-games.js",
+      "sha256": "f524b6e2fef47a9365180dc6670c9f8b88b649f75fb21ba69216953718c627db",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 27,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "fc003e13",
+          "labels": [
+            "HARVEST 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "4d35f0a4",
+          "labels": [
+            "HARVEST 1"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "cfc41dfb",
+          "labels": [
+            "HARVEST 1"
+          ]
+        }
+      ]
+    },
+    "bumper-ball": {
+      "source": "../src/more-games.js",
+      "sha256": "78a1a5d0fb17d79785dd0371bf0a89921239f1f7760987533d71cd36e38ce2a4",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 41,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "ddf88ef6",
+          "labels": [
+            "BOUNCES 1"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "ec49cf65",
+          "labels": [
+            "BOUNCES 1"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "a3822d3d",
+          "labels": [
+            "BOUNCES 1"
+          ]
+        }
+      ]
+    },
+    "tunnel-flight": {
+      "source": "../src/more-games.js",
+      "sha256": "c6d4aab9153b1accb1ebcdb889c24aa46ea1c3ffd7012ae27773589c4cdf92f0",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 30,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "56e8fabc",
+          "labels": [
+            "GATES 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "bc630d78",
+          "labels": [
+            "GATES 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "3f534293",
+          "labels": [
+            "GATES 0"
+          ]
+        }
+      ]
+    },
+    "target-practice": {
+      "source": "../src/more-games.js",
+      "sha256": "af10c747f0cba5fbb966a8b3a354fe21d0ebc7b86aa68027376a97f148decc4e",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 33,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "dac104b5",
+          "labels": [
+            "HITS 3"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "f368cc90",
+          "labels": [
+            "HITS 4"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "c1f57aeb",
+          "labels": [
+            "HITS 5"
+          ]
+        }
+      ]
+    },
+    "parcel-sort": {
+      "source": "../src/more-games.js",
+      "sha256": "f773e615f840f00204ee9a64fdcf5285a18be56ebff5cbe783b4dda97713f011",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 14,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "38f0ae01",
+          "labels": [
+            "SORTED 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "1bb2906d",
+          "labels": [
+            "SORTED 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "2640ff53",
+          "labels": [
+            "SORTED 1"
+          ]
+        }
+      ]
+    },
+    "balance-box": {
+      "source": "../src/more-games.js",
+      "sha256": "aa38114313cff9d007c1b0a8326f05571b0669cce6bc8ef32d737c9c27809d37",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 50,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "6299400b",
+          "labels": [
+            "BALANCE 1s",
+            "KEEP THE BOX CENTERED"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "5562ee8c",
+          "labels": [
+            "BALANCE 2s",
+            "KEEP THE BOX CENTERED"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "accec7b4",
+          "labels": [
+            "BALANCE 3s",
+            "KEEP THE BOX CENTERED"
+          ]
+        }
+      ]
+    },
+    "laser-dodge": {
+      "source": "../src/more-games.js",
+      "sha256": "e5ac580d906cf4f020f3f475de9ec09096af1837ea93d8d6c8d109d1aec2da0f",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 18,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "869124c2",
+          "labels": [
+            "DODGED 0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "a2f72f98",
+          "labels": [
+            "DODGED 0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "d687278c",
+          "labels": [
+            "DODGED 1"
+          ]
+        }
+      ]
+    },
+    "bubble-pop": {
+      "source": "../src/more-games.js",
+      "sha256": "d48c63a313d63b480d1cfbb8ba27b3f862c01868f9dc7871f2894e2c05b096a8",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 67,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "c4801d38",
+          "labels": [
+            "POPPED 2"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "2fe47d55",
+          "labels": [
+            "POPPED 3"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "b8d437c6",
+          "labels": [
+            "POPPED 4"
+          ]
+        }
+      ]
+    },
+    "tiny-fishing": {
+      "source": "../src/more-games.js",
+      "sha256": "bb5803a476f0a86da2f85e77e8f38a59d921066115ebdf3679993aeff6b69e14",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 16,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "b0ffbd27",
+          "labels": [
+            "CAUGHT 2"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "e822a3f5",
+          "labels": [
+            "CAUGHT 5"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "020a1734",
+          "labels": [
+            "CAUGHT 5"
+          ]
+        }
+      ]
+    },
+    "lander": {
+      "source": "../src/extra-games.js",
+      "sha256": "e6858162885ef10f9936e16b8baf79ab8b0bf40d823b81f85521fb4ccfdc7665",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 29,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "59eb129d",
+          "labels": [
+            "LANDINGS  00"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "5ecd0a08",
+          "labels": [
+            "LANDINGS  00"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "4fa4e8a2",
+          "labels": [
+            "LANDINGS  00"
+          ]
+        }
+      ]
+    },
+    "maze": {
+      "source": "../src/extra-games.js",
+      "sha256": "2508e0bc1d4d11a93481a9068a6070304a7873f38d4308949c8878189911589d",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 17,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "d7fa1efe",
+          "labels": [
+            "FIND THE EXIT"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "35ae72b8",
+          "labels": [
+            "FIND THE EXIT"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "75557e1f",
+          "labels": [
+            "FIND THE EXIT"
+          ]
+        }
+      ]
+    },
+    "asteroids": {
+      "source": "../src/extra-games.js",
+      "sha256": "c6e3d68b8d6233a1ac40a2c39f6b5fc5181b7215a31e6553a99e66c4d56c69af",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 40,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "d99bb32c",
+          "labels": [
+            "SCORE  01"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "0eb341da",
+          "labels": [
+            "SCORE  01"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "88616fd1",
+          "labels": [
+            "SCORE  03"
+          ]
+        }
+      ]
+    },
+    "catch": {
+      "source": "../src/extra-games.js",
+      "sha256": "0c337faa8c54685ad738751bb7f5f05d716de4048860f39c5bfafe6b75a67ada",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 30,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "17c830e4",
+          "labels": [
+            "FRUIT  0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "edf491c2",
+          "labels": [
+            "FRUIT  1"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "bd258db6",
+          "labels": [
+            "FRUIT  2"
+          ]
+        }
+      ]
+    },
+    "runner": {
+      "source": "../src/extra-games.js",
+      "sha256": "7ddfdcec34a683d65a661c0b7aa8642a4085f2e09ee118285bb0be9d70d9a33a",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 18,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "16f2adfd",
+          "labels": [
+            "HURDLES  0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "76f8d9dd",
+          "labels": [
+            "HURDLES  0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "2448ae10",
+          "labels": [
+            "HURDLES  1"
+          ]
+        }
+      ]
+    },
+    "invaders": {
+      "source": "../src/extra-games.js",
+      "sha256": "57903ac39b6285ec6bc4225ce3ef56a141c43ef2420915e10f697a5ff1eb43ee",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 12,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "848e455b",
+          "labels": [
+            "HITS  3"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "f8745e63",
+          "labels": [
+            "HITS  4"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "3e066e12",
+          "labels": [
+            "HITS  6"
+          ]
+        }
+      ]
+    },
+    "target": {
+      "source": "../src/extra-games.js",
+      "sha256": "6da4cb503795a156c2350d38498ebfc11b93f1bf35e4aa1f299d16121fd7789b",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 44,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "059ba292",
+          "labels": [
+            "HITS  3"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "70cf04b3",
+          "labels": [
+            "HITS  5"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "7357bb05",
+          "labels": [
+            "HITS  6"
+          ]
+        }
+      ]
+    },
+    "racer": {
+      "source": "../src/extra-games.js",
+      "sha256": "3ff3c5d84c59acc2a88fc2d492662281ccc2690fe3875d490e4cd46e9f6d4499",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 31,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "50ca1427",
+          "labels": [
+            "PASSED  0"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "3a2277d7",
+          "labels": [
+            "PASSED  0"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "af68f651",
+          "labels": [
+            "PASSED  2"
+          ]
+        }
+      ]
+    },
+    "puzzle": {
+      "source": "../src/extra-games.js",
+      "sha256": "4513859cdba156e132e9ec66408f446cc1001183b43a63f43ab492591794ac5b",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 26,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "275cd273",
+          "labels": [
+            "2",
+            "5",
+            "3",
+            "4",
+            "13",
+            "9",
+            "6",
+            "7",
+            "1",
+            "11",
+            "8",
+            "14",
+            "10",
+            "15",
+            "12",
+            "SLIDE THE TILES"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "60c0c0fa",
+          "labels": [
+            "2",
+            "5",
+            "3",
+            "4",
+            "13",
+            "9",
+            "6",
+            "7",
+            "1",
+            "11",
+            "8",
+            "14",
+            "10",
+            "15",
+            "12",
+            "SLIDE THE TILES"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "94ee9f56",
+          "labels": [
+            "2",
+            "3",
+            "4",
+            "9",
+            "5",
+            "6",
+            "7",
+            "13",
+            "1",
+            "11",
+            "8",
+            "14",
+            "10",
+            "15",
+            "12",
+            "SLIDE THE TILES"
+          ]
+        }
+      ]
+    },
+    "bubbles": {
+      "source": "../src/extra-games.js",
+      "sha256": "da0879f7c3ebe31fc6c47d1f3a750361dd6935d53f29cdf8ecda4ca6b00668e1",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 69,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "6c5e63d0",
+          "labels": [
+            "POPPED  4"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "1872cdff",
+          "labels": [
+            "POPPED  7"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "c849930f",
+          "labels": [
+            "POPPED  8"
+          ]
+        }
+      ]
+    },
+    "platform": {
+      "source": "../src/extra-games.js",
+      "sha256": "54c0c6dfe311db9ed710a9882bddb68162064c3ae98b6634fbe669982122c969",
+      "canvasWidth": 320,
+      "canvasHeight": 240,
+      "sampledColors": 21,
+      "selectedFrame": 240,
+      "samples": [
+        {
+          "frame": 120,
+          "lastDrawFrame": 119,
+          "signature": "3593b3a4",
+          "labels": [
+            "CROSSINGS  1"
+          ]
+        },
+        {
+          "frame": 180,
+          "lastDrawFrame": 179,
+          "signature": "f82906eb",
+          "labels": [
+            "CROSSINGS  1"
+          ]
+        },
+        {
+          "frame": 240,
+          "lastDrawFrame": 239,
+          "signature": "53b65ef3",
+          "labels": [
+            "CROSSINGS  1"
+          ]
+        }
+      ]
+    }
+  },
+  "homepage": {
+    "games": [
+      "machine-hunt",
+      "swarm-keeper",
+      "ashen-rage",
+      "willow-dam",
+      "ashen-courier",
+      "coin-maze"
+    ],
+    "sha256": "832575e62a34d8a4ec59db12dd43a44d7cf73dcdd1def0880192a5855c34e9e8"
+  }
+}
