@@ -1,10 +1,9 @@
 import './style.css';
 import {getSoundEnabled,setSoundEnabled,subscribeSound,unlockSound} from './audio.js';
-import { games as baseGames, createGame } from './games.js';
-import { moreGames, createMoreGame } from './more-games.js';
-import { extraGames, createExtraGame } from './extra-games.js';
+import { gameCatalog } from './catalog.js';
+import { loadGameFactory } from './game-loader.js';
+import { gameUrl, gameIdFromLocation } from './social/urls.js';
 import { customGames, createCustomGame } from './custom/runtime.js';
-import { featureRegistry } from './feature-registry.js';
 import { instantiateIfCurrent } from './async-game.js';
 import { handlePlayerEscape } from './player-session.js';
 import { createShareControls } from './ui/share-controls.js';
@@ -14,25 +13,12 @@ import {createActivityCoordinator} from './feed-activity.js';
 import { rankPreviews, previewOverlaps } from './preview-priority.js';
 import { shouldScrollGalleryWheel, nearestGalleryCard, galleryEdgeVelocity, verticalGalleryNeighbor } from './gallery-controls.js';
 
-const featureLoaders = import.meta.glob('./feature-games*.js');
-const featureEntries = featureRegistry.flatMap(({path,games}) => games.map(game => ({game,path})));
-const games = [...featureEntries.map(entry=>entry.game), ...baseGames, ...moreGames, ...extraGames, ...customGames];
-const featureFactories = new Map();
+// Custom scaffold modules join the static launch catalog without changing routes.
+const games = [...gameCatalog, ...customGames];
 const create = async (canvas, game, opts) => {
-  const feature = featureEntries.find(entry => entry.game === game);
-  if(feature){
-    let loading=featureFactories.get(feature.path);
-    if(!loading){
-      const load=featureLoaders[feature.path];
-      if(!load)throw new Error(`Missing feature module: ${feature.path}`);
-      loading=load().then(module=>{const make=Object.entries(module).find(([key])=>/^createFeatureGame\d*$/.test(key))?.[1];if(typeof make!=='function')throw new Error(`Invalid feature game module: ${feature.path}`);return make});
-      featureFactories.set(feature.path,loading);
-      loading.catch(()=>{if(featureFactories.get(feature.path)===loading)featureFactories.delete(feature.path)});
-    }
-    const make=await loading;
-    return ()=>make(canvas,game.id,opts);
-  }
-  return ()=>baseGames.includes(game) ? createGame(canvas, game.id, opts) : moreGames.includes(game) ? createMoreGame(canvas, game.id, opts) : extraGames.includes(game) ? createExtraGame(canvas, game.id, opts) : createCustomGame(canvas, game.id, opts);
+  if (customGames.includes(game)) return () => createCustomGame(canvas, game.id, opts);
+  const make = await loadGameFactory(game);
+  return () => make(canvas, game.id, opts);
 };
 const app = document.querySelector('#app');
 app.innerHTML = `
@@ -139,7 +125,6 @@ function configureTouch(game){
   for(const key of keys){const button=document.createElement('button');button.type='button';button.dataset.key=key;button.textContent=key===' '?'ACTION':key==='Shift'?'⇧':key.toUpperCase();button.setAttribute('aria-label',key===' '?'Space action':`${key} action`);if(key===' ')button.className='touch-action';actions.append(button)}
 }
 function enableTouch(enabled){document.querySelectorAll('.touch-controls [data-key]').forEach(button=>{button.disabled=!enabled})}
-function gameUrl(id){const url=new URL(location.href);if(id)url.searchParams.set('game',id);else url.searchParams.delete('game');return url}
 async function openGame(index, updateUrl=true){
   if(closingPlayer){if(updateUrl)history.pushState(null,'',gameUrl(games[index].id));pendingGame=index;return}
   setEdgeVelocity(0);const request=++playerRequest;feedView++;commentsPanel.classList.remove('open');commentsToggle.setAttribute('aria-expanded','false');releaseTouchKeys();player?.destroy();player=null;select(index,false);const game=games[index],controls=typeof game.controls==='string'?game.controls:'';if(updateUrl)history.pushState(null,'',gameUrl(game.id));shareControls.setSelection(game,gameUrl(game.id).href);document.querySelector('#feedback-info').open=false;configureTouch(game);refreshEngagement(game.id);updateFeedPosition();enableTouch(false);document.querySelector('#feed-play').disabled=true;document.querySelector('#play-title').textContent=game.name.toUpperCase();document.querySelector('#play-subtitle').textContent=game.description??'';document.querySelector('#instructions').textContent=controls;document.querySelector('#feed-instructions').textContent=controls||'Use the game controls to play.';document.querySelector('#play-foot').textContent=controls.toUpperCase();overlay.hidden=false;dialog.dataset.mode='loading';playing=false;hasStarted=false;document.querySelector('#auto').textContent='WATCH AI';document.querySelector('#start').disabled=true;document.querySelector('#auto').disabled=true;if(!dialog.open)dialog.showModal();updatePreviews();
@@ -185,7 +170,7 @@ document.querySelector('#auto').addEventListener('click',()=>{unlockSound();if(p
 function closePlayer(){if(dialog.open){releaseTouchKeys();closingPlayer=true;dialog.close()}}
 document.querySelector('#close').addEventListener('click',closePlayer);
 dialog.addEventListener('cancel',()=>{closingPlayer=true});
-dialog.addEventListener('close',()=>{closingPlayer=false;shareControls.setSelection(null,null);playerRequest++;player?.destroy();player=null;if(pendingGame!==null){const index=pendingGame;pendingGame=null;select(index,false);openGame(index,false);return}if(new URL(location.href).searchParams.has('game'))history.replaceState(null,'',gameUrl(null));updatePreviews();cards[selected].button.focus()});
+dialog.addEventListener('close',()=>{closingPlayer=false;shareControls.setSelection(null,null);playerRequest++;player?.destroy();player=null;if(pendingGame!==null){const index=pendingGame;pendingGame=null;select(index,false);openGame(index,false);return}if(gameIdFromLocation(location))history.replaceState(null,'',gameUrl(null));updatePreviews();cards[selected].button.focus()});
 dialog.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.querySelector('#feedback-info').open){e.preventDefault();document.querySelector('#feedback-info').open=false;document.querySelector('#feedback-info summary').focus();return}if(e.key==='Escape'&&commentsPanel.classList.contains('open')){e.preventDefault();setCommentsOpen(false);return}if(handlePlayerEscape(e,playing,player,watch))return;if(e.key==='Enter'&&!playing&&(e.target===dialog||e.target===playCanvas||e.target.id==='start')){e.preventDefault();explicitPlay();}});
 function setLayout(mode, persist=false){setEdgeVelocity(0);layout=mode;gallery.classList.toggle('row',layout==='row');document.querySelectorAll('[data-layout]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.layout===layout)));if(persist)try{localStorage.setItem('miniarcade-layout',layout)}catch{};select(selected);}
 document.querySelectorAll('[data-layout]').forEach(button=>button.addEventListener('click',()=>setLayout(button.dataset.layout,true)));
@@ -199,7 +184,7 @@ gallery.addEventListener('wheel',e=>{if(shouldScrollGalleryWheel({row:layout==='
 gallery.addEventListener('keydown',e=>{if(dialog.open || e.altKey || e.ctrlKey || e.metaKey || !['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(e.key))return;if(layout==='row' && (e.key==='ArrowUp'||e.key==='ArrowDown'))return;e.preventDefault();const vertical=e.key==='ArrowUp'||e.key==='ArrowDown';const index=vertical?verticalGalleryNeighbor(cards.map((c,index)=>({index,rect:c.card.getBoundingClientRect()})),selected,e.key==='ArrowUp'?-1:1):e.key==='Home'?feedOrder[0]:e.key==='End'?feedOrder.at(-1):feedOrder[Math.max(0,Math.min(games.length-1,feedOrder.indexOf(selected)+(e.key==='ArrowLeft'?-1:1)))];select(index);cards[selected].button.focus()});
 selected=feedOrder[0];applyFeedOrder();setLayout(layout);
 function syncGameUrl(){
-  const id=new URL(location.href).searchParams.get('game');
+  const id=gameIdFromLocation(location);
   const index=games.findIndex(game=>game.id===id);
   if(closingPlayer){pendingGame=index<0?null:index;return}
   if(index<0){if(dialog.open){pendingGame=null;closePlayer()}return}
