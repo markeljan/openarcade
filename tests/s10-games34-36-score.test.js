@@ -48,7 +48,7 @@ for(const method of ['keyboard','pointer'])test(`Void ${method} autoplay cannot 
  const ctx=new Proxy({fillText(s){labels.push(s)}},{get:(o,k)=>o[k]??noop,set:(o,k,v)=>(o[k]=v,true)}),canvas={getContext:()=>ctx,getBoundingClientRect:()=>({left:0,top:0,width:320,height:720}),setAttribute:noop,focus:noop,addEventListener:(k,f)=>listeners.set(k,f),removeEventListener:k=>listeners.delete(k)};
  const records=[],game=createFeatureGame34(canvas,'void-gambit',{interactive:true,onResult:r=>records.push(r)}),key=k=>{listeners.get('keydown')({key:k,preventDefault:noop});listeners.get('keyup')({key:k,preventDefault:noop})},step=()=>{now+=1000/60;labels.length=0;const f=[...frames.values()];frames.clear();f.forEach(x=>x(now))};
  if(method==='keyboard')key('z');else listeners.get('pointerdown')({clientX:250,clientY:655});
- for(let i=0;i<15000&&game.getSessionState()!=='result';i++)step();assert.equal(game.getSessionState(),'result');assert.ok(labels.includes('Assisted run'));assert.equal(records.length,0);
+ for(let i=0;i<15000&&game.getSessionState()!=='result';i++)step();assert.equal(game.getSessionState(),'result');step();assert.ok(labels.includes('Assisted run'));assert.equal(records.length,0);
  game.restart();for(let i=0;i<15000&&game.getSessionState()!=='result';i++){if(i%120===0)key('x');step()}assert.equal(game.getSessionState(),'result');assert.equal(records.length,1);assert.equal(records[0].actor,'human');assert.equal(records[0].result,'Hull lost');
  game.beginRun({interactive:false,context:'watch-player'});for(let i=0;i<20000&&records.length<2;i++)step();assert.equal(records.length,2);assert.equal(records[1].actor,'ai');assert.equal(records[1].context,'watch-player');assert.equal(records[1].submissionEligible,true);game.destroy();
 });
