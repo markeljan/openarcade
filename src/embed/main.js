@@ -4,6 +4,7 @@ import { loadGameFactory } from '../game-loader.js';
 import { gameIdFromLocation, gameUrl } from '../social/urls.js';
 import { getSoundEnabled, setSoundEnabled, unlockSound } from '../audio.js';
 import { touchKeys } from './controls.js';
+import { fitEmbedStage } from './layout.js';
 
 const root = document.querySelector('#embed');
 const id = gameIdFromLocation(new URL(location.href.replace(/\.html(?=\?|#|$)/, '')));
@@ -24,7 +25,8 @@ if (!game || import.meta.env.VITE_EMBEDS_ENABLED === 'false') {
   stage.style.setProperty('--ratio', game.width / game.height);
   const start = root.querySelector('#start'), restart = root.querySelector('#restart'), pause = root.querySelector('#pause'), sound = root.querySelector('#sound'), touch = root.querySelector('.touch');
   for (const key of touchKeys(game)) { const button = document.createElement('button'); button.dataset.key = key; button.textContent = key === ' ' ? 'ACTION' : key === 'Shift' ? '⇧' : key.toUpperCase(); button.setAttribute('aria-label', key === ' ' ? 'Space action' : `${key} action`); root.querySelector('.touch-actions').append(button); }
-  let player = null, disposed = false, playing = false, paused = false;
+  const disposeLayout=fitEmbedStage(root,stage,game.width/game.height);
+  let player = null, disposed = false, playing = false, paused = false, unfocused = false;
   const send = (button, type) => canvas.dispatchEvent(new KeyboardEvent(type, { key: button.dataset.key, bubbles: true, cancelable: true }));
   const release = () => touch.querySelectorAll('[data-key]').forEach(button => send(button, 'keyup'));
   const updateTouch = () => touch.querySelectorAll('button').forEach(button => { button.disabled = !playing || paused; });
@@ -44,10 +46,11 @@ if (!game || import.meta.env.VITE_EMBEDS_ENABLED === 'false') {
   touch.addEventListener('pointerdown', e => { const button = e.target.closest('[data-key]'); if (!button || button.disabled) return; e.preventDefault(); button.setPointerCapture(e.pointerId); send(button, 'keydown'); });
   for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) touch.addEventListener(type, e => { const button = e.target.closest('[data-key]'); if (button) send(button, 'keyup'); });
   touch.addEventListener('click', e => { const button = e.target.closest('[data-key]'); if (button && !button.disabled && e.detail === 0) { send(button, 'keydown'); send(button, 'keyup'); } });
-  window.addEventListener('blur', release);
-  document.addEventListener('visibilitychange', () => { if (!player) return; if (document.hidden) { release(); player.pause(); } else if (!paused) player.resume(); });
-  window.addEventListener('pagehide', () => { disposed = true; release(); player?.destroy(); player = null; });
+  window.addEventListener('blur', () => { unfocused=true; release(); player?.pause(); });
+  window.addEventListener('focus', () => { unfocused=false; if(!paused&&!document.hidden)player?.resume(); });
+  document.addEventListener('visibilitychange', () => { if (!player) return; if (document.hidden) { release(); player.pause(); } else if (!paused&&!unfocused) player.resume(); });
+  window.addEventListener('pagehide', () => { disposed = true; disposeLayout(); release(); player?.destroy(); player = null; });
   window.addEventListener('pageshow', event => { if (event.persisted && disposed) location.reload(); });
-  loadGameFactory(game).then(factory => { if (disposed) return; player = factory(canvas, game.id, { interactive: false, context: 'gallery-preview', audioEnabled: true, onAttract: () => { if (disposed) return; playing = false; paused = false; start.disabled = false; pause.disabled = true; pause.textContent = 'Pause'; status.textContent = 'Ready to play'; release(); updateTouch(); }, onResult: result => { if (disposed) return; const score = Number.isFinite(result?.score) ? ` Score: ${result.score}.` : ''; status.textContent = `${result?.result || 'Game completed.'}${score}`; } }); if (document.hidden) player.pause(); status.textContent = 'Ready to play'; start.disabled = false; restart.disabled = false; }).catch(() => { if (!disposed) unavailable('Unable to load this game.'); });
+  loadGameFactory(game).then(factory => { if (disposed) return; player = factory(canvas, game.id, { interactive: false, context: 'gallery-preview', audioEnabled: true, onAttract: () => { if (disposed) return; playing = false; paused = false; start.disabled = false; pause.disabled = true; pause.textContent = 'Pause'; status.textContent = 'Ready to play'; release(); updateTouch(); }, onResult: result => { if (disposed) return; const score = Number.isFinite(result?.score) ? ` Score: ${result.score}.` : ''; status.textContent = `${result?.result || 'Game completed.'}${score}`; } }); if (document.hidden||unfocused) player.pause(); status.textContent = 'Ready to play'; start.disabled = false; restart.disabled = false; }).catch(() => { if (!disposed) unavailable('Unable to load this game.'); });
 }
 
