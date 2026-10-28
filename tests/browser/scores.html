@@ -1,0 +1,27 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>S02 score persistence browser fixture</title>
+<body><h1>S02 score persistence browser fixture</h1><p>Isolated local browser checks. No API requests or real scores.</p><button id="reload">Reload to verify persistence</button><pre id="status">Running…</pre>
+<script type="module">
+import {createPendingQueue} from '/src/scores/pending.js';
+const out=document.querySelector('#status'),results=[];
+document.querySelector('#reload').onclick=()=>location.reload();
+const check=(condition,label)=>{if(!condition)throw Error(label);results.push('PASS '+label)};
+const record=(id,nonce='first')=>({runId:'s02-browser-'+id,gameId:'browser-fixture',score:2,ruleVersion:1,claimNonce:nonce,durationMs:1000,actor:'human',context:'manual-player'});
+try {
+  const q=createPendingQueue(),other=createPendingQueue();
+  const marker=await q.get('s02-browser-reload');
+  if(marker) check(marker.claimNonce==='reload-private','IndexedDB survived actual page reload');
+  else {await q.enqueue(record('reload','reload-private'));results.push('READY reload marker stored; click Reload to verify');}
+  await q.abandon('s02-browser-a');await q.abandon('s02-browser-b');
+  const saved=await q.enqueue(record('a'));check(saved.durability==='persistent','transaction committed to real IndexedDB');
+  await Promise.all([q.enqueue(record('a','second')),other.enqueue(record('a','third'))]);
+  check((await other.get('s02-browser-a')).claimNonce==='first','concurrent connections preserve first private nonce');
+  await q.update('s02-browser-a',{claimNonce:'replacement',score:99,receipt:{claimToken:'server-private'}});
+  const immutable=await other.get('s02-browser-a');check(immutable.score===2&&immutable.claimNonce==='first','updates preserve immutable run and nonce');
+  await Promise.all([q.acknowledge('s02-browser-a'),other.enqueue(record('b'))]);
+  check(await q.get('s02-browser-a')===null&&!!await q.get('s02-browser-b'),'acknowledgment deletes only its own run across connections');
+  check(await other.update('s02-browser-a',{receipt:{}})===null,'late receipt cannot resurrect acknowledged run');
+  await q.abandon('s02-browser-b');
+  const volatile=createPendingQueue({indexedDB:null});check((await volatile.enqueue(record('memory'))).durability==='memory','blocked-storage fallback reports memory durability');
+  out.textContent=results.join('\n');document.body.dataset.result='pass';
+}catch(error){out.textContent=results.join('\n')+'\nFAIL '+error.message;document.body.dataset.result='fail'}
+</script></body></html>
