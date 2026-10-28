@@ -1,0 +1,112 @@
+{
+  "games": [
+    {
+      "id": "snake",
+      "metric": "food eaten",
+      "units": "food",
+      "order": "descending",
+      "version_proposal": 1,
+      "terminal_boundary": "wall/self collision; board full",
+      "reset_boundary": "factory initialization, restart, AI terminal; return to AI after human result",
+      "local_best_key": "tiny-arcade.best.snake",
+      "human_path": "human end",
+      "ai_path": "AI resets",
+      "lifecycle_risks": [
+        "takeover currently retains AI progress",
+        "AI resets before callback",
+        "held keys require release on transition"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "breakout",
+      "metric": "bricks destroyed",
+      "units": "bricks",
+      "order": "descending",
+      "version_proposal": 1,
+      "terminal_boundary": "ball below field; all 36 bricks destroyed",
+      "reset_boundary": "factory initialization, restart, AI terminal; return to AI after human result",
+      "local_best_key": "tiny-arcade.best.breakout",
+      "human_path": "human end",
+      "ai_path": "AI resets",
+      "lifecycle_risks": [
+        "takeover currently retains AI progress",
+        "AI resets before callback",
+        "held keys require release on transition"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "pong",
+      "metric": "left paddle returns",
+      "units": "returns",
+      "order": "descending",
+      "version_proposal": 1,
+      "terminal_boundary": "ball exits either side; point won/lost",
+      "reset_boundary": "factory initialization, restart, AI terminal; return to AI after human result",
+      "local_best_key": "tiny-arcade.best.pong",
+      "human_path": "human end",
+      "ai_path": "AI resets",
+      "lifecycle_risks": [
+        "takeover currently retains AI progress",
+        "AI resets before callback",
+        "held keys require release on transition"
+      ],
+      "notes": "Pong score counts returns, not points won."
+    },
+    {
+      "id": "orbit",
+      "metric": "sparks collected",
+      "units": "sparks",
+      "order": "descending",
+      "version_proposal": 1,
+      "terminal_boundary": "enemy collision",
+      "reset_boundary": "factory initialization, restart, AI terminal; return to AI after human result",
+      "local_best_key": "tiny-arcade.best.orbit",
+      "human_path": "human end",
+      "ai_path": "AI resets",
+      "lifecycle_risks": [
+        "takeover currently retains AI progress",
+        "AI resets before callback",
+        "held keys require release on transition"
+      ],
+      "notes": ""
+    },
+    {
+      "id": "flappy",
+      "metric": "pipes recycled offscreen",
+      "units": "pipes",
+      "order": "descending",
+      "version_proposal": 1,
+      "terminal_boundary": "bird boundary or pipe collision",
+      "reset_boundary": "factory initialization, restart, AI terminal; return to AI after human result",
+      "local_best_key": "tiny-arcade.best.flappy",
+      "human_path": "human end",
+      "ai_path": "AI resets",
+      "lifecycle_risks": [
+        "takeover currently retains AI progress",
+        "AI resets before callback",
+        "held keys require release on transition"
+      ],
+      "notes": "Flappy increments at offscreen recycle, not crossing bird."
+    },
+    {
+      "id": "dodge",
+      "metric": "drops recycled below field",
+      "units": "drops",
+      "order": "descending",
+      "version_proposal": 1,
+      "terminal_boundary": "drop collision",
+      "reset_boundary": "factory initialization, restart, AI terminal; return to AI after human result",
+      "local_best_key": "tiny-arcade.best.dodge",
+      "human_path": "human end",
+      "ai_path": "AI resets",
+      "lifecycle_risks": [
+        "takeover currently retains AI progress",
+        "AI resets before callback",
+        "held keys require release on transition"
+      ],
+      "notes": "Dodge can reset inside drops.forEach and continue processing old drops; duplicate collision callbacks possible."
+    }
+  ]
+}
