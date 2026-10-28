@@ -1,0 +1,40 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {existsSync,mkdtempSync,readFileSync,rmSync,cpSync,copyFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {spawn} from 'node:child_process';
+import {createServer as createPortServer} from 'node:net';
+import {createServer} from 'vite';
+
+const executable=(process.platform==='win32'?['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe']:['/usr/bin/chromium','/usr/bin/chromium-browser','/usr/bin/google-chrome']).find(existsSync);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+test('brand, sharing and feedback controls preserve player behavior',{skip:!executable,timeout:150000},async()=>{
+ const probe=createPortServer();await new Promise(r=>probe.listen(0,'127.0.0.1',r));const port=probe.address().port;await new Promise(r=>probe.close(r));
+ const root=mkdtempSync(join(tmpdir(),'s04-source-')),profile=mkdtempSync(join(tmpdir(),'s04-browser-'));cpSync(join(process.cwd(),'src'),join(root,'src'),{recursive:true});copyFileSync(join(process.cwd(),'index.html'),join(root,'index.html'));
+ const server=await createServer({root,configFile:false,server:{host:'127.0.0.1',port,strictPort:true,hmr:false},logLevel:'silent'});await server.listen();
+ const proc=spawn(executable,['--headless=new','--disable-gpu','--no-sandbox','--remote-debugging-port=0',`--user-data-dir=${profile}`,'about:blank'],{stdio:'ignore'});let ws;
+ try{
+  let browserPort;for(let i=0;i<100;i++){try{browserPort=Number(readFileSync(join(profile,'DevToolsActivePort'),'utf8').split('\n')[0]);break}catch{await sleep(50)}}assert.ok(browserPort);
+  const targets=await(await fetch(`http://127.0.0.1:${browserPort}/json`)).json();ws=new WebSocket(targets.find(t=>t.type==='page').webSocketDebuggerUrl);await new Promise((resolve,reject)=>{ws.onopen=resolve;ws.onerror=reject});let seq=0;const pending=new Map();ws.onmessage=e=>{const v=JSON.parse(e.data);if(v.id&&pending.has(v.id)){const q=pending.get(v.id);pending.delete(v.id);v.error?q.reject(v.error):q.resolve(v.result)}};
+  const send=(method,params={})=>new Promise((resolve,reject)=>{const id=++seq;pending.set(id,{resolve,reject});ws.send(JSON.stringify({id,method,params}))});
+  const value=async expression=>{const out=await send('Runtime.evaluate',{expression,returnByValue:true});if(out.exceptionDetails)throw Error(out.exceptionDetails.text);return out.result.value};
+  const until=async(expr,msg)=>{for(let i=0;i<800;i++){if(await value(expr))return;await sleep(25)}assert.fail(msg)};
+  const key=async k=>{await send('Input.dispatchKeyEvent',{type:'keyDown',key:k,code:k,text:k==='Enter'?'\r':'',windowsVirtualKeyCode:k==='Enter'?13:k==='Escape'?27:9});await send('Input.dispatchKeyEvent',{type:'keyUp',key:k,code:k,windowsVirtualKeyCode:k==='Enter'?13:k==='Escape'?27:9})};
+  await send('Page.enable');await send('Runtime.enable');await send('Emulation.setDeviceMetricsOverride',{width:1280,height:720,deviceScaleFactor:1,mobile:false});
+  await send('Page.addScriptToEvaluateOnNewDocument',{source:`Object.defineProperty(navigator,'share',{value:undefined,configurable:true});Object.defineProperty(navigator,'clipboard',{value:{writeText:url=>{window.copied=url;return window.copyMode==='fail'?Promise.reject(Error('no')):window.copyMode==='pending'?new Promise(resolve=>window.resolveCopy=resolve):Promise.resolve()}},configurable:true});`});
+  await send('Page.navigate',{url:`http://127.0.0.1:${port}/`});await until("document.querySelector('.github-link')",'gallery');
+  assert.equal(await value("document.querySelector('.github-link').getAttribute('aria-label')"),'OpenArcade on GitHub (opens in a new tab)');
+  await value("document.querySelector('.brand a').focus();true");await key('Tab');assert.equal(await value("document.activeElement===document.querySelector('.github-link')"),true);assert.notEqual(await value("getComputedStyle(document.activeElement).outlineStyle"),'none');
+  await value("document.querySelector('[aria-label=\"Play Machine Hunt\"]').click();true");await until("document.querySelector('#dialog').dataset.mode==='watching'",'player');
+  assert.equal(await value("document.querySelector('.feed-stats').nextElementSibling.className"),'share-controls');
+  await value("document.querySelector('#share').click();true");await until("document.querySelector('#share-status').textContent==='Link copied.'",'copied status');assert.equal(await value("new URL(window.copied).searchParams.get('game')"),'machine-hunt');assert.equal(await value("document.querySelector('#share-status').getAttribute('role')"),'status');
+  await value("window.copyMode='fail';document.querySelector('#share').click();true");await until("!document.querySelector('#share-link-label').hidden",'fallback');await value("document.querySelector('#share-link').focus();true");assert.equal(await value("document.querySelector('#share-link').selectionEnd-document.querySelector('#share-link').selectionStart===document.querySelector('#share-link').value.length"),true);
+  await value("window.copyMode='pending';document.querySelector('#share').click();document.querySelector('#feed-next').click();true");await until("document.querySelector('#dialog').dataset.mode==='watching'",'next player');await value("window.resolveCopy();true");await sleep(100);assert.equal(await value("document.querySelector('#share-status').textContent"),'');
+  await value("document.querySelector('#feedback-info summary').focus();true");await key('Enter');assert.equal(await value("document.querySelector('#feedback-info').open"),true);assert.equal(await value("document.querySelector('#feedback-info p').textContent"),'Feedback may be used by AI agents to improve gameplay and fix bugs.');await key('Escape');assert.equal(await value("document.querySelector('#dialog').open&&!document.querySelector('#feedback-info').open&&document.activeElement===document.querySelector('#feedback-info summary')"),true);
+  await send('Emulation.setDeviceMetricsOverride',{width:320,height:568,deviceScaleFactor:1,mobile:true});await send('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:1});
+  const share=await value("(()=>{const r=document.querySelector('#share').getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}})()");assert.ok(share.w>=44&&share.h>=44,JSON.stringify(share));
+  await value("document.querySelector('#comments-toggle').click();true");const summary=await value("(()=>{const r=document.querySelector('#feedback-info summary').getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2}})()");await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[summary]});await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});assert.equal(await value("document.querySelector('#feedback-info').open"),true);await key('Escape');assert.equal(await value("document.querySelector('#dialog').open&&!document.querySelector('#feedback-info').open"),true);
+  await value("document.querySelector('#comments-close').click();document.querySelector('#feed-play').click();window.releases=[];document.querySelector('#play-canvas').addEventListener('keyup',e=>window.releases.push(e.key));document.querySelector('#share').click();true");assert.equal(await value("window.releases.includes('ArrowRight')"),true);await value("document.querySelector('#auto').click();true");assert.equal(await value("document.querySelector('#dialog').dataset.mode"),'watching');await value("window.dispatchEvent(new Event('pagehide'));window.dispatchEvent(new Event('pageshow'));window.dispatchEvent(new Event('resize'));document.querySelector('#close').click();true");await until("!document.querySelector('#dialog').open",'close');await value("document.querySelector('.card-button').click();true");await until("document.querySelector('#dialog').dataset.mode==='watching'",'reopen');
+ }finally{ws?.close();proc.kill();await server.close();await sleep(200);try{rmSync(profile,{recursive:true,force:true});rmSync(root,{recursive:true,force:true})}catch{}}
+});
