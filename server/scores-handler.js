@@ -4,6 +4,8 @@ import {scoreRegistry} from '../src/scores/registry.js';
 
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const nonce = /^[A-Za-z0-9_-]{43}$/;
+const validUUID = value => typeof value === 'string' && uuid.test(value);
+const validNonce = value => typeof value === 'string' && nonce.test(value);
 const maxBody = 8192;
 const hash = value => createHash('sha256').update(value).digest('hex');
 const keys = (object, allowed) => object && typeof object === 'object' && !Array.isArray(object) && Object.keys(object).every(key => allowed.includes(key));
@@ -29,7 +31,7 @@ function readBody(req) {
 export function validateScoreRun(run, rule) {
   if (!keys(run, ['schemaVersion', 'runId', 'gameId', 'ruleVersion', 'score', 'result', 'durationMs', 'actor', 'context', 'provenance', 'submissionEligible'])) return false;
   const b = rule?.bounds;
-  return !!(b && run.schemaVersion === 1 && uuid.test(run.runId) && run.gameId === rule.gameId && run.ruleVersion === rule.version &&
+  return !!(b && run.schemaVersion === 1 && validUUID(run.runId) && run.gameId === rule.gameId && run.ruleVersion === rule.version &&
     typeof run.score === 'number' && Number.isFinite(run.score) && run.score >= b.minScore && run.score <= b.maxScore && (!b.integer || Number.isSafeInteger(run.score)) &&
     Number.isSafeInteger(run.durationMs) && run.durationMs >= b.minDurationMs && run.durationMs <= b.maxDurationMs &&
     typeof run.result === 'string' && run.result.trim().length > 0 && run.result.length <= 80 && !/[\u0000-\u001f]/.test(run.result) &&
@@ -88,7 +90,7 @@ export function createScoresHandler({store, catalogIds = [], registry = scoreReg
         if (!limit.allowed) { res.setHeader('Retry-After', String(limit.retryAfter ?? 60)); return fail(429, 'rate-limited'); }
       }
       if (body.action === 'claim') {
-        if (!keys(body, ['action', 'runId', 'claimToken']) || !uuid.test(body.runId) || !nonce.test(body.claimToken)) return fail(400, 'invalid-claim');
+        if (!keys(body, ['action', 'runId', 'claimToken']) || !validUUID(body.runId) || !validNonce(body.claimToken)) return fail(400, 'invalid-claim');
         const result = await store.claim({runId: body.runId, claimHash: hash(body.claimToken), userId: identity.userId, displayName: identity.displayName || 'Player'});
         if (result.status === 'expired') return fail(410, 'claim-expired');
         if (result.status === 'forbidden') return fail(403, 'claim-forbidden');
@@ -101,9 +103,9 @@ export function createScoresHandler({store, catalogIds = [], registry = scoreReg
       if (!rule) return fail(409, 'score-rule-pending');
       if (!validateScoreRun(run, rule)) return fail(400, 'invalid-run');
       if ((body.action === 'ai') !== (run.actor === 'ai')) return fail(400, 'actor-mismatch');
-      if (body.action === 'guest' && (run.context !== 'embed' || !/^[A-Z]{4}$/.test(body.guestName))) return fail(400, 'invalid-guest');
+      if (body.action === 'guest' && (run.context !== 'embed' || typeof body.guestName !== 'string' || !/^[A-Z]{4}$/.test(body.guestName))) return fail(400, 'invalid-guest');
       if (body.action !== 'guest' && body.guestName !== undefined) return fail(400, 'invalid-guest');
-      if (body.action === 'pending' ? !nonce.test(body.claimNonce) : body.claimNonce !== undefined) return fail(400, 'invalid-claim-nonce');
+      if (body.action === 'pending' ? !validNonce(body.claimNonce) : body.claimNonce !== undefined) return fail(400, 'invalid-claim-nonce');
       if (body.attribution !== undefined && !['x', 'direct'].includes(body.attribution)) return fail(400, 'invalid-attribution');
       if (run.context !== 'embed' && body.attribution !== undefined) return fail(400, 'invalid-attribution');
       const userId = body.action === 'submit' ? identity.userId : null;

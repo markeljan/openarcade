@@ -63,7 +63,7 @@ test('separate guest embed validates four uppercase slots and has no account own
   const {handler, submissions} = setup(); const guest = {action: 'guest', run: {...run, context: 'embed'}, guestName: 'ABCD', attribution: 'x'};
   assert.equal((await call(handler, {body: guest})).statusCode, 200);
   assert.equal(submissions[0].userId, null); assert.equal(submissions[0].displayName, 'ABCD'); assert.equal(submissions[0].details.attribution, 'x');
-  for (const name of ['abcD', 'ABC', 'ABCDE', '1234']) assert.equal((await call(handler, {body: {...guest, guestName: name}})).statusCode, 400);
+  for (const name of ['abcD', 'ABC', 'ABCDE', '1234', ['ABCD'], {value: 'ABCD'}, null, 1234]) assert.equal((await call(handler, {body: {...guest, guestName: name}})).statusCode, 400);
   assert.equal((await call(handler, {body: {...guest, run}})).statusCode, 400);
 });
 test('claim requires verified account/capability and maps duplicate owner/expiry rejection', async () => {
@@ -94,4 +94,14 @@ test('reads default Players; optional verified identity and ascending rule reach
 test('local forwarded IP spoofing cannot select limiter key', () => {
   const req = {headers: {'x-vercel-forwarded-for': '1.2.3.4'}, socket: {remoteAddress: '127.0.0.1'}};
   assert.equal(requestAddress(req), '127.0.0.1'); assert.equal(requestAddress(req, true), '1.2.3.4');
+});
+test('UUID and private capabilities require strings without regex coercion', async () => {
+  const {handler, submissions, claims} = setup();
+  for (const value of [['a'.repeat(43)], {value: 'a'.repeat(43)}, null, 123]) {
+    assert.equal((await call(handler, {body: {action: 'pending', run, claimNonce: value}})).statusCode, 400);
+    assert.equal((await call(handler, {body: {action: 'claim', runId: id, claimToken: value}, headers: {authorization: 'Bearer verified'}})).statusCode, 400);
+  }
+  assert.equal((await call(handler, {body: {action: 'pending', run: {...run, runId: [id]}, claimNonce: 'a'.repeat(43)}})).statusCode, 400);
+  assert.equal((await call(handler, {body: {action: 'claim', runId: [id], claimToken: 'a'.repeat(43)}, headers: {authorization: 'Bearer verified'}})).statusCode, 400);
+  assert.equal(submissions.length, 0); assert.equal(claims.length, 0);
 });
