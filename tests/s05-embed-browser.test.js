@@ -18,6 +18,14 @@ test('built embed loads a game and provides accessible player controls', {skip: 
   await send('Page.enable');await send('Runtime.enable');await send('Page.navigate',{url:`http://127.0.0.1:${port}/embed/snake`});
   for(let i=0;i<400;i++){if(await evaluate("document.querySelector('#start') && !document.querySelector('#start').disabled"))break;await sleep(25)}
   assert.equal(await evaluate("document.querySelector('h1')?.textContent"),'Snake'); assert.equal(await evaluate("document.querySelector('#sound').getAttribute('aria-pressed')"),'false');
+  for(const saved of ['on','off']){
+    await evaluate(`localStorage.setItem('miniarcade-sound',${JSON.stringify(saved)});document.querySelector('#sound').click()`);
+    assert.equal(await evaluate("document.querySelector('#sound').getAttribute('aria-pressed')"),'true');
+    assert.equal(await evaluate("localStorage.getItem('miniarcade-sound')"),saved);
+    await evaluate("document.querySelector('#sound').click()");
+    assert.equal(await evaluate("document.querySelector('#sound').getAttribute('aria-pressed')"),'false');
+    assert.equal(await evaluate("localStorage.getItem('miniarcade-sound')"),saved);
+  }
   await evaluate("document.querySelector('#start').click()"); assert.equal(await evaluate("document.activeElement===document.querySelector('canvas')"),true); await evaluate("document.querySelector('#pause').click()"); assert.equal(await evaluate("document.querySelector('#pause').textContent"),'Resume');
   await evaluate("document.querySelector('#restart').click()"); assert.equal(await evaluate("document.querySelector('#pause').textContent"),'Pause'); assert.equal(await evaluate("document.querySelector('a').rel"),'noopener noreferrer'); assert.equal(await evaluate("document.querySelector('.gallery')===null"),true); assert.equal(await evaluate("performance.getEntriesByType('resource').some(e => e.name.includes('/main-') && e.name.endsWith('.js'))"),false);
   const missing=await fetch(`http://127.0.0.1:${port}/embed/no-such-game`); assert.equal(missing.status,404); assert.match(await missing.text(),/Game not found/);
