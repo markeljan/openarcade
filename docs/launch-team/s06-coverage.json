@@ -1,6 +1,6 @@
 {
   "session": "OPENARCADE S06",
-  "status": "initial audit; pending S02 merged contract and finite-boundary decisions",
+  "status": "Snake implemented; 31 games remain at audited proposal",
   "gameCount": 32,
   "games": [
     {
@@ -12,11 +12,16 @@
       "version": 1,
       "boundary": "wall/self collision; board full",
       "localBestKey": "tiny-arcade.best.snake",
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; AI resets without callback",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Natural wall collision in tests/s06-classics-snake.test.js; positive food score persisted under existing key; immutable human record",
+      "aiTerminalEvidence": "Two natural seeded AI collision completions with distinct run IDs in tests/s06-classics-snake.test.js; no human local-best writes",
+      "focusedTests": [
+        "tests/s06-classics-snake.test.js",
+        "tests/classic-best.test.js",
+        "tests/classic-terminal.test.js",
+        "tests/s06-registry.test.js"
+      ],
+      "browserStatus": "Local actual-wrapper harness: AI preview rendering, fresh manual takeover and wall-loss result/callback observed. API/database not tested.",
+      "status": "implemented"
     },
     {
       "id": "breakout",
