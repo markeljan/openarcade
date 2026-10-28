@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {dungeon} from '../src/feature-games15.js';
+test('manual held slash repeats only when the 12-frame cooldown expires',()=>{const events=[],g=dungeon(e=>events.push(e));g.input(' ',true);g.update(0,false);for(let i=0;i<60;i++)g.update(1/60,false);g.input(' ',false);const count=events.filter(e=>e==='dungeon-slash').length;assert.equal(count,6);for(let i=0;i<30;i++)g.update(1/60,false);assert.equal(events.filter(e=>e==='dungeon-slash').length,count)});
+test('repeated keydown cannot bypass slash cooldown',()=>{const events=[],g=dungeon(e=>events.push(e));for(let i=0;i<8;i++)g.input(' ',true);g.update(0,false);assert.equal(events.filter(e=>e==='dungeon-slash').length,1)});

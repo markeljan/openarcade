@@ -19,6 +19,6 @@ for(const [name,make,id,manualTerminal,autoTerminal] of [
   ['Star Roller',createFeatureGame17,'star-roller',s=>s.includes('TIME UP')||s.includes('STAR FORMED'),s=>s.includes('TIME UP')||s.includes('STAR FORMED')],
   ['Scrap Arena',createFeatureGame6,'scrap-arena',s=>s==='ENTER TO PLAY AGAIN',s=>s==='NEXT ROUND...'],
 ]){
-  test(`${name} manual result remains until restart`,()=>{const r=simulate(make,id,true,manualTerminal,name==='Star Roller'?360:240);assert.ok(r.endedAt,'run never reached a result');assert.ok(r.terminalFrames>180,'result did not remain visible');assert.equal(r.resumed,false,'manual result restarted by itself');assert.ok(r.restarted,'restart did not start a new run');});
-  test(`${name} preview resumes after a result`,()=>{const r=simulate(make,id,false,autoTerminal,name==='Star Roller'?360:240);assert.ok(r.endedAt,'preview never reached a result');assert.ok(r.resumed,'preview failed to resume');});
+  test(`${name} manual result remains visible before ${name==='Star Roller'?'attract':'restart'}`,()=>{const r=simulate(make,id,true,manualTerminal,name==='Ashen Rage'?920:name==='Star Roller'?360:240);assert.ok(r.endedAt,'run never reached a result');assert.ok(r.terminalFrames>180,'result did not remain visible');assert.equal(r.resumed,name==='Star Roller',name==='Star Roller'?'result did not return to attract':'manual result restarted by itself');assert.ok(r.restarted,'restart did not start a new run');});
+  test(`${name} preview resumes after a result`,()=>{const r=simulate(make,id,false,autoTerminal,name==='Ashen Rage'?920:name==='Star Roller'?360:240);assert.ok(r.endedAt,'preview never reached a result');assert.ok(r.resumed,'preview failed to resume');});
 }

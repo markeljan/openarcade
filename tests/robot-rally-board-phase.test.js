@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {resolveRallyRegister,robots} from '../src/feature-games12.js';
+test('board effects do not replay a collision for robots left on the same tile',()=>{const bots=[{x:2,y:10,dir:1,hp:3},{x:2,y:10,dir:0,hp:2}],r=resolveRallyRegister(bots,[],0,0,'board');assert.deepEqual(r.bots.map(b=>b.hp),[3,2]);assert.ok(!r.events.includes('rally-collision'));assert.equal(r.lasers.length,0)});
+test('manual and AI races continue through repeated board phases',()=>{for(const auto of [false,true]){const cues=[],g=robots(c=>cues.push(c));if(!auto)g.input('ArrowUp',true);for(let i=0;i<5000;i++)g.update(1/60,auto);assert.ok(g.snapshot().round>4);assert.ok(cues.includes('rally-register'))}});

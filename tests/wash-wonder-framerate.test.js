@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createWashWonder} from '../src/feature-games40.js';
+function run(hz,auto){let seed=923;const old=Math.random;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/2**32);try{const g=createWashWonder();if(!auto){g.input(' ',true);g.input('ArrowRight',true)}for(let i=0;i<hz*80;i++)g.update(1/hz,auto);return g.snapshot()}finally{Math.random=old}}
+for(const auto of [false,true])test(`${auto?'AI':'manual'} produces the same state at 30 and 60 Hz`,()=>{const a=run(30,auto),b=run(60,auto);assert.deepEqual(a,b)});
+test('manual input waits for a whole simulation frame',()=>{const g=createWashWonder(),before=g.snapshot();g.input(' ',true);g.update(1/120,false);assert.equal(g.snapshot().water,before.water);g.update(1/120,false);assert.ok(g.snapshot().water<before.water)});

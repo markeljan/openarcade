@@ -1,6 +1,6 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {dragon} from '../src/feature-games18.js';
-test('manual lock charges over time and release launches a seeking volley',()=>{const old=Math.random;Math.random=()=>.5;try{const g=dragon();for(let i=0;i<200;i++)g.update(1/60,false);g.input('x',true);g.update(1/60,false);assert.equal(g.snapshot().locks,0);for(let i=0;i<40;i++)g.update(1/60,false);assert.ok(g.snapshot().locks>0);const count=g.snapshot().locks;g.input('x',false);assert.equal(g.snapshot().locks,0);assert.equal(g.snapshot().shots,count);for(let i=0;i<120;i++)g.update(1/60,false);assert.ok(g.snapshot().score>0)}finally{Math.random=old}});
-test('lance travels forward rather than damaging targets instantly',()=>{const g=dragon();g.input(' ',true);let s=g.snapshot();assert.equal(s.lances.length,1);const y=s.lances[0].y;g.update(.1,false);s=g.snapshot();assert.ok(s.lances[0].y<y)});
+import test from 'node:test';import assert from 'node:assert/strict';import {dragon,dragonLockScore,dragonRackReady} from '../src/feature-games18.js';
+test('manual lock charges over time and release launches a seeking volley',()=>{const old=Math.random;Math.random=()=>.5;try{const g=dragon();for(let i=0;i<200;i++)g.update(1/60,false);g.input('x',true);g.update(1/60,false);assert.equal(g.snapshot().locks,0);for(let i=0;i<40;i++)g.update(1/60,false);assert.ok(g.snapshot().locks>0);const count=g.snapshot().locks;g.input('x',false);g.update(1/60,false);assert.equal(g.snapshot().locks,0);assert.equal(g.snapshot().shots,count);for(let i=0;i<120;i++)g.update(1/60,false);assert.ok(g.snapshot().score>0)}finally{Math.random=old}});
+test('lance travels forward rather than damaging targets instantly',()=>{const g=dragon();g.input(' ',true);g.update(1/60,false);let s=g.snapshot();assert.equal(s.lances.length,1);const y=s.lances[0].y;g.update(.1,false);s=g.snapshot();assert.ok(s.lances[0].y<y)});
 test('AI builds repeated locks on a boss and grows its rack from kills',()=>{const old=Math.random;Math.random=()=>.5;try{const g=dragon({firstAct:0,warningDuration:.1,stormDuration:.1,actInterval:.1});let repeated=false,upgraded=false;for(let i=0;i<9000;i++){g.update(1/60,true);const s=g.snapshot();if(s.enemies.some(e=>e.boss)&&s.locks>=2)repeated=true;if(s.kills>=12)upgraded=true;if(repeated&&upgraded)break}assert.ok(repeated);const rack=dragon();for(let i=0;i<6000&&rack.snapshot().kills<12;i++)rack.update(1/60,true);assert.ok(rack.snapshot().kills>=12)}finally{Math.random=old}});
 
 
@@ -10,3 +10,20 @@ test('autoplay advances through carrier weak-point phases',()=>{const old=Math.r
 
 test('manual flight encounters warned storm then warned carrier on the reference schedule',()=>{const old=Math.random;Math.random=()=>.5;try{const g=dragon();g.input('ArrowLeft',true);let observed=new Set();for(let i=0;i<9300;i++){g.update(1/60,false);let s=g.snapshot();observed.add(s.act);if(s.act==='wyrm')break}for(const state of ['storm-warning','storm','wyrm-warning','wyrm'])assert.ok(observed.has(state),`missing ${state}`);assert.equal(g.snapshot().bossStage,1)}finally{Math.random=old}});
 test('autoplay counters storm wind and reaches the carrier',()=>{const old=Math.random;Math.random=()=>.5;try{const g=dragon({firstAct:.1,warningDuration:1,stormDuration:1,actInterval:.2});let states=new Set();for(let i=0;i<1000;i++){g.update(1/60,true);let s=g.snapshot();states.add(s.act);if(s.act==='wyrm')break}assert.ok(g.snapshot().stormCorrections>0);for(const state of ['storm-warning','storm','wyrm-warning','wyrm'])assert.ok(states.has(state))}finally{Math.random=old}});
+
+
+test('AI holds a full lock rack before releasing its volley',()=>{
+ const original=Math.random;Math.random=()=>.5;try{const game=dragon();let observed=false,released=false;for(let i=0;i<4000;i++){game.update(1/60,true);const s=game.snapshot();if(s.locks===2&&s.fullHold>0&&s.fullHold<.3){observed=true;assert.equal(dragonRackReady(s.fullHold,3,s.locks,2),false)}if(observed&&s.shots>0){released=true;break}}assert.ok(observed);assert.ok(released)}finally{Math.random=original}
+});
+test('lock selection favors centered midrange targets',()=>{
+ const player={x:120,y:380},mid={x:120,y:230},near={x:120,y:350},offset={x:190,y:230};assert.ok(dragonLockScore(player,mid)>dragonLockScore(player,near));assert.ok(dragonLockScore(player,mid)>dragonLockScore(player,offset));assert.equal(dragonLockScore(player,{x:120,y:50}),-1);
+});
+
+test('lock sweep takes priority over lance and volley waits for both controls to clear',()=>{const old=Math.random;Math.random=()=>.5;try{const g=dragon();g.input('x',true);for(let i=0;i<600&&!g.snapshot().locks;i++)g.update(1/60,false);assert.ok(g.snapshot().locks>0);g.input(' ',true);g.input('x',false);g.update(1/60,false);let s=g.snapshot();assert.ok(s.locks>0);assert.equal(s.shots,0);assert.equal(s.lances.length,0);g.input(' ',false);g.update(1/60,false);s=g.snapshot();assert.equal(s.locks,0);assert.ok(s.shots>0);const h=dragon();h.input(' ',true);h.input(' ',false);h.update(1/60,false);assert.equal(h.snapshot().lances.length,0)}finally{Math.random=old}});
+
+test('lock aliases sample the same 13-frame sweep and held lance fires every nine frames',()=>{
+ const old=Math.random;Math.random=()=>.5;try{for(const key of ['x','z','j','k','Shift']){const g=dragon({firstAct:999});for(let i=0;i<200;i++)g.update(1/60,false);g.input(key,true);for(let i=0;i<12;i++)g.update(1/60,false);assert.equal(g.snapshot().locks,0,key);g.update(1/60,false);assert.ok(g.snapshot().locks>0,key);g.input(key,false)}const frames=[],g=dragon({firstAct:999},cue=>{if(cue==='dragon-lance')frames.push(frame)});let frame=0;g.input(' ',true);for(frame=1;frame<=20;frame++)g.update(1/60,false);assert.deepEqual(frames,[1,10,19]);}finally{Math.random=old}
+});
+test('AI releases a partial rack when targets vanish or its sweep exceeds 170 frames',()=>{
+ assert.equal(dragonRackReady(0,1,1,2,false),true);assert.equal(dragonRackReady(0,170/60,1,2,true),false);assert.equal(dragonRackReady(0,171/60,1,2,true),true);assert.equal(dragonRackReady(21/60,10,2,2,true),false);assert.equal(dragonRackReady(22/60,10,2,2,true),true);
+});

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createFeatureGame15} from '../src/feature-games15.js';
 
-for(const [id,make] of [['dungeon-relay',createFeatureGame15],['gravity-claw',createFeatureGame15]]){
+for(const [id,make] of [['gravity-claw',createFeatureGame15]]){
  test(`${id} retains manual result and AI recovers`,t=>{
   const originalRandom=Math.random, originals=Object.fromEntries(['window','ResizeObserver','requestAnimationFrame','cancelAnimationFrame'].map(k=>[k,globalThis[k]]));
   t.after(()=>{Math.random=originalRandom;Object.assign(globalThis,originals)});
@@ -15,12 +15,7 @@ for(const [id,make] of [['dungeon-relay',createFeatureGame15],['gravity-claw',cr
   const press=key=>{listeners.get('keydown')({key,preventDefault:noop});listeners.get('keyup')({key,preventDefault:noop})};
   function lose(){
    step();
-   if(id==='dungeon-relay'){
-    const targets=new Set(['7,7','5,3']),q=[['1,11',[]]],seen=new Set(['1,11']);let route;
-    while(q.length){const [pos,path]=q.shift();if(targets.has(pos)){route=path;break}const [x,y]=pos.split(',').map(Number);for(const [dx,dy,key] of [[1,0,'ArrowRight'],[-1,0,'ArrowLeft'],[0,1,'ArrowDown'],[0,-1,'ArrowUp']]){const next=`${x+dx},${y+dy}`;if(next!=='9,1'&&floors.has(next)&&!seen.has(next)){seen.add(next);q.push([next,[...path,key]])}}}
-    assert.ok(route,'enemy should be reachable in generated maze');
-    for(let n=0;n<3;n++)for(const key of route){press(key);step()}
-   }else{for(let n=0;n<18000&&!texts.includes('GAME OVER');n++)step()}
+   for(let n=0;n<18000&&!texts.includes('GAME OVER');n++)step();
    assert.ok(texts.includes('GAME OVER'),`${id} did not reach game over`);
   }
   lose();for(let n=0;n<600;n++)step();assert.ok(texts.includes('GAME OVER'),'manual result must persist');

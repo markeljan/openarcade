@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createRuleboundPuzzle} from '../src/feature-games35.js';
+test('manual undo retains the latest hundred moves',()=>{const events=[],g=createRuleboundPuzzle({seed:0,onSound:e=>events.push(e)});for(let i=0;i<102;i++){const k=i%2?'ArrowRight':'ArrowLeft';g.input(k,true);g.update(22/60,false);g.input(k,false)}for(let i=0;i<102;i++){g.input('x',true);g.input('x',false);g.update(22/60,false)}assert.equal(events.filter(e=>e==='rule-undo').length,100)});

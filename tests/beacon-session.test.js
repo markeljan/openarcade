@@ -1,0 +1,7 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createFeatureGame19} from '../src/feature-games19.js';
+test('player takeover begins a fresh manual harbor after AI preview',t=>{
+ const names=['window','ResizeObserver','requestAnimationFrame','cancelAnimationFrame'],saved=Object.fromEntries(names.map(k=>[k,globalThis[k]]));t.after(()=>Object.assign(globalThis,saved));const old=Math.random;let seed=42;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);t.after(()=>{Math.random=old});let callback,clock=0,labels=[];globalThis.window={devicePixelRatio:1};globalThis.ResizeObserver=class{observe(){}disconnect(){}};globalThis.requestAnimationFrame=f=>(callback=f,1);globalThis.cancelAnimationFrame=()=>{};
+ const noop=()=>{},ctx=new Proxy({fillText(s){labels.push(s)}},{get:(o,k)=>o[k]??noop,set:(o,k,v)=>(o[k]=v,true)}),canvas={getContext:()=>ctx,getBoundingClientRect:()=>({width:320,height:720}),setAttribute:noop,addEventListener:noop,removeEventListener:noop};const game=createFeatureGame19(canvas,'beacon-bay');let rescued=false;
+ for(let i=0;i<6000;i++){labels=[];callback(clock+=1000/30);if(labels.some(s=>/^SAVED [1-9]/.test(s))){rescued=true;break}}assert.ok(rescued);
+ game.setInteractive(true);labels=[];callback(clock+=1000/30);assert.ok(labels.includes('SAVED 0  LOST 0  CONVOYS 0'));assert.ok(labels.includes('RUN 0'));game.destroy();
+});

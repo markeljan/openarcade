@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createFeatureGame5} from '../src/feature-games5.js';
+import {createFeatureGame5,deadline} from '../src/feature-games5.js';
 
 test('Deadline Deck autoplay banks deliveries before the route ends',()=>{
   const previousRandom=Math.random;let seed=0x12345678,scheduled,id=0,score=0,delivered=0,firstScore=0;
@@ -17,3 +17,6 @@ test('Deadline Deck autoplay banks deliveries before the route ends',()=>{
     assert.ok(score>0,`no score banked despite ${delivered} deliveries`);
   } finally {game.destroy();Math.random=previousRandom;}
 });
+
+test('manual skater accelerates and coasts after releasing a turn',()=>{const g=deadline();g.input('ArrowRight',true);g.update(1/60,false);const first=g.snapshot().p;for(let i=0;i<4;i++)g.update(1/60,false);const fast=g.snapshot().p;assert.ok(fast.vx>first.vx);g.input('ArrowRight',false);g.update(1/60,false);const coast=g.snapshot().p;assert.ok(coast.x>fast.x);assert.ok(coast.vx>0&&coast.vx<fast.vx)});
+test('AI uses momentum while navigating its route',()=>{const g=deadline();let moved=false;for(let i=0;i<3000;i++){const a=g.snapshot().p;g.update(1/60,true);const b=g.snapshot().p;if(Math.abs(b.vx)>1&&b.x!==a.x){moved=true;assert.ok(Math.abs(b.vx)<=360);break}}assert.ok(moved)});

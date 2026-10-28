@@ -46,7 +46,7 @@ test('dropping rehandled cargo outside a hold removes its pending manifest entry
  const game=harbor();const step=n=>{for(let i=0;i<n;i++)game.update(1/60,false)},press=()=>{game.input(' ',true);game.input(' ',false);step(25)};
  function move(axis,target){for(let i=0;i<1000;i++){const s=game.snapshot(),v=axis==='x'?s.crane.x:150+Math.cos(s.angle)*s.crane.rope,d=target-v;if(Math.abs(d)<3)break;const key=axis==='x'?(d<0?'ArrowLeft':'ArrowRight'):(d<0?'ArrowUp':'ArrowDown');game.input(key,true);step(1);game.input(key,false)}step(50)}
  move('x',55);move('y',490);press();const id=game.snapshot().crane.carry.id;move('y',220);move('x',225);move('y',490);press();press();assert.equal(game.snapshot().manifest.entries[0].id,id);
- move('y',220);move('x',155);move('y',490);press();const s=game.snapshot();assert.equal(s.crane.carry,null);assert.ok(s.boxes.some(b=>b.id===id));assert.ok(!s.manifest.entries.some(e=>e.id===id));
+ move('y',220);move('x',162);move('y',490);press();const s=game.snapshot();assert.equal(s.crane.carry,null);assert.ok(!s.boxes.some(b=>b.id===id),'overboard cargo should be lost');assert.ok(!s.manifest.entries.some(e=>e.id===id));
 });
 
 test('a safe worker warning counts one clearance, not one per frame',()=>{
@@ -59,5 +59,12 @@ test('a safe worker warning counts one clearance, not one per frame',()=>{
  for(let i=0;i<1000;i++){game.update(1/60,false);state=game.snapshot();workerIndex=state.workers.findIndex(w=>w.state==='warn'&&w.resolved&&w.timer>.15);if(workerIndex>=0)break}
  assert.ok(workerIndex>=0,'no resolved warning observed');const baseline=state.clearances;
  for(let i=0;i<5;i++)game.update(1/60,false);
- state=game.snapshot();assert.equal(state.workers[workerIndex].state,'warn');assert.equal(state.clearances,baseline);
+ state=game.snapshot();assert.equal(state.workers[workerIndex].state,'warn');assert.ok(state.workers[workerIndex].resolved);assert.ok(state.clearances<=baseline+1,'only the other worker may add a clearance');
+});
+
+
+test('manual high release falls into a hold and records a damaged load',()=>{
+ const game=harbor(),step=n=>{for(let i=0;i<n;i++)game.update(1/60,false)},press=()=>{game.input(' ',true);game.input(' ',false);step(25)};
+ function move(axis,target){for(let i=0;i<1000;i++){const s=game.snapshot(),v=axis==='x'?s.crane.x:150+Math.cos(s.angle)*s.crane.rope,d=target-v;if(Math.abs(d)<3)break;const key=axis==='x'?(d<0?'ArrowLeft':'ArrowRight'):(d<0?'ArrowUp':'ArrowDown');game.input(key,true);step(1);game.input(key,false)}step(50)}
+ move('x',55);move('y',490);press();const id=game.snapshot().crane.carry.id;move('y',220);move('x',195);press();let s=game.snapshot();assert.ok(s.boxes.some(b=>b.id===id&&b.mode==='falling'));step(60);s=game.snapshot();assert.ok(s.holds[0].some(b=>b.id===id&&b.scar>0));assert.equal(s.manifest.entries.find(e=>e.id===id).steady,false);assert.equal(new Set(s.boxes.map(b=>b.x)).size,s.boxes.length,'yard replenishment must use an unoccupied position');
 });

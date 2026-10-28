@@ -23,3 +23,35 @@
 .touch-actions button,.touch-actions button:not(.touch-action),.touch-controls .touch-action{width:44px;height:44px;min-width:44px;border-radius:50%;font-size:9px;letter-spacing:0}
 .touch-controls button:disabled{opacity:.35}
 @media(max-width:400px) and (pointer:coarse){.touch-actions{grid-template-columns:repeat(3,40px);grid-auto-rows:40px}.touch-actions button,.touch-actions button:not(.touch-action),.touch-controls .touch-action{width:40px;height:40px;min-width:40px}.touch-actions .touch-action{grid-row:auto}}
+
+/* On touch-sized screens, reserve room for controls while letting the portrait
+   game use the remaining height. Desktop and non-touch layouts stay unchanged. */
+@media(max-width:600px) and (pointer:coarse){
+ .play-layout{height:100dvh;min-height:0}
+ .play-header{min-height:44px;padding:3px 6px;gap:0;align-items:center}
+ .play-header>div:first-child{display:none}
+ .play-header .actions{width:100%;flex-wrap:nowrap;gap:3px}
+ .play-header .action{flex:1;min-width:0;min-height:44px;padding:4px 2px;font-size:8px;letter-spacing:0;white-space:nowrap}
+ .game-stage{flex:1;min-height:0;padding:3px}
+ .play-canvas{aspect-ratio:4/9;height:100%;width:auto;max-height:100%;max-width:100%}
+ .play-foot{display:none}
+ .touch-controls{flex:none;padding:3px 10px 5px;gap:8px}
+ .dpad{grid-template-columns:repeat(3,44px);grid-template-rows:repeat(2,44px)}
+ .dpad button{min-width:44px;height:44px}
+ .touch-actions{grid-template-columns:repeat(3,44px);grid-template-rows:none;grid-auto-rows:44px}
+ .touch-actions button,.touch-actions button:not(.touch-action),.touch-controls .touch-action{width:44px;height:44px;min-width:44px}
+}
+
+/* Landscape touch layouts place the controls beside the game, not below it. */
+@media(orientation:landscape) and (pointer:coarse){
+ .play-layout{height:100dvh;min-height:0;position:relative}
+ .play-header{min-height:44px;padding:3px 6px;gap:0;align-items:center}
+ .play-header>div:first-child{display:none}
+ .play-header .actions{width:100%;flex-wrap:nowrap;gap:3px}
+ .play-header .action{flex:1;min-width:0;min-height:44px;padding:4px 2px;font-size:8px;letter-spacing:0;white-space:nowrap}
+ .game-stage{flex:1;min-height:0;padding:3px}
+ .play-canvas{aspect-ratio:4/9;height:100%;width:auto;max-height:100%;max-width:100%}
+ .play-foot{display:none}
+ .touch-controls{position:absolute;left:0;right:0;bottom:0;padding:3px 10px 5px;pointer-events:none}
+ .touch-controls button{pointer-events:auto}
+}

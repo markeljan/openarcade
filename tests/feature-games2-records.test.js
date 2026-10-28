@@ -20,3 +20,5 @@ test('Jelly Dash saves the human result while excluding preview qualification',(
   assert.ok(final,'manual tournament must end');assert.ok(final.manualScore>=0);assert.equal(Number(memory.data.get(key)),final.manualScore);h.game.restart();assert.equal(Number(memory.data.get(key)),final.manualScore);
  }finally{h.close()}
 });
+
+test('Jelly Dash Enter restarts from the manual elimination overlay',()=>{const memory=store(),h=harness('jelly-dash',memory,true);try{let ended=false;for(let i=0;i<60*160;i++){const labels=h.step();if(labels.includes('GAME OVER')){ended=true;break}}assert.ok(ended);const saved=memory.data.get('miniarcade:best:jelly-dash');h.key('Enter');const labels=h.step(),state=h.game.snapshot();assert.equal(state.round,0);assert.equal(state.phase,'INTRO');assert.equal(state.spectating,false);assert.equal(state.manualScore,0);assert.ok(!labels.includes('GAME OVER'));assert.equal(memory.data.get('miniarcade:best:jelly-dash'),saved)}finally{h.close()}});

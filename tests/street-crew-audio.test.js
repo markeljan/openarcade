@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createRoadsGame} from '../src/feature-games39.js';
+test('AI emits construction, delivery and completion cues',()=>{const cues=[],g=createRoadsGame(c=>cues.push(c));for(let i=0;i<40000&&!g.snapshot().complete;i++)g.update(1/60,true);assert.ok(g.snapshot().complete);for(const cue of ['street-build','street-bridge','street-delivery','street-district','street-roundabout','street-complete'])assert.ok(cues.includes(cue),cue);assert.equal(cues.filter(c=>c==='street-complete').length,1)});

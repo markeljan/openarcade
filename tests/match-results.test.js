@@ -12,6 +12,6 @@ test('Turbo Arena keeps manual result and resumes the AI preview',()=>seeded(()=
 }));
 test('Castle Crasher rebuilds after a breach and reset starts chapter one',()=>seeded(()=>{
  const game=castle();for(let i=0;i<60*600&&game.snapshot().chapter===1;i++)game.update(1/60,true);
- assert.ok(game.snapshot().chapter>1,'AI should breach a fort');assert.equal(game.snapshot().blocks.filter(b=>!b.dead).length,26,'breach rebuilds both forts');
+ assert.ok(game.snapshot().chapter>1,'AI should breach a fort');assert.equal(game.snapshot().blocks.filter(b=>!b.dead).length,60,'breach rebuilds both reference forts');
  game.reset();assert.equal(game.snapshot().chapter,1);
 }));

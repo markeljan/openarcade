@@ -1,0 +1,6 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {dungeon} from '../src/feature-games15.js';
+const seeded=(seed,fn)=>{const old=Math.random;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);try{fn()}finally{Math.random=old}};
+test('manual empty sigil is silent and a slash cues its action',()=>seeded(42,()=>{const events=[],g=dungeon(e=>events.push(e));g.input('z',true);g.update(0,false);g.input('z',false);assert.deepEqual(events,[]);g.input(' ',true);g.update(0,false);g.input(' ',false);assert.deepEqual(events,['dungeon-slash'])}));
+test('AI cues sigils, equipment, combat and the completed lap',()=>seeded(42,()=>{const events=[],g=dungeon(e=>events.push(e));for(let i=0;i<6000&&!g.snapshot().lap;i++)g.update(.033,true);assert.equal(g.snapshot().lap,1);assert.equal(events.filter(e=>e==='dungeon-rune').length,4);assert.equal(events.filter(e=>e==='dungeon-boot').length,1);assert.equal(events.filter(e=>e==='dungeon-key').length,1);assert.equal(events.filter(e=>e==='dungeon-lap').length,1);assert.ok(events.includes('dungeon-hit'));assert.ok(events.includes('dungeon-ko'));assert.ok(events.indexOf('dungeon-boot')>events.indexOf('dungeon-rune'));assert.ok(events.indexOf('dungeon-lap')>events.indexOf('dungeon-key'))}));

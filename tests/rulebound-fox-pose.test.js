@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createRuleboundPuzzle} from '../src/feature-games35.js';
+function shapes(g){const rects=[],noop=()=>{},ctx=new Proxy({fillRect(x,y,w,h){rects.push({x,y,w,h,color:ctx.fillStyle})}},{get:(o,k)=>o[k]??noop,set:(o,k,v)=>(o[k]=v,true)});g.draw(ctx);return rects}
+function legs(g){return shapes(g).filter(r=>r.color==='#704331'&&r.w===7&&r.h===12)}
+test('idle fox is still while a pushed word gives the fox a walking gait and paw',()=>{const g=createRuleboundPuzzle({seed:0});g.update(5/60,false);let l=legs(g);assert.equal(l.length,2);assert.equal(l[0].y,l[1].y);g.input('ArrowUp',true);g.update(17/60,false);g.update(5/60,false);l=legs(g);assert.equal(l.length,2);assert.notEqual(l[0].y,l[1].y);assert.ok(shapes(g).some(r=>r.w===8&&r.h===6&&r.color==='#fff2d6'))});
+test('AI uses the push pose while rewriting its first rule',()=>{const g=createRuleboundPuzzle({seed:0});let found=false;for(let i=0;i<200&&!found;i++){g.update(1/60,true);found=shapes(g).some(r=>r.w===8&&r.h===6&&r.color==='#fff2d6')}assert.ok(found)});

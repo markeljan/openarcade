@@ -1,0 +1,5 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {duel} from '../src/feature-games39.js';
+test('duelist cues follow combat and departure events; drawing stays silent',()=>{const cues=[],g=duel(name=>cues.push(name));g.input(' ',true);g.input('x',true);g.update(1/60,false);assert.deepEqual(cues.slice(0,2),['neon-roll','neon-cut']);g.input(' ',false);g.input('x',false);for(let i=0;i<10000&&!cues.includes('neon-depart');i++)g.update(1/60,true);for(const cue of ['neon-windup','neon-gun','neon-parry','neon-blade-hit','neon-mask','neon-captain','neon-gate','neon-board','neon-depart'])assert.ok(cues.includes(cue),`missing ${cue}`);const count=cues.length,noop=()=>{},c=new Proxy({},{get:()=>noop,set:()=>true});g.draw(c);assert.equal(cues.length,count,'drawing emitted a sound')});
+test('lethal manual encounter emits one rewind cue',()=>{const cues=[],g=duel(name=>cues.push(name));for(let i=0;i<100&&!cues.includes('neon-rewind');i++)g.update(1/60,false);assert.equal(cues.filter(x=>x==='neon-rewind').length,1)});

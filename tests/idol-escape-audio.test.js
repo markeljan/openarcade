@@ -1,0 +1,10 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {idol} from '../src/feature-games12.js';
+const step=(g,frames,auto=false)=>{for(let i=0;i<frames;i++)g.update(1/60,auto)};
+function hold(g,key,frames){g.input(key,true);step(g,frames);g.input(key,false)}
+test('manual chain sounds occur on physical outcomes, not a missed action or drawing',()=>{const events=[],g=idol(e=>events.push(e));hold(g,' ',50);assert.deepEqual(events,[]);hold(g,'ArrowRight',44);hold(g,' ',44);step(g,75);hold(g,'x',87);hold(g,'ArrowRight',60);hold(g,'z',48);step(g,200);hold(g,'ArrowRight',60);for(const e of ['idol-dig','idol-rock-load','idol-push','idol-valve','idol-seal','idol-artifact','idol-escape'])assert.equal(events.filter(x=>x===e).length,1,e);const n=events.length,noop=()=>{},ctx=new Proxy({},{get:()=>noop,set:()=>true});g.draw(ctx);g.draw(ctx);assert.equal(events.length,n)});
+test('AI emits the same chain cues and caught transition emits once',()=>{const aiEvents=[],g=idol(e=>aiEvents.push(e));for(let i=0;i<5000&&!aiEvents.includes('idol-escape');i++)g.update(1/60,true);assert.ok(aiEvents.includes('idol-dig'));assert.ok(aiEvents.includes('idol-seal'));assert.ok(aiEvents.includes('idol-artifact'));assert.ok(aiEvents.includes('idol-escape'));const events=[],idle=idol(e=>events.push(e));for(let i=0;i<6000&&!events.includes('idol-caught');i++)idle.update(1/60,false);assert.equal(events.filter(e=>e==='idol-caught').length,1);assert.ok(!events.includes('idol-escape'))});
+
+test('sluice water waits for its floor delay and physically reaches the cart',()=>{
+ const events=[],g=idol(e=>events.push(e));hold(g,'ArrowRight',105);hold(g,'z',46);let s=g.snapshot();assert.equal(s.valve,true);assert.equal(s.water.hit,false);step(g,80);s=g.snapshot();assert.equal(s.water.floor,false);assert.equal(events.includes('idol-water'),false);step(g,20);s=g.snapshot();assert.equal(s.water.floor,true);assert.equal(s.water.hit,true);assert.ok(s.cart.v>0);assert.equal(events.filter(e=>e==='idol-water').length,1);
+});

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createFeatureGame36 } from '../src/feature-games36.js';
 
 for (const [id, make] of [['ashen-courier',createFeatureGame36]]) {
-  test(`${id} keeps manual game over and AI recovers`, t => {
+  test(`${id} returns manual terminal runs to attract mode`, t => {
     const originalRandom=Math.random;
     const originals=Object.fromEntries(['window','ResizeObserver','requestAnimationFrame','cancelAnimationFrame'].map(key=>[key,globalThis[key]]));
     t.after(()=>{Math.random=originalRandom;Object.assign(globalThis,originals)});
@@ -15,18 +15,19 @@ for (const [id, make] of [['ashen-courier',createFeatureGame36]]) {
     globalThis.cancelAnimationFrame=n=>scheduled.delete(n);
     const ctx=new Proxy({fillText(value){text.push(String(value))}}, {get:(object,key)=>object[key]??noop,set:(object,key,value)=>(object[key]=value,true)});
     const canvas={getContext:()=>ctx,getBoundingClientRect:()=>({left:0,top:0,width:320,height:720}),setAttribute:noop,focus:noop,addEventListener:(key,fn)=>listeners.set(key,fn),removeEventListener:key=>listeners.delete(key)};
-    const game=make(canvas,id,{interactive:true});
+    let handoffs=0;const game=make(canvas,id,{interactive:true,onAttract:()=>handoffs++});
     const step=()=>{now+=1000/60;text=[];const pending=[...scheduled.values()];scheduled.clear();pending.forEach(fn=>fn(now))};
     let frames=0;while(!text.includes('GAME OVER') && frames++<18000)step();
     assert.ok(text.includes('GAME OVER'),`${id} did not reach a manual terminal state`);
-    for(let i=0;i<600;i++)step();
-    assert.ok(text.includes('GAME OVER'),`${id} reset without the player asking`);
-    game.restart();step();assert.ok(!text.includes('GAME OVER'),`${id} did not restart`);
+    for(let i=0;i<120;i++)step();
+    assert.equal(handoffs,1,'manual finish hands off once to the player UI');
+    assert.equal(canvas.tabIndex,-1);
+    assert.ok(!text.includes('GAME OVER'),'attract run restarted');
+    game.setInteractive(true);assert.equal(canvas.tabIndex,0);
+    step();assert.equal(handoffs,1,'manual takeover is retained');
     frames=0;while(!text.includes('GAME OVER') && frames++<18000)step();
-    assert.ok(text.includes('GAME OVER'),`${id} did not reach a second terminal state`);
-    game.setInteractive(false);
-    for(let i=0;i<300;i++)step();
-    assert.ok(!text.includes('GAME OVER'),`${id} preview did not recover`);
+    assert.ok(text.includes('GAME OVER'),'second manual run reaches a terminal state');
+    for(let i=0;i<120;i++)step();assert.equal(handoffs,2);
     game.destroy();assert.equal(scheduled.size,0);
   });
 }

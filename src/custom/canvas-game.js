@@ -23,7 +23,7 @@ export function createCanvasGame(canvas, metadata, factory, options = {}) {
     return factory({finish({score, result}={}) {
       if(disposed||current!==generation||outcome)return;
       const points=typeof score==='number'&&Number.isFinite(score)?score:null;
-      outcome={score:points,result:String(result??'RUN COMPLETE').slice(0,50),delay:2};
+      outcome={score:points,result:String(result??'RUN COMPLETE').slice(0,50),delay:2,manualDelay:12+1/60};
       if(interactive&&points!==null) {
         const stored=readBest();if(stored!==null&&(best===null||stored>best))best=stored;
         if(best===null||points>best){best=points;records.set(recordKey,best);try { window.localStorage?.setItem(recordKey,String(best)); } catch { /* Keep the current session playable. */ }}
@@ -53,6 +53,7 @@ export function createCanvasGame(canvas, metadata, factory, options = {}) {
   function key(event, down) {
     if (!interactive) return;
     const name = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+    if (down && outcome && name === 'Enter' && isGameKey(event)) { event.preventDefault(); release(); newRun(); draw(); return; }
     if (down ? (outcome || !isGameKey(event)) : !held.has(name)) return;
     event.preventDefault();
     if (down) held.add(name); else held.delete(name);
@@ -83,17 +84,18 @@ export function createCanvasGame(canvas, metadata, factory, options = {}) {
       ctx.font='bold 13px monospace';
       if(outcome.score!==null)ctx.fillText(`SCORE ${outcome.score}`,160,348);
       if(interactive&&best!==null)ctx.fillText(`BEST ${best}`,160,371);
-      ctx.fillText(interactive?'RESTART TO PLAY':'NEXT RUN...',160,400);
+      ctx.fillText(interactive?'ENTER TO PLAY AGAIN':'NEXT RUN...',160,400);
     }
   }
   function tick(time) {
     if (disposed || paused) return;
     if (!interactive && last && time-last < 1000/30-1) { frame=requestAnimationFrame(tick); return; }
     const dt=last ? Math.min((time-last)/1000,.05) : 0;
-    last=time; if(outcome){if(!interactive&&(outcome.delay-=dt)<=0)newRun()}else game.update(dt,!interactive); draw(); frame=requestAnimationFrame(tick);
+    last=time; if(outcome){if(interactive&&(outcome.manualDelay-=dt)<=0){release();interactive=false;canvas.tabIndex=-1;newRun();options.onAttract?.()}else if(!interactive&&(outcome.delay-=dt)<=0)newRun()}else game.update(dt,!interactive); if(disposed||paused)return;draw(); frame=requestAnimationFrame(tick);
   }
   if (!paused) frame=requestAnimationFrame(tick);
   return {
+    getSessionState() { return outcome ? 'result' : 'playing'; },
     restart() { if(disposed)return; release(); newRun(); draw(); },
     setInteractive(value) { if(disposed)return; release(); const takeover=!interactive&&!!value; interactive=!!value; if(takeover&&outcome)newRun(); canvas.tabIndex=interactive ? 0 : -1; last=0; draw(); },
     pause() { if (!paused) { release(); paused=true; cancelAnimationFrame(frame); last=0; } },

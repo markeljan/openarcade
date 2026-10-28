@@ -1,0 +1,8 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createHiveHeist,createCaravanGame} from '../src/feature-games21.js';
+const press=(g,k)=>{g.input(k,true);g.input(k,false)};
+test('manual hive dance and wasp threats emit cues once per event',()=>{let cues=[],g=createHiveHeist(c=>cues.push(c));g.input('ArrowUp',true);for(let i=0;i<12;i++)g.update(.02,false);g.input('ArrowUp',false);press(g,'x');assert.equal(cues.filter(c=>c==='hive-dance').length,1);for(let i=0;i<500;i++)g.update(.02,false);assert.ok(cues.includes('hive-warning'));assert.ok(cues.includes('hive-raid'))});
+test('hive AI gathers, pollinates and deposits',()=>{let cues=[],g=createHiveHeist(c=>cues.push(c));for(let i=0;i<10000&&!cues.includes('hive-deposit');i++)g.update(.02,true);assert.ok(cues.includes('hive-gather'));assert.ok(cues.includes('hive-pollinate'));assert.ok(cues.includes('hive-deposit'))});
+test('manual caravan loads and ballast emits only when spent',()=>{let cues=[],g=createCaravanGame(c=>cues.push(c));for(let i=0;i<100;i++)g.update(.02,false);assert.equal(cues.filter(c=>c==='caravan-load').length,3);for(let n=0;n<4;n++){press(g,'z');for(let i=0;i<30;i++)g.update(.02,false)}assert.equal(cues.filter(c=>c==='caravan-ballast').length,3)});
+test('caravan AI docks and unloads a route',()=>{let cues=[],g=createCaravanGame(c=>cues.push(c));for(let i=0;i<15000&&g.snapshot().route<1;i++)g.update(.02,true);assert.ok(g.snapshot().route>=1);assert.ok(cues.includes('caravan-dock'));assert.equal(cues.filter(c=>c==='caravan-unload').length,3);assert.ok(cues.includes('caravan-route'))});

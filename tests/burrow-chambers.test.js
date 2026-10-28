@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createBurrowGame} from '../src/feature-games11.js';
+test('first chamber opens the two reference ellipses while retaining boundary and soil',()=>{const {grid}=createBurrowGame().snapshot();for(const [x,y] of [[6,10],[8,10],[14,26],[14,24]])assert.equal(grid[y][x],0,`${x},${y}`);assert.equal(grid[10][0],2);assert.equal(grid[18][18],1)});
+test('all three personas can bait and bury the first boss in the chamber layout',()=>{for(const persona of ['SURVEYOR','HOOK','SHOWBOAT']){const g=createBurrowGame({persona});let win=false;for(let i=0;i<7200;i++){g.update(1/60,true);if(g.snapshot().state==='victory'){win=true;break}}assert.ok(win,persona)}});

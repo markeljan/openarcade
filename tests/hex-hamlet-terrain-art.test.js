@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createHexHamlet} from '../src/feature-games35.js';
+function styles(g){const fills=[],strokes=[],noop=()=>{},c=new Proxy({fill(){fills.push(c.fillStyle)},stroke(){strokes.push(c.strokeStyle)}},{get:(o,k)=>o[k]??noop,set:(o,k,v)=>(o[k]=v,true)});g.draw(c);return{fills,strokes}}
+for(const auto of [false,true])test(`${auto?'AI':'manual'} board paints routes over meadow rather than broad route wedges`,()=>{const g=createHexHamlet();if(auto)for(let i=0;i<80;i++)g.update(1/60,true);const s=styles(g);assert.ok(s.strokes.includes('#4e9fa7'));assert.ok(s.strokes.includes('#675d4f'));assert.ok(!s.fills.includes('#78bec9'));assert.ok(!s.fills.includes('#927e6b'))});

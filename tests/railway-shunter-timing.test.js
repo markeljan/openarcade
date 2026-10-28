@@ -1,0 +1,5 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createRailwayGame} from '../src/feature-games20.js';
+test('manual yard receives the second shunter after the reference district interval',()=>{const old=Math.random;Math.random=()=>0;try{const g=createRailwayGame();let first=-1,second=-1,previous=false;for(let i=1;i<650;i++){g.update(1/60,false);const s=g.snapshot(),warning=s.shunters.some(q=>q.phase==='warning');if(warning&&!previous){if(first<0){first=i;assert.ok(Math.abs(s.shunters.find(q=>q.phase==='warning').speed-41.4)<1e-9)}else{second=i;break}}previous=warning}assert.ok(first>=138&&first<=139);assert.ok(second-first>=355&&second-first<=356)}finally{Math.random=old}});
+test('AI continues deliveries with the source shunter schedule',()=>{const old=Math.random;Math.random=()=>.3;try{const g=createRailwayGame();let faster=false;for(let i=0;i<15000&&!faster;i++){g.update(1/60,true);faster=g.snapshot().shunters.some(sh=>Math.abs(sh.speed-46.8)<1e-9)}assert.ok(g.snapshot().delivered>=4);assert.ok(faster,'later district must spawn a faster shunter')}finally{Math.random=old}});

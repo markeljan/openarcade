@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {foundry} from '../src/feature-games16.js';
+import {foundry,advanceFoundryPhysics,foundryChargeSpeed} from '../src/feature-games16.js';
 const step=(g,n=1200)=>{for(let i=0;i<n&&g.snapshot().ball;i++)g.update(1/60,false)};
 const press=(g,k)=>{g.input(k,true);g.input(k,false)};
 function route(g,port,dir){let s=g.snapshot();while(s.port<port){press(g,'ArrowRight');s=g.snapshot()}while(s.port>port){press(g,'ArrowLeft');s=g.snapshot()}if(s.dir!==dir)press(g,'ArrowUp');press(g,' ');step(g)}
@@ -9,5 +9,18 @@ test('foundry preserves a charge through separate machine launches and installs 
  route(g,0,1);assert.equal(g.snapshot().dependencies,1);route(g,0,1);assert.equal(g.snapshot().dependencies,2);
 });
 test('wrong-order machine scraps the charge and returns a raw replacement',()=>{
- const g=foundry();press(g,'ArrowUp');press(g,' ');for(let i=0;i<600&&g.snapshot().charge.stage!=='SCRAP';i++)g.update(1/60,false);assert.equal(g.snapshot().charge.stage,'SCRAP');step(g);assert.equal(g.snapshot().charge.stage,'RAW');assert.equal(g.snapshot().pressure,10);
+ const g=foundry();press(g,'ArrowUp');press(g,' ');for(let i=0;i<600&&g.snapshot().charge.stage!=='SCRAP';i++)g.update(1/60,false);assert.equal(g.snapshot().charge.stage,'SCRAP');step(g);assert.equal(g.snapshot().charge.stage,'RAW');assert.equal(g.snapshot().pressure,34);
 });
+test('a manual launch passes its guide and travels to the furnace',()=>{const g=foundry();press(g,'ArrowLeft');press(g,'ArrowUp');press(g,' ');let s=g.snapshot();assert.equal(s.ball.mode,'guide');assert.equal(s.charge.stage,'RAW');let guide=false,outbound=false,heated=false;for(let i=0;i<600;i++){g.update(1/60,false);s=g.snapshot();guide ||= s.ball?.mode==='guide';outbound ||= s.ball?.mode==='outbound';if(s.charge.stage==='HEATED'){heated=true;break}}assert.ok(guide&&outbound&&heated);assert.ok(s.ball.trail.length>0)});
+test('preview routes charges from the guide to a machine before installing parts',()=>{const g=foundry();let guide=false,outbound=false;for(let i=0;i<12000;i++){g.update(1/60,true);const s=g.snapshot();guide ||= s.ball?.mode==='guide';outbound ||= s.ball?.mode==='outbound';if(s.parts>=1){assert.ok(guide&&outbound);return}}assert.fail('preview did not install a part')});
+test('manual valve shot counters a warned surge before the die jams',()=>{const g=foundry();for(let i=0;i<720;i++)g.update(1/60,false);let s=g.snapshot();assert.equal(s.hazard.phase,'warning');assert.equal(s.jammed,false);route(g,2,1);s=g.snapshot();assert.equal(s.hazard.counters,1);assert.equal(s.jammed,false);assert.ok(s.pressure<24)});
+test('unanswered surge jams the die until a valve shot clears it',()=>{const g=foundry();for(let i=0;i<970;i++)g.update(1/60,false);let s=g.snapshot();assert.equal(s.jammed,true);assert.equal(s.pressure,39);route(g,2,1);s=g.snapshot();assert.equal(s.jammed,false);assert.equal(s.pressure,21)});
+test('preview responds to pressure and continues producing parts',()=>{const g=foundry();let sawHazard=false,sawCounter=false;for(let i=0;i<16000;i++){g.update(1/60,true);const s=g.snapshot();sawHazard ||= s.hazard.phase==='warning'||s.hazard.phase==='land';sawCounter ||= s.hazard.counters>0;if(s.parts>=3&&sawHazard){assert.ok(sawCounter||!s.jammed);return}}assert.fail('preview failed to progress through pressure hazard')});
+test('excess pressure triggers emergency vent and raw replacement',()=>{const g=foundry();press(g,'ArrowUp');for(let i=0;i<12&&!g.snapshot().emergencyVents;i++){press(g,' ');for(let j=0;j<1200&&g.snapshot().ball&&!g.snapshot().emergencyVents;j++)g.update(1/60,false)}let s=g.snapshot();assert.ok(s.emergencyVents>0);assert.equal(s.pressure,55);assert.equal(s.charge.stage,'SCRAP');for(let i=0;i<40;i++)g.update(1/60,false);assert.equal(g.snapshot().charge.stage,'RAW')});
+
+test('swept charge reflects from a wall even when one frame crosses it',()=>{const b={x:100,y:150,vx:-300,vy:0,radius:9,routeLocked:true},wall={id:'wall',kind:'wall',x:0,y:100,w:4,h:100,active:true};const hits=advanceFoundryPhysics(b,.5,[wall]);assert.deepEqual(hits,['wall']);assert.ok(b.vx>0);assert.ok(b.x>13);});
+test('unlocked charge hits and breaks slag while locked routes pass it',()=>{const slag={id:'slag',kind:'slag',x:100,y:100,w:10,h:40,hp:1,active:true},b={x:40,y:120,vx:300,vy:0,radius:9,routeLocked:true};assert.deepEqual(advanceFoundryPhysics(b,.3,[slag]),[]);assert.equal(slag.hp,1);Object.assign(b,{x:40,y:120,vx:300,vy:0,routeLocked:false});assert.deepEqual(advanceFoundryPhysics(b,.3,[slag]),['slag']);assert.equal(slag.active,false);assert.ok(b.vx<0)});
+
+test('pressure changes charge speed at the reference thresholds',()=>{assert.equal(foundryChargeSpeed(44.9),240);assert.equal(foundryChargeSpeed(45),270);assert.equal(foundryChargeSpeed(75),300);const g=foundry();press(g,' ');const start=g.snapshot().ball;g.update(1/60,false);const end=g.snapshot().ball;assert.ok(Math.abs(Math.hypot(end.x-start.x,end.y-start.y)-4)<1e-8)});
+
+test('manual port selection wraps in both directions',()=>{const g=foundry();assert.equal(g.snapshot().port,1);press(g,'ArrowLeft');assert.equal(g.snapshot().port,0);press(g,'ArrowLeft');assert.equal(g.snapshot().port,2);press(g,'ArrowRight');assert.equal(g.snapshot().port,0);press(g,'ArrowRight');assert.equal(g.snapshot().port,1);press(g,'ArrowRight');assert.equal(g.snapshot().port,2);press(g,'ArrowRight');assert.equal(g.snapshot().port,0)});

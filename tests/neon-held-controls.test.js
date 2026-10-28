@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {duel} from '../src/feature-games39.js';
+test('held manual cut and roll repeat only after their cooldowns',()=>{let cues=[],g=duel(c=>cues.push(c));g.input(' ',true);g.input('x',true);for(let i=0;i<40;i++)g.update(1/60,false);g.input(' ',false);g.input('x',false);assert.ok(cues.filter(x=>x==='neon-cut').length>=2);assert.equal(cues.filter(x=>x==='neon-roll').length,2)});
+test('preview still completes combat and the train departure',()=>{let cues=[],g=duel(c=>cues.push(c));for(let i=0;i<8000&&!cues.includes('neon-depart');i++)g.update(1/60,true);assert.ok(cues.includes('neon-captain'));assert.ok(cues.includes('neon-board'));assert.ok(cues.includes('neon-depart'))});

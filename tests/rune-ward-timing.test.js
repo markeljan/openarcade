@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createRuneSwarm,runeWardDuration} from '../src/feature-games4.js';
+test('blue ward uses reference frame-based duration and capped accumulation',()=>{assert.equal(runeWardDuration(0,1,1),68/60);assert.equal(runeWardDuration(9.9,4,25),10)});
+test('AI cast ward decays in real seconds between attacks',()=>{const old=Math.random;let seed=42;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);try{const g=createRuneSwarm();for(let i=0;i<1000&&!g.snapshot().shield;i++)g.update(.05,true);const before=g.snapshot().shield;assert.ok(before>0);g.update(.05,false);const after=g.snapshot().shield;assert.ok(Math.abs(before-after-.05)<1e-8)}finally{Math.random=old}});

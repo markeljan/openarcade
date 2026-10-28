@@ -1,0 +1,5 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {wordfall} from '../src/feature-games3.js';
+test('arrows retain their launch damage across a rune upgrade and manual volleys use the new power',()=>{const old=Math.random;let seed=5;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/2**32);try{const g=wordfall();let upgraded=false;for(let i=0;i<10000;i++){g.update(1/60,true);const s=g.snapshot();if(s.green>=4&&s.bullets.some(b=>b.damage===1)){upgraded=true;break}}assert.ok(upgraded,'a previously launched arrow survived a real upgrade');let ready=false;for(let i=0;i<3000;i++){const s=g.snapshot(),near=s.enemies.some(e=>Math.hypot(Math.min(Math.abs(e.x-s.player.x),320-Math.abs(e.x-s.player.x)),e.y-s.player.y)<250);if(near&&!s.choices.length){ready=true;break}g.update(1/60,true)}assert.ok(ready);g.input('x',true);g.input('x',false);g.update(1/60,false);const s=g.snapshot();assert.ok(s.bullets.filter(b=>b.damage===1+Math.floor(s.green/4)).length>=3)}finally{Math.random=old}});
+

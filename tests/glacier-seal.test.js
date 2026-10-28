@@ -1,23 +1,4 @@
-import test from 'node:test';
-import assert from 'node:assert/strict';
-import {createFeatureGame32} from '../src/feature-games32.js';
+import test from 'node:test';import assert from 'node:assert/strict';import {createGlacierGame} from '../src/feature-games32.js';
+test('Glacier seal starts at the scaled reference position and patrols within the field',()=>{const g=createGlacierGame(),start=g.snapshot().seal;assert.equal(start.x,44);assert.equal(start.y,252);assert.equal(start.vx,60);let lo=Infinity,hi=-Infinity;for(let i=0;i<7200;i++){g.update(1/60,true);const s=g.snapshot().seal;lo=Math.min(lo,s.x);hi=Math.max(hi,s.x);assert.ok(s.x>=16&&s.x<=304);assert.ok(s.y>=206&&s.y<=574)}assert.ok(hi-lo>100,'seal should patrol the ice')});
 
-test('Glacier Glide seal patrol stays onscreen during accelerated preview', t=>{
-  const names=['performance','window','ResizeObserver','requestAnimationFrame','cancelAnimationFrame'];
-  const original=Object.fromEntries(names.map(name=>[name,globalThis[name]]));
-  t.after(()=>Object.assign(globalThis,original));
-  const noop=()=>{},frames=new Map(),positions=[];let id=0;
-  globalThis.performance={now:()=>1400};
-  globalThis.window={devicePixelRatio:1};
-  globalThis.ResizeObserver=class{observe(){} disconnect(){}};
-  globalThis.requestAnimationFrame=fn=>{frames.set(++id,fn);return id};
-  globalThis.cancelAnimationFrame=id=>frames.delete(id);
-  const ctx=new Proxy({arc(x,y,r){if(y===350&&r===16)positions.push(x)}},{get:(o,k)=>o[k]??noop,set:(o,k,v)=>(o[k]=v,true)});
-  const canvas={getContext:()=>ctx,getBoundingClientRect:()=>({width:320,height:720}),setAttribute:noop,addEventListener:noop,removeEventListener:noop};
-  const game=createFeatureGame32(canvas,'glacier-glide');
-  for(let frame=1;frame<=7200;frame++){const callbacks=[...frames.values()];frames.clear();callbacks.forEach(fn=>fn(frame*1000/60));}
-  game.destroy();
-  assert.ok(positions.length>100);
-  assert.ok(Math.min(...positions)>=260&&Math.max(...positions)<=300);
-  assert.ok(Math.max(...positions)-Math.min(...positions)>35,'seal should patrol rather than stay still');
-});
+test('AI anticipates a distant winding seal and can still reunite the chick',()=>{const g=createGlacierGame();let responded=false;for(let i=0;i<3000;i++){g.update(1/60,true);const s=g.snapshot(),d=Math.hypot(s.seal.x-s.penguin.x,s.seal.y-s.penguin.y);if(s.seal.state==='tell'&&d>80&&d<138&&!s.hopCooldown&&!s.diveTime){g.update(1/60,true);assert.ok(g.snapshot().hop>0);responded=true;break}}assert.ok(responded,'AI should see a tell beyond the former 75-pixel radius');for(let i=0;i<9000&&!g.snapshot().rescues;i++)g.update(1/60,true);assert.ok(g.snapshot().rescues>=1)});

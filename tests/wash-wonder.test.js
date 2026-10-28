@@ -20,7 +20,7 @@ test('manual spray consumes water, locks aim while moving, and refills only at t
  game.input(' ',false);game.input('ArrowRight',false);game.input('z',true);game.update(.05,false);assert.equal(game.snapshot().water,sprayed.water);
  game.input('ArrowLeft',true);for(let i=0;i<120;i++)game.update(1/60,false);game.input('ArrowLeft',false);
  for(let i=0;i<30;i++)game.update(1/60,false);assert.equal(game.snapshot().water,168);assert.ok(game.snapshot().refills>0);
- game.input('z',false);game.input('x',true);assert.equal(game.snapshot().nozzle,'narrow');game.input('x',false);
+ game.input('z',false);game.input('x',true);game.update(1/60,false);assert.equal(game.snapshot().nozzle,'narrow');game.input('x',false);
 });
 
 test('autoplay restores all three landmarks, opens gates and refills the tank',()=>{
@@ -68,4 +68,14 @@ test('grime follows landmark edges and manual spraying removes persistent cells'
  game.input(' ',false);game.input('ArrowRight',false);
  const after=s.cells.reduce((sum,c)=>sum+c.hp,0);game.update(.05,false);
  assert.equal(game.snapshot().cells.reduce((sum,c)=>sum+c.hp,0),after);
+});
+
+test('held nozzle control repeats on the reference 18-frame cooldown',()=>{const cues=[],g=createWashWonder(c=>cues.push(c));g.input('x',true);g.update(1/60,false);assert.equal(g.snapshot().nozzle,'narrow');for(let i=0;i<17;i++)g.update(1/60,false);assert.equal(g.snapshot().nozzle,'narrow');for(let i=0;i<2;i++)g.update(1/60,false);assert.equal(g.snapshot().nozzle,'fan');assert.equal(cues.filter(c=>c==='wash-nozzle').length,2);g.input('x',false)});
+test('AI chooses spray height based on dirty surface and still restores the first landmark',()=>{const g=createWashWonder();let sawApproach=false;for(let i=0;i<12000&&g.snapshot().phase==='wash';i++){g.update(1/60,true);const s=g.snapshot();if(s.player.y<540)sawApproach=true}assert.ok(sawApproach,'AI should approach higher grime');assert.equal(g.snapshot().phase,'ribbon')});
+test('AI starts a fresh wash immediately after reaching the tap with a full tank',()=>{const old=Math.random;let seed=3;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);try{const g=createWashWonder();let ready=false;for(let i=0;i<40000;i++){g.update(1/60,true);const s=g.snapshot();if(s.phase==='pack'&&s.water===168&&Math.hypot(s.player.x-34,s.player.y-588)<=21){ready=true;break}}assert.ok(ready);g.update(1/60,true);const s=g.snapshot();assert.equal(s.phase,'wash');assert.equal(s.job,0)}finally{Math.random=old}});
+
+
+test('nozzle samples held input and changes before same-tick spraying',()=>{
+ const cues=[],g=createWashWonder(c=>cues.push(c));g.input('x',true);g.input('x',false);g.update(1/60,false);assert.equal(g.snapshot().nozzle,'fan');assert.ok(!cues.includes('wash-nozzle'));
+ const before=g.snapshot().water;g.input('x',true);g.input(' ',true);g.update(1/60,false);const s=g.snapshot();assert.equal(s.nozzle,'narrow');assert.equal(s.jet.nozzle,'narrow');assert.ok(s.water<before);assert.ok(cues.includes('wash-nozzle'));g.input('x',false);g.input(' ',false);
 });

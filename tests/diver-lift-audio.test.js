@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createDiverGame,lift} from '../src/feature-games26.js';
+test('manual diver sonar and ballast cues follow input actions',()=>{const cues=[],g=createDiverGame(c=>cues.push(c));g.input(' ',true);g.input(' ',false);g.input('z',true);g.input('z',false);assert.ok(cues.includes('diver-sonar'));assert.ok(cues.includes('diver-buoy'));const n=cues.length;for(let i=0;i<30;i++)g.update(1/60,false);assert.equal(cues.filter(c=>c==='diver-sonar').length,1);assert.ok(cues.length>=n)});
+test('automatic diver emits recovery feedback at real interactions',()=>{const cues=[],g=createDiverGame(c=>cues.push(c));for(let i=0;i<60*240&&g.snapshot().recoveries<1;i++)g.update(1/60,true);assert.ok(g.snapshot().recoveries>0);for(const cue of ['diver-sonar','diver-reveal','diver-tether','diver-dock'])assert.ok(cues.includes(cue),cue)});
+test('manual lift switch and brake cues correspond to actions',()=>{const cues=[],g=lift(c=>cues.push(c));g.input(' ',true);g.input(' ',false);g.input('x',true);g.input('x',false);assert.deepEqual(cues,['lift-switch','lift-brake']);for(let i=0;i<20;i++)g.update(1/60,false);assert.equal(cues.filter(c=>c==='lift-brake').length,1)});
+test('automatic lift emits warning, boarding and delivery cues',()=>{const cues=[],g=lift(c=>cues.push(c));for(let i=0;i<60*120&&g.snapshot().delivered<2;i++)g.update(1/60,true);assert.ok(g.snapshot().delivered>=2);for(const cue of ['lift-wind-warning','lift-brake','lift-board','lift-delivery'])assert.ok(cues.includes(cue),cue)});

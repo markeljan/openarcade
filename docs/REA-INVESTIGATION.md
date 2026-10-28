@@ -319,3 +319,798 @@ After the wrapper frame-rate fixes, a controlled four-second Edge sample of the 
 - Star Roller now models the reference 300-second timeout and source-derived magnet rain/royal visit; local size scale and event presentation remain adapted.
 - Rune Rebound's ritual orb now travels ballistically and must physically contact a distinct socket. Independent reference and local autoplay probes each observed sealing, but used different seeds and do not establish trajectory parity.
 - The local Jelly Dash result now signals the shared player to enter watch mode, and a browser test exercises a fresh takeover after automatic attract. The reference REA showed result-to-attract; exact UI wording differs.
+
+### Follow-up runtime observations
+
+- Pottery House: an isolated local browser with read-only snapshot instrumentation and real keyboard input now completed overheat loss, kiln reset and replacement clay (order 2). A separate reference manual run observed overheat loss and replacement clay. The two uncontrolled runs do not establish precise timing or later quality parity.
+
+- Starlight Ward: a controlled reference manual CDP trace observed repeated shadow lunges drain a charged emitter while the session continued. Local removed its invented ward-health terminal path, with repeated-drain/recovery tests. Three-room geometry and unlocks remain open.
+- Glacier Glide now has five holes and source-derived rotating, hazard-aware selection; three have scaled reference positions while two remain adapted to local routes. Local manual and AI tests cover fishing and rescue; exact placement and timing remain open.
+- Grave Garden now presents the source-derived five-second lane forecast, enemy silhouettes, chapter palettes and damage cues. A local REA capture showed gameplay and a damage bar; it did not validate late-wave rendering or exact art.
+- Deep Digger now includes source-derived obsidian and a first paired waygate, with local manual bidirectional transit and seeded AI construction tests. Only one deep gate is supported locally; late food, grove and tower progression are still missing.
+- Preview-budget browser checks sampled six or fewer active preview callbacks in normal mode, at most one with reduced motion, and zero playing previews while a game dialog was open. These are bounded loop counts, not CPU or power benchmarks.
+
+- Rulebound: real-time CDP held Left+Up in both orders chose Left in the reference; local priority now matches. A separate controlled page-four OPEN route with undo matched sampled landed states, supplementing the earlier PUSH route. These checks do not cover all alternative routes.
+- Reef to Rice now includes all three fish tiers together and source-derived tank, speed and depth upgrades. Local manual and AI tests cover tier gating; reference short REA samples did not independently verify exact depth.
+- Deep Digger now supports multiple deep gates spaced 45 tiles apart, camp-to-newest return and rations. Local manual and seeded AI tests exercise these; the cave and food input are adapted, and later grove/tower objectives remain open.
+- Void Gambit now uses source-scaled lane and hull positions, player bob, visible card travel and victory/upgrade holds. Short REA captures did not establish full pacing equivalence.
+
+- Reference Rune Rebound attract-to-instructions-to-play reset stage and score in a controlled browser run. A local Snake watch-to-takeover run previously saved the inherited preview score as best; shared takeover is being changed to restart. Machine Hunt separately tracked manual score.
+- Pocket League REA showed a 1–7 loss with time left and Enter restart; local Turbo Arena now ends at seven and accepts Enter, with focused tests.
+- Robot Register's reference planner matched all four local candidate selections in one isolated sampled state; this does not establish planner equivalence across states. Its source-derived library, seeded tie break and profile decisions now replace the prior baseline.
+- Starlight Ward's three-room geometry, proximity devices, ordered unlock and restoration cycle were added from source. Local manual and AI tests exercise progression; exact wall geometry, ray rendering and enemy behavior remain approximate.
+- Deep Digger's first grove and tower work includes food immunity, sapling growth and initial construction, but a seeded 480-second AI remained at tower height 2. The full 60-course build, physical tower and reliable resource trips remain incomplete.
+- Audio: reference shared source declares sound mappings for all 80 games. A controlled Kiln Keeper session scheduled sample sources only after a trusted gesture and enabling sound; gallery preview remained silent. Local previously had only Hearth Conductor audio. A shared opt-in audio foundation is in progress; the sample does not prove every reference mapping was executed.
+
+- Deep Digger: a seeded AI run now completes 60 tower courses after grove harvesting and stone trips. Tower courses now have full-size rendered walls, windows, floors and a climbable ladder with falling, but remain a separate grid rather than integrated cave-world cells; camera transitions and hazards differ from the reference.
+- Shared opt-in audio was added with silent gallery previews and game event sinks. Several games now emit synthesized cues; these are not the reference recordings and audio is not yet integrated across the complete catalog. A local Hearth Conductor instrumented browser check observed oscillator events stop on mute and resume after unmute. Background-resume behavior is undergoing browser verification.
+- A local isolated browser regression now confirms Watch AI to Take Over starts at zero and saves the manual Snake score, not the AI preview score. A reference Rune Rebound attract/instructions/play probe separately observed a fresh reset.
+
+- The shared audio control is now wired into selected games including Machine Hunt, Meat Lad, Turbo Arena, Jelly Dash, Deep Digger, Rune Swarm, Grave Garden, Swarm Keeper, Robot Register, Idol Escape, Gravity Claw, Dungeon Relay, Tower Panic, Glacier Glide, Rulebound, Hex Hamlet, Ashen Courier, Icebound Ascent, Reef to Rice, Neon Duelist, Street Crew, Void Gambit, Wobble War, Rooftop Post, Orbit Kitchen, Hearth Conductor and Pottery House. Coverage is incomplete and synthesized cues, spatialization and ambience remain approximations; do not assume sound parity for other games.
+- Hex Hamlet now has river and rail travelers delivering on matching connected paths, based on static reference inspection and local manual/AI tests. Exact movement, placement and timing are not established.
+- Stamp Harbor's guided reference manual run completed 12 cases and reached ferry departure. Local tests cover all cases, departure and the source-derived post-departure flag/book/bell sequence; fine arm and document animation remains approximate.
+
+- An isolated Edge test using a real AudioContext and actual keyboard play observed a Pottery clay cue after simulated page visibility restoration (oscillator starts increased from 2 to 3). Mute and close released the contexts and the preference persisted. This tests scheduling rather than audible device output.
+- Frog Convoy now has source-derived flood crocodile and shift outcomes; manual and AI tests cover the lifecycle, but a real manual crocodile collision remains unobserved.
+- Bakery Blitz now has independent rack and oven loaf timers and reference recipe timings. Manual tests cover overlapping batches; exact heat, steam showpieces and AI pipelining remain simplified.
+
+- Mill Mechanic now has reference-informed gale bracing and storm feathering; local manual and seeded AI tests exercise restoring six grid blocks. Exact wind cycle and presentation remain approximate.
+- Essence Workshop now has the moon-moth elixir branch. REA saw the reference carrying objective after one relic; local manual and AI tests complete the branch. Stills and wisps remain simplified.
+- Ricochet Foundry now shows guide/director travel before a machine, based on reference source; local routing still uses approximate waypoints rather than reference collision physics.
+- Tower Heist guards now telegraph and charge, respond to decoys, and stun rather than reset a caught player. A bounded reference AI run reached the roof; individual attack timings are source-derived.
+- Drift Divers now gives the eel a latched-target warning, lunge and recovery and lets the AI avoid it. Source supports this; browser capture output was lost and does not establish runtime parity.
+
+- Grave Garden: a planned 15-minute REA capture hit the Codex client deadline at 450 seconds. That timeout is not a terminal result or proof of cleanup; do not infer score persistence from it. The run's state must be checked before any repeat or alternate probe.
+- An integrated `node --test --test-concurrency=4` run passed 971 tests. This is local behavior evidence, not proof of catalog-wide reference parity.
+
+- Starlight Ward's initially added sound cues were removed after checking Prism Patrol, its shared engine and sound wrapper: the inspected game did not trigger those cues. Do not infer reference audio from visual event names. Mill Mechanic's reference ambient wind bed remains unimplemented.
+- Accelerated direct Edge/CDP execution of Grave Garden's shipped E.runFrames reached a manual loss at wave 22 with score 3918, persisted best 3918 and Enter restarted. This is not a natural-speed run or REA capture; the timed-out REA result remains unknown.
+
+- After the timed-out REA capture, an independently owned accelerated CDP session using the shipped frame-step API reached a Grave Garden manual loss at wave 22, persisted score 3918 as best, and restarted with Enter. A separate high-best run retained 999999. Local manual record, Enter and 12-second attract tests now cover those behaviors. This does not prove natural-speed or loss-balance parity.
+- Burrow Boss now has source-shaped biome chambers; local AI was adapted to the altered paths and all three personas reach a first-boss defeat in tests. Exact pursuit remains approximate.
+- Frog Convoy and Pico Cap, Web Slam and Deadline Deck, Dragon Lock and Cursed Fist, Phase Foundry and Hearthbound, Castle Crasher and Hotel Haunt, and Cosmic Haul and Midnight Pursuit now have selected-player synthesized audio events. Reference ambience, exact samples and remaining catalog coverage are open.
+
+- A later integrated `node --test --test-concurrency=4` run passed 1053 tests; subsequent edits require a fresh run. Catalog parity remains unproven.
+- Frog Convoy's accelerated reference manual idle reached a zero-score result and Enter restart. Local score and record rules are source-informed; a nonzero reference record was not observed.
+- The Mill reference uses a six-second wind audio bed and no directly authored action SFX. A synthesized six-second opt-in wind bed now runs in selected-player sessions; real Edge checks confirmed start, pause/reactivation and teardown. Exact timbre and the reference fade remain unverified.
+
+- Burrow Boss accelerated direct reference runtime reached a zero-score game-over after the source's 54,000-frame finale and restarted with Enter. Local manual scoring, finale, record and attract lifecycle are tested; nonzero reference persistence remains source-inferred.
+- An integrated `node --test --test-concurrency=4` run passed 1067 tests. The production build passed with a large-chunk warning. Subsequent edits need fresh verification.
+
+- Feature modules now load on demand from a checked metadata registry, while custom games remain eager. One production build reduced the entry from 786.6 KB to 108.7 KB (35.7 KB gzip); a bounded review exercised direct links, stale loads, Back and failed-load retry. Normal/reduced preview-budget checks passed after the change. This does not cover every navigation race or network condition.
+- Reference sound dispatch can originate in feedback mappings even without explicit per-game sfx calls. A controlled standalone reference probe observed mapped Mill and Prism events, so corresponding synthesized local cues were restored.
+- An integrated four-worker test run passed 1105 tests; subsequent edits require another run.
+
+- A later four-worker integrated run passed 1117 tests. All feature modules now contain the shared audio interface, but this does not establish that every individual game has complete or reference-identical sounds; synthesized timbres and most ambient beds remain open.
+- Mill and Prism sound events were restored after a standalone reference probe confirmed the shared feedback dispatcher actually emits mapped SFX. The previously stated absence of Prism sounds was incorrect.
+
+- An integrated four-worker test run passed 1140 tests; later work requires rerunning. The local reference comparison remains incomplete.
+- Drift Divers now models winch tension and both-body docking from source; local manual and AI tests cover towing. Reference runtime and battery/scoring parity are still open.
+- Hearthbound now has an independent fire-fuel timer and source-informed early hunger/cold/wound penalties; the local AI rescue test passes. The pre-clinic medic behavior remains a gap.
+
+- Production lazy-loading review at 1280×720 fetched only the entry and two feature chunks; hiding the page and opening a player paused previews. A generated custom fixture opened via direct link. An aborted chunk succeeded on retry. The bounded review is not a complete memory or network-race audit.
+- Star Roller accelerated reference execution observed a nonzero best score persist through Enter restart. Local now also returns from a manual result to attract after 12 seconds; the reference finale duration was still being implemented.
+- An integrated `node --test --test-concurrency=4` run passed 1153 tests; subsequent changes require rechecking.
+
+- An integrated four-worker test run passed 1174 tests; further edits require a fresh run. The user objective remains incomplete.
+- A bounded CDP reference/manual Harbor Hoist drop landed as damaged manifested cargo; a separate local keyboard run loaded a dropped crate and exposed overlapping replacement crates, which were corrected. This does not establish exact fall physics or supply timing.
+- Moonshine Valley's day, dusk and dawn timing now follows reference source; local enemy behavior and plot/economy remain simplified. Hearthbound now has source-informed traveling defender bolts; no reference runtime combat comparison was performed.
+
+- A 390×844 mobile player comparison showed the local canvas at about 554px high versus the reference's nearly full viewport. Compact local layout now reaches about 690px while retaining 44px touch controls; one browser test checks bounds and a real touch. Other viewport sizes need further review.
+- An integrated four-worker suite passed 1184 tests. Local tests establish their covered behaviors, not all-game reference equivalence.
+
+- A further isolated lazy-load review exercised pagehide during a delayed game request, rapid Watch→Take Over, restart during loading and a switch to a custom direct link. No race or page error was reproduced; this is not exhaustive.
+- An integrated four-worker suite passed 1195 tests; subsequent edits require another run.
+
+- Dragon Lock's accelerated reference manual run reached a nonzero gate result and preserved its record through Enter. Local now models the source-duration finale, result and manual record, but mapped scoring omits reference events and physics differ.
+- A later four-worker integrated suite passed 1208 tests. Subsequent changes need rechecking; this does not establish reference parity.
+
+- A four-worker integrated run passed 1229 tests. Subsequent work requires rechecking, and passing tests do not prove full fidelity.
+- Storm Roundup now follows source-informed earlier lightning cadence, wider squalls and predictive targeting; local manual and AI routes were adjusted to exercise grounding under those hazards.
+- The mobile player review checked 320×568, 390×844, 844×390 and desktop, finding and fixing overlapping touch rows and landscape canvas sizing.
+
+- Drift Divers pressure enclosure sides, floor and sealed lid now block diver and tethered relic. Local manual and AI recovery tests pass; reference geometry is source-derived and controlled reference collision remains unverified.
+- A four-worker integrated run passed 1245 tests; subsequent changes require another run.
+
+- The Mill and Prism audio assessment was corrected: standalone reference feedback probes and sound ledger showed that their events are dispatched by the shared feedback mapper despite no direct game-level sfx calls. Their local mapped synthesized cues are present; this does not establish reference timbre.
+- Railway Rush's physical siding and rolling-coupling tests now cover manual and AI encounters. A later shunter pass follows reference source on braking/diversion; movement interpolation remains approximate.
+- Rune Rebound has source-derived called-bank scoring, rotating flippers and sampled swept collisions. Tests cover manual and AI conversion; exact collision integration and reference runtime parity remain open.
+
+- Gravity Claw scroll: controlled reference stepWorld fixtures and local manual up/down fixtures both showed projectile and bolt screen displacement consistent with world movement minus camera movement. Reference camera easing and local threshold differ; velocities and input setup differed, so this is not speed or full trajectory parity. Reference screenshot evidence: ev_083a3b0655f8ad1981807ffddcd857de0ee428caa2e346b8295bdd993dc44b32.
+
+- A four-worker integrated test run passed 1259 tests. A previously flaky Midnight Pursuit preview-bust check now starts from a controlled near-bust state and still exercises a real collision, no distance reset and later progress. Subsequent code changes require retesting.
+
+- A four-worker integrated test run passed 1286 tests; subsequent changes need verification. Turbo Arena AI now produces physical goals in local simulations and has simplified attacker/defender roles; reference AI profiles and refueling remain open.
+
+- A four-worker integrated run passed 1290 tests. Later changes need rerunning. Source-informed Kaiju target locks and Greenhouse manual harvest scoring have focused tests, but long reference outcomes remain open.
+
+- The latest integrated four-worker run passed 1309 tests and production build succeeded with a 112 KB entry. Subsequent edits need retesting; many reference mechanics, artwork, sound fidelity, manual and long-run paths remain incomplete.
+
+- Cursed Fist now has source-derived airborne slams, jump steering and baited-whiff bonuses, covered by manual and AI tests. No new live reference combat capture was made; local targeting and movement remain approximate.
+- The latest integrated four-worker suite passed 1313 tests and the production build passed. Later work must be verified again; the overall objective remains incomplete.
+
+- A four-worker integrated suite passed 1343 tests. This remains local coverage, not proof of reference parity.
+- An independently sampled reference Tower Panic preview had assist active in all 75 observed moving states; local AI now uses assist while moving. That sample does not establish all hazard outcomes.
+- Glacier Glide's hop and cooldown were compared with real reference key input: the hop expired while its cooldown remained active. Local focused traversal tests reflect the 20/52-frame timing.
+
+- Deep Digger now has source-informed surface wolves, harpies, swoops and lightning shielding, with manual predator combat and a seeded 60-course AI run. Population, terrain and weather remain simplified; the short reference capture did not reach these late behaviors.
+- Pottery House separate reference and local 12-second REA AI captures each showed gallery 1/master 1 and an iridescent reveal. The isolated local real-keyboard full clay-to-gallery replay also passed after waiting for lazy loading. These independent runs do not prove exact timing or artwork parity.
+- A four-worker integrated test run passed 1385 tests. Later edits need retesting; the overall goal is not complete.
+
+- A four-worker integrated suite passed 1429 tests. Later edits need rerunning, and catalog-wide parity remains unproven.
+- An accelerated reference manual Grave Garden run reached wave 60 loss; local unattended runs also lost but three local AI runs survived where one reference AI run lost. The unmatched rosters and small sample do not establish a balance error.
+- Dungeon Relay's six-room topology, held manual movement and AI shortcut approach are source-informed; reference held-key movement was observed live, while room/shortcut paths still need fuller runtime comparison.
+
+- A four-worker integrated run passed 1449 tests. Changes made afterward must be retested; no global parity is implied.
+- Wobble War now has source-informed ballistic arrows; one reference runtime sample showed a rising arrow, while local deflection is tested with a deterministic physical collision.
+- A controlled reference Dungeon Relay held-key probe moved six cells in roughly one second; the local timed held movement and AI shortcut approach were corrected. The six-room graph remains a source-informed implementation without complete reference runtime comparison.
+
+- A four-worker integrated suite passed 1471 tests and production build passed with a 112 KB entry. Further work requires retesting; the overall fidelity goal remains incomplete.
+- A guided accelerated reference Stamp Harbor run completed twelve documents and the final ledger; the session continued, so no natural terminal was inferred. A separate guided accelerated Wash Wonder run reached Park Reopened and remained active.
+- A real held-key reference Dungeon Relay probe moved six cells in roughly 61 frames; local held movement and AI shortcut approach were corrected. The six-room implementation and additional room mechanics remain source-derived and need deeper runtime comparison.
+
+
+## Follow-up fidelity work
+
+- Deep Digger: shipped Block Mine source places a mineable beacon at the completed tower crown and checks the struck tile for lightning protection. Local now represents the beacon in the sky grid; seeded AI completion and manual mining tests cover it. No fresh reference endgame was captured; world dimensions, camera and storm targeting remain approximate.
+- Grave Garden: reference source sets pea and moon projectile lives to 90 and 120 frames. Local shots now expire and cannot collide beyond their remaining lifetime; focused manual and AI tests pass. Late AI outcomes have not been compared with matched random scenarios.
+- Dungeon Relay: shipped source separates activating a vault rune from collecting the center reward. Local manual and AI routes now do the same; the room graph and obstacle detail still need deeper runtime comparison.
+- Ashen Rage: source-informed nitro starts at 20, requires 30, lasts 90 frames, and charges from race actions. Focused manual and AI tests cover activation and duration; traffic, rival behavior and terrain remain simplified.
+- Neon Duelist: a fresh Neon Vow AI capture showed carriage combat; source indicates the bot activates focus near incoming fire. Local AI now uses focus against nearby shots. Exact spacing, movement and art remain approximate.
+- Robot Register: source distinguishes polarity-reversing conveyors from fixed-direction fans and respawns robots at their assigned starts even when occupied. Local tests cover both, plus manual and AI rounds; no fresh runtime comparison was made for these changes.
+- The shared opt-in custom-game result contract now accepts Enter to restart a finished manual session and returns to AI after 12 seconds, following the reference engine. Preview finishes remain isolated from saved scores. This does not supply score persistence to built-in games that do not expose it.
+- A fresh paired gallery survey saw four previews in view on each site. The reference also has recording controls and a promotional strip absent locally; recording is outside the requested scope. A paired Meat Lad start showed visibly different layouts, but the reference generates levels, so individual random screens do not establish systematic layout differences.
+
+- Tower Panic now shows source-informed zone palettes, named zones, worker uniforms and broken, non-traversable ladder segments. Manual and AI progression tests pass; a short reference capture did not reach a stage outcome and local artwork remains simplified.
+- Starlight Ward now slows the keeper briefly after a shadow drains a lens, following source; a manual local strike and recovery test covers it. The fresh reference REA attempt timed out, so it is not runtime evidence of that effect.
+- Reef to Rice has source-informed tier-specific restaurant layouts and deep fish population; manual serving and AI progression through three rooms pass. Local canvas geometry and art are adaptations.
+- Cursed Fist has source-informed grounded stomps and downed-enemy recovery, with manual and AI combat tests. A reference capture loaded the canvas but did not exercise those rules.
+- Wash Wonder mechanisms animate after being released, as indicated by source; local AI tests observe all three drawings change. Exact mechanisms and effects remain visually simplified.
+- Glacier Glide now requires eight sustained fast-slide frames before committing a fish run, with the source-informed cooldown. AI releases and requalifies after feeding; local manual catch, feed and reunion and AI repeated-feeding tests pass. No fresh reference trace verified this change, and variable timestep counting approximates discrete reference frames.
+- Shared audio currently uses synthesized cues instead of the reference's named buffers and supports fewer ambience beds. Source inspection found reference per-event pitch, volume and pan; matching controls does not establish sound parity and no comparative listening test was performed.
+
+- Machine Hunt's herd warning, stampede and retreat were added from reference source. Local manual and seeded AI runs reach the event; a 40-second reference attract capture reached an earlier encounter, not the herd.
+- Tower Heist applies source-informed gear-cycle stun and AI avoidance; local uses fixed phase and discrete floor transitions, and the change was not freshly exercised in reference runtime.
+- Rulebound ink changes appearance when its safety rule is active and reverts on undo, matching reference source and a fresh opening capture. Manual rule/undo and AI page tests pass.
+- Void Gambit discards the remaining hand and clears threats when an enemy is destroyed. A test checks card conservation through the next battle; separate unseeded reference and local samples reached the first battle's third turn but do not establish timing parity.
+- Side Surfers interpolates physical lane position for collision and pickup tests rather than teleporting logical collision to the target lane. Manual early/late changes and AI checks pass; the new rule is source-derived.
+
+- Ashen Courier AI now varies its preferred first shrine and dashes toward a nearby enemy at the end of its windup, based on reference source. A controlled reference frame-step run observed a Tide-first start and dash evasion; local tests cover both orders and escape. Arena art and pursuit remain approximate.
+- The shared sound emitter now accepts bounded optional pitch, volume and pan, with mono fallback; games need to supply those parameters, and the reference sample library and ambience are still not reproduced.
+
+- Kaiju Control keeps a manual-only score separately from its aggregate gameplay counter. Source specifies manual awards of 16 for pickup, 50 plus passengers for delivery, 21 repair, 13 decoy, 37 diversion, 2 grid hold and 155 district. A guided accelerated reference manual run physically deployed a decoy and collected a ward; a synthetic game-over call exposed 29 points. This does not establish a natural ending. Local manual and preview isolation tests pass.
+- Pottery House displays vent state, heat-reactive brick, flickering fire and stage-dependent window changes. An isolated keyboard replay again completed clay, ash, kiln, cooling and gallery. Independent 12-second REA captures showed gallery 1, master 1, iridescent in both versions, but do not prove timing equivalence; reference art and animation remain richer.
+
+- Stamp Harbor now models reading the posted rules once per shift before permit comparison, and AI prioritizes that action. Local manual and AI full-progression tests pass; reference source supports it, while the fresh REA capture only opened the game.
+- A live Side Surfers manual input check confirmed repeated Right keydowns while held advance just one lane; the updated local input guard matches that observation. Reference AI ran 718 frames in a single sample, while local seeded runs are not matched-track outcome comparisons.
+
+- Reef to Rice oxygen capacity, drain, warning, burst and predator costs follow reference frame values. A live manual reference check observed 91 oxygen consumed in 91 frames; local warning and AI return tests pass. Movement and depth geometry remain approximate.
+- Meat Lad gates opening hazards and now uses source-informed 7–9 steps, shorter 48/64-pixel ledges, 32/48-pixel rises and a 96-pixel summit. AI launch positioning and obstacle placement were adjusted for these ledges; six local seeded 60,000-frame runs passed the prior level-24 deadlock, and manual and 100-seed witness tests pass. The reference generator chimneys, backtracking and hazard distributions remain approximate; the attempted fresh reference runtime capture returned no usable evidence.
+
+- The integrated four-worker suite passed 1507 tests and the production build passed after the above changes. Normal and reduced-motion preview-budget browser checks passed. The first integrated run exposed a Web Slam test assuming the match could not restart at the final sample; deterministic tests now observe progress and serving throughout instead. Tests and build do not establish catalog parity.
+
+- On a subsequent browser session check, this host's headless Edge reported native visibility hidden, suppressing native animation frames. The updated harness waits for lazy loading and uses timer-driven frames only in that case: Watch AI to Take Over reset Machine Hunt from 5M to 0M and pause, resume and restart were exercised. This synthetic-frame run skipped visible preview resumption and close URL cleanup; those require a visible browser check and are not established by this run.
+
+
+## Continued comparisons
+
+- Deep Digger tower walls, windows and crown now block sky projectiles and line of sight; surface, trees and the first course share a full-scale camera. Manual tower and 60-course AI tests pass. The underground transition remains a scene cut, and world structures remain separate.
+- Glacier Glide thin-ice strain and AI warning radii now follow source-scaled reference distances, with a local manual warning test. Crack placement remains simplified.
+- Robot Register no longer emits a duplicate collision during the machinery phase, following reference source. Manual and AI repeated-register tests pass; planner timing and presentation remain approximate.
+- Starlight Ward's source-informed shadow spawn, floor constraints, retreat movement and respawn delay are implemented and tested. A live capture did not exercise these changes.
+- Fresh paired Neon Vow and Neon Duelist captures informed moving-city windows, seats, lights and train scenery; character scale and scene geometry remain approximate.
+- Rulebound now shows source-informed contextual captions for blocked moves, undo and rule changes. Local manual and AI rendering tests pass; no fresh reference runtime checked the captions.
+- Reef to Rice now blocks the diver at reefs with sliding detours; local manual and AI banquet tests pass. The source supports collision; the opening reference capture did not exercise it.
+- Gravity Claw's tripod drops two physical explosive cans on defeat, based on source; a local AI defeat and manual salvage test passes, but the reference capture did not reach the boss.
+- Ashen Courier AI now uses source-informed bolt evasion, flanking and sidestepping; seeded local AI escape exercises those actions. Full manual browser completion remains unverified.
+- Castle Crasher applies seeded persona-dependent aim variation at launch; source-informed local manual and AI tests pass, but no fresh reference launch was captured.
+- Star Roller AI saves dash for danger or promising pickups, based on source. Its route heuristic remains simpler than the reference planner.
+- Grave Garden displays source-informed win/loss cards and last-second-save lane feedback. Local manual and AI dawn tests pass; reference frame-stepped sessions reached wave 60 loss, not a dawn win. Art and AI remain approximate.
+- Avalanche Post now stages dog marking, probing, tether and extraction before escort. Local manual and AI tests pass; reference source supports this sequence, while terrain, dog routing and other rescue hazards remain simplified.
+
+- Tower Panic fire and machine contact now follow source-scaled centers and logical floors during ladder movement; focused manual and AI tests pass. These exact encounters have not been observed in the bounded reference runtime.
+- Scrap Arena has two source-informed acid puddles with periodic damage; local manual and AI encounter tests pass. Reference replay did not verify puddle contact, and hazard avoidance and artwork remain approximate.
+- Bakery Blitz separates pantry ingredients from mixer preparation and applies the source action cooldown; manual and AI tests cover preparation and service. Fresh REA captured the reference, but local stations and visuals remain simplified.
+- Lantern Line launches completed lanterns visibly and treats workshop keys as taps, following static source; manual and AI tests pass, while scheduling and visual detail remain approximate.
+- Pottery House now distinguishes carried, firing and displayed pot shapes and markings and adds facing and working poses. A complete local keyboard ash firing and display replay passed after the changes; reference animation and artwork remain richer.
+- A new visible-browser attempt was stopped by Computer Use when it could not establish the current browser URL with sufficient confidence. No visible preview-resume or close-URL evidence was obtained; the synthetic-frame test's skips remain open.
+
+- Deadline Deck now accelerates and coasts laterally using source-scaled steering; local manual and AI tests pass. Route, rail and longitudinal physics remain simplified.
+- Midnight Pursuit uses discrete police collision damage and cooldowns, excludes airborne contact, and raises heat from driving and intersections. Values come from source; the live reference capture did not exercise contact. Traffic and police dynamics remain approximate.
+- Idol Escape's source-informed sluice waits by chamber, advances visibly, and pushes the cart on contact; local manual and AI escape tests pass. Geometry and forces remain adapted.
+- Wingrush distinguishes gust, spring, star and blast core effects from source; manual and AI local tests pass. The reference can place multiple cores per fort, whereas local forts retain one.
+
+- Side Surfers generates source-informed oncoming and crawling trains with distinct speeds and headlights. Local manual and AI tests pass; reference runtime did not exercise these new train encounters and track/AI behavior remains simplified.
+
+- Dune Delivery now tracks 48 persistent, progressively available wells and renders sky and guide star from the same dusk/night/dawn/day phase used by gameplay. Paired idle reference/local captures had exposed the incorrect daylight cue; reference well progression comes from source and local manual/AI tests. A subsequent pass added world-coordinate travel, following camera and source-spaced wells and outposts. A later pass added source-informed inertia and scrolling terrain; player height and sheltered movement remain simplified, and no fresh manual browser comparison was captured.
+- Coral Courier now applies source-informed middle-biome current and starting momentum to manual and AI movement; local rescue and reef restoration tests pass. Fixed-step timing and a fresh reference movement trace remain unverified.
+
+- Mill Mechanic now repeats held tools on the source 18-frame lock and varies/slews wind direction. A controlled live reference hold produced four crank rotations over 61 frames; local tests cover that input and AI grid restoration. Wind forces and storm visuals remain approximate.
+- Cloud Caravan has source-informed lightning warning, two-dimensional aiming, tracking strikes and flight response. A bounded reference frame-stepped run observed charge and a later dodge; local manual and AI tests exercise those paths. Horizontal travel and art remain adapted.
+- Greenhouse Guardians now uses reference source starting water, seasonal aphid timing, infected graft decay and rescue healing. Local manual and AI tests pass; this pass did not capture those events in the reference runtime.
+
+- Drift Divers vent cycles use elapsed dive time after difficulty changes, and sonar/tether select only the current salvage site, based on reference source. Local manual and AI tests pass; later site sequence remains simplified.
+- Willow Dam now uses source-informed flood warning and impact timings, weak-bay targeting, temporary reinforcement and different new-versus-existing bay integrity. Local manual/AI tests pass; river geometry and current remain approximate.
+- Audio investigation: a Kiln Keepers REA load observed 27 named FLAC responses. The reference bank declares thousands of named sounds and loops, variants and event intervals, whereas local tones are synthesized and only wind ambience is implemented. The capture does not establish rights to redistribute those individual files; detailed timbre, mapping and ambience parity remain open.
+
+- Orbit Kitchen now damages and knocks the chef on drone contact, allows nearby interception and damages the hull on overheat, following source. Local manual/AI tests pass; the fresh reference capture did not exercise those events.
+
+- Storm Slot now latches a countersteer save once per bend or wet section and requires the source speed threshold. A controlled pre-fix comparison observed one reference save versus three local saves in 19 held frames; local manual and AI tests cover latch and rearming, but no fresh paired post-fix capture was made.
+- Pico Cap small-form gnawer contact now retreats to a passable neighboring tile, with timed motion and gnawer retreat. Local manual collision and AI glade tests pass; reference evidence is source-based and ordinary movement remains simplified.
+
+- After integration, the four-worker suite passed 1,571 tests and the production build passed. The earlier automated 60-second seeded autoplay sweep completed without script errors; it is not a full-playthrough or reference-parity check. Visible-browser preview resumption and URL cleanup remain unverified after the Computer Use policy stopped the attempted navigation.
+
+
+## Further comparisons
+
+- Pico Cap now commits tile movement after the source-informed 12/15-frame travel and interpolates its drawing. A live reference hold moved three tiles in 62 frames; local input moved three in 60 updates. Short AI samples in each reached two shards and two gates but had different layouts, so they do not establish timing parity.
+- Side Surfers checks the full train body and physical lane for roof support, based on source. Local manual collision and AI survival tests pass; train lengths and AI exits remain approximate.
+- Reef to Rice has source-informed acceleration, damping and momentum-aware reef collision; local manual and AI tests pass. Reference movement was not freshly exercised, and geometry and speeds remain adapted.
+- Void Gambit's AI waits 74 frames before an upgrade as indicated by source. The earlier unseeded samples do not establish tactical outcome parity.
+
+- Rulebound now shows source-informed page indicators, book count and time-limited initial hints. Manual and AI tests pass; runtime was not re-observed for this change and artwork remains approximate.
+- Robot Register renders collision rings at the computed pileup centroid for the source-informed duration. Local manual and AI collision tests pass; ring artwork is approximate and no fresh reference collision was captured.
+- Deep Digger can replace a missing tower rung during manual or AI climbing, preventing a severed ladder from stranding construction. Reference supports climb placement, but exact placement policy and world transitions remain simplified.
+- Glacier Glide uses source-scaled playfield bounds and edge rebound; local manual and AI tests pass, but a fresh reference boundary trace was not captured and variable-step physics remains approximate.
+- Meat Lad varies section length, rise and spring/ice occurrence based on source difficulty distributions. Local multi-seed tests pass; chimneys, backtracking, side spikes and exact hazard distribution remain missing.
+
+- Neon Duelist uses source-informed cut and roll active periods and cooldowns; local held-input, manual parry and AI progression tests pass. Reference runtime was not freshly exercised for these timings.
+- Gravity Claw restores the hull when a cell opens an airlock, based on reference source. Local manual and AI tests pass; no reference slot interaction was captured.
+
+- Gloam Trawler uses source-informed island fish schools and sale values, depletes sold fish, and forces night/eel response for a relic cast. Local manual and AI tests pass; earlier reference capture loaded the page but did not exercise these mechanics.
+- Pottery House shows kiln soak, bloom and ash heat indicators from reference gauge values. A fresh isolated real-keyboard run fired, cooled and displayed an iridescent piece; visual art remains approximate.
+- Shared audio now caps concurrent effects per player and supports optional per-event intervals without imposing unverified default timing. Reference FLAC timbres, mapped variants and most ambience remain open.
+
+- Grave Garden AI now models source-informed decision intervals and short lapses without stopping an ongoing task or manual takeover. Local tests pass; random seeding and held-intent behavior differ, and this is not a matched-seed reference run.
+- Paired Pico captures exposed a substantial wall, actor and HUD gap. Local walls, objects, sprites, status and route panel were redrawn and a local frame inspected. Reference biome art and animation remain richer.
+
+- The settled four-worker suite passed 1,594 tests and the production build passed after the Dune, Pico, audio and game-specific changes. Some tests initially failed during concurrent edits; the settled versions verify actual physical scenarios and passed. This is not proof of catalog parity.
+
+
+## Further runtime and source comparisons
+
+- Dune Delivery now accelerates and coasts and draws parallax ridges, landmarks and ground texture relative to the camera, using the captured reference source. Manual and AI local tests pass. Player height and sheltered movement remain simplified; no new manual reference run verified these changes.
+- Deep Digger resolves tower tiles over underlying terrain and uses source-informed storm intervals. Local tower and seeded AI tests pass; world seed, size, strike targeting and scene transitions remain approximate.
+- Glacier Glide hazard impacts now use source-informed velocity response rather than teleportation; local manual and AI tests pass. Hazard update ordering remains adapted.
+- Side Surfers AI jumps roof gantries and exits oncoming trains toward a clear lane, following source; local tests pass, while forecasting remains approximate.
+- Rulebound displays source-informed transient event particles; local manual/AI rendering tests pass, with approximate placement and timing.
+- Robot Register uses source-informed reveal and register frame boundaries. Exact-frame local manual/AI tests pass; no fresh reference runtime capture verified them.
+- Reef to Rice predators patrol tier-specific depths and retain their strikes after contact. Manual and AI local tests pass; reference source rather than a live later strike supports this change.
+- Gravity Claw drops captured props when hit, corrects mite damage and excludes stunned mites from capture. Manual and AI local tests pass; no reference damage event was captured.
+- Void Gambit has distinct source-informed encounter backdrops and moving stars; local artwork remains simplified.
+- Pottery House notices expire to the workshop prompt at source-informed timings. A fresh local real-keyboard ash firing, cooling and gallery replay passed; no fresh reference notice replay was made.
+- Grave Garden now uses scaled reference simulation coordinates and a compact projected garden. A local accelerated manual loss had similar sampled mid-run glass to an earlier reference sample; the unpaired AI runs diverged and do not establish balance parity. Reference atlas art remains approximate.
+
+- Shared Watch AI now restarts an abandoned manual game, based on a reference manual Escape transition and shared engine source; initial watching remains unchanged. A subsequent headless Edge run reported native visibility visible and used real animation frames: Watch→Take Over reset 8M to 0M, manual→Watch reset to 0M, preview resumption and close URL cleanup passed. This was not a visible-window check.
+
+- Pocket Regatta currents now vary in two axes and phase with shore bounds, and sailing drive and helm follow captured source. Local manual and AI tests pass; no fresh live reference run verified these changes.
+- Ashen Courier's source-informed bridge, guardian arena, enemy silhouettes and strike sectors were rendered and a local AI guardian frame inspected. Reference sprites and decoration remain more detailed.
+- Meat Lad has optional lower spike shelves, a source-scaled fall cutoff, and additional route gap validation. Local manual collision and seeded AI tests pass; chimneys and full backtracking remain absent.
+
+- Street Crew construction and repair require sustained work and cancel on release or movement. A controlled reference hold left a road unbuilt after eight frames and completed it after the 17-frame threshold; local manual and AI tests cover work and interruption. A paired capture showed the reference town filling the canvas, so local roads, river, houses and vehicles were expanded; this redraw was checked with a canvas mock, not a fresh paired screenshot. Reference edge-grid topology and art remain approximate.
+- Neon Duelist AI retains forward intent while jumping over carriage baggage, based on source and fresh bounded reference/local captures; focused local tests pass.
+
+- The settled four-worker suite passed 1,616 tests and the production build passed after these changes. The headless session check used native animation frames and passed preview resumption and URL cleanup when Edge reported itself visible; a visible-window check remains unperformed. Passing tests do not establish full parity.
+
+
+## Latest comparisons
+
+- Dune Delivery draws caravan and route objects on the terrain and uses a source-informed oscillating lee target with damped shelter movement. Local manual storm/parcel and AI tests pass; rock selection, proportions and tactics remain approximate.
+- Meat Lad now backtracks through candidate ledge placements using bounded search and sampled hop witnesses. Manual climb, hazard and seeded AI tests pass; the fallback, chimney geometry and full reference route proof remain open. A fresh five-second REA opening did not demonstrate chimney play.
+- Deep Digger retains armor, mitigates combat damage and spaces subsequent golem spawn depths according to source. A local seeded manual golem encounter and full AI tower test pass; fall/lava damage and exact spawn timing remain approximate.
+- Glacier Glide floe wrapping, landing range and velocity follow source; local manual boarding and AI reunion tests pass. Landing is still one frame later than the reference.
+- Grave Garden bite audio uses source-informed attacker-specific timing; local manual and AI events pass. Paired-seed late balance and atlas art remain open.
+- Gravity Claw replenishes sparsely populated zones with shielded wardens, following source; local manual and AI tests pass, while the initial check delay and zone generation are approximate.
+- Street Crew signal work now takes ten held frames with interruption; local manual and AI tests pass. AI still signals remotely and roads use an approximate grid.
+- Rulebound has source-informed page-specific scenery, verified in local manual and AI rendering tests; reference art remains more detailed.
+- Reef to Rice harpoon speed varies with tank tier, based on source; local manual shots and AI banquet tests pass.
+- Void Gambit displays source-informed upgrade effects, shield and warned-shot damage. This improves tactical information but is not evidence of combat parity.
+- Side Surfers checks hazards when a jetpack expires or leaving a roof, allowing extension and automatic hops; local AI tests pass, with track thresholds adapted.
+- Harbor Hoist prevents departure with excessive outer-hold imbalance, based on reference source. A controlled reference fixture also showed a swinging in-position cargo release, unlike the old local angle gate; that difference is being corrected.
+- Pottery House AI now patrols between kiln and wood and waits for glaze bloom, following source. A seeded AI test reached an iridescent masterwork; two keyboard replays timed out while steering; diagnostics showed the canvas remained focused and painting, and one timed-out position was already within the station interaction radius. The replay steering tolerance was corrected, after which two fresh real-keyboard ash firing, cooling and iridescent gallery runs passed. Gameplay did not change.
+
+- Harbor Hoist accepts a swinging load positioned over a hold and opens with three boxes and the hook over the middle one. A controlled live reference fixture confirmed the swinging release; local manual and AI tests pass. Dock proportions and initial masses remain approximate.
+- Escape during manual play now returns to a freshly reset AI run, based on an actual reference transition. Local keyboard lifecycle checks pass using timer-driven frames on this host; instructions and watching retain native modal cancel behavior.
+
+- The settled four-worker suite passed 1,637 tests and the production build passed. A stale Harbor audio test initially expected the hook to start empty; it now physically raises the hook before checking silence. Tests and build do not establish overall parity.
+
+
+## Additional fidelity work
+
+- Glacier Glide floe landing now registers with one hop frame remaining and carries the penguin starting on the next update, following source order. Local manual and AI boarding tests pass; coarse variable timesteps can cross the boundary.
+- Street Crew AI now travels within junction range before signalling, routing across an existing bridge when needed, based on source. Local AI completion and signal-position tests pass; its grid and job priorities remain approximate.
+- Rulebound objects now show source-informed active-rule indicators; local manual and AI rendering tests pass, with approximate icon art and no new reference runtime capture.
+- Gravity Claw has source-informed scrolling biome colors, grates, lights, crystals and airlock detail. Local render tests pass; placement is approximate and no new paired screenshot was taken.
+- Void Gambit preserves the ship's position between encounters and glides to center before dealing, following source. Local manual and AI transitions pass; no fresh live reference transition was captured.
+
+- Dune Delivery AI seeks new wells only during source-informed dusk/night approach windows, requires movement for relay pickup, reserves water for the route, and selects a forward shelter rock. Local manual and AI tests pass; hazard steering and scenery remain simplified.
+- Deep Digger applies armor and shared invulnerability to source-informed fall and lava damage. Local tower and AI tests pass; no fresh reference lava replay was captured and integration remains approximate.
+- Robot Register retains tagged and wiped-out robots through their respective animations, based on source. Local manual/AI rendering tests pass; art is simplified.
+- Side Surfers has source-informed rooftop coin lines and elevation-gated collection. A local manual run boarded and collected coins; the prior reference capture did not exercise rooftop loot.
+- Reef to Rice fish now swim in bounded tier schools and bob vertically, following source. Local manual and AI tests pass; depths remain adapted.
+- The reference ignores Escape on a finished result card, while the shared local player cannot identify terminal state for every built-in game and currently treats it as manual play. The custom finish contract exposes outcomes, but catalog-wide result-state parity remains open.
+
+- Street Crew was rewritten around the reference's 25 nodes and 21 stage-gated edges, continuous crew movement, river crossings and graph traffic. Local manual tests and AI completion of 42 deliveries pass. Captured source informed the graph; no fresh post-rewrite REA comparison was performed. Traffic still uses simplified BFS and lacks reference car-following and roundabout arcs.
+
+- Street Crew now uses the captured reference's 25-node, 21-edge stage-gated network and continuous crew movement. Local manual input and AI 42-delivery completion tests pass; traffic routing remains simplified and no fresh post-rewrite paired runtime capture was made.
+- Meat Lad now creates physical two-wall chimneys with an elevated exit when local route and wall-jump witnesses pass. Manual and AI input tests clear the obstacle; six long seeded AI runs reached levels 150–155. Fixed right-hand exits, simplified collision and a single scripted witness do not establish full reference generation parity.
+- Icebound Ascent now has physical interior walls and wall jumps, and its third room uses source-scaled ledges, crystals, chasm spikes and checkpoint. Local manual traversal and seeded AI completion tests pass; first/second room reconstruction is underway and predictive AI and art remain approximate.
+- Dune Delivery AI uses source-informed storm, well and dust-devil priorities. Local seeded scenarios pass; exact hazard cadence and controller parity remain unverified.
+- Gravity Claw creates source-informed mite clusters in new shaft bands; local manual/AI tests pass. Placement, count randomization and world generation remain approximate.
+- Harbor Hoist crane and pendulum rates were aligned to source; local manual physics and AI tests pass without a matched live motion replay.
+- Pottery House displays fifteen pieces and a fresh real-keyboard firing, cooling and gallery replay passed after further script steering correction; artwork remains approximate.
+
+- Grave Garden matched-seed frame stepping exposed projectile-window and gardener task timing differences. Local now matches reference seed 42 at frame 25,000 on wave, sun, glass, plants and sampled moon cooldowns, and matches an uproot/carry/replant sequence at frames 25,262/25,288/25,407. Later state still diverges: a prior moon cooldown differs by one frame and an enemy outcome differs at 25,622; at frame 53,999 reference glass was 18 versus local 94. The reference observations were controlled CDP E.runFrames, not the opening REA screenshot.
+- Icebound Ascent now has source-scaled interior walls, wall jumps, and all three authored room layouts including the Crown chasm, spikes and checkpoints. Local manual-input traversal and AI tests pass; predictive wall-route AI and reference artwork remain approximate.
+
+- The settled four-worker suite passed 1,665 tests and the production build passed. A randomized Castle audio fixture initially failed because some valid shots missed; the revised seeded fixture verifies a physical hit before checking its cue. These checks do not establish catalog parity.
+
+
+## Current follow-up comparisons
+
+- Street Crew now uses source-informed distance, junction and congestion costs and same-direction car spacing. A controlled live reference held signal for 126 frames produced twelve responses; local held input now renews every ten frames. Cross-lane and roundabout behavior remains under review.
+- Glacier Glide bridge rescue requires sustained slide and positions the carried chick by facing, following source. Local manual and AI reunion tests pass; no fresh reference runtime probe was made and variable timestep remains approximate.
+- Rulebound sentence highlights use the settled word state until movement or undo lands. Manual and AI rendering tests pass; this comparison was source-only.
+- Void Gambit's AI waits a source-informed 20 frames after a card; local tests pass, without a fresh reference capture.
+- Gravity Claw now draws distinct prop and enemy types based on source; local render tests pass, but no paired screenshot checked proportions or animation.
+- Robot Register crusher and turret indicators animate on source-informed physics/display clocks; local rendering tests pass and art remains stylized.
+
+- Matched Street Crew reference held-signal testing confirmed renewal, and post-rewrite paired REA captures showed the graph closer to the reference. Reference buildings, vehicles, river and destination meters remain more detailed; AI counts in those captures were not matched-duration evidence.
+- Dune caravan tail now has direction-sensitive inertia, and four source-informed biome palettes and landmarks advance by delivery. Local manual and AI tests pass; source-informed artwork and variable-step tail behavior remain approximations.
+- Deep Digger golem health increases with depth and an unbeaten golem expires without loot after 60 seconds, following source. Local manual and AI tests pass; no full reference survival replay established the timer.
+- Meat Lad chimneys now support left and right exits with local manual and AI physical traversal tests. A new REA reference screenshot attempt timed out with cleanup unconfirmed; it did not provide runtime evidence.
+- Icebound Ascent has distinct source-informed room environments and a clearer climber; a local screenshot was inspected, but art and waypoint AI remain approximate.
+- Pottery House shows crack/heat cues and carried work pieces; a fresh local keyboard firing, cooling and gallery run passed. These exact visual states were compared to source, not a fresh reference runtime capture.
+
+- Grave Garden seed-42 exact-frame tracing identified gardener speed rounding and transplant tie order differences; after correction, sampled enemy health and task choice match at frames 25,622 and 26,104 and aggregate state matches at 30,000. A further plan-cache equality correction aligns the observed actions at 32,829 and 32,842. Later samples remain different: at 40,000 reference/local glass is 140/141 and plants 2/4; at 53,999 glass is 18/24. Reference observations were isolated CDP E.runFrames, not a full parity proof.
+- Street Crew uses source-informed previous-edge-aware roundabout arcs and spacing; local AI completes 42 deliveries with observed roundabout passages. A complete manual roundabout run remains unverified and scene art remains simplified.
+- Reef to Rice retains unsold fish identities in the cold box across dives, based on source; local manual and AI tests pass, but the reference multi-round behavior was not newly captured.
+- The custom game runtime now exposes an optional result state so Escape leaves explicit results visible. Legacy built-ins without outcome state retain existing behavior; this does not resolve catalog-wide result parity.
+- A later REA browser capture returned cleanup_incomplete for browser_transport and browser_profile without an owner identifier, PID or profile path. No public exact-owner retry was found, so release is unconfirmed; do not start another REA browser scenario using those resources until cleanup is confirmed.
+
+- The settled four-worker suite passed 1,685 tests and the production build passed. The current REA browser cleanup remains unconfirmed as described above; these tests do not establish full parity.
+
+
+## Ongoing source-based work while REA cleanup is unresolved
+
+- Icebound Ascent now triggers jump/dash on key transitions and treats wall caps as reference support. Local manual and AI traversal tests pass; predictive trajectory search remains open.
+- Street Crew scene detail and destination meters were expanded from retained reference captures/source; local render and AI tests pass, but no fresh paired browser comparison was made.
+- Robot Register conveyor treads and sky-dock fans animate on the reference-informed display clock. Local manual and AI rendering tests pass; art remains simplified.
+- Glacier Glide anticipates seal tells at the source-scaled radius and uses a source-informed tell motion. Local AI tests reach reunion; variable-step timing remains approximate.
+- Dune wells retain and display source-informed reeds, residents, lantern and partial fill. Local manual and AI restoration tests pass; art remains simplified.
+- Side Surfers uses shortened/delayed old-corridor trains to leave a reference-inspired transition window. Local manual transition and AI tests pass; timing and overlap are adapted.
+- Void Gambit command cards show source-informed colors and symbols; local artwork remains adapted.
+
+- Grave Garden seed-42 exact-frame tracing found a floating-point lapse-expiry boundary that delayed replanning. After correction, reference and local sampled wave, sun, glass, breaches, plant/enemy counts, transplants and lapses match at frames 40,000 and 53,999. Planner-call counts differ (796/1021 reference versus 799/1024 local), so this does not establish complete state or other-seed parity. Reference was observed through a separately owned CDP session, not a new REA browser scenario.
+- Deep Digger adds a source-informed creeper warning, charge and terrain blast. Local manual tests pass; reference mixed mob spawning remains approximated by one scripted encounter.
+- Reef to Rice uses three distinct source-informed reef layouts for rendering and collision; local manual and AI progression tests pass, while depths and artwork remain adapted.
+- Orbit Kitchen AI toggles magnetic boots near targets, and ingredient/station selection uses source-scaled reach and nearest-item behavior. Local manual and AI tests pass; retained REA page capture does not establish gameplay parity.
+- Meat Lad walls now resolve swept vertical contact in runtime and route witnesses. Local manual/AI chimney tests pass; reference screenshot capture remains unavailable while REA cleanup is unconfirmed.
+
+- The settled four-worker suite passed 1,707 tests and the production build passed. REA browser cleanup remains unconfirmed; these checks do not establish full arcade parity.
+
+
+## Continued retained-source work
+
+- Star Roller explicitly exposes result state for shared Escape handling; active finale and Enter restart remain playable. Reference outcome behavior is retained evidence and local wrapper tests pass. Other built-ins still need individual opt-in.
+- Street Crew vehicles turn with travel and work shows a worker and tool, based on retained source. Local manual and AI rendering tests pass; visual fidelity is approximate.
+- Icebound crystal pickup now uses the source-scaled body-center radius. Local manual/AI traversal tests pass; predictive AI remains open.
+- Robot Register renders reference-informed board warnings and factory act overlays, based on the display clock. Local render tests pass; art is approximate.
+- Glacier Glide seal art was reconstructed from retained source geometry; local tests pass, but no fresh visual comparison was made.
+- Void Gambit projectile contacts have short hit/block/damage effects, based on retained source. Local manual/AI tests pass; visuals remain adapted.
+- Side Surfers generates source-informed paired hurdles, with local manual and AI tests; the rest of its obstacle distribution remains approximate.
+- Rulebound gates and active rule text show source-informed state cues; local manual and AI rendering tests pass, with approximate art.
+- Reef to Rice has distinct source-colored reef and restaurant scenes. Local progression/render tests pass; artwork remains a procedural approximation.
+- Deep Digger adds a source-informed spider pounce and silk drop; local manual and AI tests pass. The encounter is scripted and rope physics remain simplified.
+
+
+## Further retained-evidence work
+
+- Grave Garden seed 1 initially diverged in a transplant tie by roughly 6e-13 because the local scoring loop used a different order. Using reference cell-order projection restored sampled aggregate matches at frames 30,000, 40,000 and 53,999. An idle manual seed-1 comparison also matched sampled frame-30,000 and 53,999 aggregates and dawn loss. Reference observations used a separately owned CDP E.runFrames session; these samples do not establish active-manual, full-state, art or all-seed parity.
+- Meat Lad jump release now cuts upward speed and repeated keydown does not queue jumps, following retained source. Local manual ledge and both chimney directions pass; no new reference browser run was made.
+- Pocket Regatta crossing warning units, held yield, rival steerage and source-informed tactical behavior were corrected with local manual/AI tests. Art and exact timestep remain approximate.
+- Icebound AI tests candidate dash trajectories before takeoff and rejects predicted spikes. It does not simulate walls, icicles or all reference candidate combinations and retains a waypoint fallback.
+- Gravity Claw tripod engagement, warning persistence and spread timing follow retained source; manual and AI tests pass, but orbit center and reference runtime remain approximate/unverified.
+- Frog Convoy explicitly exposes manual result state for shared Escape handling, with local Enter and preview tests. Reference nonzero record persistence remains unverified.
+- Pottery House has source-informed station gestures and cooling effects; an isolated real-keyboard firing, cooling and gallery replay passed. Art remains approximate.
+
+- The settled four-worker suite passed 1,731 tests and the production build passed. REA browser cleanup remains unconfirmed; passing checks do not establish overall parity.
+
+- A controlled active-manual Grave Garden seed-1 run with three keyboard-planted defenses matched sampled reference/local wave, sun, glass, breaches, plant and enemy counts through frame 53,999; one plant differed by 0.024 health at frame 20,000. Reference observations used a separate CDP E.runFrames session; this is not full state or all-seed parity.
+- Street Crew now uses a source-informed ten-car fleet and dispatches when demand and clearance permit. Local AI completion tests pass; no new REA browser capture was made.
+- Side Surfers awards a manual near-miss for adjacent moving trains, based on source; local manual/AI tests pass. Parked-train near misses and geometry remain approximate.
+- Dune dust-devil lane thresholds, storm momentum and held barter were aligned to source. Local manual and AI tests pass; exact frame sequencing remains approximate.
+- Robot Register draws animated laser beams from actual committed shots, based on source; local manual/AI tests pass and art remains stylized.
+- Void Gambit emits feedback for escaping threatened lanes and clearing a salvo, based on source; local manual/AI tests pass without a fresh reference capture.
+- Deep Digger models anchored rope tiles made from silk instead of ladders. Local manual and AI tests pass; automatic freefall rope catching remains absent.
+- Glacier Glide thin-ice strain follows actual sliding and continues during diving, based on source; local tests pass.
+
+- Moonshine Valley now permits manual farm work at night when no enemy is targetable, prioritizes sling attacks when one is present, and awards source-informed shot/hit points. Local manual and AI tests pass; the reference behavior was source-based rather than newly captured.
+- Reef to Rice AI bursts away from imminent targeted predator strikes, based on source; local tests verify the response, not guaranteed avoidance.
+- Meat Lad uses source-informed stationary and oscillating saws, with route checks covering their full sweep. Local seeded AI and manual tests pass; distributions and positions remain approximate.
+
+- Gravity Claw vents use independent random draws for item type and resupply interval, as in source; local crossed-roll and manual/AI tests pass.
+- Pottery House processes draft hazard state before player action, based on source. A local boundary test and fresh keyboard firing, cooling and gallery replay passed; no new reference scenario was run.
+- The settled four-worker suite passed 1,758 tests and the production build passed. REA browser cleanup remains unconfirmed; these checks do not establish full parity.
+
+- Hearthbound work now takes source-informed task-specific durations and cancels on release or task change. Local manual boundary and AI rescue tests pass; routing and art remain approximate.
+- Side Surfers adds a source-informed express warning and service phase. Local manual/AI phase tests pass; distance scaling and train distribution remain approximate.
+- Void Gambit reference game source unconditionally starts a new run after its 110-frame ending and does not call the engine game-over path. Local manual and AI endings now do the same; tests cover both.
+- Burrow Boss explicitly reports its manual result card for shared Escape handling; local manual and preview tests pass. Nonzero reference score persistence remains unverified.
+- The earlier 0.024-health difference in the seed-1 active-manual Grave Garden comparison was caused by reference rAF advancing between CDP keyboard events. With rAF frozen before navigation and actual keyboard events plus controlled E.runFrames, sampled reference/local plant beds and health match at frames 500, 5000, 20000, 30000, 40000 and 53999; every sampled frame 19001–20000 also matched plant HP. This does not establish all enemy state, active routes or seeds.
+
+- Grave Garden's active manual seed-1 comparison now freezes reference rAF before navigation and drives actual keyboard events with controlled frames. Sampled plant IDs, beds and HP match through frame 53,999; lane-1 enemy IDs, positions and health and wall HP matched on every frame 19,001–20,000. The previous 0.024 HP difference was a harness race. This is not proof for other lanes, seeds or manual routes.
+- Hearthbound tasks now require source-informed work durations and cancel on release or task change. Local manual boundary and AI rescue tests pass; movement, routing and art remain approximate.
+- Icebound's AI search now includes dash directions, walls, active icicles and a refill-assisted second dash. Local manual and AI traversal tests pass; shelf landing and stamina simulation remain approximate.
+- Machine Hunt alerted striders coordinate charging or fleeing in a herd, based on retained source. Local manual/AI encounters pass; no fresh reference capture was made.
+- Deep Digger AI can place an anchored ladder or rope during a fall, following source; direct deterministic tests pass, but sampled natural AI runs did not trigger it and homing timing remains open.
+- Void Gambit source unconditionally starts a new run after a 110-frame ending and does not invoke engine game-over. Local manual and AI tests now follow that distinction.
+- Burrow Boss explicitly reports manual result state so Escape leaves the result visible; local preview and Enter tests pass, while nonzero reference record persistence remains unverified.
+- Pottery House AI now approaches stations by source-informed directional movement and can start work during final approach. A local real-keyboard firing, cooling and gallery replay passed; exact AI timing remains approximate.
+
+- The settled four-worker suite passed 1,778 tests and the production build passed. REA browser cleanup remains unconfirmed; passing tests are not evidence of full parity.
+
+
+## Latest retained-source comparisons
+
+- Icebound's AI evaluates dash directions, wall contact, active icicles and refill-assisted second dashes, and now includes no-dash plans, intervening shelf landings and finite grip stamina. Local manual and AI tests pass; spike prediction and waypoint fallback remain approximate.
+- Machine Hunt's Thunderjaw now retreats, approaches or orbits according to source-scaled ranges. Local manual and AI encounters pass; no fresh reference runtime comparison was made.
+- Street Crew reserves asphalt and keeps approaching traffic outside a pending roundabout worksite, based on source; local tests pass.
+- Gloam Trawler's independent audit found relics omitted from hold capacity; correction is underway using source and local fixture evidence.
+- Robot Register numbers program cards and brackets the active register, based on source; local manual/AI render tests pass.
+- Glacier Glide AI slide intent follows target distance rather than an animation timer. Local manual/AI tests pass; target planning remains approximate.
+- Reef to Rice AI leads moving fish and uses the source harpoon cooldown. Local manual/AI tests pass; geometry remains adapted.
+- Side Surfers track and train speeds increase with distance, based on source; local manual/AI tests pass and segment timing remains approximate.
+- Dune depleted well relays now use their supplier and require returning to the well to load. Local manual/AI recovery tests pass; later-outpost supplier behavior is source-supported but not independently reproduced.
+
+- Grave Garden seed 2 diverged because local blood moon transitions ended two frames late. After correcting floating boundaries, sampled reference/local plant HP matched at frame 26,975 and aggregate wave, sun, glass, breaches, plant/enemy and transplant counts matched at frames 30,000, 40,000 and 53,999. Reference observation used an owned, cleaned-up CDP session with rAF frozen and E.runFrames; this is not full state, artwork or all-seed parity.
+- Deep Digger now schedules recurring mixed cave encounters with reachable placements and AI pursuit, without suppressing them during tower construction. Four seeded AI runs completed 60 courses with encounters enabled; local tests pass. The reference supports multiple cave mobs, but local still has one slot and scripted depth encounters.
+- Gloam Trawler now counts carried relics against hold capacity, restricts fish to the current island, and models source-informed panic and eel response. Manual/AI local tests pass; the reference hold evidence was source-based, not a new runtime capture.
+
+- Hearthbound now performs source-timed work with interruption; local manual and AI tests pass.
+- Deep Digger has recurring mixed cave encounters and route-aware AI; four local seeded AI runs completed the tower. Only one cave mob is active locally, while the reference supports more.
+- Grave Garden seed 2 now matches sampled reference/local plant HP at frame 26,975 and aggregate values at 30,000, 40,000 and 53,999 after correcting blood moon timing. Reference used a separate owned CDP session with controlled stepping; this is not full state or all-seed parity.
+- Pottery House station and threat feedback uses temporary source-inspired particles; local manual tests and a keyboard firing/gallery replay pass.
+- The settled four-worker suite passed 1,801 tests and the production build passed. REA browser cleanup remains unconfirmed; passing checks do not establish full parity.
+
+
+## Further retained-source comparisons
+
+- Deep Digger now supports concurrent cave mobs with separate pursuit and attacks, physical first-hit projectile selection and nearest-threat targeting. Local manual tests and AI tower runs for seeds 1, 7 and 42 pass with multiple mobs. Seed 7 needed the source wood-to-ladder recipe; seed 99 remains unresolved after pursuing an enemy up a depleted shaft consumed its stone on rungs. Two attempted fixes regressed other seeds and were reverted. World size, spawn mapping and scripted encounters remain approximate.
+- Icebound previews now run fixed 60 Hz simulation steps, allowing its 60 Hz trajectory planner to execute under the gallery's 30 FPS draw cap. Irregular-frame AI tests reach the summit; this is not full planner parity.
+- Machine Hunt arrows now have source-informed critical, burn and stun effects; local manual/AI tests pass, no fresh reference runtime capture.
+- Cloud Shepherd uses source-informed starting position, acceleration, bounds and 18-frame bridge work; local manual and AI rescue tests pass. Variable-timestep behavior remains approximate.
+- Gloam Trawler damaged boats must return to harbor; cargo is lost and returned at original positions while delivered relics remain. Local manual and AI recovery tests pass; complex AI routes remain unverified.
+- Side Surfers anticipates moving obstacles by arrival time and checks occupied train bodies when selecting a lane; local tests pass, while anticipation remains approximate.
+- Turbo Arena explicitly reports manual result state to the shared player; local Escape/Enter and preview record tests pass.
+
+- Cloud Shepherd movement and initial position now follow source-informed speed, acceleration and bounds, with AI lamb rescue updated for the faster movement. Local manual and AI tests pass; variable-step integration remains approximate.
+- Turbo Arena explicitly exposes its manual result state to preserve the result on Escape. Local manual and preview tests pass.
+- Gloam Trawler requires a damaged boat to return to harbor rather than teleporting. Local manual and one seeded AI recovery pass; complex rock routes remain unverified.
+
+- The settled four-worker suite passed 1,830 tests and the production build passed. The Deep Digger seed-99 resource-return issue and REA browser cleanup remain open; tests are not proof of overall parity.
+
+
+## Further retained-source and controlled comparisons
+
+- Deep Digger AI now selects threats within the source-informed ranges, avoiding the seed-99 depleted-shaft pursuit that consumed its building resources. Local seeds 1, 7, 42 and 99 each completed 60 tower courses with concurrent mobs; one isolated creeper test disables ambient mobs. Spawn pacing, world size and other seeds remain approximate or unverified.
+- Cloud Shepherd uses source-informed nominal flock/bridge positions and interaction area; local manual and AI tests pass, while the reference's small initial random offsets are not modeled.
+- Grave Garden seed-4 AI matched sampled reference/local plants, enemies and aggregate state at five checkpoints through frame 53,999, and both entered loss at 54,000. The reference used a separately owned CDP session with controlled frames. Intervening frames and other seeds remain unverified.
+- Rooftop Post commits delivery at frame 12 and follows through to frame 18, with source-informed manual scoring. Local manual/AI tests pass; packet identity and movement remain approximate.
+- Machine Hunt Thunderjaw drops physical ward, stamina and healing rewards on defeat, based on source; a seeded local AI defeat observed all three. Manual boss defeat was not verified in this pass.
+- Turbo Arena and Grave Garden explicitly expose manual result state for shared Escape behavior; local preview and Enter tests pass. The Garden finale test accelerates its initial clock.
+- Dune storms and dust devils have source-inspired animated effects; local canvas tests pass, without a fresh image comparison.
+- Gloam harbor delivery clears forced night and sends the eel to retreat, based on source; local manual and AI tests pass.
+- Wobble War units use source-informed role-specific attack timing; local manual/AI tests pass.
+- Side Surfers applies source-scaled jetpack acceleration and high-speed parked-train near misses; local tests pass, distance scaling remains approximate.
+
+- The settled four-worker suite passed 1,853 tests and the production build passed. REA browser cleanup remains unconfirmed, and these checks do not establish full parity.
+
+
+## Additional retained-evidence work
+
+- Deep Digger retires distant enemies by source-informed vertical separation; manual gate return and four seeded AI tower runs pass with concurrent threats. Cave pacing, terrain and AI remain approximate.
+- Icebound actual and predicted shelf collision now account for the climber's foot width, based on source; local manual edge and AI traversal tests pass.
+- Grave Garden seed-5 AI matched sampled plant, enemy and aggregate state at five checkpoints and both runs transitioned to DAWN SAVED at frame 54,000. The reference used a separately owned controlled CDP session; intervening frames and other seeds remain unverified.
+- Cloud Shepherd whistle uses source-informed range, call duration and cooldown. Local manual and AI tests pass; sheep still follow the keeper continuously instead of using stored goals and inertia.
+- Neon Duelist now uses the source-scaled forward guard range. A manual test verifies contact and the gunner test rolls through the lunge; local AI finale passes.
+- Idol Escape limits DIG, PUSH and VALVE to once per chamber, following source; local manual and AI tests pass, with room layouts and forces still adapted.
+- Fossil repair uses the source bench position and reach and can continue while moving within it; local manual and AI tests pass.
+- Rooftop Post uses source-informed delivery contact/recovery and manual score awards. Local manual and AI tests pass; packet identity and movement remain approximate.
+- Wobble arrows now use shooter position and transfer ownership on shield reflection, based on source. Local manual and AI combat tests pass.
+
+- Wobble War draft placement now uses map ridge and role-size spacing, based on retained source and an independent local fixture audit. Local manual boundary and AI draft tests pass; no new reference runtime was captured.
+- Cloud Shepherd whistle follows source-informed range, duration and cooldown, with local manual/AI checks. Stored whistle goals and flock inertia remain open.
+- Robot Register has source-inspired course floor patterns; local rendering tests pass but art remains approximate.
+- Street Crew marks the next worksite and shows source-informed progress and context cues; local manual and AI render tests pass.
+- Grave Garden seed-5 AI matched sampled reference/local plant and enemy states through frame 53,999 and both reached DAWN SAVED at frame 54,000. A controlled separate CDP session was used; intervening frames remain unverified.
+
+- The settled two-worker suite passed 1,875 tests and the production build passed. The preceding four-worker run had a mobile-browser load failure with ERR_NO_BUFFER_SPACE; that test passed in isolation and in the two-worker full run. REA browser cleanup remains unconfirmed; neither run establishes full parity.
+
+
+## Further retained-source work
+
+- Cursed Fist now uses source-informed dodge direction, duration and cooldown, with AI able to cancel attack recovery for a tell. Local manual and AI tests pass; no fresh reference runtime capture was made.
+- Deep Digger retires enemies beyond the source-informed vertical separation; local manual gate return and four AI tower seeds pass with concurrent threats. World and cave pacing remain approximate.
+- Grave Garden seed 6 matched sampled reference/local plant and enemy state at five checkpoints through frame 53,999. Controlled separate CDP was cleaned up; intervening frames remain unverified.
+- Cloud Shepherd stores whistle targets at the keeper's position and facing, following source; local manual/AI tests pass. Flock inertia and rescue-specific goals remain simplified.
+- Neon Duelist uses source-informed projectile speeds and muzzle offsets. Local manual and AI tests pass; no fresh reference browser scenario was made.
+- Fossil uses source-informed museum socket and supply positions/reach. Local manual/AI tests pass; movement and targeting remain approximate.
+- Gloam Trawler selects the nearest eligible fish or relic, based on source; local manual and AI tests pass.
+- Hex Hamlet AI now stages selection, rotation and placement on source-informed beats; local AI/takeover tests pass, with planner randomness still approximate.
+
+- Dungeon Relay counters now stun and retreat recovering enemies, following source. Its settled Dungeon/Gravity focused suite passed 93 tests.
+- The two-worker suite passed 1,893 tests; Dungeon Relay changed during that run, so the settled focused suite was run afterward. The production build passed after all changes. REA browser cleanup remains unconfirmed; these checks do not establish full parity.
+
+- Grave Garden seed 7's first divergence arose because the reference's event-driven show scheduler briefly suppresses AI planning for garden-apex admiration. The local scheduler now has source-informed priority, coalescing, tier gaps, expiry, hold/slow and admiration, with a separate fixed-rate presentation clock in the production wrapper. The moon-cap rebuild starts at game frame 21,630 in both reference and local; sampled seed-7 game states through 53,999 and corresponding show frames (5,000; 20,066; 30,110; 40,154; 54,197) match. Reference observation used a separately owned controlled CDP session. Direct garden tests fast-forward presentation-only ticks; samples do not prove complete state or other-game show parity.
+- Railway Rush received source-inspired rail, depot and vehicle detail; local keyboard screenshot was inspected, but no complete browser delivery or fresh paired reference image was captured.
+
+- The settled two-worker suite passed 1,918 tests and the production build passed after the Grave Garden show scheduler. REA browser cleanup remains unconfirmed; tests do not establish full parity.
+
+- Avalanche Post now uses source-informed ballistic jump height, held-repeat cooldown and obstacle-specific clearance. Local manual and AI tests pass; only one slide is active locally and world geometry remains approximate.
+- Railway Rush records delivered wagons per depot and marks saved rolling-coupler cargo, based on source. Local tests reach 35 deliveries. A 40-second real Edge Watch AI sample did not deliver; two follow-up diagnostics showed native requestAnimationFrame throttling to roughly 2/s despite visible state, with the game's capped dt slowing simulation. Ten seeded simulations delivered within 7.2–21.7 simulated seconds. This is scheduling evidence, not proof of a game-specific deadlock; a real-browser delivery remains unverified.
+- Neon Duelist rooms, obstacles, enemies and movement now use coordinated source scaling. Local manual jump and AI finale tests pass; sprite/hitbox and art differences remain.
+- Deep Digger surface animals can trigger TNT; a local seeded AI-assisted/manual replay defeated a creeper for powder, armed TNT and observed a wolf trigger and owner damage. No fresh reference runtime capture was made.
+- Cloud Shepherd hawk patrol, windup, dive, ward and retreat follow retained source; local manual/AI tests pass, while sheep hit physics remain simplified.
+- Fossil actions now use success-only cooldowns and preserve a fossil when the pack is full, based on source; local manual/AI tests pass.
+
+- Grave Garden's feature wrapper passes that option and advances fixed 60 Hz presentation ticks; an actual wrapper render test confirms manual and 30 Hz preview hold. The earlier independent claim that the wrapper omitted the option was stale.
+- A local Railway Watch AI browser sample did not deliver within 40 wall seconds. Diagnostics found native rAF throttled to roughly 2/s despite visible state; ten seeded simulations delivered in 7.2–21.7 simulated seconds. Browser delivery remains unverified, not proven deadlocked.
+- The settled two-worker suite passed 1,945 tests and the production build passed. The first run's unseeded Storm Slot slingshot failure did not reproduce in 40 seeded trials; its regression now exercises three fixed seeds. The cause of that original failure remains uncertain. REA browser cleanup remains unconfirmed; tests do not establish full parity.
+
+- Railway Rush AI ranks competing source-informed tasks; a deterministic local scenario verifies it moves toward a later, higher-priority shunter threat rather than the first train. In that scenario contact occurs before the brake is reached, so it does not prove that threat was averted; a separate local test covers braking.
+- Cloud Shepherd hawk motion and frightened sheep impulse follow retained source, with local manual/AI tests. Ordinary flock inertia remains simplified.
+- Fossil action cooldown now starts only on success and a full pack leaves the fossil recoverable; local manual/AI tests pass.
+- Deep Digger surface animals trigger TNT; a local AI-assisted/manual replay observed creeper powder, trap placement, wolf detonation and owner damage. This is not a fresh reference runtime replay.
+- Avalanche Post uses source-informed ballistic jump, obstacle clearance and first avalanche timing; local manual/AI tests pass. Multiple active slides and world layout remain simplified.
+- Neon Duelist room geometry, movement, jump and combat were scaled together; local manual gap crossing and AI finale pass. Art and hitbox offsets remain approximate.
+- Grave Garden seed-8 sampled game and presentation clocks and entities match the reference through frame 53,999. Production wrapper tests confirm real 60Hz show pacing under player and preview; the earlier claim that it omitted `realShowClock` was stale. Comparisons use separately owned CDP and are sampled, not exhaustive.
+
+- Seed-9 Grave Garden AI matched sampled reference/local plant, enemy and show-clock state at five checkpoints through frame 53,999. An active manual route matched at six samples with a two-show-tick takeover offset. The separately owned CDP session was closed; samples do not prove continuous or all-seed parity.
+- Dungeon Relay enemies now step back during the warning while retaining the pre-step attack axis, based on source. The settled Dungeon/Gravity suite passed 100 tests, including manual and AI progression.
+- Cursed Fist dodge direction, 12-frame duration, 34-frame cooldown and AI recovery cancellation follow retained source; local manual and AI tests pass.
+- The two-worker suite passed 1,965 tests. Dungeon Relay changed during the run, so its settled focused suite was rerun afterward; the production build passed after all changes. REA browser cleanup remains unconfirmed. These checks do not establish full parity.
+
+- Deep Digger now generates source-informed depth-banded gold and supports daylight camp caravan exchanges for food, arrows, torches, healing, score and later saplings. A local manual replay mined and traded; AI seeds 1, 7, 42 and 99 traded and completed all 60 courses. The TNT isolation fixture disables gold but ordinary runtime does not. World width, ore RNG, homeward routing and caravan audio remain approximate.
+
+- The settled two-worker suite passed 1,988 tests and the production build passed. REA browser cleanup remains unconfirmed, and these checks do not establish full parity.
+
+- Deep Digger now uses a conservative player-aware closest-waygate route with climb supplies and support, then physically channels through the gate. AI seeds 1 and 7 each performed two such returns; seeds 1, 7, 42 and 99 completed the tower with mixed mobs and gold trade. The planner cannot yet plan mining, bridges, controlled falls or alternate inventory states at one position; seeds 42 and 99 did not demonstrate an AI gate return and may use the existing bottom-world warp.
+
+## Subsequent source-backed fidelity work
+
+- Avalanche Post schedules overlapping independent slides with 43-frame warnings and 160-frame rolling lifetimes; warned lodges shelter and unwarned lodges become buried. Controlled local manual and AI tests cover both. Geometry and screen-space speed remain approximate.
+- Cloud Shepherd now applies flock acceleration, damped inertia, cohesion, repulsion and whistle impulse, as well as bridge collision damping. Local manual and AI rescue tests pass; bridge waypoints, some attraction forces and variable-timestep behavior remain approximate.
+- Gloam Trawler holds homecoming for 240 reference frames and resets after the celebration in manual and AI play; the AI performs a harbor lap. The lap and art remain approximate.
+- Railway rolling freight accelerates and brakes gradually from reference values. Local manual and AI coupling tests pass; browser delivery remains unverified under the observed headless rAF throttling.
+- Neon Duelist rolls for the full nine movement frames. Fossil AI braces a weak chosen column before excavation. Dungeon Relay alerts vault guards and re-arms shortcut guards. Stamp Harbor accepts held station actions on arrival. Hearthbound allows manual eating below 99 hunger. Each has focused local tests and retained source evidence, not a new reference runtime comparison.
+- Grave Garden preserves a lethally damaged thorn wall when the attacker dies from the same bite, following source branch ordering; the edge case is locally tested but was not observed live.
+- Icebound room guidance, Side Surfers action poses, Castle Crasher chapter scenery/projectiles and Hex Hamlet event feedback now reflect retained reference presentation cues; their local artwork remains approximate. Ashen Courier mirrors the source arena variants and adjusts a spear spawn.
+- Deep Digger bridge preparation is modeled and tested but remains disabled for live planning pending investigation of a seeded fatal encounter. Its mining and controlled-fall routing remain incomplete.
+
+Follow-up independent reviews corrected several issues before integration. Deep Digger bridge planning is now enabled after a seed-42 fatal fall was traced to low health; source-informed night campfire healing and AI rest, plus the homing rope threshold, were added. Seeds 1, 7, 42 and 99 completed 60 courses locally; mining routes, planned falls and bottom-world warp parity remain open. Cloud Shepherd now retains whistle goals and uses additive bridge, rescue and shelter forces; 30 Hz and 60 Hz local simulations match in a focused manual/AI test. Avalanche bells now occupy separate positions and skip already warned lodges; overlap cases are tested. Stamp Harbor now evaluates held actions after movement and applies source-informed busy locks. All of these comparisons use retained reference source rather than a new reference capture.
+
+Machine Hunt AI now uses a trek, cover, hide and aim cycle and discards targets removed from the world; seeded local tests cover these states. Hive Heist now handles held actions and flower selection without the former cooldown; focused manual and AI tests pass. Cover geometry and the wider games remain approximate.
+
+The arcade preview scheduler now allows prioritized live previews while one still is painted, preserving the maximum of six game instances. In an owned headless browser run, six were active by four seconds; reduced-motion and modal budget checks passed. Deliberate focus permits previews under data saver, with a six-instance ceiling in the synthetic check. Visibility restoration needs separate verification: the existing player-session browser check failed during a throttled headless run.
+
+Railway's armed train now receives the reference gap and cruise adjustments in sequence; local tests cover multiple timesteps and manual/AI saves. Exact world layout and a real-browser AI delivery remain unverified.
+
+The player-session check passed on an isolated production build using synthetic timer-driven frames: takeover reset the score, pause held, and the player advanced after resume. Native preview resumption and close-URL checks were skipped because headless visibility was hidden. The earlier Vite-run failure lost injected instrumentation, consistent with a page reload but without a proven cause; it does not establish an app regression or native visibility parity.
+
+## Latest focused comparisons
+
+- Deep Digger's AI now falls back to planning and physically mining blocked homeward routes. Five local seeds (1, 7, 42, 99, 12345) completed 60 courses and returned via gates. Search uses tile-count BFS rather than reference weighted mining/hazard cost; controlled-fall planning and performance under adverse maps remain open.
+- Grave Garden production input queues logical taps for the next manual world step, including during presentation holds; aliases, coalescing, action priority and AI-to-manual takeover have local tests. Low-level virtual-clock test mode remains synchronous. No new reference runtime capture was made.
+- Avalanche Post adds a pressure front that can overrun buried, probing or rope-attached hikers; scaled geometry is approximate and ridge/cornice rescue remains missing. Railway waits 70 frames before a coupler opportunity and selects the greatest eligible gap; local manual/AI tests pass.
+- Dungeon Relay holds ordinary laps and completed floors for 72 and 110 frames respectively before progression. Hearthbound now allows the world to run during result holds and resets manual and AI episodes after the source-informed delay; its 180-second limit and manual failure/rescue are tested.
+- Neon Duelist samples held jump, roll and cut on simulation ticks and uses two reference-informed opening gunner placements. Ashen Courier interrupts guardian attacks on shell break and recognizes a held shrine key. Machine Hunt AI runs in safe open ground and spends/replenishes stamina. Each has focused local manual/AI tests, with art, geometry and broader behavior still approximate.
+- Cloud Shepherd targets the source-selected frightened/leftward loose sheep; Fossil AI shifts stance while working. Gloam harbor purchases have the 17-frame cooldown. Side Surfers magnets physically pull coins and powerups do not award invented points. Castle Crasher seeds the opening side, and Hex Hamlet renders connected river/rail edges. Retained source and local tests underpin these changes, not new reference captures.
+- A foreground local Chrome check closed the player, removed its game query and returned to five cards marked playing; screenshots 1.5 seconds apart differed. This supports close and resumed visible activity but does not prove per-preview animation. The earlier browser stall did not recur and its cause remains unknown.
+
+An independent Deep Digger planner review found that mined stone was not credited in route search and all mineable tiles had equal cost. A new weighted fallback handles both and uses a heap/shared rows; the supplied 240×10 synthetic search measured 6–12 ms in five local runs, down from 35–71 ms in the earlier review. Seeded tower tests pass with the fallback, but the ordinary reachable-route selection still uses the older priority: using weighted routing universally caused repeated shaft falls in seed 7. Further investigation is in progress; the synthetic timings are not a full browser performance profile.
+
+The weighted-only route investigation reproduced the seed-7 failure: after exhausting reachable stone, the miner repeatedly falls down a depleted shaft, uses the bottom warp and returns through the deep gate until it dies. A quarry-navigation experiment regressed seed 1 and was removed. The settled implementation retains weighted search as a fallback; persistent resource navigation and safe shaft descent remain necessary for universal weighted routing.
+
+## Further source-backed changes
+
+- Deep Digger now uses weighted homeward routes for live AI and mines nearby stone before resuming descent. Seeds 1, 7, 42, 99 and 12345 completed all 60 courses and physically used gates locally. The adjacent-gathering rule is an approximation; persistent resource navigation, reference stair descent, unsupported falls and the existing bottom warp remain gaps.
+- Avalanche Post now alternates ridge and probe rescue sites, with timed cornice warning, carry, burial and matching-lodge delivery. A subsequent independent review corrected warning/pressure activation distances; manual and AI approach/rescue tests pass. Pressure velocity and world spacing remain approximate.
+- Dungeon Relay adds the periodic warned ward seal and reopening, with route connectivity and AI replan tests. Ward selection, effects and audio are simplified.
+- Hearthbound adds active shelter warming and AI hysteresis to 75; manual and AI tests pass. Neon Duelist simulates bullets during boarding and allows a hit to trigger rewind; an instrumented local fixture covers this rare state.
+- Railway use prioritizes wagon over overlapping lever and can brake as fallback. Wash Wonder samples its nozzle toggle on update. Side Surfers spawns course segments by traveled distance. Machine Hunt generates grass, trees and rocks per world band for rendering and cover; exact reference RNG/decor remains approximate.
+- Castle Crasher adds source-informed manual-session scoring. Cloud Shepherd held ward refresh, Fossil hoist/rockfall boundary, Gloam lantern beam, Ashen bolt bounds and Hex tile random draws have focused local tests. Exact presentation remains approximate.
+- Grave Garden seed 12 matched reference/local sampled plant, enemy and presentation state at five checkpoints through frame 53,999. The owned CDP session was closed; those samples do not establish every intervening frame.
+
+Gallery resource policy: unlike the reference's static posters, local reduced-motion and data-saver modes briefly run one game at a time to paint still canvases, then destroy the engine and retain its bitmap. This is intentional while authored poster assets are unavailable; reduced-motion browser checks observed at most one temporary game observer. `scripts/check-preview-races.cjs` delays a feature module request, scrolls away and back, opens a modal before releasing it, then hides the page; the local run intercepted one request and observed no active gallery previews while modal or hidden. Its observer counter is a proxy for mounted game engines and does not measure pending imports directly.
+
+Follow-up review corrected Deep Digger's weighted planner to distinguish resource/map states at a location, model automatic crafting, and pass actual materials to homing replans. The quarry-return-bridge and beacon-consumption fixtures pass, as do five seeded 60-course runs. Search is bounded to six variants per coordinate and 3,000 expansions; a synthetic worst case measured 19–36 ms in three runs, and general resource navigation and controlled descent remain approximate. An independent 400-simulated-second run had a 28.3 ms maximum update; differing run trajectories prevent direct comparison with earlier timing.
+
+Preview lifecycle now evicts inactive engines while retaining canvas stills, ranks by focus/selection/visible geometry, and clips to actual visible overlap. A local browser observer proxy measured at most six mounted game observers and preserved nonblank stills after resize. A controlled delayed-import, scroll, modal and page-hide sequence observed zero active gallery previews in modal/hidden states; it covers one delayed request, not all races. Reduced-motion/data-saver still generation intentionally uses one temporary painter instead of reference static posters. Headless throttling limits native post-resize playback evidence.
+
+## Additional reference comparisons
+
+- A controlled Grave Garden manual tap during the chapter hold was buffered until the first resumed game tick in both versions. The reference had two startup presentation ticks, so the sample does not establish full restart/takeover timing parity; the owned browser was closed.
+- Machine Hunt machines now patrol and approach when suspicious; exact world generation and offscreen behavior remain approximate. Railway has visible advance train warnings; Side Surfers places hurdle coin lines and uses the source-informed powerup chance. Gloam AI repairs at critical hull and brakes near nets.
+- Dragon Lock manual fire priority, aliases and frame cadence and its AI rack release were corrected from retained source, with focused tests. Hearthbound defense now samples held input during movement updates. Ashen gate bounds, Neon airborne gate collision, Fossil repair interruption, Castle forecast and Hex terrain rendering have focused manual/AI checks.
+- Dungeon Relay now scores source-informed progression and remembered shortcut crossings; its source-specific detour bonus is still absent because local AI lacks the baseline detour planner.
+- Gallery row-wheel navigation passed a local browser check. A stale active-preview marker on still-painter cancellation was corrected, and modal/race checks passed.
+- An independent Avalanche review identified reversed approach projection. The local projection was corrected and a follow-up source review confirmed its direction and initial placement; further skier control, interaction windows and terrain speed comparisons are underway. No new reference capture was made.
+- Deep Digger adds source-informed side/diagonal stair digging and supported stepping; five seeded local runs completed the tower. Independent review identified portal/lava, cycle guards and physical interpolation gaps, which require further work. Direct shaft fallback and general distant-resource routing remain approximate.
+
+Follow-up source work corrected Avalanche projection, prebuilt terrain, movement inertia and scaled rescue windows; independent review confirmed direction and initial placement, while AI tuck and collision details remain approximate. Deep Digger stair steps now reject portal cores, seal lava using stone, and interpolate over 8 frames (12 in water), with enemies continuing during transit; general movement, avoid/cycle guards and distant-resource planning remain incomplete. Focused manual and seeded AI tests passed. These are source-backed comparisons, not fresh REA browser captures.
+
+An independent stair-transit review found an eighth-frame floating-point error and missing queued inputs. Local transit now commits on frame eight, queues manual torch/trap taps until arrival, and uses eased position for drawing and enemy projectile hits. Focused tests exercise those details and five seeded tower runs. Enemy melee/range still uses the grid position during transit; general movement and avoid/cycle behavior also remain incomplete.
+
+## Subsequent source-backed checks
+
+- Grave Garden seed 13 matched sampled reference/local plant, enemy and presentation state at five checkpoints through frame 53,999; the owned CDP browser was closed. This does not establish all intervening frames or seeds.
+- An independent Deep Digger review identified skeleton and golem targeting still using the old cell during stair travel and a contact-distance discontinuity. Those call sites now use interpolated position and Euclidean melee thresholds. Focused tests cover the calculations; live ranged wiring was checked in source. General movement and avoid/cycle guards remain approximate.
+- Phase Foundry starts its cube within radial pickup reach. Machine Hunt updates offscreen machines. Railway uses key press edges and nearest-train braking. Dungeon Relay includes the optional no-route-memory detour and its 10-point award. Focused local manual/AI tests pass.
+- Avalanche collision recovery and AI tuck, Gloam vent avoidance, Neon baggage traversal, Side Surfers train generation and Castle shot selection were revised against retained source; their world geometry and full behavior remain approximate. Cloud sheep/hawk, Ashen HUD, Hex map layering and Fossil rockfall presentation were improved without a new reference visual capture.
+- Gallery compact-row selection follows the centered card; reduced-motion reveal, Previous/Next focus and swipe-timer cancellation were corrected after independent review. A local browser check exercised these cases and observed the six-preview cap.
+
+## New comparisons and corrections
+
+- Grave Garden seed 14 AI matched reference/local sampled plant, enemy and presentation state at five checkpoints through frame 53,999. A separate 320×720 frame comparison exposed missing foreground and greenhouse detail. The local scene now adds a cart/wheel/fence, roofed greenhouse, thorn shrub and hound silhouette. Beds, cards, characters and landscape remain visibly simplified; this is one early frame, not a complete visual audit. Owned comparison browsers were closed.
+- Deep Digger adds cycle recovery before ordinary cave decisions, including surface expiry, edge clamping, penalized cells, threat costs and portal avoidance. Focused helper and five seeded tower tests pass, but no natural cycle was observed in seeds 1–20, so end-to-end recovery remains unverified. General movement, tower-space detection and reference route tie-breaking remain incomplete.
+- Bakery stokes while held and uses fixed 60 Hz simulation; local manual and AI snapshots match at 30 Hz and 60 Hz update rates. Avalanche adds source-inspired paired ramps and crevasses, while horizontal course geometry remains approximate. Railway uses an independent wagon spawn serial; initial depot seeding remains simplified.
+- Machine Hunt renders distinct machine silhouettes; Cloud sheep/hawks, Ashen Tide wave, Hex vehicles, Dungeon combat motion and Fossil museum bones use reference-informed artwork. No broad visual parity claim is made. Side Surfers AI pursues safe nearby loot; Gloam AI targets nearby fish; Castle collapse velocities use per-fort order.
+- A reproduced rapid history Back/Forward race was corrected. Delayed-import browser checks covered Back→Forward and Back→Forward→Back; visible Chrome checked deep-link close and Escape in manual, watching and instructions states, preserving unrelated URL state. One hidden headless close check was skipped.
+
+## Further gameplay and visual work
+
+- Grave Garden's matched early frame informed narrower beds, illustrated plant cards, gardener/landscape details and chapter celestial art. The new local frame was checked against the reference; the art remains simplified and late-game/result visuals remain unverified.
+- Word Fall's hearts, charge bars, rune clue/keyboard panel, altar targeting cue, directional arrows and diamond gems were rebuilt using retained source and inspected in local browser captures. Post-solve tween, arrow trails and game-over presentation remain approximate.
+- Starfall Station now has source-informed reactor charging and repair→charge→shield action ordering; fixed 60 Hz simulation produced matching local 30/60 Hz manual and AI samples. Dungeon Relay now commits movement on arrival and follows source decision/held-action order, with manual and AI tests; a follow-up review is in progress.
+- Machine Hunt AI defeat preserves the world and allows machines/projectiles to continue before revival. Avalanche cycles through three area palettes and source-informed hazard timing; exact art and terrain remain approximate. Side Surfers AI returns toward safety during high heat/express; Castle projectile miss bounds and Gloam water drift were adjusted.
+- Railway opposing-signal selection now picks the furthest eligible train. Neon HUD, Ashen dash aiming and Hex tile reserve panel were improved. The custom-game scaffold rejected a duplicate ID and its discovery/lifecycle/input/score checks passed 14/14. A possible rapid game-switch race could not be confirmed because browser attempts were interrupted; no speculative shell fix was made.
+
+## Further source and local verification
+
+- Starfall Station now implements reactor charging, source action priority, periodic pressure venting and oxygen-module repair. The previous local terminal loss was replaced with the source's in-session pressure restart on a subsequent impact. Controlled manual and AI tests cover recovery, vent timing, recharge and action overlap; source and local tests, not a new reference runtime, support these changes.
+- Dungeon Relay now commits movement on arrival; independent review led to decision-tick, held-input, enemy landing and altar-exit corrections. Focused manual and AI tests pass.
+- Word Fall's HUD, rune panel, altar highlight, arrows and gems were rebuilt from retained source and checked in local captures; post-solve panel, trails and game-over presentation remain approximate.
+- Grave Garden's early matched frame was refined further with narrower beds, card illustrations and gardener/landscape detail; art remains simplified. Machine Hunt AI defeat preserves and advances the world before revival. Deep Digger gates and TNT account for stair transit, but general movement and natural cycle recovery remain incomplete.
+- Avalanche area progression, Railway signal choice, Gloam current, Side Surfers emergency corridor, Castle projectile limits and Neon HUD were revised against source with local focused tests. The add-game scaffold rejected a duplicate ID and 14 discovery/lifecycle/input/score checks passed. A possible rapid game-switch race could not be verified because browser attempts were interrupted.
+
+A further independent Starfall audit corrected AI repair suppression during unsealed EVA, ion meteor energy loss, and newest-first simultaneous meteor resolution across pressure restart. Controlled manual/AI tests cover these cases. This is retained-source and local fixture evidence; full reference gameplay remains unverified.
+
+## Latest comparisons
+
+- Grave Garden's late-wave/result frame was compared at matching seeded game frames: local dawn, trellis, undead and bordered result card were revised. The local pixel art remains visibly simplified, and this is one bounded result sample.
+- Gloam Trawler was visually compared in an owned browser (reference preview versus local manual start, not frame matched). Local islands, harbor and HUD now have source-informed scenery and objectives, but boat, eel and fine textures remain simplified.
+- Dungeon Relay scouts unknown rooms, persists room knowledge and reveals shortcut endpoints on boot collection; a follow-up review corrected an altar leak through unexplored fog while retaining reference boss visibility.
+- Machine Hunt uses source-informed per-machine rectangular arrow hitboxes. The AI revival fixture uses a manually wounded hunter followed by takeover; it does not prove defeat in a fully AI-controlled run. Railway crossover rails were checked in a local browser after keyboard movement, not a full delivery.
+- Avalanche uses source-informed switchback positions and Ashen attack timing was corrected. Castle masonry support, Neon roll/focus cues, Side Surfers train probability, Hex landmarks and Fossil site braces were revised from retained source; visuals and full mechanics remain approximate. Gallery row edge glide passed a local synthetic-pointer resource check.
+
+## Most recent movement and visual work
+
+- Deep Digger manual and AI ordinary walking/climbing now use timed 8/12-frame travel. Subsequent independent source review led to committed movement through changed destinations, entombment clearing, lava-entry rules, tick-sampled attack and deferred torch/trap input. Deterministic runtime fluid and manual-input tests plus five seeded towers pass. Tower movement, general persistent resource routing and natural cycle-recovery verification remain incomplete.
+- Tower Heist now uses source-scaled objective positions, radial interaction, continuous gated traversal, inertia and AI lift assistance; independent review corrected guard rooms/heights, diagonal movement, slip and tick input. Its fixed-step 30/60 Hz comparisons and complete manual/AI route tests pass. Art and some hazards remain schematic.
+- Grave Garden late-wave/result matched frames informed an amber dawn, trellis, undead and bordered card; the local art remains stylized. Gloam was compared in owned browser captures (reference preview and local manual start, not frame matched); islands, harbor and HUD were improved, while boat, eel and textures remain simplified.
+- Dungeon Relay scouts unknown rooms and hides the altar until its room is known, while keeping the boss visible. Manual and AI tests cover discovery and boot endpoint reveal. Machine Hunt arrow hitboxes were scaled to source rectangles; the revival fixture is manual-wounded followed by AI takeover, not a wholly AI defeat.
+- Avalanche switchback positions, Castle support graph, Railway crossover drawing and held edge navigation, Ashen sword timing, Neon focus/roll cues, Hex landmarks, Fossil braces and Side Surfers train frequency were revised using retained source. Visual and full gameplay parity remain open.
+
+## Further comparisons
+
+- Coral Courier was compared using a progressed reference image and a local initial frame, so the screenshots were not state-matched. The local renderer now depicts lagoon, kelp, wreck, diver, sea life, coral and oxygen HUD from retained source; reference textures, motion and effects remain richer.
+- Gloam's local owned capture was checked against a retained preview image after adding a directional boat, crew, eel, lighthouse and shop HUD. The states differ and the artwork remains simplified. Grave Garden's seed-14 mid-chapter frame led to harvest sky/arch and animated forecast cues; gameplay is unchanged.
+- Deep Digger tower movement now uses timed transit. Independent review led to held tower mining and off-ladder descent fixes, tested with actual manual runs; upward off-ladder rules and natural cycle-recovery verification remain incomplete.
+- Word Fall AI now scores viable offered guesses using recovered reference feedback-bucket information and first-on-tie behavior. A controlled case chooses a nonfirst guess; manual choice remains separate. Dungeon AI now approaches and counters exposed enemies after dodging tells.
+- Avalanche switchback generation, Railway trackside signals, Castle chapter machines, Machine Hunt hunter poses, Neon rooftop details, Fossil actor poses and Hex transition fade have source-informed local tests. These do not establish exact artwork or complete game parity. The gallery's wall-arrow navigation now selects a geometric adjacent-row neighbor; a local browser check covered top-row behavior.
+
+## Current follow-up evidence
+
+- Word Fall AI now uses the recovered reference feedback-bucket information score and first-offered tie rule. Independent review confirmed duplicate-letter marking; six-miss reveal/history, non-repeating targets, shuffled filler and 150/151-frame auto timing were then corrected. Local manual/AI tests cover these, not an exhaustive puzzle audit.
+- Deep Digger tower travel now interpolates for manual and AI. Independent review led to held tower mining and off-ladder descent corrections; upward off-ladder rules and natural cycle recovery remain open.
+- Grave Garden seed-14 mid-chapter matched frame informed harvest arch/sky and animated forecast silhouettes. A Gloam owned screenshot (reference preview versus local manual, not state matched) informed boat, eel, lighthouse and shop HUD details. Both remain stylized rather than exact artwork.
+- Coral Courier owned local and retained reference captures showed large habitat and creature gaps. Source-informed lagoon, kelp, wreck, diver, coral, sea life and oxygen HUD were added; textures, movement and effects remain simplified. The compared states differed.
+- Dungeon AI now dodges attack tells and approaches exposed enemies to counter. Avalanche switchback generation, Railway trackside signals, Castle support and chapter machines, Machine Hunt hunter states, Neon rooftop cues, Hex landmarks and Fossil actor poses were revised from retained source. Focused local checks pass but do not establish full parity.
+- Wall-view Up/Down now select a geometric adjacent-row neighbor, and row edge glide stops for reduced motion, hidden state and modal. Local browser checks covered synthetic pointer/focus cases and the six-preview cap.
+
+## Latest source-backed changes
+
+- Beacon Bay's retained reference and local captures differed in both art and station geometry. The lighthouse, crank, bells, keeper bounds, beam cone/range and crank orbit were scaled from source; manual eight-save routes and AI convoy checks pass, and local 30/60 Hz AI outcomes match. Local screenshot was inspected, but ship spawn/collision and animation remain simplified. Reference and local images were different play states.
+- Deep Digger tower bridge cells are passable, and off-center climbing can weave silk into rope and extend anchored ropes; deterministic manual runtime tests and five seeded towers pass. Central-column non-ladder climbing and natural cycle recovery remain open.
+- Greenhouse Guardians now evaluates held net→adjust→interact actions with success-only cooldown; local manual/AI tests pass. Dungeon uses the reference seed-based rune choice when unguarded. Avalanche now selects AI intents before movement and resolves actions after it.
+- Machine Hunt sawtooths circle in both directions and wait before pouncing. Railway locomotive signals follow siding phases. Grave Garden seed-14 night frame informed the night palette and family crypt. Gloam restored islands, Castle projectile stepping, Neon sword reach, Hex region HUD and Fossil repair bench were revised from retained source; visuals and full behavior remain approximate.
+- A valid minimal custom game with only ID/name previously failed because controls were assumed present. The shell now supplies empty optional text; an isolated local browser fixture opened it and custom scaffold/lifecycle checks passed.
+
+## Latest source-backed changes
+
+- Beacon Bay now starts with an immediate first ship. This corrects the earlier entry above that said the reference starts at frame 24: independent source review found that reset spawns immediately and schedules the next ship. Hazard forecasts now project both axes; guided ships choose a safe direct dock course or source-scaled avoidance, with a wider locked escape. Manual/AI and 30/60 Hz local tests pass; broader hazard and weather behavior remains approximate.
+- Deep Digger tower walls/windows support the miner, and the top ladder permits one timed step into the open cell above. The local tower representation still limits further upward extension and natural cycle recovery remains unverified.
+- Willow Dam samples held Space/X/Z actions after movement, permits empty-handed Z interaction and uses success-only cooldowns. Its fixed 60 Hz local simulation matches at 30/60 Hz in tested manual/AI scenarios.
+- Greenhouse Guardians uses reference held-action priority and success-only cooldown. Railway serial/random draw order now governs initial sidings and dispatch. Machine Hunt sawtooths orbit in either direction, can reverse and wait before pouncing. Dungeon AI uses the source seed-based rune preference when a vault is unguarded.
+- Grave Garden seed-14 night frame was rechecked with a navy sky, moon and family crypt. Gloam restored-island markers, Neon parry trails, Castle impact feedback, Ashen enemy silhouettes, Hex region HUD and Fossil repair bench were revised from retained source. Artwork remains approximate; most have no new reference runtime comparison.
+- The custom-game shell now accepts missing optional controls/description for minimal ID/name metadata. An isolated local browser fixture opened such a game, and 15 custom lifecycle/discovery tests passed.
+
+## Latest evidence
+
+- A natural Deep Digger surface cycle was reproduced in local seed 66. An independent frame-by-frame replay saw detection at frame 25,535, completed arrival at the chosen cell at 25,565, resumed construction at 26,162 and finished the 60-course tower at 36,111. This verifies local recovery for one surface case, not exact reference parity or underground/tower cycles.
+- A real isolated browser reproduced and verified the fix for same-turn close→open: the new game's URL remains present and the latest of competing requests wins. Delayed history and preview-budget checks also passed; native hidden-page close remains a limited check.
+- Avalanche scoring now excludes unsupported warning/dodge points and credits mail and shelter events. Dungeon enemies and run clocks continue during knockout. Railway brakes remain stationary for all 48 frames. Ricochet port navigation wraps. Local manual/AI tests support these source-informed changes.
+- Beacon tide and surge phase, Machine Hunt low-health cover seeking, Gloam line return/shoal avoidance and Fossil action ordering were revised from retained source. Grave Garden's threatened-lane labels matched three sampled seed-14 checkpoints and unaffordable cards are dimmed. Hex terrain detail, Neon objective/parry cues, Ashen defeated silhouettes and Castle impact rings remain approximations of reference presentation.
+
+## Additional source-backed work
+
+- Deep Digger seed 66 naturally entered a surface cycle, chose an escape and resumed construction. An independent every-frame replay verified completed transit and the 60-course finish; this is local evidence, not a matched reference recovery. The miner can now extend ladders into open sky; horizontal sky reach and underground/tower cycle behavior remain incomplete.
+- Essence Workshop held work/ward/vent now uses source order and success-only cooldowns at fixed 60 Hz. Equal-elapsed 30/60 Hz manual and AI states/audio match in local tests. Fossil likewise substeps larger intervals for held actions; fractional/native scheduling remains approximate.
+- Beacon checks all shoals and wrecks and maintains beam-lock qualification. Railway manual diagonal motion uses reference per-axis speed. Avalanche separates manual score from AI preview. Dungeon enemy spawning uses reference room offsets/safe fallback and continues enemies/clock during knockout. Focused manual/AI tests pass; full game parity remains open.
+- An isolated browser reproduced and verified the fix for same-turn close→open game switching, including competing requests and URL identity. The add-game and player-switch checks passed; native hidden deep-link close remains a limited check.
+- Grave seed-14 threatened lanes matched three sampled checkpoints, with critical warning color and unaffordable-card dimming. Neon objective and parry feedback, Side Surfers horn, Machine Hunt canopy/biome rendering, Gloam relic locks, Ashen remains and Hex placement details are source-informed approximations; no broad visual parity claim is made.
+
+## Latest bounded checks
+
+- A failed gallery preview was found to occupy a live priority slot in an isolated browser. The scheduler now excludes it; the fixture observed six healthy previews rather than five and the observer budget stayed at six. This does not prove every asynchronous failure race.
+- Fossil now retains active warning/fall across site transition and uses complete 60 Hz ticks; manual and AI transition tests and 120/60 Hz checks pass. Source comparison, not a new reference runtime, supports these changes.
+- Castle starts a fresh siege when an explicit manual session begins after watching. Gloam clocks continue through rescue/homecoming; Dungeon door layouts use the source seed formula. Local focused tests pass, while Gloam eel rescue behavior and Dungeon room obstacles remain approximate.
+- Grave Garden's warning lane and affordability feedback, Neon fallen enemies and hit flash, Railway smoke, Machine Hunt wrecks and Side Surfers milestone were revised from retained source. Artwork remains approximate. Beacon collision checks now include every shoal/wreck; convoy behavior is still simplified.
+- Deep Digger permits timed sky movement beyond the tower footprint and preserves the fall column. The local world remains ten columns wide, and underground/tower cycle recovery has not been matched end to end.
+
+## Latest bounded work
+
+- Deep Digger now retains a reachable quarry target across the bottom-zone boundary and can route to an affordable bridgeable standing cell. A deterministic runtime fixture verifies physical mining, five seeded towers and the seed-66 surface escape pass. A trial of reference-like cave/pit generation was reverted after seed 42 exhausted stone and stalled at course 27; local ten-column underground terrain therefore remains substantially different. A scan of seeds 101–300 found no natural underground cycle, not proof it cannot occur.
+- Hotel Haunt now uses source-scaled furniture positions, proximity and hunter-level sweep decay, with fixed 60 Hz simulation. Manual interruption/retarget and AI tests pass locally; this remains retained-source rather than matched runtime evidence.
+- Dungeon room terrain now uses four biome patterns and connected sight-break search. A read-only source review found no concrete algorithm discrepancy, but tests check invariants on sampled seeds rather than exact reference grids.
+- A failed preview is excluded from live priorities, verified by an isolated browser fixture. Side Surfers hurdles remain active across their contact window; Railway AI acts after final approach; Gloam eel/tide continue during rescue. Grave warning overlays and several visual feedback changes are source-informed approximations.
+
+## Further checkpoint evidence
+
+- Deep Digger now keeps a quarry objective across the bottom-zone boundary, targets a specific stone cell, expires it after eight seconds, invalidates it on disappearance or route failure, and weights nearby enemies. Runtime fixtures cover physical collection, expiry and safer target choice; five seeded towers and the seed-66 surface recovery pass. The reference's fog and general ore scoring are not modeled. A cave/pit trial was reverted after seed 42 stalled without sufficient reachable stone, so the local ten-column terrain remains substantially different. A scan of seeds 101–300 did not find a natural underground cycle; it does not prove none exist.
+- Hotel Haunt uses source-scaled furniture positions, hunter-level sweep/decay and fixed 60 Hz simulation. Manual interruption/retarget and 30/60 Hz manual/AI checks pass. Dungeon's four terrain patterns and connected sightbreak search were independently reviewed against source; exact seed-by-seed reference grids remain unverified.
+- A checkpoint full suite found an unseeded Greenhouse priority fixture failure. The real pollination assertion was retained with deterministic randomness, and passed 15 consecutive focused runs. Grave warning lane rendering, Gloam rescue eel movement, Side hurdle windows and Railway AI approach order have local tests and retained-source support, not new reference captures.
+
+Independent quarry review confirmed an actual physical first stone collection in the local fixture, then identified missing target expiry and mob avoidance; both were added with local runtime fixtures. The reference-like cave/pit generation trial remains reverted after seed 42 exhausted stone, and source fog/general ore scoring remain unmodeled. A 101–300 seed scan found no natural underground cycle; that is bounded negative evidence only.
+
+The settled integration test initially failed a Fossil test that assumed all site transitions are calm. Retained reference allows active warnings/falls to carry over; the calm fixture now uses a deterministic calm transition while separate tests cover active hazard carryover and damage. Fossil/Dune passed three consecutive focused runs after the correction.
+
+## Latest source-backed checks
+
+- Greenhouse Guardians' valves and right-wall shutter cranks now use the scaled reference positions, radial reach and AI targets. Fixed 60 Hz local simulation produces identical seeded manual/AI state and event sequences at 30/60 Hz update calls; broader bed geometry remains simplified.
+- Deep Digger tower walls/windows provide support and a top ladder permits one open cell above. This is tested in manual runtime and five seeded tower runs; further sky representation, natural underground/tower cycles and reference-like cave/pit terrain remain incomplete.
+- Beacon's first ship is immediate and forecasts both velocity components. Direct source review corrected safe-dock vs detour steering; manual/AI focused tests pass. Avalanche AI actions now resolve after movement, and Railway initial siding depots follow source random draw order.
+- Willow samples held work and Z interaction on complete 60 Hz steps; local 30/60 Hz manual and AI snapshots match. Ricochet port selection wraps. Dungeon uses source seed-based rune selection when unguarded. These are source and local-test comparisons, not full-game reference parity.
+- Grave Garden's seed-14 night frame informed its night palette and crypt. Machine Hunt sawtooth orbit timing, Gloam restored islands, Hex region labels, Castle impact effects, Neon parry feedback and Fossil repair-bench detail were revised from retained source; artwork and behavior remain approximate.
+
+## Subsequent quarry and lava work
+
+- Deep Digger's persistent quarry now targets a specific stone cell, expires after eight seconds, reselects on disappearance/route failure and weights threats. Independent replay observed completed stone collection in a synthetic 34-row, no-dynamic-spawn fixture; the source's fog and general ore-value scoring remain unmodeled.
+- Emergency recovery now searches for dry supported ground or a mineable bank when too short of stone to seal lava; it can also plan an excavated standing cell. A further independent source review found mining should be interrupted for a safe adjacent escape and overhead lava should prompt a sidestep. Runtime fixtures cover both, plus the no-safe-neighbor case; five seeded baseline towers pass.
+- The reference-like cave/pit trial was not retained. Improvements allowed seeds 7, 42, 99 and 12345 to finish the experimental terrain, but seed 1 exhausted finite bottom-world stone and stalled at course 13. Wider world/terrain and robust resource survival remain substantive gaps. A concurrent full run imported experimental code and failed; a settled `npm test` afterward passed 2,522/2,522 before the final lava correction, which was then separately tested.
+
+- Hotel Haunt now uses reference furniture locations and hunter-level sweep/decay at fixed 60 Hz; local manual interruption/retarget and AI tests pass. Dungeon terrain uses four biome patterns and connected sight breaks, independently checked against retained source but not exact seed-matched grids.
+- Beacon convoy/channel behavior, Avalanche lodge targeting, Railway AI approach, Gloam rescue eel behavior, Side Surfers hazard windows and Castle session reset were revised from retained source. Grave warning lanes and hit feedback, Machine Hunt wrecks and arrow tiers, Neon bodies/projectile lifetime, Fossil support state and Hex presentation remain source-informed approximations. Full visual and behavioral parity remains open.
+
+## Wider-world working checkpoint
+
+Deep Digger now uses a 20-column local underground with approximate cave and pit carving and a following camera. This supersedes the earlier note that the cave/pit trial was reverted: after investigating lava-covered quarry routes, edge-column ore, resource-target persistence and the premature bottom cutoff, the settled five-seed sample completed all 60 tower courses with physical gate returns and 6–7 concurrent mobs. The focused Deep/Rune suite passed 156/156; manual gate, combat, camp and golem cases use controlled physical-world fixtures where the new terrain no longer guarantees the former route. An independently observed seed-1 recovery completed at sampled frame 92,821 with two gate returns and no sampled deaths. These are bounded local checks, not reference equivalence.
+
+Reference source still differs materially: a single deterministic terrain hash, ore probabilities, x10 camp/start and x4/x15 trees are not reproduced by the current mixed random/hash generator, forced local shaft seams remain, and the local world has a 240-row safety warp. The wider cave implementation should therefore be treated as an incomplete working checkpoint, not parity. A seed-7 quarry stall under overhead lava was fixed by rejecting exposed stands and route cells; tests cover physical collection, but general fog and ore-value routing remain incomplete.
+
+The post-fixed-timestep Pottery House manual replay passed on a fresh isolated production build: real keyboard input fired an ash-glazed vessel, cooled it in water and displayed an iridescent piece at GALLERY 1. The first attempt timed out en route to water under headless throttling; a retry with a longer steering deadline passed. The owned browser and preview server were stopped. No new REA browser capture was made.
+
+## Source-derived Deep Digger terrain checkpoint
+
+This supersedes the preceding mixed-generator description. Retained Blockmine source specifies a 20-column world with one terrain seed, a deterministic coordinate hash, cave and pit rules, liquid conditions and ore thresholds. The local generator now uses those formulas with the reference-to-local row offset, starts at x10, places the home gate at x17, and places trees at x4 and x15. An independent source review checked these formulas and positions. Five sampled seeds (1, 7, 42, 99 and 12345) completed all 60 tower courses with physical gate returns; focused manual and AI tests cover resource routing and interactions. A settled integrated run passed 2,578/2,578 tests before subsequent work.
+
+This is bounded evidence, not parity: the local underground ends at 240 rows with a safety warp, upper tree canopies are clipped, the tower starts at x4 rather than x3, and AI fog and ore-value scoring remain approximate. The independent review also found surface grass and dirt still mined as stone and a different weather seed; corrections are in progress. REA's previous browser cleanup remains unconfirmed, so no new REA browser scenario was started.
+
+## Station, gate and spray checks
+
+A source-scaled Stamp Harbor review found the decision sides and station positions differed. The local desk now places REFUSE on the left and ADMIT on the right, aligns the bell, documents, ledger, rope and flag, and uses reference-scaled reach and movement. Local manual tests complete all twelve cases and AI tests cover progression. Comparison and stamping still use simplified fixed positioning rather than the reference's physical clerk and paper movement.
+
+Ashen Courier's closed gate now blocks the courier, enemies and projectiles. A local manual test reaches the gate, is stopped, selects the shrine and crosses; AI completes its escape. Guardian and projectile collision used a controlled fixture. The retained source informed the geometry; no new REA capture was made.
+
+Wash Wonder's AI now checks jet intersection and moves to the required standoff before spraying, fixing a reproduced case that consumed water without cleaning. Nozzle cooldown and per-update grime rounding were aligned with the reference at 60 Hz; focused manual and AI tests pass. Fixed-rate behavior and reference carousel masks remain under review.
+
+Wash Wonder now uses fixed 60 Hz steps, with seeded 30/60 Hz manual and AI snapshots matching across 80 seconds, including restart and grime rounding. Simplified carousel masks and broader visual parity remain open.
+
+Deep Digger's surface grass and dirt now use separate solid materials, reference mining hardness and no cobble reward, and storm scheduling uses the terrain seed. With those changes and shallow quarry targeting, seeds 1, 7, 99 and 12345 completed the tower in the latest bounded sample; seed 42 stalled at course 44 while holding stone. A direct shallow-camp routing experiment was removed because it failed to resolve that stall and caused expensive searches. This supersedes the earlier five-seed completion result for the pre-material-change version. Shallow resource return remains open and is under independent investigation.
+
+Stamp's comparison and stamping now move clerk and paper separately, include scan/recovery and permit return, and use fixed 60 Hz steps. Local manual frame checks and AI progression plus 30/60/120 Hz and irregular update comparisons pass. Arm poses, sheet return on the next issue and full visual parity remain approximate.
+
+A subsequent source-informed shallow homing change uses a cached physical route to camp, with bounded retry. The latest five-seed sample (1, 7, 42, 99, 12345) completed all 60 tower courses; seed 42 made four physical gate returns. A controlled regression also observed AI mine dirt and reach the surface. Focused integration retesting remains in progress, and this bounded sample does not establish general AI or reference parity.
+
+Independent source reviews identified further pending work: Stamp travelers should wait 14 frames after contact and physically depart before ledger reconciliation, rather than using the current fixed departure timer. Wash Wonder's carousel mask comparison found 701 reference cells versus 753 local cells, with missing, extra and differing partial masks; the horse polygons and roof/rail/pole boundaries remain approximate. These are not yet fixed.

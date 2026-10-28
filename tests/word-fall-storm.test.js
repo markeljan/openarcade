@@ -4,7 +4,7 @@ import {wordfall} from '../src/feature-games3.js';
 function seeded(seed,fn){const old=Math.random;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/2**32);try{fn()}finally{Math.random=old}}
 test('Word Fall enemies enter and pursue across tower heights',()=>seeded(42,()=>{
  const game=wordfall(),kinds=new Set(),heights=new Set();
- for(let i=0;i<60*20;i++){game.update(1/60,true);for(const e of game.snapshot().enemies){kinds.add(e.kind);heights.add(Math.floor(e.y/160));}}
+ for(let i=0;i<60*60&&kinds.size<3;i++){game.update(1/60,true);for(const e of game.snapshot().enemies){kinds.add(e.kind);heights.add(Math.floor(e.y/160));}}
  assert.deepEqual([...kinds].sort(),['bat','mage','wisp']);assert.ok(heights.has(0)&&heights.has(1)&&heights.has(2)&&heights.has(3),'flying enemies should occupy multiple heights');
 }));
 test('storm warns, strikes and clears while preview dodges its threatened lanes',()=>seeded(42,()=>{

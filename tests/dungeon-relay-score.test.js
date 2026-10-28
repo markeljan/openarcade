@@ -1,0 +1,9 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {dungeon} from '../src/feature-games15.js';
+async function fixture(){let src=await readFile(new URL('../src/feature-games15.js',import.meta.url),'utf8');src=src.replace("import {createGameAudio,unlockSound} from './audio.js';",'const createGameAudio=()=>({emit(){}}), unlockSound=()=>{};');src=src.replace('},reset,snapshot(){return structuredClone({grid,p,enemies,level,health,time,lapTime',`},reset,atRune(n){worldSeed=2;knownRooms=new Set([0,1,2,3,4,5]);enemies=[];p={...puzzles[0].runes[n]};cool=0},snapshot(){return structuredClone({grid,p,enemies,level,health,time,lapTime`);return (await import('data:text/javascript;base64,'+Buffer.from(src).toString('base64'))).dungeon()}
+test('manual sigils award 35 each plus 80 on puzzle completion',async()=>{const g=await fixture();g.atRune(0);g.input('z',true);g.update(0,false);g.input('z',false);assert.equal(g.snapshot().manualScore,35);g.atRune(1);g.input('z',true);g.update(0,false);g.input('z',false);const s=g.snapshot();assert.equal(s.manualScore,150);assert.equal(s.score,150)});
+test('AI progression earns simulation points without manual score',()=>{const old=Math.random;let seed=42;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/2**32);try{const g=dungeon();for(let i=0;i<6000&&!g.snapshot().lap;i++)g.update(.033,true);const s=g.snapshot();assert.ok(s.lap>=1);assert.ok(s.score>=180);assert.equal(s.manualScore,0)}finally{Math.random=old}});
+test('manual takeover starts counting only later actions',async()=>{const g=await fixture();g.atRune(0);g.update(1/60,true);assert.equal(g.snapshot().score,35);assert.equal(g.snapshot().manualScore,0);g.atRune(1);g.input('z',true);g.update(0,false);g.input('z',false);const s=g.snapshot();assert.equal(s.score,150);assert.equal(s.manualScore,115)});
+

@@ -9,7 +9,7 @@ test('Orchard Gate opens only after pushing OPEN, supports undo and completes at
  press(game,'x');assert.ok(!ruleboundRules(game.snapshot()).has('GATE_OPEN'));
  press(game,'ArrowUp');for(const key of ['ArrowRight','ArrowUp','ArrowUp','ArrowLeft','ArrowUp','ArrowUp','ArrowRight','ArrowRight','ArrowUp'])press(game,key);
  assert.equal(game.snapshot().won,true,'the authored gate route should reach the star');
- press(game,'x');assert.equal(game.snapshot().won,false,'undo reverses the winning move');press(game,'z');assert.deepEqual(game.snapshot().p,{x:2,y:7});assert.ok(!ruleboundRules(game.snapshot()).has('GATE_OPEN'));
+ game.input('x',true);game.input('x',false);game.input('z',true);game.input('z',false);game.update(.49,false);assert.equal(game.snapshot().won,true,'winning page remains visible');game.update(.01,false);assert.equal(game.snapshot().chapter,1,'winning page advances after 30 frames');
 });
 
 test('rule parser supports vertical and horizontal OPEN, PUSH, WIN and SAFE and changes collision',()=>{

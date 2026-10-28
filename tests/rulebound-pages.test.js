@@ -13,8 +13,8 @@ test('ink page makes ink safe and allows crossing',()=>{
  assert.ok(ruleboundRules(game.snapshot()).has('INK_SAFE'));press(game,'ArrowRight');assert.deepEqual(game.snapshot().p,{x:1,y:3});
 });
 
-test('moth marks a position, strikes a return, and supports undo',()=>{
- const game=createRuleboundPuzzle({page:1,seed:0});press(game,'ArrowRight');assert.deepEqual(game.snapshot().mothTarget,{x:1,y:6});press(game,'ArrowLeft');press(game,'ArrowRight');assert.equal(game.snapshot().dead,true);press(game,'x');assert.equal(game.snapshot().dead,false);assert.deepEqual(game.snapshot().p,{x:0,y:6});
+test('moth strikes a return, waits, and automatically undoes',()=>{
+ const game=createRuleboundPuzzle({page:1,seed:0});press(game,'ArrowRight');assert.deepEqual(game.snapshot().mothTarget,{x:1,y:6});press(game,'ArrowLeft');press(game,'ArrowRight');assert.equal(game.snapshot().dead,true);game.input('x',true);game.input('x',false);game.input('z',true);game.input('z',false);game.update(.39,false);assert.equal(game.snapshot().dead,true);game.update(.01,false);game.update(22/60,false);assert.equal(game.snapshot().dead,false);assert.deepEqual(game.snapshot().p,{x:0,y:6});
 });
 
 for(let page=0;page<6;page++)test(`AI solves authored page ${page+1} and proceeds`,()=>{
@@ -24,7 +24,7 @@ for(let page=0;page<6;page++)test(`AI solves authored page ${page+1} and proceed
 test('blocked and idle turns advance the moth warning and undo or restart safely',()=>{
  const game=createRuleboundPuzzle({page:1,seed:0});press(game,'ArrowLeft');assert.equal(game.snapshot().mothPhase,1);assert.deepEqual(game.snapshot().mothTarget,{x:0,y:6});
  game.update(.01,false);game.update(.37,false);assert.equal(game.snapshot().mothPhase,2);game.update(.01,false);game.update(.37,false);assert.equal(game.snapshot().dead,true);
- game.update(.9,false);assert.equal(game.snapshot().dead,false);assert.equal(game.snapshot().mothPhase,0);
+ game.update(.4,false);assert.equal(game.snapshot().dead,false);assert.equal(game.snapshot().mothPhase,0);
 });
 
 test('moth and its warning marker are visibly rendered',()=>{
@@ -71,4 +71,9 @@ test('a direction released before the idle boundary does not start a move',()=>{
 
 test('fractional time carries into the next turn regardless of update chunking',()=>{
  const a=createRuleboundPuzzle({seed:1}),b=createRuleboundPuzzle({seed:1});a.input('ArrowLeft',true);b.input('ArrowLeft',true);a.update(.75,false);for(let i=0;i<3;i++)b.update(.25,false);assert.deepEqual(a.snapshot().p,b.snapshot().p);assert.deepEqual(a.snapshot().p,{x:2,y:7});a.input('ArrowLeft',false);b.input('ArrowLeft',false);a.update(22/60-.75% (22/60),false);b.update(22/60-.75% (22/60),false);assert.deepEqual(a.snapshot().p,b.snapshot().p);assert.deepEqual(a.snapshot().p,{x:1,y:7});
+});
+
+test('simultaneous held directions use reference left-down-right-up priority independent of press order',()=>{
+ for(const keys of [['ArrowLeft','ArrowUp'],['ArrowUp','ArrowLeft']]){const game=createRuleboundPuzzle({seed:1});for(const key of keys)game.input(key,true);game.update(22/60,false);assert.deepEqual(game.snapshot().p,{x:3,y:7});for(const key of keys)game.input(key,false)}
+ const game=createRuleboundPuzzle({seed:0});game.input('ArrowUp',true);game.input('ArrowRight',true);game.update(22/60,false);assert.deepEqual(game.snapshot().p,{x:3,y:7});
 });

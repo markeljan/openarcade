@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {dungeon} from '../src/feature-games15.js';
+const seeded=(seed,fn)=>{const old=Math.random;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/2**32);try{fn()}finally{Math.random=old}};
+function check(s){const n=s.worldSeed,expected=[{x:5,y:2+n%3},{x:5,y:8+(n+7)%3},{x:5,y:14+(n+14)%3},{x:2+(n+33)%2,y:6},{x:2+(n+44)%2,y:12},{x:7+(n+55)%2,y:6},{x:7+(n+66)%2,y:12}];assert.deepEqual(s.wardDoors,expected);const edge=expected[(n+s.level*5)%7];assert.deepEqual({x:s.shortcut.x,y:s.shortcut.y},edge);assert.equal(s.grid[edge.y][edge.x],'#')}
+for(const auto of [false,true])test(`${auto?'AI':'manual'} doors and shortcut use floor-seeded reference layout`,()=>{for(let seed=1;seed<=30;seed++)seeded(seed,()=>{const g=dungeon();g.update(1/60,auto);check(g.snapshot())})});
+test('AI second floor rebuilds its seeded doors and shortcut',()=>seeded(42,()=>{const g=dungeon();for(let i=0;i<12000&&g.snapshot().level<2;i++)g.update(.033,true);const s=g.snapshot();assert.equal(s.level,2);check(s)}));

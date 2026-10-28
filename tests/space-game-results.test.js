@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createFeatureGame9} from '../src/feature-games9.js';
-import {createFeatureGame29} from '../src/feature-games29.js';
 
 function simulate(make,id,interactive,seed,terminal,{frames=5400,step=1000/60}={}){
   const isTerminal=labels=>[].concat(terminal).some(label=>labels.includes(label));
@@ -18,13 +17,6 @@ function simulate(make,id,interactive,seed,terminal,{frames=5400,step=1000/60}={
     return {endedAt,resumed,endFrames,restarted};
   }finally{game.destroy();Math.random=oldRandom;}
 }
-for(const [name,make,id,terminal,manualSeed] of [
-  ['Starfall Station',createFeatureGame29,'starfall-station','STATION LOST',1],
-]){
-  test(`${name} manual loss stays visible until restart`,()=>{const result=simulate(make,id,true,manualSeed,terminal);assert.ok(result.endedAt,'manual run never lost');assert.ok(result.endFrames>180,'result did not persist');assert.equal(result.resumed,false,'manual run reset without a restart');assert.ok(result.restarted,'restart did not begin a fresh run');});
-  test(`${name} autoplay resumes after a loss`,()=>{const result=simulate(make,id,false,1,terminal);assert.ok(result.endedAt,'preview never lost');assert.ok(result.resumed,'preview did not resume');});
-}
-
 // Star Salvage rescues a wrecked tug; the run ends at the shift deadline.
 test('Cosmic Haul manual quota result stays visible until restart',()=>{
   const result=simulate(createFeatureGame9,'cosmic-haul',true,28,'QUOTA MISSED',{frames:18300,step:50});

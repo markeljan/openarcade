@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {harbor} from '../src/feature-games30.js';
+test('tide cycles in 228 frames and workers warn during the first second',()=>{for(const auto of [false,true]){const g=harbor();let warned=false;for(let i=0;i<60;i++){g.update(1/60,auto);warned||=g.snapshot().workers.some(w=>w.state==='warn')}assert.ok(warned);for(let i=60;i<228;i++)g.update(1/60,auto);assert.ok(Math.abs(g.snapshot().tide-2*Math.PI)<1e-10)}});

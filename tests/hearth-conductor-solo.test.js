@@ -1,0 +1,5 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {conductor} from '../src/feature-games23.js';
+test('manual cellist call needs a timely strings cue before the desk lights and audience rises',()=>{const g=conductor();g.input('ArrowLeft',true);for(let i=0;i<25;i++)g.update(.02,false);g.input('ArrowLeft',false);while(g.snapshot().solo.phase==='waiting')g.update(.02,false);assert.equal(g.snapshot().solo.phase,'anticipation');assert.equal(g.snapshot().solo.deskLights,0);while(g.snapshot().due>.04)g.update(.02,false);g.input(' ',true);g.update(1/60,false);g.input(' ',false);assert.equal(g.snapshot().solo.phase,'answer');for(let i=0;i<16;i++)g.update(.02,false);let s=g.snapshot();assert.equal(s.solo.phase,'ovation');assert.equal(s.solo.deskLights,1);assert.equal(s.solo.standing,2)});
+test('missed cellist call does not light the desk; AI answers later calls',()=>{const g=conductor();for(let i=0;i<110;i++)g.update(.02,false);assert.equal(g.snapshot().solo.deskLights,0);for(let i=0;i<1200&&g.snapshot().solo.deskLights===0;i++)g.update(.02,true);assert.ok(g.snapshot().solo.deskLights>0)});

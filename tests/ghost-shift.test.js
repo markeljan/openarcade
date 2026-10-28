@@ -16,3 +16,4 @@ test('manual play warns, locks down and causes same-room sentries to chase',()=>
 test('autoplay continues objectives through a lockdown',()=>{
  const g=ghost();let live=false,progress=false;for(let i=0;i<1600;i++){g.update(.05,true);const s=g.snapshot();live ||= s.lockdown.phase==='live';progress ||= s.shift>1;if(live&&progress)break}assert.ok(live);assert.ok(progress);
 });
+test('sentries remember lost sight and cut off the active objective',()=>{const g=ghost();g.update(.17,false);let s=g.snapshot();assert.equal(s.guards[0].mode,'chase');assert.equal(s.guards[1].mode,'cut-off');assert.equal(s.guards[1].x,6,'cutoff moves toward the first sigil');g.input('ArrowDown',true);g.update(.17,false);g.input('ArrowDown',false);s=g.snapshot();assert.deepEqual(s.player,{x:1,y:2});assert.equal(s.guards[0].mode,'chase');assert.ok(s.guards[0].memory>0&&s.guards[0].memory<1.2,'chase persists after line of sight is lost')});

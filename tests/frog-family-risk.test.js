@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {frogFamilyRisk,frog} from '../src/feature-games10.js';
+test('traffic safe for the leader can be dangerous for a delayed follower',()=>{const cars=[{row:9,x:5,v:60,len:38}],act={phase:'calm',kind:'rush'};const solo=frogFamilyRisk(1,9,[],cars,[],act),family=frogFamilyRisk(1,9,[{}],cars,[],act);assert.equal(solo,0);assert.ok(family>solo)});
+test('AI keeps advancing and gathering after family-aware route selection',()=>{const g=frog();let progressed=false,collected=false;for(let i=0;i<5000;i++){g.update(1/60,true);const s=g.snapshot();progressed ||= s.leader.row<7;collected ||= s.collected>1}assert.ok(progressed);assert.ok(collected)});

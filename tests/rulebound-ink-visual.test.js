@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createRuleboundPuzzle} from '../src/feature-games35.js';
+function colors(g){let out=[];const noop=()=>{},c=new Proxy({fillRect(){out.push(this.fillStyle)}},{get:(o,k)=>o[k]??noop,set:(o,k,v)=>(o[k]=v,true)});g.draw(c);return out}
+function press(g,k){g.input(k,true);g.update(22/60,false);g.input(k,false)}
+test('manual INK IS SAFE visibly changes the river when the word lands',()=>{const g=createRuleboundPuzzle({page:4,seed:0});assert.ok(colors(g).includes('#665469'));for(const k of ['ArrowLeft','ArrowUp','ArrowUp','ArrowUp'])press(g,k);const after=colors(g);assert.ok(after.includes('#709f96'));assert.ok(!after.includes('#665469'));assert.ok(after.includes('#a9d4b2'));g.input('x',true);g.input('x',false);g.update(22/60,false);assert.ok(colors(g).includes('#665469'),'undo restores unsafe appearance')});
+test('AI reaches and crosses the ink river page',()=>{const g=createRuleboundPuzzle({page:4,seed:0});for(let i=0;i<5000&&g.snapshot().chapter===4;i++)g.update(1/60,true);assert.equal(g.snapshot().chapter,5)});

@@ -176,3 +176,48 @@ These are scoped simulations with mocked canvases, not equivalence tests against
 - A later 60-second seeded autoplay audit completed without a reported script error. This finite simulation is not evidence of long-run progress or reference equivalence. Current per-game static evidence and open gaps are recorded in [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
 
 
+
+
+Recent source-informed changes include a mineable Deep Digger crown beacon, finite Grave Garden projectile lifetimes, physical Dungeon Relay vault rewards, Ashen Rage nitro, Neon Duelist AI focus, and Robot Register fan and respawn rules. These are focused improvements, not a full runtime or visual parity audit; see [REA-INVESTIGATION.md](REA-INVESTIGATION.md) for evidence and outstanding gaps.
+
+Dune Delivery now tracks all 48 source-informed wells and uses the gameplay day/night phase for its sky. A subsequent pass added world-coordinate travel and a following camera. Terrain and movement inertia remain simplified; this is not full spatial parity. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md) for the evidence.
+
+Recent source-backed changes improve Avalanche Post's overlapping slides and lodge outcomes, Cloud Shepherd's flock inertia, Railway Rush's wagon acceleration, Gloam Trawler's homecoming/reset, and Stamp Harbor's held station actions. Focused local manual and AI tests exercise those changes. Their spatial physics, presentation and complete reference behavior remain only partially compared; see [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Further local comparisons improved Deep Digger's bridge routing and campfire recovery, Machine Hunt's cover-and-aim AI, Hive Heist's held actions, and Cloud Shepherd's bridge and rescue steering. The source-derived changes have focused manual or AI tests; the games still have meaningful unverified mechanics and presentation differences. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md) for evidence and remaining gaps.
+
+Later source-backed local work adds Deep Digger homeward mining, Dungeon Relay lap/floor holds, Avalanche Post pressure-front rescue, Neon tick-sampled controls and Hearthbound episode resets. Weighted Deep Digger routing is still only a fallback because universal use exposed a repeated shaft-fall failure; source and test evidence and other remaining gaps are in [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Latest source-backed local changes include alternating Avalanche ridge/probe rescues, Dungeon Relay ward seals, Deep Digger weighted homeward mining with resource-aware replanning, and a six-engine preview lifecycle. Focused manual and AI checks pass; search limits, geometry, effects and broader reference parity remain open. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md) for evidence and limitations.
+
+Recent source-backed work corrected Avalanche's projection, terrain approach and steering, added Deep Digger stair transit, and improved Machine Hunt patrol, Dragon Lock controls and Dungeon Relay scoring. Local focused manual and AI checks cover these changes, but collision, AI planning, artwork and full game parity remain incomplete; see [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Recent local changes improve Phase Foundry pickup reach, Avalanche collision recovery, Machine Hunt offscreen behavior, Deep Digger transit targeting and compact gallery selection. Grave Garden matched a further five seeded checkpoints; these bounded comparisons and focused tests do not establish full parity. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Recent comparisons improved Grave Garden's foreground and greenhouse after a matched frame, Avalanche hazard patterns, Bakery's fixed-rate stoking, Deep Digger cycle recovery and the gallery's history handling. Local tests and bounded source comparisons support these changes; the art, full AI behavior and natural cycle recovery remain incomplete. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Recent source-backed changes add Starfall reactor charging and pressure recovery, correct Dungeon arrival timing, and refine Word Fall and Grave Garden visuals. Manual and AI local tests pass, but these checks do not establish full reference parity. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md) for evidence and gaps.
+
+Recent source-backed work adds timed manual and AI Deep Digger movement and continuous gated Tower Heist traversal. Grave Garden late-result and Gloam scenery were compared in owned captures and improved, though the artwork remains simplified. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md) for evidence, limitations and remaining gaps.
+
+Recent source-backed work improved Word Fall deduction and reveal flow, Deep Digger tower transit, Dungeon counter AI, and Coral/Gloam presentation. The visual comparisons covered selected, sometimes different states; full parity remains unverified. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Recent source-backed changes align Beacon Bay's stations and beam, improve Deep Digger tower rope routes, and correct Greenhouse action priority. Their local manual and AI tests pass; Beacon ship behavior, Deep tower edge cases and broader parity remain open. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Recent source-backed changes corrected Beacon ship spawning and steering, Willow held actions, Deep Digger tower support, and Railway siding seeding. Focused manual and AI checks pass, but broad reference parity remains open. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Recent source-backed changes improved Avalanche scoring, Dungeon knockout timing, Beacon tide, Railway braking, Gloam line return and Deep Digger cycle recovery. A local seed-66 surface recovery was independently replayed, but it does not establish full reference parity. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Recent source-backed work improved Essence held actions, Beacon collisions, Avalanche scoring, Dungeon spawning and knockout, and the player-switch lifecycle. Focused manual/AI and browser checks pass; broader reference parity remains open. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Recent source-backed work corrected Fossil site-transition hazards, Castle session reset, Dungeon door generation, Gloam rescue clocks and failed-preview slot selection. Local tests pass, but complete game and presentation parity remain open. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Recent work improved Deep Digger quarry persistence and threat weighting, Hotel Haunt sweep geometry, and Dungeon biome sight breaks. The reference-like Deep cave/pit trial remains reverted after a seeded stall; local terrain and broad parity remain incomplete. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Deep Digger now has persistent threat-aware quarry targets and lava emergency interruption, but a reference-like cave/pit trial remains reverted after a finite-world resource stall. The ten-column world and broad game parity remain incomplete; see [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Deep Digger now has a 20-column approximate cave and pit world; five sampled AI seeds completed the tower with physical gate returns. Its terrain hash, ore rates, camp/tree placement and 240-row safety warp still differ from the reference. This supersedes earlier notes that caves/pits were reverted; see [REA-INVESTIGATION.md](REA-INVESTIGATION.md) for the working checkpoint and limitations.
+
+Deep Digger's source-derived terrain hash, caves, pits, liquids, ore thresholds and camp/tree positions now replace the previous approximate generator. Five sampled AI seeds completed the tower and used physical gates; the settled integrated checkpoint passed 2,578 tests. The 240-row limit, clipped tree canopies, tower position and AI resource scoring still differ, and surface material and weather corrections are in progress. Full arcade parity and REA browser cleanup remain open. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md).
+
+Recent source-backed work corrected Stamp Harbor station geometry, physical comparison and stamping paths, and fixed-rate simulation; Wash Wonder's AI jet positioning and fixed-rate cleaning; and Ashen Courier's closed-gate collision. Deep Digger now uses distinct grass/dirt mining and weather seeding, with a physical shallow return route. Manual and AI tests cover these changes, but presentation and broader game parity remain incomplete. See [REA-INVESTIGATION.md](REA-INVESTIGATION.md).

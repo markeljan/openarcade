@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createFeatureGame12,rallyBlocked,rallyFeature,resolveRallyRegister,forecastRallyPrograms,robots,rallyApplyLapse,rallyPersonas,rallyDrawPosition,rallyForecastTrace,rallyCrusherActive,rallyTurretActive} from '../src/feature-games12.js';
+import {createFeatureGame12,rallyBlocked,rallyFeature,resolveRallyRegister,forecastRallyPrograms,robots,rallyApplyLapse,rallyPersonas,rallyDrawPosition,rallyForecastTrace,rallyCrusherActive,rallyTurretActive,rallyHash,rallyOilTurn,rallyBaselineProgram,rallyProgramTrace,rallyProfileRoll} from '../src/feature-games12.js';
 const bot=(x,y,dir,hp=3)=>({x,y,dir,hp,color:'#fff',score:0});
 test('register lasers use the opening snapshot while every robot completes its move',()=>{const r=resolveRallyRegister([bot(1,9,0),bot(1,7,1)],['FIRE','CHARGE'],0,1);assert.deepEqual([r.bots[1].x,r.bots[1].y,r.bots[1].hp],[3,7,2]);assert.equal(r.lasers.length,1)});
 test('simultaneous shots and contested moves damage both robots',()=>{let r=resolveRallyRegister([bot(2,9,1,1),bot(4,9,3,1)],['FIRE','FIRE'],0,1);assert.deepEqual(r.bots.map(b=>b.hp),[0,0]);r=resolveRallyRegister([bot(2,10,1),bot(4,10,3)],['MOVE','MOVE'],0,1);assert.deepEqual(r.bots.map(b=>[b.x,b.y,b.hp]),[[2,10,2],[4,10,2]])});
@@ -66,17 +66,17 @@ test('course presentation holds six frames and slows 24 before the 96-frame tran
 });
 
 test('manual register commits immediately but its sprite eases over 24 frames',()=>{
- const game=robots();game.input('ArrowUp',true);game.update(3,false);let s=game.snapshot(),b=s.bots[0];assert.equal(s.phase,'EXECUTE');assert.equal(b.y,10);assert.equal(b.fromY,11);assert.equal(rallyDrawPosition(b,s.phase,s.registerTime).y,11);
- game.update(.2,false);s=game.snapshot();b=s.bots[0];assert.ok(Math.abs(rallyDrawPosition(b,s.phase,s.registerTime).y-10.5)<1e-9);assert.equal(b.y,10);
+ const game=robots();game.input('ArrowUp',true);game.update(3,false);game.update(1/60,false);let s=game.snapshot(),b=s.bots[0];assert.equal(s.phase,'EXECUTE');assert.equal(b.y,10);assert.equal(b.fromY,11);assert.ok(rallyDrawPosition(b,s.phase,s.registerTime).y<11);
+ game.update(11/60,false);s=game.snapshot();b=s.bots[0];assert.ok(Math.abs(rallyDrawPosition(b,s.phase,s.registerTime).y-10.5)<1e-9);assert.equal(b.y,10);
  game.update(.2,false);s=game.snapshot();assert.equal(rallyDrawPosition(s.bots[0],s.phase,s.registerTime).y,s.bots[0].y);
 });
 
 
-test('forecast excludes inactive robots from collisions and returns them to a free start',()=>{
+test('board projection excludes inactive robots from collisions and returns them to their assigned start',()=>{
  const bots=[bot(2,10,1),{...bot(3,10,3),outT:5,outReason:'WIPEOUT'}],programs=[['MOVE','BRAKE','BRAKE','BRAKE','BRAKE'],Array(5).fill('BRAKE')],before=structuredClone({bots,programs});
  const trace=rallyForecastTrace(bots,programs,0,0);assert.deepEqual(trace[0].activeAtStart,[true,false]);assert.equal(trace[0].bots[0].x,3);assert.equal(trace[0].bots[0].hp,3);assert.equal(trace[1].activeAtStart[1],false);assert.equal(trace[2].bots[1].outT,0);assert.deepEqual([trace[2].bots[1].x,trace[2].bots[1].y],[2,11]);assert.equal(trace[3].activeAtStart[1],true);assert.deepEqual({bots,programs},before);
 });
-test('forecast suppresses a flagged robot until its 38-frame return',()=>{
+test('board projection suppresses a flagged robot until its 38-frame return',()=>{
  const bots=[bot(3,1,0)],trace=rallyForecastTrace(bots,[Array(5).fill('MOVE')],0,0);
  assert.equal(trace[0].flagged[0],true);assert.equal(trace[0].bots[0].outReason,'FLAG');assert.equal(trace[1].activeAtStart[0],false);assert.equal(trace[1].bots[0].y,11);assert.equal(trace[2].activeAtStart[0],true);assert.equal(trace[2].bots[0].y,10);
 });
@@ -92,4 +92,11 @@ test('beam with no target reaches five cells and ignores opponents beyond that r
 
 test('crusher uses 72-frame cycles and the monotonic course serial',()=>{assert.equal(rallyCrusherActive(2,5,0,0),false);assert.equal(rallyCrusherActive(2,5,71,0),false);assert.equal(rallyCrusherActive(2,5,72,0),true);assert.equal(rallyCrusherActive(2,5,0,1),true);assert.equal(rallyCrusherActive(2,5,0,4),false);const b=[bot(2,5,0)],ctx={frame:72,stageSerial:0,round:1,slot:0};assert.equal(resolveRallyRegister(b,[],0,0,'board',null,ctx).bots[0].hp,0);assert.equal(resolveRallyRegister(b,[],0,0,'board',null,{...ctx,frame:71}).bots[0].hp,3)});
 test('turret uses round and register index rather than global register count',()=>{assert.equal(rallyTurretActive(1,0,0,4),true);assert.equal(rallyTurretActive(2,0,0,4),false);assert.equal(rallyTurretActive(1,1,0,4),false);const b=[bot(0,4,0)],ctx={frame:200,stageSerial:1,round:1,slot:0};assert.equal(resolveRallyRegister(b,[],1,99,'board',null,ctx).bots[0].hp,2);assert.equal(resolveRallyRegister(b,[],1,99,'board',null,{...ctx,round:2}).bots[0].hp,3)});
-test('forecast uses projected simulation frame for crusher effects',()=>{const bots=[bot(2,5,0)],programs=[Array(5).fill('BRAKE')],runtime={physicsClock:3.6,round:1,stageSerial:0},trace=rallyForecastTrace(bots,programs,0,0,null,0,runtime);assert.equal(trace[0].wiped[0],true);assert.equal(trace[0].bots[0].outReason,'WIPEOUT')});
+test('board projection uses projected simulation frame for crusher effects',()=>{const bots=[bot(2,5,0)],programs=[Array(5).fill('BRAKE')],runtime={physicsClock:3.6,round:1,stageSerial:0},trace=rallyForecastTrace(bots,programs,0,0,null,0,runtime);assert.equal(trace[0].wiped[0],true);assert.equal(trace[0].bots[0].outReason,'WIPEOUT')});
+
+test('oil spin follows round and world seed, independent of register count',()=>{const b=[bot(5,7,1)],move=resolveRallyRegister(b,['MOVE'],0,0,'movement');const a={frame:204,round:2,slot:0,stageSerial:0,worldSeed:1},bctx={...a,worldSeed:2};assert.equal(rallyOilTurn(6,7,2,1),1);assert.equal(rallyOilTurn(6,7,2,2),-1);assert.equal(resolveRallyRegister(move.bots,[],0,0,'board',null,a).bots[0].dir,2);assert.equal(resolveRallyRegister(move.bots,[],0,99,'board',null,a).bots[0].dir,2);assert.equal(resolveRallyRegister(move.bots,[],0,0,'board',null,bctx).bots[0].dir,0);const raw=Math.sin((6+2)*127.1+(7+1)*311.7)*43758.5453;assert.equal(rallyHash(8,8),raw-Math.floor(raw))});
+test('board projection uses the same seeded oil turn as the live board',()=>{const bots=[bot(5,7,1)],programs=[['MOVE','BRAKE','BRAKE','BRAKE','BRAKE']],runtime={physicsClock:0,round:2,stageSerial:0,worldSeed:1},trace=rallyForecastTrace(bots,programs,0,0,null,0,runtime);assert.equal(trace[0].bots[0].x,6);assert.equal(trace[0].bots[0].dir,2)});
+
+test('baseline programs follow the seeded nine-entry rotation and return copies',()=>{assert.deepEqual(rallyBaselineProgram(0,1,0),['MOVE','MOVE','LEFT','CHARGE','RIGHT']);assert.deepEqual(rallyBaselineProgram(0,1,1),['CHARGE','RIGHT','MOVE','LEFT','MOVE']);assert.deepEqual(rallyBaselineProgram(40,1,2),rallyBaselineProgram(0,2,2));const p=rallyBaselineProgram(0,1,0);p[0]='FIRE';assert.equal(rallyBaselineProgram(0,1,0)[0],'MOVE');assert.deepEqual(rallyPersonas.map(x=>x.risk),[.52,.70,.38,.82])});
+test('reference planner traces commanded motion without executing belt effects',()=>{const trace=rallyProgramTrace(bot(1,9,0),['MOVE','BRAKE'],0);assert.deepEqual(trace.map(p=>[p.x,p.y]),[[1,8],[1,8]]);assert.equal(resolveRallyRegister([bot(1,9,0)],['MOVE'],0,0).bots[0].x,2)});
+test('profile uses the reference seeded stream and consumes its reaction draw',()=>{assert.deepEqual(rallyProfileRoll(1),{state:3663131627,value:0.6270739405881613});const old=Math.random;let seed=17;const random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/2**32);try{Math.random=random;const g=robots(),state=g.snapshot();let expectedSeed=17;const next=()=>((expectedSeed=(Math.imul(expectedSeed,1664525)+1013904223)>>>0)/2**32);const world=1+Math.floor(next()*2147483647),initial=Array.from({length:4},()=>1+Math.floor(next()*2147483647));assert.equal(state.worldSeed,world);assert.deepEqual(state.baselinePrograms,initial.map((_,i)=>rallyBaselineProgram(world,1,i)));assert.deepEqual(state.skillSeeds,initial.map(n=>rallyProfileRoll(n).state));assert.deepEqual(state.lapsed,initial.map(n=>rallyProfileRoll(n).value<.105))}finally{Math.random=old}});

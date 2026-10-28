@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {haulTetherStep,haul} from '../src/feature-games9.js';
+test('one stretched link transfers the reference two-pass spring impulse',()=>{const tug={x:0,y:0,vx:0,vy:0},cargo={x:20,y:0,vx:0,vy:0,kind:0,tied:true};const r=haulTetherStep(tug,[cargo],[1],1/60);assert.equal(r.snapped,0);assert.ok(Math.abs(cargo.vx+10.08)<1e-9);assert.ok(Math.abs(tug.vx-2.016)<1e-9)});
+test('manual and AI tow simulations remain finite',()=>{for(const auto of [false,true]){const g=haul();if(!auto){g.input('ArrowUp',true);g.input('x',true)}for(let i=0;i<4000;i++)g.update(1/60,auto);const s=g.snapshot();assert.ok([s.ship.x,s.ship.y,s.ship.vx,s.ship.vy,...s.frags.flatMap(f=>[f.x,f.y,f.vx,f.vy])].every(Number.isFinite))}});

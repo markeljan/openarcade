@@ -1,0 +1,4 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createHiveHeist} from '../src/feature-games21.js';
+test('preview deposits are excluded and a manual deposit scores 15 per nectar',()=>{const g=createHiveHeist();for(let i=0;i<6000&&g.snapshot().deposits<1;i++)g.update(.05,true);assert.ok(g.snapshot().deposits>0);assert.equal(g.snapshot().manualScore,0);for(let i=0;i<6000&&!g.snapshot().bee.nectar;i++)g.update(.05,true);let s=g.snapshot();assert.ok(s.bee.nectar>0);for(const [axis,goal,neg,pos] of [['x',220,'ArrowLeft','ArrowRight'],['y',570,'ArrowUp','ArrowDown']])for(let i=0;i<600&&Math.abs(g.snapshot().bee[axis]-goal)>5;i++){const k=g.snapshot().bee[axis]<goal?pos:neg;g.input(k,true);g.update(.025,false);g.input(k,false)}s=g.snapshot();const n=s.bee.nectar;g.input(' ',true);assert.equal(g.snapshot().manualScore,n*15);g.reset();assert.equal(g.snapshot().manualScore,0)});

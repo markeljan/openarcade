@@ -1,0 +1,6 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createStarRoller} from '../src/feature-games17.js';
+function seeded(run){const old=Math.random;let seed=42;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/2**32);try{run()}finally{Math.random=old}}
+test('manual fizzle plays a 360-frame finale before saving and accepting Enter',()=>seeded(()=>{const saved=[],g=createStarRoller({finish:s=>saved.push(s)});g.input('ArrowLeft',true);for(let i=0;i<19000&&!g.snapshot().dead;i++)g.update(1/60,false);let s=g.snapshot();assert.equal(s.result,'TIME UP');assert.equal(s.finale,360);g.input('Enter',true);assert.equal(g.snapshot().finale,360);for(let i=0;i<359;i++)g.update(1/60,false);assert.deepEqual(saved,[]);assert.equal(g.snapshot().finale,1);g.update(1/60,false);assert.equal(saved.length,1);g.input('Enter',true);assert.equal(g.snapshot().dead,0)}));
+test('preview star plays a 430-frame finale then resets without saving',()=>seeded(()=>{const saved=[],g=createStarRoller({finish:s=>saved.push(s)});for(let i=0;i<18000&&!g.snapshot().dead;i++)g.update(1/60,true);let s=g.snapshot();assert.equal(s.result,'STAR FORMED!');assert.equal(s.finale,430);for(let i=0;i<429;i++)g.update(1/60,true);assert.equal(g.snapshot().finale,1);g.update(1/60,true);assert.equal(g.snapshot().dead,0);assert.deepEqual(saved,[])}));

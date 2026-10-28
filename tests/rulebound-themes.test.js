@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {createRuleboundPuzzle} from '../src/feature-games35.js';
+function colors(g){const seen=new Set(),noop=()=>{},ctx=new Proxy({},{get:(o,k)=>o[k]??noop,set:(o,k,v)=>{if(k==='fillStyle')seen.add(v);o[k]=v;return true}});g.draw(ctx);return seen}
+test('authored pages render their distinct reference scenery',()=>{for(const [page,color] of [[0,'#f4e7c9'],[1,'#694c36'],[2,'#9eada4'],[3,'#bd9873'],[4,'#d4dfc5'],[5,'#edd0ba']]){const g=createRuleboundPuzzle({page,seed:0}),before=g.snapshot();assert.ok(colors(g).has(color));assert.deepEqual(g.snapshot(),before)}});
+test('AI page transition changes the visible scenery',()=>{const g=createRuleboundPuzzle({seed:0});for(let i=0;i<1000&&g.snapshot().chapter===0;i++)g.update(.05,true);assert.equal(g.snapshot().chapter,1);assert.ok(colors(g).has('#694c36'))});

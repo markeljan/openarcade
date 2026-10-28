@@ -11,7 +11,7 @@ test('default manual and autoplay runs can reach both scheduled acts',()=>{
 });
 
 test('manual countdown lasts 300 seconds unless a star forms early',()=>{
- const old=Math.random;let seed=42;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/2**32);try{const g=createStarRoller();for(let i=0;i<14950;i++)g.update(.02,false);let s=g.snapshot();assert.equal(s.dead,0);assert.ok(s.time>.9&&s.time<1.1);for(let i=0;i<60;i++)g.update(.02,false);s=g.snapshot();assert.equal(s.result,'TIME UP');assert.ok(s.dead>0)}finally{Math.random=old}
+ const old=Math.random;let seed=42;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/2**32);try{const g=createStarRoller();g.input('ArrowLeft',true);for(let i=0;i<14950;i++)g.update(.02,false);let s=g.snapshot();assert.equal(s.dead,0);assert.ok(s.time>.9&&s.time<1.1);for(let i=0;i<60;i++)g.update(.02,false);s=g.snapshot();assert.equal(s.result,'TIME UP');assert.ok(s.dead>0)}finally{Math.random=old}
 });
 test('autoplay can form a star before the full countdown',()=>{
  const old=Math.random;let seed=42;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/2**32);try{const g=createStarRoller();for(let i=0;i<18000&&!g.snapshot().dead;i++)g.update(1/60,true);const s=g.snapshot();assert.equal(s.result,'STAR FORMED!');assert.ok(s.time>0);assert.ok(s.elapsed<300)}finally{Math.random=old}

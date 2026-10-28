@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createFeatureGame9,pursuitHitsRoadblock} from '../src/feature-games9.js';
+import {createFeatureGame9,pursuit,pursuitHitsRoadblock} from '../src/feature-games9.js';
 
 test('a ramp jump clears a roadblock while an unsafe ground lane hits',()=>{
   assert.equal(pursuitHitsRoadblock(58,182,false),true);
@@ -27,3 +27,6 @@ test('manual driver can steer onto a ramp and launch',t=>{
   for(let i=0;i<4000&&!airborne;i++){labels=[];ramp=null;now+=50;next(now);if(ramp&&ramp.y<420){key('ArrowLeft',carX>ramp.x+5);key('ArrowRight',carX<ramp.x-5)}else{key('ArrowLeft',false);key('ArrowRight',false)}}
   game.destroy();assert.ok(airborne,'driver never launched from a ramp');
 });
+
+test('manual garage swap changes vehicle halfway through its 84-frame sequence',()=>{const old=Math.random;Math.random=()=>0;try{const g=pursuit(),sounds=[];g.input('ArrowUp',true);let s;for(let i=0;i<4000;i++){s=g.snapshot();if(s.swapTimer>0)break;if(s.garage){g.input('ArrowLeft',s.x>s.garage.x+5);g.input('ArrowRight',s.x<s.garage.x-5)}g.update(1/60,false)}assert.ok(s.swapTimer>0);assert.equal(s.vehicle,'coupe');assert.equal(s.swapTarget,'bike');assert.equal(s.decoy.vehicle,'coupe');for(let i=0;i<41;i++)g.update(1/60,false);assert.equal(g.snapshot().vehicle,'coupe');for(let i=0;i<2;i++)g.update(1/60,false);s=g.snapshot();assert.equal(s.vehicle,'bike');assert.ok(s.swapTimer>0);for(let i=0;i<43;i++)g.update(1/60,false);s=g.snapshot();assert.equal(s.swap,1);assert.equal(s.swapTarget,null);assert.equal(s.vehicle,'bike')}finally{Math.random=old}});
+test('AI garage swaps choose and retain an actual new vehicle',()=>{const old=Math.random;Math.random=()=>0;try{const g=pursuit();for(let i=0;i<6000&&(g.snapshot().swap===0||g.snapshot().swapTimer>0);i++)g.update(1/60,true);const s=g.snapshot();assert.ok(s.swap>0);assert.equal(s.vehicle,'bike');assert.equal(s.swapTarget,null)}finally{Math.random=old}});

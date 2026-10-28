@@ -1,0 +1,5 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {coral} from '../src/feature-games19.js';
+test('preview progress is excluded from the manual score after takeover',()=>{const g=coral();for(let i=0;i<2000;i++)g.update(1/60,true);const before=g.snapshot();assert.ok(before.score>0);assert.equal(before.manualScore,0);for(let i=0;i<30;i++)g.update(1/60,false);assert.equal(g.snapshot().manualScore,g.snapshot().score-before.score);g.reset();assert.equal(g.snapshot().manualScore,0)});
+test('manual rescue awards 90 points',()=>{const g=coral();const target=g.snapshot().horses[0];for(let i=0;i<600;i++){const p=g.snapshot().diver,dx=target.x-p.x,dy=target.y-p.y;if(Math.hypot(dx,dy)<15)break;for(const [k,v] of [['ArrowLeft',dx< -4],['ArrowRight',dx>4],['ArrowUp',dy< -4],['ArrowDown',dy>4]])g.input(k,v);g.update(1/60,false)}for(const k of ['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'])g.input(k,false);g.input(' ',true);for(let i=0;i<20;i++)g.update(1/60,false);assert.equal(g.snapshot().manualScore,90)});
