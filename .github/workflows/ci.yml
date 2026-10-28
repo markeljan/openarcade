@@ -25,5 +25,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npm test
+      # Browser fixtures launch real Chromium processes with bounded startup waits.
+      # Serialize files on the shared runner; retain every test and assertion.
+      - run: npm test -- --test-concurrency=1
       - run: npm run build
