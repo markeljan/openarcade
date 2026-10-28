@@ -203,5 +203,141 @@ export default [
       "minDurationMs": 120000,
       "maxDurationMs": 120000
     }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "dune-delivery",
+    "source": "src/feature-games27.js",
+    "metric": "cargo delivery and well refill awards in 120 active seconds",
+    "units": "points",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 1000000,
+      "integer": true,
+      "minDurationMs": 120000,
+      "maxDurationMs": 120000
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "fossil-frontier",
+    "source": "src/feature-games27.js",
+    "metric": "excavation, recovery, mounting and skeleton awards in 120 active seconds",
+    "units": "points",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 1000000,
+      "integer": true,
+      "minDurationMs": 120000,
+      "maxDurationMs": 120000
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "starlight-ward",
+    "source": "src/feature-games28.js",
+    "metric": "counter, restoration and seal awards in 120 active seconds",
+    "units": "points",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 1000000,
+      "integer": true,
+      "minDurationMs": 120000,
+      "maxDurationMs": 120000
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "rooftop-post",
+    "source": "src/feature-games28.js",
+    "metric": "delivery and completed route awards in 120 active seconds",
+    "units": "points",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 1000000,
+      "integer": true,
+      "minDurationMs": 120000,
+      "maxDurationMs": 120000
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "bakery-blitz",
+    "source": "src/feature-games29.js",
+    "metric": "served loaf awards in 120 active seconds",
+    "units": "points",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 1000000,
+      "integer": true,
+      "minDurationMs": 120000,
+      "maxDurationMs": 120000
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "starfall-station",
+    "source": "src/feature-games29.js",
+    "metric": "repair, seal, ring and combat awards in 120 active seconds",
+    "units": "points",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 1000000,
+      "integer": true,
+      "minDurationMs": 120000,
+      "maxDurationMs": 120000
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "greenhouse-guardians",
+    "source": "src/feature-games30.js",
+    "metric": "harvested bloom awards in 120 active seconds",
+    "units": "points",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 1000000,
+      "integer": true,
+      "minDurationMs": 120000,
+      "maxDurationMs": 120000
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "harbor-hoist",
+    "source": "src/feature-games30.js",
+    "metric": "cargo mass safely dispatched aboard departed vessels in 120 active seconds",
+    "units": "mass units",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 10000,
+      "integer": true,
+      "minDurationMs": 120000,
+      "maxDurationMs": 120000
+    }
   }
 ];
