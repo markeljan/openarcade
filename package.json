@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@clerk/backend": "3.26.4",
+    "@clerk/clerk-js": "6.42.0",
     "@neondatabase/serverless": "^1.2.0",
     "@vercel/analytics": "^2.0.1"
   }
