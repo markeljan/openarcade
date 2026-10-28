@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>OPENARCADE S06 browser smoke</title>
+<style>
+  body { background: #121c17; color: #e8f2e8; font: 16px system-ui; margin: 24px; }
+  button, select { font: inherit; margin: 4px; padding: 8px; }
+  canvas { display: block; width: 640px; height: 480px; max-width: 100%; border: 1px solid #718477; }
+  pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+</style>
+<h1>OPENARCADE S06 browser smoke</h1>
+<p>Actual game wrappers, local callback evidence. This page does not submit scores.</p>
+<label>Game <select id="game"></select></label>
+<button id="human">Fresh human run</button>
+<button id="ai">Fresh watch AI run</button>
+<button id="gallery">Fresh gallery preview</button>
+<button id="takeover">setInteractive takeover</button>
+<button id="watch">setInteractive watch</button>
+<button id="restart">Restart</button>
+<button id="pause">Pause</button>
+<button id="resume">Resume</button>
+<button id="dispose">Dispose</button>
+<p id="state" role="status"></p>
+<canvas id="canvas" width="640" height="480"></canvas>
+<h2>Completed run callbacks</h2>
+<pre id="records">[]</pre>
+<script type="module">
+  import { games, createGame } from '/src/games.js';
+  import { moreGames, createMoreGame } from '/src/more-games.js';
+  import { extraGames, createExtraGame } from '/src/extra-games.js';
+  const groups = [[games, createGame], [moreGames, createMoreGame], [extraGames, createExtraGame]];
+  const select = document.querySelector('#game');
+  const canvas = document.querySelector('#canvas');
+  const state = document.querySelector('#state');
+  const output = document.querySelector('#records');
+  const records = [];
+  let player;
+  for (const [catalog] of groups) for (const game of catalog) {
+    const option = document.createElement('option');
+    option.value = game.id;
+    option.textContent = `${game.name} (${game.id})`;
+    select.append(option);
+  }
+  select.value = new URL(location.href).searchParams.get('game') || 'snake';
+  function start(interactive, context) {
+    player?.destroy();
+    const [, create] = groups.find(([catalog]) => catalog.some(game => game.id === select.value));
+    player = create(canvas, select.value, { interactive, context, onResult(record) {
+      records.push(record);
+      output.textContent = JSON.stringify(records, null, 2);
+      state.textContent = `${record.gameId}: completed ${record.actor} ${record.context}`;
+    }});
+    state.textContent = `${select.value}: ${interactive ? 'human' : 'AI'} ${context}`;
+    if (interactive) canvas.focus();
+  }
+  function begin(interactive, context) {
+    if (!player?.beginRun) return start(interactive, context);
+    player.beginRun({interactive, context});
+    state.textContent = `${select.value}: ${interactive ? 'human' : 'AI'} ${context}`;
+    if (interactive) canvas.focus();
+  }
+  document.querySelector('#human').onclick = () => begin(true, 'manual-player');
+  document.querySelector('#ai').onclick = () => begin(false, 'watch-player');
+  document.querySelector('#gallery').onclick = () => begin(false, 'gallery-preview');
+  document.querySelector('#takeover').onclick = () => { player?.setInteractive(true); state.textContent = `${select.value}: takeover`; canvas.focus(); };
+  document.querySelector('#watch').onclick = () => { player?.setInteractive(false); state.textContent = `${select.value}: watching`; };
+  document.querySelector('#restart').onclick = () => { player?.restart(); state.textContent = `${select.value}: restarted`; canvas.focus(); };
+  document.querySelector('#pause').onclick = () => { player?.pause(); state.textContent = `${select.value}: paused`; };
+  document.querySelector('#resume').onclick = () => { player?.resume(); state.textContent = `${select.value}: resumed`; canvas.focus(); };
+  document.querySelector('#dispose').onclick = () => { player?.destroy(); player = null; state.textContent = `${select.value}: disposed`; };
+  select.onchange = () => start(false, 'gallery-preview');
+  window.addEventListener('pagehide', () => player?.destroy());
+  start(false, 'gallery-preview');
+</script>
+</html>

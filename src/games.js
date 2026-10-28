@@ -1,3 +1,4 @@
+import { createRunReporter } from './scores/run.js';
 /** Tiny self-contained canvas games. Add an entry and a factory to extend the arcade. */
 export const games = [
   { id: 'snake', name: 'Snake', category: 'CLASSIC', description: 'A little longer every time.', controls: 'Arrow keys or WASD to steer', accent: '#b5f36f', icon: '↗' },
@@ -57,8 +58,8 @@ function snake(end = () => {}) {
         if (choice) next=choice;
       }
       dir = next; const head = {x:body[0].x+dir.x,y:body[0].y+dir.y}; const eating = head.x===food.x && head.y===food.y;
-      if (head.x<0 || head.x>=cols || head.y<0 || head.y>=rows || body.slice(0,eating ? undefined : -1).some(p=>p.x===head.x&&p.y===head.y)) { if(auto) reset(); else end('GAME OVER',score); return; }
-      body.unshift(head); if (eating) { score++; if(body.length===cols*rows){if(auto)reset();else end('BOARD CLEAR',score);}else place(); } else body.pop();
+      if (head.x<0 || head.x>=cols || head.y<0 || head.y>=rows || body.slice(0,eating ? undefined : -1).some(p=>p.x===head.x&&p.y===head.y)) { end('GAME OVER',score); return; }
+      body.unshift(head); if (eating) { score++; if(body.length===cols*rows){end('BOARD CLEAR',score);}else place(); } else body.pop();
     },
     draw(ctx) { for(let x=0;x<cols;x++) for(let y=0;y<rows;y++) rect(ctx,ox+x*cell+5,oy+y*cell+5,1,1,'#26312e'); circle(ctx,ox+food.x*cell+6,oy+food.y*cell+6,4,'#ffad70'); body.forEach((p,i)=>rect(ctx,ox+p.x*cell+1,oy+p.y*cell+1,10,10,i?'#83c85f':'#c2f77e',3)); label(ctx,`SCORE  ${String(score).padStart(2,'0')}`,16,229); }, reset
   };
@@ -93,12 +94,28 @@ export function createGame(canvas, id, options = {}) {
   let result = null, best = 0;
   const bestKey = `tiny-arcade.best.${id}`;
   try { const stored=Number(globalThis.localStorage?.getItem(bestKey)); if(Number.isFinite(stored)&&stored>0)best=stored; } catch {}
+  let interactive = !!options.interactive, context = options.context ?? (interactive ? 'manual-player' : 'gallery-preview'), game, aiFinished = false, disposed = false, generation = 0;
+  const reports = id === 'snake' ? createRunReporter({gameId:id, ruleVersion:1, actor:interactive?'human':'ai', context, onResult:options.onResult, onError:options.onError}) : null;
   const end = (message, score=0) => {
     const safeScore=Number.isFinite(score) ? Math.max(0,Math.floor(score)) : 0;
     result={message,score:safeScore};
     if(safeScore>best){best=safeScore;try{globalThis.localStorage?.setItem(bestKey,String(best))}catch{}}
   };
-  let game = factories[id](end), interactive = !!options.interactive, frame, last = 0, disposed = false, paused = !!options.paused;
+  function fresh() {
+    game?.destroy?.();
+    const runGeneration = ++generation;
+    const finish = reports?.beginRun({actor:interactive?'human':'ai', context});
+    aiFinished = false;
+    game = factories[id]((message, score=0) => {
+      if (!reports) { end(message, score); return; }
+      const record = finish({score, result:message});
+      if (!record || disposed || generation !== runGeneration) return;
+      if (record.actor === 'human') end(message, score); else aiFinished = true;
+    });
+  }
+  fresh();
+  let frame, last = 0, paused = !!options.paused;
+  reports?.setPaused(paused);
   canvas.tabIndex = interactive ? 0 : -1;
   canvas.setAttribute('aria-label', `${games.find(g => g.id === id).name} game`);
   function resize() { const bounds=canvas.getBoundingClientRect(); const ratio=Math.min(window.devicePixelRatio||1,2); canvas.width=Math.max(1,Math.round(bounds.width*ratio));canvas.height=Math.max(1,Math.round(bounds.height*ratio)); }
@@ -111,9 +128,10 @@ export function createGame(canvas, id, options = {}) {
   const clearKeys=()=>['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','w','a','s','d'].forEach(k=>game.input?.(k,false));
   canvas.addEventListener('blur',clearKeys);
   canvas.addEventListener('keydown',keydown);canvas.addEventListener('keyup',keyup);canvas.addEventListener('pointerdown',pointer);canvas.addEventListener('pointermove',move);
-  function tick(t){if(disposed || paused)return;if(!interactive&&last&&t-last<1000/30-1){frame=requestAnimationFrame(tick);return;}const dt=last?Math.min((t-last)/1000,.04):0;last=t;if(!result)game.update(dt,!interactive);ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#18211d';ctx.fillRect(0,0,canvas.width,canvas.height);const scale=Math.min(canvas.width/W,canvas.height/H),x=(canvas.width-W*scale)/2,y=(canvas.height-H*scale)/2;ctx.fillStyle='#26342c';for(let i=0;i<28;i++){const sx=((i*83+17)%320)/320*canvas.width,sy=((i*137+19)%480)/480*canvas.height;ctx.fillRect(sx,sy,Math.max(1,scale),Math.max(1,scale));}ctx.setTransform(scale,0,0,scale,x,y);ctx.fillStyle='#18211d';ctx.fillRect(0,0,W,H);game.draw(ctx);if(result){rect(ctx,54,79,212,78,'#11151dee',5);label(ctx,result.message,160,103,'#fff4df',16,'center');label(ctx,`SCORE ${result.score}   BEST ${best}`,160,122,'#e6d49b',10,'center');label(ctx,'RESTART TO PLAY AGAIN',160,140,'#b7c5c5',9,'center');}frame=requestAnimationFrame(tick);}
-  frame=requestAnimationFrame(tick);
-  return { restart(){clearKeys();result=null;game=factories[id](end);}, setInteractive(value){clearKeys();interactive=!!value;if(!interactive&&result){result=null;game=factories[id](end);}canvas.tabIndex=interactive?0:-1;}, pause(){clearKeys();if(!paused){paused=true;cancelAnimationFrame(frame);last=0;}}, resume(){if(paused && !disposed){paused=false;last=0;frame=requestAnimationFrame(tick);}}, resize, destroy(){disposed=true;cancelAnimationFrame(frame);observer?.disconnect();canvas.removeEventListener('blur',clearKeys);canvas.removeEventListener('keydown',keydown);canvas.removeEventListener('keyup',keyup);canvas.removeEventListener('pointerdown',pointer);canvas.removeEventListener('pointermove',move);} };
+  function schedule(){if(!disposed && !paused && frame == null)frame=requestAnimationFrame(tick);}
+  function tick(t){frame=null;if(disposed || paused)return;if(!interactive&&last&&t-last<1000/30-1){schedule();return;}const dt=last?Math.min((t-last)/1000,.04):0;last=t;if(!result){reports?.advance(dt);game.update(dt,!interactive);if(aiFinished && !disposed && !paused)fresh();}if(disposed || paused)return;ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#18211d';ctx.fillRect(0,0,canvas.width,canvas.height);const scale=Math.min(canvas.width/W,canvas.height/H),x=(canvas.width-W*scale)/2,y=(canvas.height-H*scale)/2;ctx.fillStyle='#26342c';for(let i=0;i<28;i++){const sx=((i*83+17)%320)/320*canvas.width,sy=((i*137+19)%480)/480*canvas.height;ctx.fillRect(sx,sy,Math.max(1,scale),Math.max(1,scale));}ctx.setTransform(scale,0,0,scale,x,y);ctx.fillStyle='#18211d';ctx.fillRect(0,0,W,H);game.draw(ctx);if(result){rect(ctx,54,79,212,78,'#11151dee',5);label(ctx,result.message,160,103,'#fff4df',16,'center');label(ctx,`SCORE ${result.score}   BEST ${best}`,160,122,'#e6d49b',10,'center');label(ctx,'RESTART TO PLAY AGAIN',160,140,'#b7c5c5',9,'center');}schedule();}
+  schedule();
+  return { beginRun({interactive:value, context:nextContext}){if(disposed)return;reports?.abandon();generation++;clearKeys();interactive=!!value;context=nextContext ?? (interactive?'manual-player':'gallery-preview');result=null;fresh();canvas.tabIndex=interactive?0:-1;}, restart(){if(disposed)return;reports?.abandon();generation++;clearKeys();result=null;fresh();}, setInteractive(value){if(disposed)return;const changed=interactive!==!!value;if(changed && reports){reports.abandon();generation++;}clearKeys();interactive=!!value;if(reports && changed){context=context==='embed'?'embed':(interactive?'manual-player':'watch-player');result=null;fresh();}else if(!interactive&&result){result=null;fresh();}canvas.tabIndex=interactive?0:-1;}, pause(){if(disposed)return;reports?.setPaused(true);clearKeys();if(!paused){paused=true;cancelAnimationFrame(frame);frame=null;last=0;}}, resume(){if(paused && !disposed){reports?.setPaused(false);paused=false;last=0;schedule();}}, resize, destroy(){if(disposed)return;disposed=true;generation++;reports?.destroy();clearKeys();game?.destroy?.();cancelAnimationFrame(frame);observer?.disconnect();canvas.removeEventListener('blur',clearKeys);canvas.removeEventListener('keydown',keydown);canvas.removeEventListener('keyup',keyup);canvas.removeEventListener('pointerdown',pointer);canvas.removeEventListener('pointermove',move);} };
 }
 
 
