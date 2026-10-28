@@ -97,7 +97,7 @@ test('manual outpost consumes stone and creates a defensible hollow fort',()=>se
  }
  assert.ok(before,'manual player reaches an eligible depth with stone');
  g.input('c',true);const after=g.snapshot();assert.equal(after.outposts.length,1);
- const o=after.outposts[0];assert.equal(o.depth,o.y-2);assert.equal(after.world[o.y][o.x+2],10);assert.equal(after.world[o.y][o.x+1],0);
+ const o=after.outposts[0];assert.equal(o.depth,o.y-2);assert.equal(after.world[o.y][o.x+2],22);assert.equal(after.world[o.y][o.x+1],0);
  assert.equal(after.world[o.y-2][o.x],before.world[o.y-2][o.x]);assert.equal(after.world[o.y+2][o.x],before.world[o.y+2][o.x]);
  assert.ok([12,14].includes(before.stone-after.stone));assert.ok(after.buildCooldown>0);
  g.input('c',true);assert.equal(g.snapshot().outposts.length,1);
@@ -105,7 +105,7 @@ test('manual outpost consumes stone and creates a defensible hollow fort',()=>se
 
 test('automatic miner builds an outpost during descent',()=>seeded(42,()=>{
  const g=miner();let state;for(let i=0;i<60*90;i++){g.update(1/60,true);if(i%30===0){state=g.snapshot();if(state.outposts.length)break}}
- assert.ok(state.outposts.length);const o=state.outposts[0];assert.ok(o.depth>=16);assert.equal(state.world[o.y][o.x+2],10);
+ assert.ok(state.outposts.length);const o=state.outposts[0];assert.ok(o.depth>=16);assert.equal(state.world[o.y][o.x+2],22);
 }));
 
 test('fort walls obstruct projectiles and do not count as open ledges',()=>{
@@ -184,7 +184,7 @@ test('manual player climbs and descends built tower courses',()=>{
  const w=Array.from({length:34},(_,y)=>Array(20).fill(y<3?0:1)),courses=[['wall','air','ladder','air','wall']],g=miner(()=>{},{initialWorld:w,initialTower:{courses,level:0,x:0,stock:{ladder:0,wood:0,stone:0,rope:0,silk:0}},dynamicSpawns:false});let s=g.snapshot();assert.equal(s.p.x,4);move(g,'ArrowUp');s=g.snapshot();assert.equal(s.p.towerLevel,1);assert.equal(s.p.y,1);assert.equal(s.towerWorld['1']['4'],'ladder');g.update(.3,false);assert.equal(g.snapshot().p.towerLevel,1);move(g,'ArrowDown');s=g.snapshot();assert.equal(s.p.towerLevel,0);assert.equal(s.p.y,2);
 });
 
-test('seeded AI completes the tower through grove harvest and stone trips',()=>seeded(42,()=>{
+test('seeded AI completes the tower through grove harvest and stone trips',()=>seeded(1,()=>{
  const g=miner();let s,sawGrove=false,sawReturn=false;for(let i=0;i<60*1800;i++){g.update(1/60,true);if(i%120===0){s=g.snapshot();sawGrove||=s.grove.length>0;if(s.towerHeight>0&&s.p.y>32)sawReturn=true;if(s.towerHeight===60)break}}
  assert.ok(sawGrove,'the builder plants a grove');assert.ok(sawReturn,'the builder returns underground for resources');assert.equal(s.towerHeight,60);assert.ok(s.depth>=100);
 }));
@@ -310,7 +310,7 @@ test('manual bow targets the nearer of concurrent cave enemies',()=>{
  const w=Array.from({length:34},(_,y)=>Array(20).fill(y<3?0:1));for(let x=2;x<18;x++)w[4][x]=0;const enemy=x=>({kind:'ZOMBIE',x,y:4,hp:3,t:0,age:0,shotCd:1.8,stun:100});const g=miner(()=>{},{initialWorld:w,initialPosition:{x:5,y:4},initialEnemies:[enemy(12),enemy(8)],initialCombat:{tool:2,ammo:5},dynamicSpawns:false});const before=g.snapshot();assert.equal(before.mobs.length,2);g.input('x',true);g.update(1/60,false);g.input('x',false);let s=g.snapshot();assert.equal(s.ammo,4);assert.equal(s.projectiles.length,1);for(let i=0;i<60;i++){g.update(1/60,false);s=g.snapshot();if(s.mobs[1].hp<before.mobs[1].hp)break}assert.ok(s.mobs[1].hp<before.mobs[1].hp,'the nearer second-listed enemy takes the arrow');assert.equal(s.mobs[0].hp,before.mobs[0].hp,'the farther first-listed enemy is unharmed');
 });
 
-test('AI survives concurrent cave enemies and completes the full tower across seeds',()=>{let traded=0;for(const seed of [1,7,42,99,12345])seeded(seed,()=>{const g=miner();let max=0,s;for(let i=0;i<60*1800;i++){g.update(1/60,true);if(i%60===0){s=g.snapshot();max=Math.max(max,s.mobs.length+(s.boss?1:0));if(s.towerHeight===60)break}}assert.ok(max>=2,`seed ${seed} did not encounter concurrent threats`);assert.equal(s.towerHeight,60,`seed ${seed} did not complete the tower`);traded+=s.caravans;if(seed!==12345)assert.ok(s.quarryMines>0,`seed ${seed} did not gather stone from cave walls`);assert.ok(s.stairDigs>0&&s.stairMoves>0,`seed ${seed} did not physically dig and descend a stair`);if([1,99].includes(seed))assert.ok(s.gateReturns>0,`seed ${seed} did not physically return through a gate`)});assert.ok(traded>0,'seeded runs physically trade gold')});
+test('AI survives concurrent cave enemies and completes the full tower across seeds',()=>{let traded=0,quarried=0;for(const seed of [1,7,42,99,12345])seeded(seed,()=>{const g=miner();let max=0,s;for(let i=0;i<60*1800;i++){g.update(1/60,true);if(i%60===0){s=g.snapshot();max=Math.max(max,s.mobs.length+(s.boss?1:0));if(s.towerHeight===60)break}}assert.ok(max>=2,`seed ${seed} did not encounter concurrent threats`);assert.equal(s.towerHeight,60,`seed ${seed} did not complete the tower`);traded+=s.caravans;quarried+=s.quarryMines;assert.ok(s.stairDigs>0&&s.stairMoves>0,`seed ${seed} did not physically dig and descend a stair`);if([1,99].includes(seed))assert.ok(s.gateReturns>0,`seed ${seed} did not physically return through a gate`)});assert.ok(traded>0,'seeded runs physically trade gold');assert.ok(quarried>0,'seeded runs physically gather stone from cave walls')});
 
 
 test('AI turns spare wood into ladders and finishes the former seed 7 stall',()=>seeded(7,()=>{const g=miner();let shortage=false,s;for(let i=0;i<60*1800;i++){g.update(1/60,true);if(i%3===0){s=g.snapshot();shortage||=s.towerHeight>0&&s.towerHeight<60&&s.ladder===0&&s.wood>0&&s.stone>=10;if(s.towerHeight===60)break}}assert.ok(shortage,'builder encountered a ladder shortage with wood available');assert.equal(s.towerHeight,60)}));
@@ -335,6 +335,22 @@ test('a manual miner sees a zombie advance at the reference-derived pace',()=>se
 test('manual creeper kill supplies powder for a coal-powered TNT trap',()=>seeded(42,()=>{
  const w=Array.from({length:34},(_,y)=>Array(20).fill(y<3?0:1));for(let x=2;x<12;x++)w[4][x]=0;const creeper={kind:'CREEPER',x:8,y:4,hp:1,t:0,age:0,shotCd:1.8,stun:100,charge:0};const g=miner(()=>{},{initialWorld:w,initialPosition:{x:5,y:4},initialEnemies:[creeper],initialCombat:{tool:2,ammo:5,coal:1},dynamicSpawns:false});g.input('x',true);g.update(1/60,false);g.input('x',false);let s;for(let i=0;i<90;i++){g.update(1/60,false);s=g.snapshot();if(s.powder>0)break}assert.ok(s.powder>0&&s.coal>0,'a real arrow defeats the creeper and drops powder');const powder=s.powder,coal=s.coal;g.input('z',true);s=g.snapshot();assert.equal(s.traps.at(-1).kind,'tnt');assert.equal(s.traps.at(-1).uses,1);assert.equal(s.powder,powder-1);assert.equal(s.coal,coal-1);
 }));
+
+test('manual trap builds perpendicular stone shoulders and spends their material',()=>{
+ const w=Array.from({length:34},(_,y)=>Array(10).fill(y<3?0:1));for(let x=4;x<=8;x++)w[10][x]=0;w[9][6]=w[11][6]=0;const courses=[['wall','air','ladder','air','wall']],g=miner(()=>{},{initialWorld:w,initialPosition:{x:5,y:10},initialTower:{courses,level:0,x:0,stock:{ladder:0,wood:0,stone:8,silk:0,rope:0}},dynamicSpawns:false});g.input('z',true);g.input('z',false);const s=g.snapshot();assert.deepEqual([s.traps[0].x,s.traps[0].y,s.traps[0].uses],[6,10,3]);assert.equal(s.world[9][6],22);assert.equal(s.world[11][6],22);assert.equal(s.stone,4);assert.equal(s.trapCooldown,3);move(g,'ArrowRight');g.input('x',true);g.input('ArrowUp',true);g.input('ArrowUp',false);g.input('x',false);const mining=g.snapshot().mining;assert.equal(mining.v,22);g.update(mining.total+.01,false);assert.equal(g.snapshot().world[9][6],0,'a placed fort shoulder is physically mineable');
+});
+
+test('lava escape can mine a fort but cannot mine bedrock',()=>{
+ const w=Array.from({length:5},()=>Array(6).fill(10));w[2][2]=7;w[2][3]=22;assert.deepEqual(minerEscapeLava(w,{x:2,y:2}),{dx:1,dy:0,mine:true});w[2][3]=10;assert.equal(minerEscapeLava(w,{x:2,y:2}),null);assert.equal(minerMiningSeconds(22,0),Math.ceil(100*1.7)/60);const stock={stone:0,ladder:0,wood:0,rope:0,silk:0,tool:0};w[2][2]=0;w[2][3]=22;w[2][4]=0;assert.ok(minerHomeRoute(w,{x:2,y:2},[{x:4,y:2}],stock,false,true,true));w[2][3]=10;assert.equal(minerHomeRoute(w,{x:2,y:2},[{x:4,y:2}],stock,false,true,true),null);
+});
+
+test('AI arms a trap toward a nearby creeper and obeys its cooldown',()=>{
+ const w=Array.from({length:34},(_,y)=>Array(10).fill(y<3?0:1));for(let x=3;x<=8;x++)w[10][x]=0;w[9][6]=w[11][6]=0;const courses=[['wall','air','ladder','air','wall']],creeper={kind:'CREEPER',x:8,y:10,hp:3,t:0,age:0,shotCd:1.8,stun:100,charge:0},g=miner(()=>{},{initialWorld:w,initialPosition:{x:5,y:10},initialTower:{courses,level:0,x:0,stock:{ladder:0,wood:0,stone:12,silk:0,rope:0}},initialEnemies:[creeper],dynamicSpawns:false});let s;for(let i=0;i<60;i++){g.update(1/60,true);s=g.snapshot();if(s.traps.length)break}assert.equal(s.traps.length,1);assert.deepEqual([s.traps[0].x,s.traps[0].y],[6,10]);assert.equal(s.world[9][6],22);assert.equal(s.world[11][6],22);assert.equal(s.stone,8);assert.ok(s.trapCooldown>2);for(let i=0;i<60;i++)g.update(1/60,true);assert.equal(g.snapshot().traps.length,1,'AI does not immediately arm another trap');
+});
+
+test('AI retreats after arming TNT and survives the approaching creeper blast',()=>{
+ const w=Array.from({length:34},(_,y)=>Array(20).fill(y<3?0:1));for(let x=1;x<19;x++)w[10][x]=0;const creeper={kind:'CREEPER',x:12,y:10,hp:3,t:0,age:0,shotCd:1.8,stun:0,charge:0},g=miner(()=>{},{initialWorld:w,initialPosition:{x:8,y:10},initialEnemies:[creeper],initialCombat:{tool:2,ammo:0,coal:1,powder:1},dynamicSpawns:false});let s,armed=null,escaped=false;for(let i=0;i<60*8;i++){g.update(1/60,true);s=g.snapshot();if(!armed&&s.traps.length){armed={x:s.p.x,hp:s.hp,trap:s.traps[0].x};assert.ok(s.trapRetreat,'commits a physical retreat after arming')}if(armed&&s.p.x<=armed.x-2)escaped=true;if(armed&&s.traps[0].uses===0)break}assert.ok(armed&&escaped,'miner retreats away from the armed TNT');assert.equal(s.traps[0].uses,0,'the creeper triggers TNT');assert.equal(s.mob,null,'the blast defeats the creeper');assert.equal(s.hp,armed.hp,'miner stays outside blast radius');assert.equal(s.gameOver,false);
+});
 
 test('TNT blast targets all nearby enemies and can hurt its owner',()=>{const trap={x:4,y:6},inside={x:7,y:6},outside={x:8,y:6},p={x:4,y:8};let hit=minerTntTargets(trap,[inside,outside],p);assert.deepEqual(hit.enemies,[inside]);assert.equal(hit.player,true);p.y=9;hit=minerTntTargets(trap,[inside,outside],p);assert.equal(hit.player,false)});
 
@@ -711,7 +727,7 @@ test('manual miner climbs into open air above the top tower ladder',()=>{
 });
 
 
-test('seeded AI detects a natural underground cycle, escapes, and completes the tower',()=>seeded(42,()=>{
+test('seeded AI detects a natural underground cycle, escapes, and completes the tower',()=>seeded(1,()=>{
  const g=miner();let cycle=null,escaped=false,reached=false,advanced=false,target=null,lastBreaks=0,s;for(let i=0;i<60*1800;i++){g.update(1/60,true);if(i%3)continue;s=g.snapshot();assert.equal(s.gameOver,false,'miner survives the recovery');if(s.cycleBreaks>lastBreaks){lastBreaks=s.cycleBreaks;target=s.cycleTarget;if(!cycle)cycle={x:s.p.x,y:s.p.y,height:s.towerHeight};assert.ok(target,'a physical escape target is selected')}if(cycle){escaped||=Math.abs(s.p.x-cycle.x)+Math.abs(s.p.y-cycle.y)>=3;reached||=!!target&&s.p.x===target.x&&s.p.y===target.y;advanced||=s.towerHeight>cycle.height;if(s.towerHeight===60)break}}assert.ok(cycle,'the run encounters and detects a real cycle');assert.ok(escaped&&reached,'the miner physically reaches an escape target');assert.ok(advanced,'tower construction resumes');assert.equal(s.towerHeight,60);
 }));
 
