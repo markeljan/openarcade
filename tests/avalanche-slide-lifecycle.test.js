@@ -9,7 +9,7 @@ const [body,suffix]=rest.split('const factories=',2);
 const marker='return {input(k,d){';
 assert.ok(body.includes(marker));
 source=prefix+'export function createAvalanchePost'+body.replace(marker,"return {fixture(warned){skier.x=35;lodges=[{id:42,x:250,y:400,warned,delivered:false}];slides=[{x:250,y:400.2,state:'rolling',t:1,target:42,hit:false,escaped:false}];slideTimer=0},input(k,d){")+'const factories='+suffix;
-const {createAvalanchePost}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+const {createAvalanchePost}=await import('data:text/javascript;base64,'+Buffer.from(source.replaceAll('./scores/run.js',new URL('../src/scores/run.js',import.meta.url).href)).toString('base64'));
 for(const auto of [false,true])for(const warned of [false,true])test(`${auto?'AI':'manual'} independent slide spawning and ${warned?'warned shelter':'unwarned burial'}`,()=>{
  const cues=[],g=createAvalanchePost(e=>cues.push(e));g.fixture(warned);g.update(1/60,auto);let s=g.snapshot();
  assert.equal(s.slides.length,2);assert.equal(s.slides[1].state,'warning');assert.equal(!!s.lodges[0].buried,!warned);assert.equal(!!s.lodges[0].lit,warned);assert.equal(s.slides[0].escaped,true);assert.equal(cues.filter(e=>e==='warning').length,1);
