@@ -32,3 +32,11 @@ Sources: [Open Graph](https://ogp.me/), [Vite plugin hooks](https://vite.dev/gui
 
 Focused checks: `node --test tests/s05-catalog.test.js tests/s05-social-pages.test.js`, `npm run build`, raw built HTML inspection. Deployment checks still required: public HTTPS origin, actual response/image MIME and framing headers, extensionless/trailing-slash/unknown routes, gallery route integration, API/guest persistence, iframe inputs and lifecycle, X desktop/mobile rendering. Unit fixtures do not establish those external behaviors.
 
+## Dedicated playable shell
+
+The second S05 slice adds `embed.html` and `src/embed/`, producing 112 `/embed/:id` documents. The shell loads only the selected existing factory module, preserving its rules and lifecycle. It starts in silent preview; Start/Restart prefer the shared `beginRun({interactive:true,context:'embed'})` contract when supported. Older uninstrumented wrappers retain their normal local play. Pause, visibility, touch cancellation, blur and navigation release input; pagehide destroys the instance and a restored BFCache entry reloads cleanly. It has no gallery, Clerk, comments or third-party-cookie requirement.
+
+Sound begins off while retaining the full site's stored preference. Explicit sound toggling is a user gesture. Canvas sizing uses each game's logical aspect ratio; touch keys retain the gallery's metadata mapping. The full-site link opens safely in another tab. `VITE_EMBEDS_ENABLED=false` produces an unavailable message plus this link; Player Card advertising is also disabled at build time.
+
+Validation: build passes, `node --test tests/s05-embed-controls.test.js tests/s05-embed-browser.test.js` passes in headless Chrome. Evidence includes desktop Snake Start/Pause/Restart and focus, separate mobile Machine Hunt iframe with 320:720 canvas, 44-pixel touch target and real touch-cancel key release, genuine unknown-ID 404 and no gallery entry fetched. The browser test explicitly skips if no browser or no built embed output is present; build first. Local preview does not validate Vercel CSP or database persistence. Guest-name submission and result-to-login handoff wait for S02's merged shared persistence client; no competing score transport is included in this shell slice. Player Card metadata remains opt-in pending real X-client verification.
+
