@@ -102,7 +102,7 @@ export function createAuthClient(options = {}) {
     await initialize();
     if (!clerk) throw new Error('Sign-in is unavailable');
     if (state.status === 'signed-in') return () => {};
-    await clerk.mountSignIn(container, { routing: 'hash', forceRedirectUrl: url, signUpForceRedirectUrl: url });
+    await clerk.mountSignIn(container, { routing: 'hash', oauthFlow: 'popup', forceRedirectUrl: url, signUpForceRedirectUrl: url });
     let disposed = false;
     return () => {
       if (disposed) return;

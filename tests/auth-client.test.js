@@ -64,11 +64,11 @@ test('modal preserves current URL for sign in and sign up', async () => {
   assert.deepEqual(f.clerk.signInOptions, { forceRedirectUrl: 'https://arcade.test/play?game=asteroids#scores', signUpForceRedirectUrl: 'https://arcade.test/play?game=asteroids#scores' });
 });
 
-test('embedded sign in mounts with captured URL and disposes once', async () => {
+test('embedded sign in requests an OAuth popup, preserves return URL and disposes once', async () => {
   const f = fixture();
   const node = { nodeType: 1, tagName: 'DIV' };
   const dispose = await f.client.mountSignIn(node);
-  assert.deepEqual(f.clerk.mounted, { node, options: { routing: 'hash', forceRedirectUrl: 'https://arcade.test/play?game=asteroids#scores', signUpForceRedirectUrl: 'https://arcade.test/play?game=asteroids#scores' } });
+  assert.deepEqual(f.clerk.mounted, { node, options: { routing: 'hash', oauthFlow: 'popup', forceRedirectUrl: 'https://arcade.test/play?game=asteroids#scores', signUpForceRedirectUrl: 'https://arcade.test/play?game=asteroids#scores' } });
   f.clerk.emit({ id: 'one', fullName: 'Ada' }, { getToken: async () => 'token' });
   assert.equal(f.client.getState().status, 'signed-in');
   dispose(); dispose();
