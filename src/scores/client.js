@@ -4,7 +4,7 @@ function privateNonce() {
   const bytes = globalThis.crypto.getRandomValues(new Uint8Array(32));
   return btoa(String.fromCharCode(...bytes)).replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
 }
-export function createScoreClient({fetch: request = globalThis.fetch?.bind(globalThis), getToken = async () => null, queue = createPendingQueue(), endpoint = '/api/scores', makeNonce = privateNonce} = {}) {
+export function createScoreClient({fetch: request = globalThis.fetch?.bind(globalThis), getToken = async () => null, getAuthState = () => ({status: 'signed-out'}), queue = createPendingQueue(), endpoint = '/api/scores', makeNonce = privateNonce} = {}) {
   const listeners = new Set(), states = new Map(), inflight = new Map(), thresholds = new Map(), abandoned = new Set();
   function emit(runId, status, extra = {}) {
     const state = Object.freeze({runId, status, ...extra}); states.set(runId, state);
@@ -15,7 +15,7 @@ export function createScoreClient({fetch: request = globalThis.fetch?.bind(globa
     const runId = body.runId ?? body.run?.runId;
     const token = authenticated ? await getToken() : null;
     if (abandoned.has(runId)) throw Error('run-abandoned');
-    if (authenticated && !token) throw Object.assign(Error('sign-in-required'), {status: 401});
+    if (authenticated && !token) throw authFailure();
     if (!request) throw Error('network-unavailable');
     const response = await request(endpoint, {method: 'POST', credentials: 'omit', headers: {'Content-Type': 'application/json', ...(token ? {Authorization: 'Bearer ' + token} : {})}, body: JSON.stringify(body)});
     const data = await response.json();
@@ -24,15 +24,19 @@ export function createScoreClient({fetch: request = globalThis.fetch?.bind(globa
     if (data.runId !== (body.runId ?? body.run?.runId)) throw Error('invalid-acknowledgment');
     return data;
   }
+  function authFailure() {
+    return getAuthState()?.status === 'signed-out' ? Object.assign(Error('sign-in-required'), {status: 401}) : Object.assign(Error('identity-unavailable'), {status: 503});
+  }
   function single(runId, operation) {
     if (inflight.has(runId)) return inflight.get(runId);
     const promise = operation().finally(() => inflight.delete(runId)); inflight.set(runId, promise); return promise;
   }
   function problem(runId, error) {
-    return emit(runId, error.status === 401 ? 'queued-auth' : error.status === 410 ? 'expired' : 'retry', {error: error.message});
+    return emit(runId, error.status === 401 ? 'queued-auth' : error.status === 410 ? 'expired' : error.status === 503 ? 'unavailable' : 'retry', {error: error.message});
   }
   async function leaderboard(gameId, {filter = 'players'} = {}) {
     const token = await getToken();
+    if (!token && getAuthState()?.status !== 'signed-out') throw authFailure();
     const url = endpoint + '?gameId=' + encodeURIComponent(gameId) + '&filter=' + encodeURIComponent(filter);
     const response = await request(url, {credentials: 'omit', headers: token ? {Authorization: 'Bearer ' + token} : {}});
     const board = await response.json();
@@ -88,6 +92,7 @@ export function createScoreClient({fetch: request = globalThis.fetch?.bind(globa
       try {
         if (item.actor === 'human' && !item.guestName) {
           const token = await getToken();
+          if (!token && getAuthState()?.status !== 'signed-out') throw authFailure();
           // Always create the same pending receipt first. This also recovers a
           // response lost before login rather than changing the endpoint/owner.
           if (!token) {

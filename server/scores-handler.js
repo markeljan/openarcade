@@ -76,7 +76,7 @@ export function createScoresHandler({store, catalogIds = [], registry = scoreReg
       let identity = {status: 'unauthenticated'};
       if (req.headers?.authorization || ['submit', 'claim'].includes(body.action)) {
         identity = await verifyIdentity(req);
-        if (identity.status !== 'authenticated') return fail(identity.status === 'unavailable' ? 503 : 401, 'sign-in-required');
+        if (identity.status !== 'authenticated') return fail(identity.status === 'unavailable' ? 503 : 401, identity.status === 'unavailable' ? 'identity-unavailable' : 'sign-in-required');
       }
       const address = clientAddress(req);
       if (!address) return fail(503, 'rate-limit-unavailable');

@@ -16,7 +16,7 @@ Depends on score contract PR #1 / `6f27b944`, S03 identity PR #3 / `1558d292` an
 
 ```js
 import {createScoreClient} from './scores/client.js';
-const scores = createScoreClient({getToken: () => auth.getToken()});
+const scores = createScoreClient({getToken: () => auth.getToken(), getAuthState: () => auth.getState()});
 scores.subscribe(state => renderSaveState(state));
 async function onResult(run) {
   const state = await scores.enqueue(run); // IDB transaction finishes first
