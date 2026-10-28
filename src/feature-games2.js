@@ -1,0 +1,143 @@
+export const featureGames2=[
+ {id:'turbo-arena',name:'Turbo Arena',category:'SPORTS',description:'Tiny cars. Huge goals.',controls:'Arrows steer and drive · Space boost · X / Z drift',accent:'#ffac63',icon:'⚽'},
+ {id:'jelly-dash',name:'Jelly Dash',category:'RACE',description:'Leap, dodge and race the crowd.',controls:'Left / right to move · Space to jump · X to dive',accent:'#ff89bd',icon:'★'}
+];
+const W=240,H=540,clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),rand=(a,b)=>a+Math.random()*(b-a);
+function rect(c,x,y,w,h,color){c.fillStyle=color;c.fillRect(x,y,w,h)}
+function circle(c,x,y,r,color){c.fillStyle=color;c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fill()}
+function txt(c,s,x,y,color='#fff',size=10,align='left'){c.fillStyle=color;c.font=`bold ${size}px monospace`;c.textAlign=align;c.fillText(s,x,y)}
+const norm=a=>Math.atan2(Math.sin(a),Math.cos(a));
+export function soccer(records={}){
+ let cars,ball,score,time,keys={},flash=0,pads,resultDelay,manualScore,overtime,finished;
+ function kickoff(){const old=cars||[];ball={x:120,y:270,vx:0,vy:0};cars=[{x:120,y:450,a:-Math.PI/2,team:0},{x:78,y:488,a:-Math.PI/2,team:0},{x:120,y:90,a:Math.PI/2,team:1},{x:162,y:52,a:Math.PI/2,team:1}].map((c,i)=>({...c,vx:0,vy:0,speed:0,boost:Math.max(34,old[i]?.boost||0),dead:0,immune:0}))}
+ function reset(){score=[0,0];time=180;flash=0;resultDelay=3;manualScore=0;overtime=false;finished=false;cars=[];pads=[{x:33,y:112,t:0},{x:207,y:112,t:0},{x:33,y:428,t:0},{x:207,y:428,t:0},{x:120,y:93,t:0},{x:120,y:447,t:0},{x:24,y:270,t:0,big:true},{x:216,y:270,t:0,big:true}];kickoff()}reset();
+ return {input(k,d){keys[k]=d},update(dt,auto){if(finished){if(auto&&(resultDelay-=dt)<=0)reset();return}if(flash>0){flash-=dt;return}if(!overtime){time=Math.max(0,time-dt);if(time<=0){if(score[0]===score[1])overtime=true;else{finished=true;if(!auto)records.finish?.(manualScore);return}}}
+ for(let i=0;i<cars.length;i++){let c=cars[i],steer=0,throttle=1,boost=false,drift=false;if(c.dead>0){c.dead=Math.max(0,c.dead-dt);if(!c.dead){c.x=i%2?195:45;c.y=c.team?75:465;c.a=c.team?Math.PI/2:-Math.PI/2;c.vx=c.vy=0;c.boost=34;c.immune=1}continue}c.immune=Math.max(0,c.immune-dt);
+ if(i===0&&!auto){steer=Number(!!keys.ArrowRight)-Number(!!keys.ArrowLeft);boost=!!(keys.a||keys[' '])&&c.boost>0;throttle=boost?1:(keys.ArrowUp||keys.w?1:keys.ArrowDown||keys.s?-.6:.15);drift=!!(keys.b||keys.c||keys.x||keys.z)}
+ else {const goal=c.team?500:40;const tx=ball.x,ty=ball.y+(goal<270?23:-23),d=norm(Math.atan2(ty-c.y,tx-c.x)-c.a);steer=clamp(d*2,-1,1);throttle=Math.abs(d)>2.1?.3:1;boost=Math.hypot(tx-c.x,ty-c.y)>90&&Math.abs(d)<.3&&c.boost>20}
+ c.boosting=boost;let speed=Math.hypot(c.vx,c.vy),fx=Math.cos(c.a),fy=Math.sin(c.a),forward=c.vx*fx+c.vy*fy;drift=drift&&throttle>.15&&speed>54&&Math.abs(steer)>.18&&forward>12;c.drifting=drift;c.a+=steer*(drift?3.3:2.8)*dt*(.35+Math.min(1,speed/90));fx=Math.cos(c.a);fy=Math.sin(c.a);forward=c.vx*fx+c.vy*fy;let sideX=c.vx-forward*fx,sideY=c.vy-forward*fy,sideKeep=Math.pow(drift?.98:.87,dt*60),forwardKeep=Math.pow(drift?.992:.985,dt*60);c.vx=fx*forward*forwardKeep+sideX*sideKeep;c.vy=fy*forward*forwardKeep+sideY*sideKeep;let thrust=(throttle*125+(boost?130:0))*dt;c.vx+=fx*thrust;c.vy+=fy*thrust;speed=Math.hypot(c.vx,c.vy);const cap=boost?200:150;if(speed>cap){c.vx*=cap/speed;c.vy*=cap/speed}c.speed=c.vx*fx+c.vy*fy;if(boost)c.boost=Math.max(0,c.boost-27*dt);c.x=clamp(c.x+c.vx*dt,14,226);c.y=clamp(c.y+c.vy*dt,38,502);for(const pad of pads)if(pad.t<=0&&Math.hypot(c.x-pad.x,c.y-pad.y)<12){c.boost=Math.min(100,c.boost+(pad.big?100:12));pad.t=pad.big?10:5}
+ const dx=ball.x-c.x,dy=ball.y-c.y,d=Math.hypot(dx,dy);if(d<18){const nx=dx/(d||1),ny=dy/(d||1);ball.x=c.x+nx*18;ball.y=c.y+ny*18;let impulse=Math.max(45,Math.abs(c.speed)*1.2);ball.vx+=nx*impulse;ball.vy+=ny*impulse}}
+ for(let i=0;i<cars.length;i++)for(let j=i+1;j<cars.length;j++){let a=cars[i],b=cars[j],dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1;if(a.dead||b.dead||d>=19)continue;let nx=dx/d,ny=dy/d,rel=(a.vx-b.vx)*nx+(a.vy-b.vy)*ny;if(a.team!==b.team&&rel>135){let hitter=Math.hypot(a.vx,a.vy)>Math.hypot(b.vx,b.vy)?a:b,victim=hitter===a?b:a;if(!victim.immune){victim.dead=2.17;victim.vx=victim.vy=0;continue}}let push=(19-d)/2;a.x-=nx*push;a.y-=ny*push;b.x+=nx*push;b.y+=ny*push;if(rel>0){a.vx-=nx*rel*.5;a.vy-=ny*rel*.5;b.vx+=nx*rel*.5;b.vy+=ny*rel*.5}}
+ pads.forEach(pad=>pad.t=Math.max(0,pad.t-dt));ball.x+=ball.vx*dt;ball.y+=ball.vy*dt;ball.vx*=Math.pow(.55,dt);ball.vy*=Math.pow(.55,dt);if(ball.x<17||ball.x>223){ball.x=clamp(ball.x,17,223);ball.vx*=-.8}if((ball.y<34||ball.y>506)&&ball.x>75&&ball.x<165){const team=ball.y<34?0:1;score[team]++;if(team===0&&!auto)manualScore++;if(overtime){finished=true;if(!auto)records.finish?.(manualScore)}else{flash=1.2;kickoff()}}else if(ball.y<34||ball.y>506){ball.y=clamp(ball.y,34,506);ball.vy*=-.8}},
+ draw(c){rect(c,0,0,W,H,'#0c1626');rect(c,7,28,226,484,'#0b1425');rect(c,12,32,216,476,'#17263d');for(let y=38;y<500;y+=36)rect(c,13,y,214,18,'#1a2b43');for(let i=0;i<100;i++){const x=16+(i*73)%207,y=38+(i*113)%462;rect(c,x,y,1,1,i%3?'#243b50':'#365064')}for(let y=45;y<502;y+=20){rect(c,7,y,3,10,'#24394a');rect(c,230,y,3,10,'#24394a')}c.strokeStyle='#385b6b';c.lineWidth=2;c.strokeRect(16,36,208,468);c.beginPath();c.moveTo(16,270);c.lineTo(224,270);c.stroke();c.beginPath();c.arc(120,270,39,0,Math.PI*2);c.stroke();c.strokeRect(73,36,94,43);c.strokeRect(73,461,94,43);rect(c,77,23,86,12,'#634234');rect(c,77,29,86,4,'#ef9450');rect(c,77,505,86,12,'#253b6a');rect(c,77,505,86,4,'#649eff');pads.forEach(pad=>{circle(c,pad.x,pad.y,6,pad.t?'#4b5552':'#e7c26c');circle(c,pad.x,pad.y,2,'#fff0b4')});cars.forEach((p,i)=>{c.save();c.translate(p.x,p.y);c.rotate(p.a);if(p.boosting){rect(c,-18,-3,8,6,p.team?'#ffb25c':'#77d7ff');rect(c,-22,-1,5,2,'#fff0a4')}rect(c,-12,-8,24,16,'#101824');rect(c,-10,-7,20,14,p.team?'#d87939':'#477ce2');rect(c,-8,-5,17,10,p.team?'#ffa95a':'#82afff');rect(c,-3,-5,8,10,'#b4d9e2');rect(c,5,-5,2,10,p.team?'#ffc477':'#c7e6ff');rect(c,-9,-9,5,3,'#111722');rect(c,4,-9,5,3,'#111722');rect(c,-9,6,5,3,'#111722');rect(c,4,6,5,3,'#111722');if(i===0){rect(c,-15,-2,4,4,'#fff0a4')}c.restore()});circle(c,ball.x+2,ball.y+3,9,'#132135');circle(c,ball.x,ball.y,9,'#e8e9e2');circle(c,ball.x,ball.y,4,'#536579');rect(c,ball.x-6,ball.y-5,3,3,'#aabac0');rect(c,0,0,240,25,'#10172b');txt(c,`${score[0]}  BLUE`,8,16,'#8aafff',10);txt(c,overtime?'+OT':`${Math.floor(time/60)}:${String(Math.floor(time%60)).padStart(2,'0')}`,120,16,'#fff',11,'center');txt(c,`ORANGE  ${score[1]}`,232,16,'#ffa45e',10,'right');rect(c,7,521,90,6,'#3e4648');rect(c,7,521,cars[0].boost*.9,6,'#f9c66c');txt(c,'BOOST',102,527,'#eacb8a',8);if(flash>0&&!finished)txt(c,'GOAL!',120,265,'#ffe68c',24,'center');if(finished){rect(c,32,230,176,78,'#101a2c');txt(c,'MATCH OVER',120,254,'#ffe68c',15,'center');txt(c,`${score[0]}  BLUE  —  ORANGE  ${score[1]}`,120,276,'#eef4ff',10,'center');txt(c,score[0]===score[1]?'DRAW':score[0]>score[1]?'BLUE WINS':'ORANGE WINS',120,295,'#ffce7b',10,'center');txt(c,`RUN ${manualScore}  BEST ${records.best?.()??manualScore}`,120,315,'#e8dfc6',9,'center')}},reset,snapshot(){return {time,score:[...score],manualScore,overtime,finished,pads:pads.map(p=>({...p})),ball:{...ball},cars:cars.map(c=>({...c}))}}};
+}
+export function pushJellyCrowd(beans,dt){
+ for(let i=0;i<beans.length;i++)for(let j=i+1;j<beans.length;j++){
+  const a=beans[i],b=beans[j];if(a.done||a.eliminated||b.done||b.eliminated)continue;
+  const dx=b.x-a.x;if(Math.abs(dx)>=12||Math.abs(b.y-a.y)>=14)continue;
+  const direction=dx===0?(i%2?1:-1):Math.sign(dx),push=direction*30*dt;
+  a.vx-=push*.4;b.vx+=push*.4;a.x-=push;b.x+=push;
+ }
+}
+export function refillJellyQualifiers(beans,need){
+ const done=beans.filter(b=>!b.eliminated),out=beans.filter(b=>b.eliminated);
+ while(done.length<need&&out.length){const b=out.pop();b.eliminated=false;b.done=true;done.push(b)}
+ return done;
+}
+export function jellyTouchesCrown(bean,crownX,finishY){
+ return Math.hypot(bean.x-crownX,(bean.y-9)-(finishY-9))<10.5;
+}
+export function jellyWatchdog(bean,platforms,dt,doorCourse){
+ if(bean.y<bean.minY-3){bean.minY=bean.y;bean.stall=0;return false}
+ bean.stall+=dt;if(bean.stall<(561-bean.skill*260)/60)return false;
+ bean.stall=0;bean.target=null;bean.doorMemory=[];bean.choiceRow=null;bean.recoveries++;
+ if(!doorCourse){const eligible=platforms.filter(p=>p.y<=bean.y+2).sort((a,b)=>(Math.abs(a.y-bean.y)+Math.abs(a.x+a.w/2-bean.x)*.2)-(Math.abs(b.y-bean.y)+Math.abs(b.x+b.w/2-bean.x)*.2));if(eligible.length){const p=eligible[0];bean.x=p.x+p.w/2;bean.y=p.y;bean.vx=bean.vy=0;bean.ground=true;bean.dive=0;bean.stun=0}}
+ return true;
+}
+export function chooseJellyDoor(bean,doors,rng=Math.random){
+ let best=null,bestScore=-Infinity;
+ for(const door of doors){let score=rng()*(bean.player?1:2)-Math.abs(door.x-bean.x)/51;
+  if(door.open)score+=8;else{score-=door.bonks*2.2;if(bean.doorMemory?.includes(`${door.row}:${door.x}`))score-=9;if(door.real)score+=bean.player?5:(bean.skill-.85)*8}
+  if(score>bestScore){best=door;bestScore=score}}
+ return best;
+}
+export function reconsiderJellyDoor(bean,doors,row,dt,modifier,rng=Math.random){
+ bean.doorReconsider-=dt;let chosen=doors.find(d=>d.x===bean.choiceX);
+ if(bean.choiceRow!==row||!chosen){chosen=chooseJellyDoor(bean,doors,rng);bean.choiceRow=row;bean.doorReconsider=.5}
+ else if(bean.doorReconsider<=0){const opened=doors.filter(d=>d.open);if(!chosen.open&&opened.length&&rng()<(modifier==='blitz'?.92:.75))chosen=chooseJellyDoor(bean,opened,rng);bean.doorReconsider=.5}
+ bean.choiceX=chosen?.x??null;return chosen;
+}
+export function jellyArmDistance(sweepers,x,y,time,modifier,lookAhead=0){
+ let distance=Infinity;for(const s of sweepers){const angle=(time+lookAhead)*1.8*(modifier==='frenzy'?1.35:1)*s.dir+s.phase,ax=Math.cos(angle),ay=Math.sin(angle),dx=x-s.x,dy=y-s.y,t=clamp(dx*ax+dy*ay,-s.len,s.len);distance=Math.min(distance,Math.hypot(dx-ax*t,dy-ay*t))}return distance;
+}
+export function jellyShouldDive(bean,round,finishY,crownX,dt,rng=Math.random){
+ if(bean.ground||bean.dive||bean.stun)return false;
+ let chance=0;if(round===2){if(Math.abs(bean.x-crownX)<(bean.player?30:22.5)&&bean.y-finishY<(bean.player?15:30))chance=bean.player?.5:.1}
+ else if(bean.y<finishY+63&&bean.vy<0)chance=.06;
+ return chance>0&&rng()<1-Math.pow(1-chance,dt*60);
+}
+export function jellyCameraOffset(current,target,dt){return current+(target-current)*(1-Math.pow(.92,dt*60))}
+export function hitJellyDoor(door){
+ if(!door)return false;
+ if(door.open||door.real){door.open=true;return true}
+ door.bonks++;return false;
+}
+export function race(options={}) {
+ const colors=['#ff78a9','#f6cb55','#71d5ef','#a0e877','#bc96f3','#ffac6a','#c9f5d7','#ffc7e3','#6cc4ff','#f7f7fb'];
+ const courses=['DOOR DASH','WHIRLYGIG','SLIME CLIMB','FALL MOUNTAIN'];
+ let beans,platforms,keys={},round,finished,phase,phaseTime,time,plan,limit,slimeY,doors,winner,manualScore,finishY,crownX,camera,sweepers,bumpers,modifier,episode=0,slimeSpeed,outcome,winCause,recorded,celebration,spectating,lastManualScore,resultHold,resultReason,attract;
+ function startRound() {
+  time=0;finished=0;phase='INTRO';phaseTime=150/60;slimeY=535;winner=null;outcome='';winCause=null;celebration=0;
+  const type=plan[round], shifted=type==='DOOR DASH';modifier=options.modifier??(((episode*5+round*3+beans.length)%3===0)?'none':shifted?'blitz':type==='SLIME CLIMB'?'hungry':'frenzy');slimeSpeed=modifier==='hungry'?14.5:10;
+  const rows=type==='FALL MOUNTAIN'?11:14;platforms=[{x:10,y:475,w:220}];let center=120;
+  for(let i=1;i<=rows;i++){
+   if(shifted)platforms.push({x:10,y:475-i*40,w:220});
+   else{const width=type==='FALL MOUNTAIN'?60:72;center=clamp(center+rand(-66,66),width/2+12,228-width/2);platforms.push({x:center-width/2,y:475-i*40,w:width})}
+  }
+  sweepers=platforms.slice(2).filter((p,i)=>i%3===1).map((p,i)=>({x:p.x+p.w/2,y:p.y-22,len:25+i%3*4,phase:i*Math.PI/2,dir:i%2?1:-1}));bumpers=platforms.slice(1).filter(()=>Math.random()<.3).map(p=>({x:clamp(p.x+p.w/2+rand(-50,50),15,225),y:p.y-20,r:10}));
+  const main=platforms.slice();finishY=main.at(-1).y-28;crownX=main.at(-1).x+main.at(-1).w/2;camera=0;
+  if(!shifted)for(let i=1;i<main.length-1;i++)if(Math.random()<.35){const a=main[i],b=main[i+1],w=rand(36,54),center=clamp((a.x+a.w/2+b.x+b.w/2)/2+rand(-27,27),w/2+12,228-w/2),x=center-w/2;if(x>a.x+a.w+4||x+w<a.x-4)platforms.push({x,y:a.y,w,bonus:true})}
+  doors=platforms.slice(1).flatMap((p,i)=>{const slots=i%2?[.2773,.6318]:[.1591,.5,.8409],real=Math.floor(rand(0,slots.length)),second=slots.length===3&&Math.random()<.5?(real+1+Math.floor(rand(0,2)))%3:-1;return slots.map((f,j)=>({x:p.x+p.w*f,y:p.y+9,real:j===real||j===second,open:false,bonks:0,row:i}))});
+  beans.forEach((b,i)=>{Object.assign(b,{x:35+i*18,y:475,vy:0,vx:0,ground:true,done:false,jump:rand(.05,.5),target:null,stun:0,place:0,dive:0,face:1,eliminated:false,skill:b.player?1:rand(.8,.95),minY:475,stall:0,recoveries:0,doorMemory:[],choiceRow:null,choiceX:null,doorReconsider:0,waitGear:0,clutch:false})});
+  limit=[6,4,1][round];
+ }
+ function reset(){episode++;manualScore=0;recorded=false;spectating=false;lastManualScore=0;resultHold=0;resultReason='';attract=false;round=0;const first=options.firstCourse??Math.floor(rand(0,3));plan=[courses[first],courses[(first+1)%3],courses[3]];beans=colors.map((color,i)=>({color,player:i===0}));startRound()}
+ reset();
+ function finishManual(auto,reason){if(!auto&&!recorded){recorded=true;lastManualScore=manualScore;spectating=true;resultHold=12;resultReason=reason||`ROUND ${round+1}`;options.records?.finish?.(manualScore)}}
+ function jump(b){if(b?.ground){b.vy=-333;b.ground=false}}
+ function dive(b){if(b&&!b.ground&&!b.stun&&!b.dive){b.vx=b.face*243;b.vy=Math.min(b.vy,36);b.dive=true;b.dives=(b.dives||0)+1}}
+ function cameraStep(dt){const focus=(round===2&&winner)||(!spectating&&beans.find(b=>b.player&&!b.eliminated))||beans.filter(b=>!b.done&&!b.eliminated).sort((a,b)=>a.y-b.y)[0];if(focus){const target=clamp(340-focus.y,0,Math.max(0,110-finishY));camera=jellyCameraOffset(camera,target,dt)}}
+ return {input(k,d){keys[k]=d;if(spectating||attract)return;if(d&&phase==='RACE'&&(k===' '||k==='ArrowUp'||k==='w'))jump(beans.find(b=>b.player));if(d&&phase==='RACE'&&['x','b','c','ArrowDown'].includes(k))dive(beans.find(b=>b.player))},update(dt,auto){
+  cameraStep(dt);if(spectating){resultHold-=dt;if(resultHold<=0){reset();attract=true;recorded=true;return}}if(phase==='INTRO'){phaseTime-=dt;if(phaseTime<=0)phase='RACE';return}
+  if(phase==='OVER'){if(round===2&&winner){celebration+=dt;if(winner.ground&&Math.floor(celebration*2)!==Math.floor((celebration-dt)*2)){winner.vy=-108;winner.ground=false}if(!winner.ground){winner.vy+=510*dt;winner.y+=winner.vy*dt;const top=platforms.filter(p=>winner.x>=p.x&&winner.x<=p.x+p.w).sort((a,b)=>a.y-b.y)[0];if(top&&winner.y>=top.y&&winner.vy>0){winner.y=top.y;winner.vy=0;winner.ground=true}}}phaseTime-=dt;if(phaseTime<=0){if(round===2){if(spectating){phaseTime=0;return}else if(auto||attract)reset();else{phase='END';finishManual(auto)}}else{const next=round+1,need=next===2?3:4;beans=refillJellyQualifiers(beans,need);round=next;startRound()}}return}
+  if(phase==='END')return;
+  time+=dt;if(plan[round]==='SLIME CLIMB'){slimeSpeed=Math.min(modifier==='hungry'?30:26,slimeSpeed+.72*dt);slimeY-=slimeSpeed*dt;}
+  for(let i=0;i<beans.length;i++){let b=beans[i];if(b.done||b.eliminated)continue;b.stun=Math.max(0,b.stun-dt);b.hitCd=Math.max(0,(b.hitCd||0)-dt);let dx=0;
+   if(b.player&&!auto&&!spectating&&!attract)dx=Number(!!(keys.ArrowRight||keys.d))-Number(!!(keys.ArrowLeft||keys.a));
+   else{if(b.ground)b.target=platforms.filter(p=>p.y<b.y-5).sort((a,z)=>z.y-a.y)[0]||{x:crownX-20,w:40,y:finishY};let tx=b.x;if(b.target){tx=clamp(b.x,b.target.x+Math.min(10,b.target.w/4),b.target.x+b.target.w-Math.min(10,b.target.w/4));if(plan[round]==='DOOR DASH'){let row=platforms.indexOf(b.target)-1,options=doors.filter(q=>q.row===row),chosen=reconsiderJellyDoor(b,options,row,dt,modifier);if(chosen)tx=chosen.x}dx=Math.abs(tx-b.x)<4?0:Math.sign(tx-b.x)}
+    const above=beans.filter(o=>o!==b&&!o.done&&!o.eliminated&&o.y<b.y-12).length;b.clutch=b.player&&(above>=(round===2?1:3)||(plan[round]==='SLIME CLIMB'&&slimeY-b.y<(modifier==='hungry'?128:105)));b.jump-=dt;if(b.clutch)b.jump=Math.min(b.jump,.034);
+    if(b.ground&&b.jump<=0&&!b.stun&&(!dx||plan[round]!=='DOOR DASH')){const hazard=(plan[round]==='WHIRLYGIG'||plan[round]==='FALL MOUNTAIN')&&jellyArmDistance(sweepers,tx,b.target.y-12,time,modifier,22/60)<(modifier==='frenzy'?20:16.5);if(!hazard||b.clutch||b.waitGear>1||Math.random()>b.skill){jump(b);b.jump=rand(.067,.167)+(1-b.skill)*.233;b.waitGear=0}else b.waitGear+=dt}else if(!b.ground)b.waitGear=0;if(jellyShouldDive(b,round,finishY,crownX,dt))dive(b);
+   }
+   if(!b.stun&&!b.dive){if(auto||spectating||attract||!b.player){b.vx=dx*(b.player?115:88+i*2);if(dx)b.face=Math.sign(dx)}else if(dx){b.vx=clamp(b.vx+dx*(b.ground?750:450)*dt,-(b.player?100:88+i*2),b.player?100:88+i*2);b.face=Math.sign(dx)}else b.vx*=Math.pow(b.ground?.72:.99,dt*60);}b.x=clamp(b.x+b.vx*dt,10,230);const old=b.y;b.vy=Math.min(306,b.vy+1188*dt);b.y+=b.vy*dt;b.ground=false;
+   for(const q of platforms)if(b.vy>=0&&old<=q.y&&b.y>=q.y&&b.x>q.x-4&&b.x<q.x+q.w+4){b.y=q.y;b.vy=0;b.ground=true;if(b.dive){b.dive=0;b.stun=.15}break}
+   if(plan[round]==='WHIRLYGIG'||plan[round]==='FALL MOUNTAIN'){for(const sweep of sweepers){if(b.hitCd>0)break;const angle=time*1.8*(modifier==='frenzy'?1.35:1)*sweep.dir+sweep.phase,ax=Math.cos(angle),ay=Math.sin(angle),rx=b.x-sweep.x,ry=b.y-8-sweep.y,t=clamp(rx*ax+ry*ay,-sweep.len,sweep.len);if(Math.hypot(rx-ax*t,ry-ay*t)<9){b.vx=-ay*sweep.dir*270;b.vy=Math.min(-126,ax*sweep.dir*234-54);b.stun=b.player?.233:.433;b.hitCd=34/60;b.ground=false;b.dive=0;break}}for(const bump of bumpers){const dx=b.x-bump.x,dy=b.y-8-bump.y,d=Math.hypot(dx,dy);if(d>0&&d<bump.r+7){b.vx=dx/d*225;b.vy=dy/d*225-45;b.ground=false}}}
+   if(plan[round]==='DOOR DASH'&&b.vy<0)for(const q of platforms.slice(1)){const underside=q.y+9;if(old>=underside&&b.y<underside&&b.x>=q.x&&b.x<=q.x+q.w){const door=doors.find(d=>d.row===platforms.indexOf(q)-1&&Math.abs(b.x-d.x)<12);if(!hitJellyDoor(door)){b.y=underside;b.vy=30;if(door){b.stun=b.player?.267:.5;const id=`${door.row}:${door.x}`;if(!b.doorMemory.includes(id))b.doorMemory.push(id);b.choiceRow=null}}break}}
+   if(b.y>515){b.x=120;b.y=475;b.vy=0;b.ground=true;if(b.dive){b.dive=0;b.stun=.15}}
+   if(plan[round]==='SLIME CLIMB'&&b.y>slimeY){b.eliminated=true;if(b.player)finishManual(auto);continue}
+   jellyWatchdog(b,platforms,dt,plan[round]==='DOOR DASH');
+   if(round===2?jellyTouchesCrown(b,crownX,finishY):b.y<finishY){b.done=true;b.place=++finished;if(b.player&&!auto&&!spectating&&!attract)manualScore+=round===2?500:100+round*50;if(round===2){winner=b;winCause='crown';outcome=b.player?'CROWN!':'SO CLOSE';finishManual(auto,outcome)}if(finished>=limit)break}
+  }
+  pushJellyCrowd(beans,dt);
+  const remaining=beans.filter(b=>!b.done&&!b.eliminated).length;
+  if(plan[round]==='SLIME CLIMB'&&remaining===0&&finished===0){startRound();return}
+  if(finished>=limit||remaining===0||(plan[round]!=='SLIME CLIMB'&&time>(round===2?60:modifier==='blitz'?52:75))){
+   // Timeout fills any remaining qualification places by course progress.
+   const ranked=beans.filter(b=>!b.done&&!b.eliminated).sort((a,b)=>a.y-b.y);
+   while(finished<limit&&ranked.length){const b=ranked.shift();b.done=true;b.place=++finished;if(b.player&&!auto&&!spectating&&!attract)manualScore+=round===2?500:100+round*50;if(round===2){winner=b;winCause='timeout';outcome=b.player?'CROWN!':'SO CLOSE';finishManual(auto,outcome)}}
+   beans.forEach(b=>{if(!b.done){b.eliminated=true;if(b.player)finishManual(auto)}});phase='OVER';phaseTime=round===2?420/60:170/60;if(round!==2){const player=beans.find(b=>b.player);outcome=player?.done?'QUALIFIED':'ELIMINATED'}
+  }
+ },draw(c){rect(c,0,0,W,H,plan[round]==='SLIME CLIMB'?'#9bbbd9':'#9bd1ef');for(let i=0;i<7;i++){const x=(i*67+Math.floor(time*4))%300-30,y=52+i*65;rect(c,x,y,34,5,'#c1e5f6');rect(c,x+7,y-4,20,5,'#c1e5f6')}for(let y=0;y<H;y+=50){rect(c,0,y,6,25,'#fff');rect(c,234,y+25,6,25,'#fff');rect(c,0,y+25,6,25,'#f497b2');rect(c,234,y,6,25,'#f497b2')}
+  c.save();c.translate(0,camera);
+  for(let i=0;i<5;i++){rect(c,20+i*48,finishY-6,24,8,i%2?'#303943':'#f9f6e9');rect(c,20+i*48,finishY+2,24,8,i%2?'#f9f6e9':'#303943')}
+  platforms.forEach((q,i)=>{rect(c,q.x,q.y,q.w,9,['#f8a4bc','#f5c969','#8cdaca'][i%3]);rect(c,q.x,q.y+9,q.w,5,'#7196a8');rect(c,q.x+3,q.y+2,q.w-6,2,'#fff2db');for(let x=q.x+8;x<q.x+q.w-4;x+=24)rect(c,x,q.y+10,3,2,'#547b8f')});
+  if(plan[round]==='DOOR DASH')doors.forEach(d=>{rect(c,d.x-10,d.y-12,20,24,d.open?'#b9e6df':'#f07c8e');if(!d.open)rect(c,d.x-7,d.y-8,14,16,'#ffcfdd')});
+  if(plan[round]==='WHIRLYGIG'||plan[round]==='FALL MOUNTAIN'){for(const sweep of sweepers){const angle=time*1.8*(modifier==='frenzy'?1.35:1)*sweep.dir+sweep.phase,dx=Math.cos(angle)*sweep.len,dy=Math.sin(angle)*sweep.len;c.strokeStyle='#f7ca75';c.lineWidth=5;c.beginPath();c.moveTo(sweep.x-dx,sweep.y-dy);c.lineTo(sweep.x+dx,sweep.y+dy);c.stroke();circle(c,sweep.x,sweep.y,6,'#f07c8e')}for(const bump of bumpers)circle(c,bump.x,bump.y,bump.r,'#ee7fa3')}
+  if(plan[round]==='SLIME CLIMB')rect(c,6,slimeY,228,Math.max(0,540-camera-slimeY),'#f09dbd');
+  if(plan[round]==='FALL MOUNTAIN')txt(c,'♛',crownX,finishY-10,'#ffdd73',22,'center');
+  beans.forEach(b=>{if((b.done&&b!==winner)||b.eliminated)return;rect(c,b.x-8,b.y-2,5,3,'#665c78');rect(c,b.x+3,b.y-2,5,3,'#665c78');circle(c,b.x,b.y-9,9,b.color);rect(c,b.x-9,b.y-9,18,7,b.color);rect(c,b.x-5,b.y-12,10,6,'#fff4ed');rect(c,b.x-3,b.y-10,2,2,'#36414a');rect(c,b.x+2,b.y-10,2,2,'#36414a');if(b.player)txt(c,'▼',b.x,b.y-24,'#fff',9,'center')});if(round===2&&winner&&phase!=='RACE'){for(let i=0;i<18;i++){const x=20+(i*47)%200,y=finishY-75+((celebration*45+i*37)%120);rect(c,x,y,3,5,colors[i%colors.length])}}c.restore();rect(c,0,0,W,25,'#67597b');txt(c,`R${round+1} ${plan[round]}`,7,16,'#fff',10);txt(c,`Q ${finished}/${limit}`,232,16,'#ffdf7c',10,'right');
+  if(phase!=='RACE'){rect(c,35,235,170,60,'#50476b');const player=beans.find(b=>b.player);const title=phase==='INTRO'?plan[round]:round===2?(winner?.player?'WINNER!':'SO CLOSE'):player&&!player.eliminated?'QUALIFIED!':'ELIMINATED';txt(c,title,120,258,'#fff',12,'center');txt(c,phase==='INTRO'?(modifier==='frenzy'?'FRENZY GEARS':modifier==='hungry'?'HUNGRY SLIME':modifier==='blitz'?'DOOR BLITZ':`FIRST ${limit} QUALIFY`):phase==='END'?'RESTART TO PLAY':'NEXT ROUND...',120,280,'#ffdf7c',9,'center');if(phase==='END')txt(c,`RUN ${manualScore}  BEST ${options.records?.best?.()??manualScore}`,120,310,'#fff',9,'center')}
+  if(spectating){txt(c,'SPECTATING',8,38,'#fff',8);rect(c,35,225,170,92,'#101923');txt(c,'GAME OVER',120,246,'#fff',12,'center');txt(c,`${resultReason}  ${lastManualScore}`,120,266,'#ffdf7c',10,'center');txt(c,`RUN ${lastManualScore}  BEST ${options.records?.best?.()??lastManualScore}`,120,285,'#c6d1d6',9,'center');txt(c,'RESTART TO PLAY',120,303,'#7de3dd',8,'center')}
+ },reset,isAttract(){return attract},canTakeover(){return !attract&&phase!=='END'&&beans.some(b=>b.player&&!b.eliminated)},snapshot(){return {round,phase,manualScore,finished,limit,player:beans.find(b=>b.player)?{...beans.find(b=>b.player)}:null,beans:beans.map(b=>({...b})),doors:doors.map(d=>({...d})),course:plan[round],outcome,winCause,recorded,celebration,spectating,lastManualScore,resultHold,resultReason,attract,winner:winner?{color:winner.color,player:winner.player,place:winner.place}:null,modifier,slimeY,slimeSpeed,sweepers:sweepers.map(q=>({...q})),bumpers:bumpers.map(q=>({...q})),time,finishY,crownX,camera,platforms:platforms.map(p=>({...p}))}}};
+}
+const factories={'turbo-arena':soccer,'jelly-dash':race};
+export function createFeatureGame2(canvas,id,options={}){const ctx=canvas.getContext('2d');if(!ctx||!factories[id])throw new Error(`Unknown game: ${id}`);const keyName=`miniarcade:best:${id}`;let best=null;function readBest(){try{const v=window.localStorage?.getItem(keyName);return v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v))?Number(v):null}catch{return null}}best=readBest();const records={best:()=>best,finish(value){const old=readBest();if(old!==null&&(best===null||old>best))best=old;if(best===null||value>best){best=value;try{window.localStorage?.setItem(keyName,String(value))}catch{}}}};function make(){return id==='turbo-arena'?soccer(records):race({records})}let game=make(),interactive=!!options.interactive,paused=!!options.paused,disposed=false,frame,last=0;const held=new Set();canvas.tabIndex=interactive?0:-1;canvas.setAttribute('aria-label',`${featureGames2.find(g=>g.id===id).name} game`);function resize(){const b=canvas.getBoundingClientRect(),r=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.max(1,Math.round(b.width*r));canvas.height=Math.max(1,Math.round(b.height*r))}const observer=typeof ResizeObserver!=='undefined'?new ResizeObserver(resize):null;observer?.observe(canvas);resize();function release(){for(const k of held)game.input(k,false);held.clear()}function key(e,d){if(!interactive)return;let k=e.key.length===1?e.key.toLowerCase():e.key;if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','w','a','s','d','x','z','b','c'].includes(k)){e.preventDefault();if(d)held.add(k);else held.delete(k);game.input(k,d)}}const kd=e=>{if(!e.repeat)key(e,true)},ku=e=>key(e,false),focus=()=>{if(interactive)canvas.focus({preventScroll:true})};canvas.addEventListener('pointerdown',focus);canvas.addEventListener('keydown',kd);canvas.addEventListener('keyup',ku);canvas.addEventListener('blur',release);function tick(t){if(disposed||paused)return;if(!interactive&&last&&t-last<1000/30-1){frame=requestAnimationFrame(tick);return}const dt=last?Math.min((t-last)/1000,.05):0;last=t;game.update(dt,!interactive);if(interactive&&game.isAttract?.()){release();interactive=false;canvas.tabIndex=-1;options.onAttract?.()}ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#10151c';ctx.fillRect(0,0,canvas.width,canvas.height);const scale=Math.min(canvas.width/W,canvas.height/H);ctx.setTransform(scale,0,0,scale,(canvas.width-W*scale)/2,(canvas.height-H*scale)/2);game.draw(ctx);frame=requestAnimationFrame(tick)}if(!paused)frame=requestAnimationFrame(tick);return {snapshot(){return game.snapshot?.()},restart(){release();game=make()},setInteractive(v){release();if(v&&!interactive&&game.canTakeover?.()===false)game=make();interactive=!!v;last=0;canvas.tabIndex=interactive?0:-1},pause(){if(!paused){release();paused=true;cancelAnimationFrame(frame);last=0}},resume(){if(paused&&!disposed){paused=false;last=0;frame=requestAnimationFrame(tick)}},resize,destroy(){release();disposed=true;cancelAnimationFrame(frame);observer?.disconnect();canvas.removeEventListener('pointerdown',focus);canvas.removeEventListener('keydown',kd);canvas.removeEventListener('keyup',ku);canvas.removeEventListener('blur',release)}}}

@@ -1,0 +1,9 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {additionFactories} from '../src/extra-additions.js';
+function labels(game){let out=[];const ctx=new Proxy({fillText(s){out.push(s)}},{get:(o,k)=>o[k]??(()=>{}),set:(o,k,v)=>(o[k]=v,true)});game.draw(ctx);return out}
+for(const [id,terminal,score,key] of [['runner','RUN OVER — RESTART','HURDLES',null],['racer','CRASHED — RESTART','PASSED',null],['platform','FALL — RESTART','CROSSINGS','ArrowRight']])test(`${id} holds a manual loss and AI can restart`,()=>{
+ const orig=Math.random;Math.random=()=>.5;try{const game=additionFactories[id]();if(key)game.input(key,true);let found=false;for(let i=0;i<60*60;i++){game.update(1/60,false);if(i%10===0&&labels(game).includes(terminal)){found=true;break}}assert.ok(found,'manual run reaches failure');const saved=labels(game).find(s=>s.startsWith(score));for(let i=0;i<600;i++)game.update(1/60,false);assert.ok(labels(game).includes(terminal));assert.ok(labels(game).includes(saved));for(let i=0;i<130;i++)game.update(1/60,true);assert.ok(!labels(game).includes(terminal));game.reset();assert.ok(!labels(game).includes(terminal));}finally{Math.random=orig}
+});
+test('Invaders holds fleet-cleared score manually and AI can restart',()=>{
+ const game=additionFactories.invaders();let won=false;for(let i=0;i<60*60;i++){game.update(1/60,true);if(labels(game).includes('FLEET CLEARED — RESTART')){won=true;break}}assert.ok(won);assert.ok(labels(game).includes('HITS  24'));for(let i=0;i<600;i++)game.update(1/60,false);assert.ok(labels(game).includes('HITS  24'));assert.ok(labels(game).includes('FLEET CLEARED — RESTART'));for(let i=0;i<130;i++)game.update(1/60,true);assert.ok(!labels(game).includes('FLEET CLEARED — RESTART'));game.reset();assert.ok(labels(game).includes('HITS  0'));
+});
+

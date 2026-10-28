@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createAvalanchePost} from '../src/feature-games22.js';
+function step(g,n,auto=false){for(let i=0;i<n;i++)g.update(1/60,auto)}
+test('manual probe extracts hiker and delivery shelters them at matching lodge',()=>{const old=Math.random;Math.random=()=>.5;try{const g=createAvalanchePost();for(let i=0;i<600;i++){g.update(1/60,false);const r=g.snapshot().rescues[0];if(r&&Math.abs(r.y-570)<40){g.input('x',true);break}}step(g,30);g.input('x',false);assert.equal(g.snapshot().escort,1);assert.equal(g.snapshot().sheltered,0);for(let i=0;i<120;i++){g.update(1/60,false);const l=g.snapshot().lodges.find(x=>x.id===1);if(l&&Math.abs(l.y-570)<30){g.input('z',true);g.input('z',false);break}}const s=g.snapshot();assert.equal(s.sheltered,1);assert.equal(s.delivered,1);assert.equal(s.escort,null);assert.equal(s.lodges[0].sheltered,true)}finally{Math.random=old}});
+test('unattended hiker is lost and cannot be credited as sheltered',()=>{const old=Math.random;Math.random=()=>.5;try{const g=createAvalanchePost();step(g,390);const s=g.snapshot();assert.equal(s.rescues[0].state,'lost');assert.equal(s.sheltered,0)}finally{Math.random=old}});
+test('AI extracts and shelters hikers through ordinary actions',()=>{const old=Math.random;Math.random=()=>.5;try{const g=createAvalanchePost();step(g,720,true);const s=g.snapshot();assert.ok(s.sheltered>=2);assert.ok(s.delivered>=s.sheltered)}finally{Math.random=old}});

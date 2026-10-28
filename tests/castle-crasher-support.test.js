@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {castle,castleUnsupported} from '../src/feature-games13.js';
+const block=(x,y,side=0)=>({x,y,side,dead:false});
+test('masonry support follows connections to the ground, including alternate supports',()=>{const base=block(0,558),upper=block(0,534),top=block(0,510),other=block(24,558);assert.equal(castleUnsupported([base,upper,top,other]).length,0);base.dead=true;assert.deepEqual(castleUnsupported([base,upper,top,other]),[upper,top]);const bridge=block(12,534);assert.equal(castleUnsupported([bridge,other]).length,0)});
+test('manual shot crosses aim and flight into a resolved turn',()=>{const g=castle();let before=g.snapshot();g.input('ArrowUp',true);g.update(.1,false);g.input('ArrowUp',false);assert.ok(g.snapshot().angle>before.angle);g.input(' ',true);assert.equal(g.snapshot().phase,'flight');let settled=false;for(let i=0;i<500;i++){g.update(.016,false);if(g.snapshot().turn===1){settled=true;break}}assert.ok(settled,'shot did not resolve to the opposing turn')});
+test('autoplay destroys masonry and advances after a castle breach',()=>{const old=Math.random;Math.random=()=>.5;try{const g=castle();let max=0,chapter=1;for(let i=0;i<25000;i++){g.update(.04,true);const s=g.snapshot();max=Math.max(max,...s.score);chapter=Math.max(chapter,s.chapter);if(chapter>1)break}assert.ok(max>0,'AI never damaged masonry');assert.ok(chapter>1,'AI never breached a fort')}finally{Math.random=old}});

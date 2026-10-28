@@ -1,0 +1,71 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {applyWashJet,createWashWonder} from '../src/feature-games40.js';
+
+test('fan cleans chalk faster while narrow cleans rust faster, and weak pressure cleans more slowly',()=>{
+ const make=material=>[{x:0,y:60,hp:100,material}];
+ const jet={x:0,y:100,dx:0,dy:-1,range:100,pressure:1};
+ const fanChalk=make('chalk'),narrowChalk=make('chalk'),fanRust=make('rust'),narrowRust=make('rust'),weak=make('rust');
+ applyWashJet(fanChalk,{...jet,nozzle:'fan'},1/60);applyWashJet(narrowChalk,{...jet,nozzle:'narrow'},1/60);
+ applyWashJet(fanRust,{...jet,nozzle:'fan'},1/60);applyWashJet(narrowRust,{...jet,nozzle:'narrow'},1/60);
+ applyWashJet(weak,{...jet,nozzle:'narrow',pressure:.2},1/60);
+ assert.ok(fanChalk[0].hp<narrowChalk[0].hp);assert.ok(narrowRust[0].hp<fanRust[0].hp);assert.ok(weak[0].hp>narrowRust[0].hp);
+ const missed=[{x:80,y:60,hp:10,material:'chalk'}];assert.equal(applyWashJet(missed,{...jet,nozzle:'fan'},1/60).removed,0);
+});
+
+test('manual spray consumes water, locks aim while moving, and refills only at the tap',()=>{
+ const game=createWashWonder();game.input(' ',true);game.input('ArrowRight',true);
+ for(let i=0;i<120;i++)game.update(1/60,false);
+ const sprayed=game.snapshot();assert.ok(sprayed.water<100);assert.deepEqual(sprayed.aim,{x:0,y:-1});
+ game.input(' ',false);game.input('ArrowRight',false);game.input('z',true);game.update(.05,false);assert.equal(game.snapshot().water,sprayed.water);
+ game.input('ArrowLeft',true);for(let i=0;i<120;i++)game.update(1/60,false);game.input('ArrowLeft',false);
+ for(let i=0;i<30;i++)game.update(1/60,false);assert.equal(game.snapshot().water,168);assert.ok(game.snapshot().refills>0);
+ game.input('z',false);game.input('x',true);assert.equal(game.snapshot().nozzle,'narrow');game.input('x',false);
+});
+
+test('autoplay restores all three landmarks, opens gates and refills the tank',()=>{
+ const game=createWashWonder();const visited=new Set();let completed=false,refilled=false;
+ for(let i=0;i<30000;i++){game.update(1/60,true);if(i%30===0){const s=game.snapshot();visited.add(s.job);if(s.refills)refilled=true;if(s.phase==='pack'){completed=true;assert.equal(s.remaining,0);break}}}
+ assert.deepEqual([...visited],[0,1,2]);assert.ok(refilled);assert.ok(completed);
+});
+
+test('opening a clean landmark requires the player to reach the gate',()=>{
+ const game=createWashWonder();for(let i=0;i<12000;i++){game.update(1/60,true);if(game.snapshot().phase==='ribbon')break}
+ let s=game.snapshot();assert.equal(s.phase,'ribbon');assert.equal(s.job,0);
+ game.input('ArrowLeft',true);for(let i=0;i<80;i++)game.update(1/60,false);game.input('ArrowLeft',false);
+ game.input(' ',true);game.update(.05,false);game.input(' ',false);assert.equal(game.snapshot().job,0);
+ game.input('ArrowRight',true);for(let i=0;i<180&&game.snapshot().player.x<280;i++)game.update(1/60,false);game.input('ArrowRight',false);
+ s=game.snapshot();if(s.player.y<570){game.input('ArrowDown',true);for(let i=0;i<20&&game.snapshot().player.y<574;i++)game.update(1/60,false);game.input('ArrowDown',false)}
+ game.input(' ',true);game.update(.05,false);game.input(' ',false);assert.equal(game.snapshot().job,1);assert.equal(game.snapshot().phase,'wash');
+});
+
+test('manual pack-up refills at the tap and starts a fresh job when the trigger is pressed',()=>{
+ const oldRandom=Math.random;let seed=3;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);
+ try {const game=createWashWonder();for(let i=0;i<30000;i++){game.update(1/60,true);if(game.snapshot().phase==='pack')break}
+ assert.equal(game.snapshot().phase,'pack');
+ // The preceding AI may approach the final gate from different angles. Steer
+ // to the tap rather than assuming a fixed starting height.
+ for(const [axis,goal,negative,positive] of [['x',34,'ArrowLeft','ArrowRight'],['y',588,'ArrowUp','ArrowDown']]){
+  for(let i=0;i<200&&Math.abs(game.snapshot().player[axis]-goal)>3;i++){
+   const key=game.snapshot().player[axis]<goal?positive:negative;
+   game.input(key,true);game.update(1/60,false);game.input(key,false);
+  }
+ }
+ assert.ok(Math.hypot(game.snapshot().player.x-34,game.snapshot().player.y-588)<=21,'player should reach the tap');
+ game.input('z',true);for(let i=0;i<30;i++)game.update(1/60,false);game.input('z',false);assert.equal(game.snapshot().water,168);
+ game.input(' ',true);game.update(1/60,false);assert.equal(game.snapshot().phase,'wash');assert.equal(game.snapshot().job,0);
+ } finally {Math.random=oldRandom}
+});
+
+test('grime follows landmark edges and manual spraying removes persistent cells',()=>{
+ const game=createWashWonder();let s=game.snapshot();
+ assert.ok(s.cells.some(c=>c.mask!==0xffff),'edge cells retain partial silhouette masks');
+ assert.ok(s.cells.every(c=>c.mask>0&&c.x>=c.left&&c.x<c.left+8&&c.y>=c.top&&c.y<c.top+8));
+ const before=s.cells.reduce((sum,c)=>sum+c.hp,0);
+ game.input(' ',true);game.input('ArrowRight',true);
+ for(let i=0;i<180;i++)game.update(1/60,false);
+ s=game.snapshot();assert.ok(s.cells.reduce((sum,c)=>sum+c.hp,0)<before);
+ game.input(' ',false);game.input('ArrowRight',false);
+ const after=s.cells.reduce((sum,c)=>sum+c.hp,0);game.update(.05,false);
+ assert.equal(game.snapshot().cells.reduce((sum,c)=>sum+c.hp,0),after);
+});

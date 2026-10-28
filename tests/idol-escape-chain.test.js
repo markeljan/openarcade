@@ -1,0 +1,9 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createFeatureGame12} from '../src/feature-games12.js';
+function harness(interactive){let scheduled,frame=0,labels=[];const listeners=new Map(),noop=()=>{};globalThis.window={devicePixelRatio:1};globalThis.ResizeObserver=class{observe(){}disconnect(){}};globalThis.requestAnimationFrame=f=>(scheduled=f,frame+1);globalThis.cancelAnimationFrame=noop;const ctx=new Proxy({fillText(s){labels.push(s)}},{get:(o,k)=>o[k]??noop,set:(o,k,v)=>(o[k]=v,true)}),canvas={getContext:()=>ctx,getBoundingClientRect:()=>({width:240,height:540}),setAttribute:noop,addEventListener(k,v){listeners.set(k,v)},removeEventListener:noop};const game=createFeatureGame12(canvas,'idol-escape',{interactive});return{step(n){for(let i=0;i<n;i++){labels=[];scheduled(++frame*1000/60)}return labels},key(k,d){listeners.get(d?'keydown':'keyup')({key:k,preventDefault:noop})},close(){game.destroy()}}}
+test('manual player releases the rock, breaks the seal, collects the artifact and exits',()=>{const h=harness(true);try{h.step(1);h.key('ArrowRight',true);h.step(44);h.key('ArrowRight',false);h.key(' ',true);let l=h.step(44);assert.ok(l.includes('SUPPORT DUG'));h.key(' ',false);l=h.step(75);assert.ok(l.includes('ROCK RIDES THE CART'));h.key('x',true);l=h.step(87);assert.ok(l.includes('CART PUSHED'),l.join(' | '));h.key('x',false);h.key('ArrowRight',true);h.step(60);h.key('ArrowRight',false);h.key('z',true);h.step(48);h.key('z',false);l=h.step(200);h.key('ArrowRight',true);l=h.step(60);h.key('ArrowRight',false);assert.ok(l.includes('100 M'))}finally{h.close()}});
+test('AI completes the physical chain and progresses through chambers',()=>{const h=harness(false);try{let l;for(let i=0;i<2500;i++){const x=h.step(1);if(x.length)l=x;if(l.includes('200 M'))break}assert.ok(l.includes('200 M'),l?.join(' | '))}finally{h.close()}});
+
+
+

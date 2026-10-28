@@ -1,0 +1,18 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {coral} from '../src/feature-games19.js';
+function drive(g,target){for(let i=0;i<60*10;i++){const p=g.snapshot().diver,dx=target.x-p.x,dy=target.y-p.y;if(Math.hypot(dx,dy)<15){for(const k of ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'])g.input(k,false);return}for(const [k,v] of [['ArrowLeft',dx< -4],['ArrowRight',dx>4],['ArrowUp',dy< -4],['ArrowDown',dy>4]])g.input(k,v);g.update(1/60,false)}assert.fail('target not reached')}
+function act(g){g.input(' ',true);for(let i=0;i<20;i++)g.update(1/60,false);g.input(' ',false)}
+test('manual diver rescues a seahorse, gathers regrowing coral, and blooms an adjacent socket',()=>{
+ const g=coral();let s=g.snapshot();assert.equal(s.sockets.length,12);assert.equal(s.horses.length,3);
+ drive(g,s.horses[0]);act(g);s=g.snapshot();assert.equal(s.horses[0].state,'escort');assert.equal(s.score,90);
+ drive(g,s.nurseries[0]);act(g);s=g.snapshot();assert.ok(s.carry);assert.ok(s.nurseries[0].regrow>0);
+ drive(g,s.sockets[3]);act(g);s=g.snapshot();assert.equal(s.carry,null);assert.equal(s.sockets.filter(q=>q.alive).length,2);assert.equal(s.sockets.filter(q=>q.symbiotic).length,2);assert.equal(s.horses[0].state,'sheltered');assert.ok(s.score>=390);
+});
+test('automatic diver restores multiple habitats and finds air',()=>{
+ const g=coral();let min=100,foundAir=false,s;for(let i=0;i<60*120;i++){g.update(1/60,true);s=g.snapshot();min=Math.min(min,s.oxygen);if(s.oxygen>min+20)foundAir=true;if(s.cycles>0&&foundAir)break}
+ assert.ok(s.cycles>0,'all twelve sockets can be restored');assert.ok(foundAir,'oxygen must be replenished');assert.ok(s.score>=3000);
+});
+test('cleaner intercepts lionfish and guards the rescued seahorse',()=>{const g=coral();let s=g.snapshot();drive(g,s.horses[1]);act(g);s=g.snapshot();assert.equal(s.horses[1].state,'escort');assert.ok(['intercept','guard'].includes(s.cleaner.state));let intercepted=s.cleaner.state==='guard';for(let i=0;i<180&&!intercepted;i++){g.update(1/60,false);s=g.snapshot();if(s.cleaner.state==='guard')intercepted=true}assert.ok(intercepted,'cleaner did not reach the lionfish');assert.equal(s.cleaner.horse,1);assert.ok(s.cleaner.cleared);assert.equal(s.fish[s.cleaner.fish].state,'distracted');drive(g,s.nurseries[1]);act(g);s=g.snapshot();assert.ok(s.carry);drive(g,s.sockets[4]);act(g);s=g.snapshot();assert.equal(s.horses[1].state,'sheltered');assert.ok(s.horses[1].safelyDelivered);assert.equal(s.safeNooks.length,1);assert.equal(s.safeNooks[0].horse,1)});
+test('preview can complete a cleaner escort',()=>{const g=coral();for(let i=0;i<9000;i++){g.update(1/60,true);if(g.snapshot().safeNooks.length)return}assert.fail('preview did not complete a cleaner escort')});
+test('lionfish lead the diver then lock their aim and recover before attacking again',()=>{const g=coral();g.input('ArrowDown',true);let s;for(let i=0;i<400;i++){g.update(1/60,false);s=g.snapshot();if(s.fish[0].state==='windup')break}g.input('ArrowDown',false);assert.equal(s.fish[0].state,'windup');g.input('ArrowRight',true);while(g.snapshot().fish[0].state==='windup'&&g.snapshot().fish[0].timer<.24)g.update(1/60,false);s=g.snapshot();assert.equal(s.fish[0].state,'windup');const locked={...s.fish[0].aim};for(let i=0;i<5;i++)g.update(1/60,false);s=g.snapshot();assert.deepEqual(s.fish[0].aim,locked,'aim changed after the lock');g.input('ArrowRight',false);for(let i=0;i<180;i++){g.update(1/60,false);s=g.snapshot();if(s.fish[0].state==='patrol'&&s.fish[0].cooldown>0)break}assert.equal(s.fish[0].state,'patrol');assert.ok(s.fish[0].cooldown>1,'missing post-attack cooldown')});

@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createHeistGame} from '../src/feature-games31.js';
+function move(g,x){for(let i=0;i<400;i++){const p=g.snapshot().p;if(Math.abs(p.x-x)<3)break;g.input(p.x<x?'ArrowRight':'ArrowLeft',true);g.input('x',true);g.update(.02,false);g.input('ArrowRight',false);g.input('ArrowLeft',false)}assert.ok(Math.abs(g.snapshot().p.x-x)<8)}
+function use(g){g.input(' ',true);g.input(' ',false)}
+function climb(g,dir){for(let i=0;i<600;i++){const s=g.snapshot(),x=120+45*Math.sin(s.clock*.9);if(Math.abs(s.p.x-x)<15){g.input(dir>0?'ArrowUp':'ArrowDown',true);g.input(dir>0?'ArrowUp':'ArrowDown',false);if(g.snapshot().floor!==s.floor)return}g.input(s.p.x<x?'ArrowRight':'ArrowLeft',true);g.input('x',true);g.update(.02,false);g.input('ArrowRight',false);g.input('ArrowLeft',false)}assert.fail('could not climb')}
+function waitAligned(g){for(let i=0;i<100;i++){let t=g.snapshot().clock%1.2;if(t>.23&&t<.38)return;g.update(.02,false)}assert.fail('no alignment')}
+test('manual tower heist requires both jewels and timed clockwork',()=>{const g=createHeistGame();move(g,60);use(g);move(g,120);use(g);move(g,180);while((g.snapshot().clock%1.2)>.23&&(g.snapshot().clock%1.2)<.38)g.input('x',true);g.update(.02,false);use(g);assert.equal(g.snapshot().gearOpen,false);assert.equal(g.snapshot().notice,'WAIT FOR GEAR ALIGNMENT');waitAligned(g);use(g);assert.equal(g.snapshot().gearOpen,true);climb(g,1);move(g,180);use(g);use(g);assert.equal(g.snapshot().jewels,1);move(g,60);use(g);assert.equal(g.snapshot().liftOn,true);climb(g,1);move(g,185);use(g);move(g,60);use(g);move(g,120);waitAligned(g);use(g);assert.equal(g.snapshot().chime,true);assert.equal(g.snapshot().jewels,2);climb(g,1);move(g,120);use(g);assert.equal(g.snapshot().returning,true)});
+test('autoplay completes the clockwork chain and returns for another midnight',()=>{const g=createHeistGame();let restored=false,escaped=false;for(let i=0;i<16000&&g.snapshot().score<1;i++){g.update(.033,true);let s=g.snapshot();restored ||= s.chime;escaped ||= s.returning}assert.ok(restored);assert.ok(escaped);assert.ok(g.snapshot().score>=1)});
+

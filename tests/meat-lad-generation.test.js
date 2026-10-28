@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {meatLad,meatHopWitness} from '../src/feature-games.js';
+test('generator preserves a sampled hazard-free jump for each adjacent ledge',()=>{const old=Math.random;try{for(let n=1;n<=100;n++){let seed=n;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);const {platforms,saws}=meatLad().snapshot();for(let i=1;i<platforms.length;i++)assert.ok(meatHopWitness(platforms[i-1],platforms[i],saws),`seed ${n}, hop ${i}`)}}finally{Math.random=old}});
+test('jump check rejects ledges above maximum jump height',()=>{assert.equal(meatHopWitness({x:0,y:400,w:100},{x:0,y:200,w:100},[]),false)});
