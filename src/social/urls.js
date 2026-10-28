@@ -1,4 +1,4 @@
-export const DEFAULT_SITE_ORIGIN = 'https://openarcade.vercel.app';
+export const DEFAULT_SITE_ORIGIN = 'https://openarcade.io';
 export function siteOrigin(value=DEFAULT_SITE_ORIGIN) {
   const url=new URL(value);
   if(url.protocol!=='https:' || url.username || url.password || url.pathname!=='/' || url.search || url.hash)

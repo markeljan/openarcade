@@ -16,7 +16,7 @@ Vite emits homepage metadata, 112 `games/<id>.html` pages, a sitemap and useful 
 
 Environment variable names (public build settings, no secrets):
 
-- `VITE_SITE_ORIGIN`: exact HTTPS production origin, no path/query. Current provisional default is `https://openarcade.vercel.app`; S11 must verify/override before release.
+- `VITE_SITE_ORIGIN`: exact HTTPS production origin, no path/query. Default is `https://openarcade.io`, verified by S11 from the project domain list; override before release if the canonical domain changes.
 - `VITE_X_PLAYER_ENABLED`: `true` opts into Player Card metadata on game pages. Default is an ordinary large image card. A build with this enabled requires the dedicated embed entry.
 - `VITE_EMBEDS_ENABLED`: `false` disables playable shell and Player Card advertising; full-site links and image cards remain available.
 
@@ -31,3 +31,4 @@ Only `/embed/` permits framing, with `frame-ancestors 'self' https://x.com https
 Sources: [Open Graph](https://ogp.me/), [Vite plugin hooks](https://vite.dev/guide/api-plugin.html), [Vercel static configuration](https://vercel.com/docs/project-configuration/vercel-json), [Vercel Vite routing](https://vercel.com/docs/frameworks/frontend/vite), [CSP frame ancestors](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/frame-ancestors).
 
 Focused checks: `node --test tests/s05-catalog.test.js tests/s05-social-pages.test.js`, `npm run build`, raw built HTML inspection. Deployment checks still required: public HTTPS origin, actual response/image MIME and framing headers, extensionless/trailing-slash/unknown routes, gallery route integration, API/guest persistence, iframe inputs and lifecycle, X desktop/mobile rendering. Unit fixtures do not establish those external behaviors.
+

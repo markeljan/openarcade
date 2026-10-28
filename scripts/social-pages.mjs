@@ -13,9 +13,9 @@ export function readImageManifest(root) {
   if(!existsSync(file)) return {games:{}};
   const manifest=JSON.parse(readFileSync(file,'utf8'));
   if(manifest.version!==1 || !manifest.games || typeof manifest.games!=='object') throw new Error('Invalid social image manifest');
-  for(const [id,image] of Object.entries(manifest.games)) {
+  for(const [id,image] of [...Object.entries(manifest.games),...(manifest.homepage?[['homepage',manifest.homepage]]:[])]) {
     const target=resolve(root,'public','.'+image.path), base=resolve(root,'public')+sep;
-    if(!getGame(id) || !/^\/social\/games\/[a-z0-9/_.-]+\.png$/.test(image.path) || !target.startsWith(base) ||
+    if((id!=='homepage'&&!getGame(id)) || !(id==='homepage'?/^\/social\/[a-z0-9_.-]+\.png$/:/^\/social\/games\/[a-z0-9/_.-]+\.png$/).test(image.path) || !target.startsWith(base) ||
        !Number.isInteger(image.width) || !Number.isInteger(image.height) || image.width<1 || image.height<1 ||
        typeof image.version!=='string' || !/^[a-zA-Z0-9._-]+$/.test(image.version) || !existsSync(target))
       throw new Error(`Invalid or missing social image: ${id}`);
@@ -27,7 +27,8 @@ export function socialMetadata(game,{origin,manifest={games:{}},playerEnabled=fa
   origin=siteOrigin(origin);
   const title=game?`${game.name} — OpenArcade`:SITE_TITLE;
   const description=game?`${game.description} Play ${game.name} free on OpenArcade.`:SITE_DESCRIPTION;
-  const image=manifest.games[game?.id]??FALLBACK_IMAGE;
+  const image=(game?manifest.games[game.id]:manifest.homepage)??FALLBACK_IMAGE;
+  const imageAlt=image.alt??(game?`${game.name} gameplay on OpenArcade`:FALLBACK_IMAGE.alt);
   const imageUrl=new URL(image.path,origin);
   if(image.version)imageUrl.searchParams.set('v',image.version);
   const canonical=gameUrl(game?.id,origin).href;
@@ -35,8 +36,8 @@ export function socialMetadata(game,{origin,manifest={games:{}},playerEnabled=fa
     `<title>${escapeHtml(title)}</title>`,
     `<meta name="description" content="${escapeHtml(description)}">`,
     `<link rel="canonical" href="${escapeHtml(canonical)}">`,
-    ...Object.entries({'og:type':'website','og:site_name':'OpenArcade','og:title':title,'og:description':description,'og:url':canonical,'og:image':imageUrl.href,'og:image:type':'image/png','og:image:width':image.width,'og:image:height':image.height,'og:image:alt':image.alt??`${game.name} gameplay on OpenArcade`}).map(([key,value])=>`<meta property="${key}" content="${escapeHtml(value)}">`),
-    ...Object.entries({'twitter:card':game&&playerEnabled?'player':'summary_large_image','twitter:title':title,'twitter:description':description,'twitter:image':imageUrl.href,'twitter:image:alt':image.alt??`${game.name} gameplay on OpenArcade`}).map(([key,value])=>`<meta name="${key}" content="${escapeHtml(value)}">`),
+    ...Object.entries({'og:type':'website','og:site_name':'OpenArcade','og:title':title,'og:description':description,'og:url':canonical,'og:image':imageUrl.href,'og:image:type':'image/png','og:image:width':image.width,'og:image:height':image.height,'og:image:alt':imageAlt}).map(([key,value])=>`<meta property="${key}" content="${escapeHtml(value)}">`),
+    ...Object.entries({'twitter:card':game&&playerEnabled?'player':'summary_large_image','twitter:title':title,'twitter:description':description,'twitter:image':imageUrl.href,'twitter:image:alt':imageAlt}).map(([key,value])=>`<meta name="${key}" content="${escapeHtml(value)}">`),
   ];
   if(game&&playerEnabled) tags.push(`<meta name="twitter:player" content="${escapeHtml(embedUrl(game.id,origin).href)}">`,'<meta name="twitter:player:width" content="720">','<meta name="twitter:player:height" content="720">');
   return tags.join('\n  ');

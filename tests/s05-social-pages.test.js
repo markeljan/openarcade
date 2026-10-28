@@ -32,6 +32,12 @@ test('versioned real capture manifest and opt-in Player Card keep one HTML repre
   assert.match(html,/twitter:player:width" content="720"/);
   assert.match(html,/twitter:player:height" content="720"/);
 });
+test('homepage captures can omit alt and still get safe fallback text',()=>{
+  const html=socialMetadata(null,{origin:'https://example.com',manifest:{games:{},homepage:{path:'/social/homepage.png',version:'abc',width:1200,height:630}}});
+  assert.match(html,/https:\/\/example.com\/social\/homepage.png\?v=abc/);
+  assert.match(html,/property="og:image:alt" content="OpenArcade — tiny games, big side quests"/);
+  assert.match(html,/name="twitter:image:alt" content="OpenArcade — tiny games, big side quests"/);
+});
 test('image manifest fails the build for missing, unknown or unsafe assets',()=>{
   const root=mkdtempSync(join(tmpdir(),'s05-manifest-'));
   try {
