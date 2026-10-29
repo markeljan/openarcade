@@ -12,6 +12,7 @@ const reports = createRunReporter({gameId: id, ruleVersion: 1,
   context: options.context ?? (options.interactive ? 'manual-player' : 'gallery-preview'),
   onResult: options.onResult, onError: options.onError});
 function fresh({interactive, context}) {
+  reports.abandon(); // invalidate old finish BEFORE release/destroy callbacks
   releaseHeldInputs();
   game?.destroy?.();
   const finish = reports.beginRun({actor: interactive ? 'human' : 'ai', context});
@@ -22,7 +23,7 @@ reports.advance(dt);
 game.update(dt, auto);
 ```
 
-Every restart, takeover and change of actor creates a fresh factory and bound finish closure. Expose `player.beginRun({interactive, context})` to perform this atomically; the UI must prefer it over the old restart-then-setInteractive sequence. `setInteractive` must enforce fresh state on actor changes even for callers outside main. Restart in the same mode preserves its context and creates another ID. `reports.setPaused(true/false)` mirrors pause/resume; pause excludes duration and suppresses late completion. `reports.abandon()` invalidates a callback without reporting; `reports.destroy()` invalidates permanently. Close, mode changes and stale callbacks cannot complete abandoned runs. Finish once at the actual terminal boundary, before any AI reset; best-score updates and HUD text are not terminal evidence. After reporting an AI result, start a new factory/reporter run before the next simulation.
+Every restart, takeover and change of actor creates a fresh factory and bound finish closure. Invalidate the previous callback with `reports.abandon()` before invoking input-release or destruction hooks, since those hooks can call game code. Close invalidates before cleanup too. Expose `player.beginRun({interactive, context})` to perform this atomically; the UI must prefer it over the old restart-then-setInteractive sequence. `setInteractive` must enforce fresh state on actor changes even for callers outside main. Restart in the same mode preserves its context and creates another ID. `reports.setPaused(true/false)` mirrors pause/resume; pause excludes duration and suppresses late completion. `reports.abandon()` invalidates a callback without reporting; `reports.destroy()` invalidates permanently. Close, mode changes and stale callbacks cannot complete abandoned runs. Finish once at the actual terminal boundary, before any AI reset; best-score updates and HUD text are not terminal evidence. After reporting an AI result, start a new factory/reporter run before the next simulation.
 
 The frozen record has exactly these contract fields:
 

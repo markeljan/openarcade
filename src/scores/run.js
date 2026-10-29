@@ -11,6 +11,7 @@ export function createRunReporter({gameId, ruleVersion, actor = 'ai', context = 
   if (typeof gameId !== 'string' || !gameId || !Number.isInteger(ruleVersion) || ruleVersion < 1) throw new TypeError('Game ID and rule version required');
   checkMode(actor, context);
   let current = null, paused = false, disposed = false;
+  function reportError(error, record) { try { Promise.resolve(onError?.(error, record)).catch(() => {}); } catch {} }
   function abandon() { current = null; }
   function beginRun(next = {}) {
     if (disposed) throw new Error('Score reporter disposed');
@@ -23,8 +24,8 @@ export function createRunReporter({gameId, ruleVersion, actor = 'ai', context = 
       if (typeof result !== 'string' || !result.trim()) return null;
       run.completed = true;
       const record = Object.freeze({schemaVersion: 1, runId: run.runId, gameId, ruleVersion, score, result: result.trim().slice(0, 80), durationMs: Math.round(run.elapsed * 1000), actor: run.actor, context: run.context, provenance: 'client-reported', submissionEligible: run.context !== 'gallery-preview'});
-      try { Promise.resolve(onResult?.(record)).catch(error => { try { onError?.(error, record); } catch {} }); }
-      catch (error) { try { onError?.(error, record); } catch {} }
+      try { Promise.resolve(onResult?.(record)).catch(error => reportError(error, record)); }
+      catch (error) { reportError(error, record); }
       return record;
     };
   }

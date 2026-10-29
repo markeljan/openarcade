@@ -22,6 +22,13 @@ test('pause excludes duration and rejects callbacks while paused', () => {
   const {reporter: r} = fixture(); const finish = r.beginRun(); r.advance(1); r.setPaused(true); r.advance(50);
   assert.equal(finish({score: 5}), null); r.setPaused(false); r.advance(.5); assert.equal(finish({score: 5}).durationMs, 1500);
 });
+test('transition invalidates before input release and destruction invoke game callbacks', () => {
+  const {reporter: r, results} = fixture(); const finish = r.beginRun();
+  const game = {input: () => finish({score: 9}), destroy: () => finish({score: 10})};
+  r.abandon(); game.input('ArrowUp', false); game.destroy();
+  r.beginRun({actor: 'human', context: 'manual-player'});
+  assert.equal(results.length, 0);
+});
 test('gallery reports without submission eligibility; intentional watch is eligible', () => {
   const {reporter: r} = fixture();
   assert.equal(r.beginRun()({score: 1}).submissionEligible, false);
