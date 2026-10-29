@@ -482,5 +482,252 @@ export default [
         "tests/s06-more-lifecycle.test.js"
       ]
     }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "lander",
+    "source": "src/extra-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "maze",
+    "source": "src/extra-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "successful solve only",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "successful solve only; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "asteroids",
+    "source": "src/extra-games.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "ship/asteroid collision",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "ship/asteroid collision; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "catch",
+    "source": "src/extra-additions.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "runner",
+    "source": "src/extra-additions.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "hurdle collision",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "hurdle collision; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "invaders",
+    "source": "src/extra-additions.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "24-enemy fleet cleared",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "24-enemy fleet cleared; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "target",
+    "source": "src/extra-additions.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "racer",
+    "source": "src/extra-additions.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "car collision",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "car collision; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "puzzle",
+    "source": "src/extra-additions.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "successful solve only",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "successful solve only; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "bubbles",
+    "source": "src/extra-additions.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "platform",
+    "source": "src/extra-additions.js",
+    "ruleVersion": 1,
+    "status": "complete",
+    "human": {
+      "terminal": "60 active seconds; earlier natural loss where present",
+      "provenance": "fresh human factory; abandoned before cleanup on restart/mode changes; completed callback once",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    },
+    "ai": {
+      "terminal": "60 active seconds; earlier natural loss where present; callback before a fresh AI factory",
+      "provenance": "same gameplay rules and metric; AI decisions only; gallery is not submission eligible; human local best untouched",
+      "tests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ]
+    }
   }
 ];

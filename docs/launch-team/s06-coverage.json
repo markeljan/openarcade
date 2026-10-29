@@ -1,6 +1,6 @@
 {
   "session": "OPENARCADE S06",
-  "status": "21/32 games instrumented and covered by focused terminal tests; browser/API limitations are explicit per row",
+  "status": "32/32 games instrumented and covered by focused terminal tests; browser/API limitations are explicit per row",
   "gameCount": 32,
   "games": [
     {
@@ -388,28 +388,32 @@
       "units": "landings",
       "order": "desc",
       "version": 1,
-      "boundary": "crash",
+      "boundary": "60 active seconds; earlier natural loss where present",
       "localBestKey": null,
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; callback not yet instrumented",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-extras-wrapper.test.js; terminal is 60 active seconds; earlier natural loss where present",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-extras-wrapper.test.js",
+      "focusedTests": [
+        "tests/s06-extras-wrapper.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "maze",
       "source": "src/extra-games.js",
-      "meaning": "completion",
-      "units": "completed maze",
-      "order": "desc",
+      "meaning": "active elapsed time for a completed solve",
+      "units": "milliseconds",
+      "order": "asc",
       "version": 1,
-      "boundary": "goal",
+      "boundary": "successful solve only",
       "localBestKey": null,
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; callback not yet instrumented",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-extras-wrapper.test.js; terminal is successful solve only",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-extras-wrapper.test.js",
+      "focusedTests": [
+        "tests/s06-extras-wrapper.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "asteroids",
@@ -418,13 +422,15 @@
       "units": "hits",
       "order": "desc",
       "version": 1,
-      "boundary": "collision",
+      "boundary": "ship/asteroid collision",
       "localBestKey": null,
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; callback not yet instrumented",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-extras-wrapper.test.js; terminal is ship/asteroid collision",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-extras-wrapper.test.js",
+      "focusedTests": [
+        "tests/s06-extras-wrapper.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "catch",
@@ -433,13 +439,16 @@
       "units": "fruit",
       "order": "desc",
       "version": 1,
-      "boundary": "none",
+      "boundary": "60 active seconds; earlier natural loss where present",
       "localBestKey": null,
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; callback not yet instrumented",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js; terminal is 60 active seconds; earlier natural loss where present",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js",
+      "focusedTests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "runner",
@@ -448,13 +457,16 @@
       "units": "hurdles",
       "order": "desc",
       "version": 1,
-      "boundary": "collision",
+      "boundary": "hurdle collision",
       "localBestKey": null,
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; callback not yet instrumented",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js; terminal is hurdle collision",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js",
+      "focusedTests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "invaders",
@@ -463,13 +475,16 @@
       "units": "hits",
       "order": "desc",
       "version": 1,
-      "boundary": "fleet cleared",
+      "boundary": "24-enemy fleet cleared",
       "localBestKey": null,
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; callback not yet instrumented",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js; terminal is 24-enemy fleet cleared",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js",
+      "focusedTests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "target",
@@ -478,13 +493,16 @@
       "units": "hits",
       "order": "desc",
       "version": 1,
-      "boundary": "none",
+      "boundary": "60 active seconds; earlier natural loss where present",
       "localBestKey": null,
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; callback not yet instrumented",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js; terminal is 60 active seconds; earlier natural loss where present",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js",
+      "focusedTests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "racer",
@@ -493,28 +511,34 @@
       "units": "cars",
       "order": "desc",
       "version": 1,
-      "boundary": "collision",
+      "boundary": "car collision",
       "localBestKey": null,
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; callback not yet instrumented",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js; terminal is car collision",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js",
+      "focusedTests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "puzzle",
       "source": "src/extra-additions.js",
-      "meaning": "completion",
-      "units": "completed puzzle",
-      "order": "desc",
+      "meaning": "active elapsed time for a completed solve",
+      "units": "milliseconds",
+      "order": "asc",
       "version": 1,
-      "boundary": "solved",
+      "boundary": "successful solve only",
       "localBestKey": null,
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; callback not yet instrumented",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js; terminal is successful solve only",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js",
+      "focusedTests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "bubbles",
@@ -523,13 +547,16 @@
       "units": "bubbles",
       "order": "desc",
       "version": 1,
-      "boundary": "none",
+      "boundary": "60 active seconds; earlier natural loss where present",
       "localBestKey": null,
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; callback not yet instrumented",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js; terminal is 60 active seconds; earlier natural loss where present",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js",
+      "focusedTests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "platform",
@@ -538,13 +565,16 @@
       "units": "crossings",
       "order": "desc",
       "version": 1,
-      "boundary": "fall",
+      "boundary": "60 active seconds; earlier natural loss where present",
       "localBestKey": null,
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; callback not yet instrumented",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js; terminal is 60 active seconds; earlier natural loss where present",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-extras-additions.test.js and tests/s06-extras-wrapper.test.js",
+      "focusedTests": [
+        "tests/s06-extras-additions.test.js",
+        "tests/s06-extras-wrapper.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     }
   ],
   "boundsPolicy": "Native finite score limits where derivable; MAX_SAFE_INTEGER is numeric precision for otherwise unbounded native counters and active durations, not a gameplay or anti-cheat claim. Timed round duration bounds allow final-frame tolerance."

@@ -356,5 +356,192 @@ export default [
       "minDurationMs": 0,
       "maxDurationMs": 60100
     }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "lander",
+    "source": "src/extra-games.js",
+    "metric": "successful landings; 60 active seconds; earlier natural loss where present",
+    "units": "landings",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 50,
+      "integer": true,
+      "minDurationMs": 0,
+      "maxDurationMs": 60100
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "maze",
+    "source": "src/extra-games.js",
+    "metric": "active elapsed time for a completed solve",
+    "units": "milliseconds",
+    "order": "asc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 9007199254740991,
+      "integer": true,
+      "minDurationMs": 0,
+      "maxDurationMs": 9007199254740991
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "asteroids",
+    "source": "src/extra-games.js",
+    "metric": "asteroids destroyed; ship/asteroid collision",
+    "units": "hits",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 9007199254740991,
+      "integer": true,
+      "minDurationMs": 0,
+      "maxDurationMs": 9007199254740991
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "catch",
+    "source": "src/extra-additions.js",
+    "metric": "net fruit caught; 60 active seconds; earlier natural loss where present",
+    "units": "fruit",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 300,
+      "integer": true,
+      "minDurationMs": 0,
+      "maxDurationMs": 60100
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "runner",
+    "source": "src/extra-additions.js",
+    "metric": "hurdles cleared; hurdle collision",
+    "units": "hurdles",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 9007199254740991,
+      "integer": true,
+      "minDurationMs": 0,
+      "maxDurationMs": 9007199254740991
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "invaders",
+    "source": "src/extra-additions.js",
+    "metric": "fleet hits; 24-enemy fleet cleared",
+    "units": "hits",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 24,
+      "integer": true,
+      "minDurationMs": 0,
+      "maxDurationMs": 9007199254740991
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "target",
+    "source": "src/extra-additions.js",
+    "metric": "targets hit; 60 active seconds; earlier natural loss where present",
+    "units": "hits",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 804,
+      "integer": true,
+      "minDurationMs": 0,
+      "maxDurationMs": 60100
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "racer",
+    "source": "src/extra-additions.js",
+    "metric": "cars passed; car collision",
+    "units": "cars",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 9007199254740991,
+      "integer": true,
+      "minDurationMs": 0,
+      "maxDurationMs": 9007199254740991
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "puzzle",
+    "source": "src/extra-additions.js",
+    "metric": "active elapsed time for a completed solve",
+    "units": "milliseconds",
+    "order": "asc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 9007199254740991,
+      "integer": true,
+      "minDurationMs": 0,
+      "maxDurationMs": 9007199254740991
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "bubbles",
+    "source": "src/extra-additions.js",
+    "metric": "bubbles popped; 60 active seconds; earlier natural loss where present",
+    "units": "bubbles",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 1446,
+      "integer": true,
+      "minDurationMs": 0,
+      "maxDurationMs": 60100
+    }
+  },
+  {
+    "schemaVersion": 1,
+    "gameId": "platform",
+    "source": "src/extra-additions.js",
+    "metric": "crossings; 60 active seconds; earlier natural loss where present",
+    "units": "crossings",
+    "order": "desc",
+    "version": 1,
+    "status": "complete",
+    "bounds": {
+      "minScore": 0,
+      "maxScore": 30,
+      "integer": true,
+      "minDurationMs": 0,
+      "maxDurationMs": 60100
+    }
   }
 ];

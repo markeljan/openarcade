@@ -22,3 +22,20 @@ test('S06 enables only matching, unique rules from its owned 32-game catalog', (
   assert.equal(snake.units, 'food');
   assert.equal(snake.order, 'desc');
 });
+
+test('S06 has complete matching terminal evidence for all 32 owned games', () => {
+  const ids = [...games, ...moreGames, ...extraGames].map(game => game.id);
+  assert.equal(rules.length, 32);
+  assert.equal(coverage.length, 32);
+  const registry = createScoreRegistry(rules, coverage);
+  assert.deepEqual(registry.checkCatalog(ids, {complete: true}), []);
+  for (const id of ['coin-maze','maze','puzzle']) {
+    assert.equal(registry.getRule(id).order, 'asc');
+    assert.equal(registry.getRule(id).units, 'milliseconds');
+  }
+  assert.equal(registry.getRule('invaders').bounds.maxScore, 24);
+  assert.equal(registry.getRule('breakout').bounds.maxScore, 36);
+  assert.equal(registry.getRule('balance-box').bounds.maxScore, 60);
+  assert.ok(registry.getRule('parcel-sort').bounds.minScore < 0);
+  assert.ok(registry.getRule('harvest-catch').bounds.minScore < 0);
+});
