@@ -43,7 +43,14 @@ export async function launchBrowser({url, origin: explicitOrigin, width = 1440, 
   const close = async () => {
     if (closed) return;
     closed = true;
-    if (ws?.readyState === WebSocket.OPEN) await Promise.race([call('Browser.close').catch(() => {}), sleep(1000)]);
+    // A unique user-data-dir prevents reuse of a user's browser. On Windows,
+    // terminate this spawned tree before the parent exits and strands helpers.
+    if (process.platform === 'win32' && proc.pid && proc.exitCode === null && proc.signalCode === null) {
+      await new Promise(resolve => {
+        const stop = spawn('taskkill', ['/PID', String(proc.pid), '/T', '/F'], {windowsHide: true, stdio: 'ignore'});
+        stop.on('error', resolve); stop.on('exit', resolve);
+      });
+    } else if (ws?.readyState === WebSocket.OPEN) await Promise.race([call('Browser.close').catch(() => {}), sleep(1000)]);
     ws?.close();
     for (const entry of pending.values()) { clearTimeout(entry.timer); entry.reject(new Error('S12 browser closed')); }
     pending.clear();

@@ -1,12 +1,12 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { resolve, join } from 'node:path';
+import { join } from 'node:path';
 import { launchBrowser } from './s12-browser.mjs';
+import { captureOutput, publishCapture, validateCapture } from './s12-publish.mjs';
 
 const args = process.argv.slice(2);
-const ids = args.filter(arg => !arg.startsWith('--'));
+const {ids, out} = captureOutput(args);
 const url = args.find(arg => arg.startsWith('--url='))?.slice(6) || 'http://127.0.0.1:4312/';
-const out = resolve(args.find(arg => arg.startsWith('--out='))?.slice(6) || 'public/social');
 const frameOption = args.find(arg => arg.startsWith('--frames='));
 const frames = frameOption ? Number(frameOption.slice(9)) : 240;
 if (!Number.isInteger(frames) || frames < 2 || frames > 3600) throw Error('Invalid --frames');
@@ -22,14 +22,21 @@ async function sourceFiles(dir) {
 }
 const sourceHashes = {};
 for (const file of await sourceFiles('src')) sourceHashes[file.replaceAll('\\','/')] = hash(await readFile(file));
-for (const file of ['scripts/s12-capture-page.js','scripts/s12-capture.mjs']) sourceHashes[file] = hash(await readFile(file));
+for (const file of ['scripts/s12-capture-page.js','scripts/s12-capture.mjs','scripts/s12-publish.mjs']) sourceHashes[file] = hash(await readFile(file));
 const browser = await launchBrowser({url: new URL('/scripts/s12-capture.html',url).href});
 try {
+  // Vite raw imports bind the browser's source checkout to this process's hashes.
+  // A separately running server must not silently capture another worker's files.
+  for (const [file, expected] of Object.entries(sourceHashes)) {
+    const served = await browser.run(`import(${JSON.stringify('/' + file + '?raw')}).then(module => module.default)`);
+    if (typeof served !== 'string' || hash(served) !== expected) throw Error(`Capture source differs from local checkout: ${file}`);
+  }
   await browser.run("import('/scripts/s12-capture-page.js').then(module => { window.captureHarness = module; return true; })");
   const catalog = await browser.run('window.captureHarness.catalog()');
   const selected = ids.length ? catalog.filter(game => ids.includes(game.id)) : catalog;
   const unknown = ids.filter(id => !selected.some(game => game.id === id));
   if (unknown.length) throw Error(`Unknown IDs: ${unknown.join(', ')}`);
+  const captureBatch = async out => {
   await mkdir(join(out,'games'), {recursive:true});
   const manifest = {version:1,games:{}};
   const provenance = {version:1, method:'Seeded real game factory autoplay rendered in Chromium canvas', frames, sources:sourceHashes, games:{}};
@@ -58,7 +65,10 @@ try {
     provenance.homepage = {games:chosen.map(game=>game.id),sha256:hash(mosaic)};
     await writeFile(join(out,'manifest.json'), JSON.stringify(manifest,null,2)+'\n');
     await writeFile(join(out,'provenance.json'), JSON.stringify(provenance,null,2)+'\n');
+    await validateCapture(out, selected.map(game => game.id), manifest, provenance);
   }
+  };
+  if (ids.length) await captureBatch(out);
+  else await publishCapture(out, captureBatch);
   console.log(`Captured ${selected.length} games${ids.length ? ' (partial run; no manifest written)' : ''}`);
 } finally { await browser.close(); }
-
