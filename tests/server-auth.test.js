@@ -21,7 +21,7 @@ test('verifies an RSA-signed session and returns only server-derived identity', 
 });
 
 test('rejects forged signatures, malformed tokens and missing bearer credentials', async () => {
-  for (const req of [request(token({}, otherKey)), request('nonsense'), { headers: { cookie: `__session=${token()}`, 'x-user-id': 'user_123' } }, { headers: { authorization: `Basic ${token()}` } }, { headers: { authorization: ['Bearer x'] } }]) {
+  for (const req of [request(token({}, otherKey)), request('nonsense'), request('bnVsbA.e30.AA'), request('eyJhbGciOiJSUzI1NiJ9.bnVsbA.AA'), { headers: { cookie: `__session=${token()}`, 'x-user-id': 'user_123' } }, { headers: { authorization: `Basic ${token()}` } }, { headers: { authorization: ['Bearer x'] } }]) {
     assert.deepEqual(await verify(req), no);
   }
 });

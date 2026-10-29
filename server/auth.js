@@ -11,6 +11,15 @@ const invalidTokenReasons = new Set([
 const unauthenticated = () => ({ status: 'unauthenticated' });
 const unavailable = () => ({ status: 'unavailable' });
 
+function hasJwtShape(token) {
+  if (token.length > 8192 || !/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(token)) return false;
+  try {
+    const [header, payload] = token.split('.').slice(0, 2).map(value => JSON.parse(Buffer.from(value, 'base64url').toString('utf8')));
+    return header && !Array.isArray(header) && typeof header === 'object' && header.alg === 'RS256' &&
+      payload && !Array.isArray(payload) && typeof payload === 'object';
+  } catch { return false; }
+}
+
 function configuration(env) {
   const issuer = env.CLERK_ISSUER?.trim();
   const parties = env.CLERK_AUTHORIZED_PARTIES?.split(',').map(value => value.trim());
@@ -33,7 +42,7 @@ export function createRequestIdentityVerifier(verify = verifyToken, env = proces
     const authorization = req?.headers?.authorization;
     if (typeof authorization !== 'string') return unauthenticated();
     const match = /^Bearer ([^\s]+)$/i.exec(authorization);
-    if (!match) return unauthenticated();
+    if (!match || !hasJwtShape(match[1])) return unauthenticated();
     const config = configuration(env);
     if (!config) return unavailable();
     try {
