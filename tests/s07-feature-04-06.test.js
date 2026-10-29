@@ -18,6 +18,14 @@ for(const [name,make,seconds] of [
 import {createFeatureGame4} from '../src/feature-games4.js';
 import {createFeatureGame5} from '../src/feature-games5.js';
 import {createHarness} from './s07-harness.js';
+for(const action of ['destroy','pause','restart'])test(`Gridiron timeout callback can ${action} without an orphan frame`,async()=>{
+ const {createFeatureGame6}=await import('../src/feature-games6.js');let h;
+ h=createHarness(createFeatureGame6,'gridiron-rush',{interactive:true,onAttract(){h.game[action]()}});
+ try{for(let i=0;i<40000&&!h.attract.length;i++)h.step(1,1000/30);
+  assert.equal(h.attract.length,1);assert.equal(h.results.length,1);
+  assert.equal(h.pendingFrames,action==='restart'?1:0);
+ }finally{h.cleanup()}
+});
 for(const [id,factory] of [['rune-swarm',createFeatureGame4],['deadline-deck',createFeatureGame5]]) test(`${id} wrapper abandons on takeover and re-arms on restart`,()=>{
  const h=createHarness(factory,id,{interactive:false});try{
   h.step(120);h.game.setInteractive(true);h.step(120);h.game.restart();
