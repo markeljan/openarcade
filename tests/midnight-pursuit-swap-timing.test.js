@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 
 const source = await readFile(new URL('../src/feature-games9.js', import.meta.url), 'utf8');
-const patched = source.replace("'./audio.js'", JSON.stringify(new URL('../src/audio.js', import.meta.url).href))
+const patched = source.replace("'./scores/run.js'",JSON.stringify(new URL('../src/scores/run.js',import.meta.url).href)).replace("'./audio.js'", JSON.stringify(new URL('../src/audio.js', import.meta.url).href))
   .replace('return {input(k,d){keys[k]=d},update(dt,auto){bust=', "return {fixture(h){heat=h;garage={x,y:410,vehicle:'bike'}},input(k,d){keys[k]=d},update(dt,auto){bust=");
 assert.notEqual(patched, source);
 const {pursuit} = await import(`data:text/javascript;base64,${Buffer.from(patched).toString('base64')}`);
