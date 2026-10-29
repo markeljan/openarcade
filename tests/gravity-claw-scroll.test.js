@@ -8,7 +8,7 @@ async function fixtureGame(){
  let src=await readFile(new URL('../src/feature-games15.js',import.meta.url),'utf8');
  src=src.replace("import {createGameAudio,unlockSound} from './audio.js';",'const createGameAudio=()=>({emit(){}}), unlockSound=()=>{};');
  src=src.replace('},reset,snapshot(){return structuredClone({p,props,enemies,projectiles,bolts,held,score,manualScore,height,zone,slots,bossKills',`},reset,fixture(direction){height=200; p={x:120,y:direction==='up'?95:380,vx:0,vy:direction==='up'?-85:85}; enemies=[];props=[];vents=[];projectiles=[{x:80,y:250,vx:60,vy:20,t:2,kind:'crate',mass:1,dmg:1,hp:2,bounces:0,hits:[]}];bolts=[{x:180,y:250,vx:40,vy:20}];},snapshot(){return structuredClone({p,props,enemies,projectiles,bolts,held,score,manualScore,height,zone,slots,bossKills`);
- return (await import('data:text/javascript;base64,'+Buffer.from(src).toString('base64'))).createGravityClawGame();
+ return (await import('data:text/javascript;base64,'+Buffer.from(src.replaceAll("'./scores/run.js'", JSON.stringify(new URL('../src/scores/run.js',import.meta.url).href))).toString('base64'))).createGravityClawGame();
 }
 for(const direction of ['up','down'])test(`manual ${direction} scroll preserves flying objects' world positions`,async()=>{
  const g=await fixtureGame();g.fixture(direction);g.input(direction==='up'?'ArrowUp':'ArrowDown',true);const a=g.snapshot();g.update(.02,false);const b=g.snapshot(),scroll=b.height-a.height;

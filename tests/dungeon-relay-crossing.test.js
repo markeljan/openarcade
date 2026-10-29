@@ -8,7 +8,7 @@ async function fixture(lap) {
   const anchor = '},reset,snapshot(){return structuredClone({grid,p,enemies,level,health,time,lapTime';
   assert.ok(src.includes(anchor));
   src = src.replace(anchor, `},reset,prepareCrossing(l){knownRooms=new Set([0,1,2,3,4,5]);grid=Array.from({length:8},()=>Array(10).fill('.'));p={x:4,y:3};shortcut={x:5,y:3,open:true};lap=l;boot=true;key=false;enemies=[];puzzles=[{kind:'boot',room:0,solved:true,item:{x:1,y:1},runes:[]},{kind:'key',room:1,solved:false,item:{x:7,y:3},runes:[{x:6,y:3,active:false}]}];discoveredRooms=new Set([0,1,2,3,4,5]);ward={phase:'calm',timer:0,next:9999,edge:null,count:0};score=manualScore=0;cool=manualMove=0},snapshot(){return structuredClone({grid,p,enemies,level,health,time,lapTime`);
-  const game = (await import('data:text/javascript;base64,' + Buffer.from(src).toString('base64'))).dungeon();
+  const game = (await import('data:text/javascript;base64,' + Buffer.from(src.replaceAll("'./scores/run.js'", JSON.stringify(new URL('../src/scores/run.js',import.meta.url).href))).toString('base64'))).dungeon();
   game.prepareCrossing(lap);
   return game;
 }
