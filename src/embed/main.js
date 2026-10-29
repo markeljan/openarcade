@@ -5,6 +5,9 @@ import { gameIdFromLocation, gameUrl } from '../social/urls.js';
 import { getSoundEnabled, setSoundEnabled, unlockSound } from '../audio.js';
 import { touchKeys } from './controls.js';
 import { fitEmbedStage } from './layout.js';
+import { createScoreClient } from '../scores/client.js';
+import { createPendingQueue } from '../scores/pending.js';
+import { createEmbedScores } from './guest-scores.js';
 
 const root = document.querySelector('#embed');
 const id = gameIdFromLocation(new URL(location.href.replace(/\.html(?=\?|#|$)/, '')));
@@ -25,6 +28,10 @@ if (!game || import.meta.env.VITE_EMBEDS_ENABLED === 'false') {
   stage.style.setProperty('--ratio', game.width / game.height);
   const start = root.querySelector('#start'), restart = root.querySelector('#restart'), pause = root.querySelector('#pause'), sound = root.querySelector('#sound'), touch = root.querySelector('.touch');
   for (const key of touchKeys(game)) { const button = document.createElement('button'); button.dataset.key = key; button.textContent = key === ' ' ? 'ACTION' : key === 'Shift' ? '⇧' : key.toUpperCase(); button.setAttribute('aria-label', key === ' ' ? 'Space action' : `${key} action`); root.querySelector('.touch-actions').append(button); }
+  let database; try { database=globalThis.indexedDB; } catch { database=null; }
+  const scores=createScoreClient({queue:createPendingQueue({indexedDB:database??null})});
+  const scoreOptions=createEmbedScores({scores,gameId:game.id});
+  root.insertBefore(scoreOptions.element,link);
   const disposeLayout=fitEmbedStage(root,stage,game.width/game.height);
   let player = null, disposed = false, playing = false, paused = false, unfocused = false;
   const send = (button, type) => canvas.dispatchEvent(new KeyboardEvent(type, { key: button.dataset.key, bubbles: true, cancelable: true }));
@@ -39,7 +46,7 @@ if (!game || import.meta.env.VITE_EMBEDS_ENABLED === 'false') {
   }
   setEmbedSound(false);
   sound.addEventListener('click', () => { setEmbedSound(!getSoundEnabled()); const on = getSoundEnabled(); sound.textContent = on ? 'Sound on' : 'Sound off'; sound.setAttribute('aria-pressed', String(on)); if (on) unlockSound(); });
-  const beginRun = () => { if (typeof player.beginRun === 'function') player.beginRun({interactive:true, context:'embed'}); else { player.restart(); player.setInteractive(true); } };
+  const beginRun = () => { scoreOptions.hide(); if (typeof player.beginRun === 'function') player.beginRun({interactive:true, context:'embed'}); else { player.restart(); player.setInteractive(true); } };
   start.addEventListener('click', () => { if (!player || playing) return; beginRun(); playing = true; paused = false; player.resume(); start.disabled = true; pause.disabled = false; status.textContent = 'Playing'; updateTouch(); canvas.focus(); unlockSound(); });
   restart.addEventListener('click', () => { if (!player) return; release(); beginRun(); playing = true; paused = false; player.resume(); start.disabled = true; pause.disabled = false; pause.textContent = 'Pause'; status.textContent = 'Playing'; updateTouch(); canvas.focus(); });
   pause.addEventListener('click', () => { if (!player || !playing) return; paused = !paused; release(); if (paused) player.pause(); else { player.resume(); canvas.focus(); } pause.textContent = paused ? 'Resume' : 'Pause'; status.textContent = paused ? 'Paused' : 'Playing'; updateTouch(); });
@@ -49,8 +56,8 @@ if (!game || import.meta.env.VITE_EMBEDS_ENABLED === 'false') {
   window.addEventListener('blur', () => { unfocused=true; release(); player?.pause(); });
   window.addEventListener('focus', () => { unfocused=false; if(!paused&&!document.hidden)player?.resume(); });
   document.addEventListener('visibilitychange', () => { if (!player) return; if (document.hidden) { release(); player.pause(); } else if (!paused&&!unfocused) player.resume(); });
-  window.addEventListener('pagehide', () => { disposed = true; disposeLayout(); release(); player?.destroy(); player = null; });
+  window.addEventListener('pagehide', () => { disposed = true; scoreOptions.dispose(); disposeLayout(); release(); player?.destroy(); player = null; });
   window.addEventListener('pageshow', event => { if (event.persisted && disposed) location.reload(); });
-  loadGameFactory(game).then(factory => { if (disposed) return; player = factory(canvas, game.id, { interactive: false, context: 'gallery-preview', audioEnabled: true, onAttract: () => { if (disposed) return; playing = false; paused = false; start.disabled = false; pause.disabled = true; pause.textContent = 'Pause'; status.textContent = 'Ready to play'; release(); updateTouch(); }, onResult: result => { if (disposed) return; const score = Number.isFinite(result?.score) ? ` Score: ${result.score}.` : ''; status.textContent = `${result?.result || 'Game completed.'}${score}`; } }); if (document.hidden||unfocused) player.pause(); status.textContent = 'Ready to play'; start.disabled = false; restart.disabled = false; }).catch(() => { if (!disposed) unavailable('Unable to load this game.'); });
+  loadGameFactory(game).then(factory => { if (disposed) return; player = factory(canvas, game.id, { interactive: false, context: 'gallery-preview', audioEnabled: true, onAttract: () => { if (disposed) return; playing = false; paused = false; start.disabled = false; pause.disabled = true; pause.textContent = 'Pause'; status.textContent = 'Ready to play'; release(); updateTouch(); }, onResult: result => { if (disposed) return; const score = Number.isFinite(result?.score) ? ` Score: ${result.score}.` : ''; if(scoreOptions.element.hidden||result?.actor==='human')status.textContent = `${result?.result || 'Game completed.'}${score}`; if(result?.actor==='human'&&result.context==='embed')scoreOptions.show(result); } }); if (document.hidden||unfocused) player.pause(); status.textContent = 'Ready to play'; start.disabled = false; restart.disabled = false; }).catch(() => { if (!disposed) unavailable('Unable to load this game.'); });
 }
 
