@@ -41,13 +41,23 @@ Official references: [Vercel environment variables](https://vercel.com/docs/envi
 
 ## Migration order and rollback safety
 
-1. Fetch merged S02/S03 prerequisites. Record PR URLs and exact merged SHAs; read their migration notes. Review the actual target branch and read-only table/column inventory before SQL execution.
-2. S01 sequences the existing `db/feedback-schema.sql`, then the merged S03 `db/comments-auth-schema.sql` and S02 `db/score-schema.sql` according to their documented dependencies. Do this on isolated Preview first. Filenames for unmerged work are planned contracts, not permission to run guessed SQL.
-3. Run each reviewed additive migration against the confirmed branch through the authenticated SQL editor/approved runner. Record filename, commit, branch ID and result, with no SQL credentials. Keep legacy feedback and anonymous comment history. Do not run destructive test cleanup against production.
+Merged prerequisites: [S03 comments PR #14](https://github.com/markeljan/openarcade/pull/14), commit `ba1155a908db41d1f9d5c45c237e627146bbaca3`, and [S02 scores PR #22](https://github.com/markeljan/openarcade/pull/22), commit `8356b167c926f02e7802f54c822f397f85309124`. These checksums cover the canonical Git blob bytes, not a text pipeline or a checkout with converted line endings:
+
+| File | Commit | Bytes | SHA-256 |
+| --- | --- | ---: | --- |
+| `db/feedback-schema.sql` | `8356b167` | 702 | `1a20a04b7388fd667174a90ed4f9b6539c4f9e3a12111b0de5df4f1371069fa3` |
+| `db/comments-auth-schema.sql` | `ba1155a9` | 1,160 | `bfbca0211bab8ba648db1679b1e75ac9df3ab0af52ffcd7f09a32063b35ace72` |
+| `db/score-schema.sql` | `8356b167` | 11,653 | `60dcafb3f015739c8efa46b62ada39c67b7ea957dcd290e62116a467017f0e43` |
+
+1. Fetch the merged commits above and verify the intended migration content. S01 confirms the actual database branch/endpoint identity and records read-only table/column inventory before SQL execution. A checksum proves file identity, not database isolation or execution.
+2. For a combined release, apply the feedback baseline if needed, then comments, then scores on confirmed isolated Preview first. Comments require the baseline and **must precede new-handler promotion** because reads reference the new columns. Scores are additive/idempotent, seed nothing, and have no dependency on the comments migration; an independent score-only migration can follow the baseline. See [feedback ordering](FEEDBACK.md) and [score ordering](SCORES-API.md).
+3. Run each reviewed additive migration against the confirmed branch through the authenticated SQL editor/approved runner. Record filename, commit, branch ID and result, with no SQL credentials. Verify existing object shapes/constraints too: `IF NOT EXISTS` provides repeat protection, not evidence that an existing schema matches the expected one. Keep legacy feedback and anonymous comment history. Do not run destructive test cleanup against production.
 4. S12/owners verify real Postgres behavior, two Clerk users, anonymous reads, authorization failures, concurrent rate limits, idempotent saves, score retention, and moderation. Mock API tests do not prove these.
 5. Only after S01 sequences it, apply the same reviewed additive changes to production. Keep old columns/tables compatible with the previous deployment. Deploy backend configuration before enabling UI writes; repeat read-only health checks.
 
-Deployment rollback changes code, not Neon data or Clerk settings. Leave additive schema in place. Do not drop new tables/columns or reverse migrations during an incident. Record the previous code version's behavior: an old anonymous-comment endpoint can bypass new comment policy, so S01 must assess that before rolling back an auth release. Receipt-secret or Clerk changes may also prevent an old build from working; test compatibility before promotion.
+Deployment rollback changes code, not Neon data or Clerk settings. Leave additive schema in place. Do not drop new tables/columns or reverse migrations during an incident. An old anonymous-comment endpoint bypasses the new sign-in policy and ignores `removed_at`, potentially re-exposing hidden comments. Prefer an authenticated known-good handler when those policies must remain; S01 coordinates any temporary feedback-write restriction with S03/S05. The score-write switch does not disable comments. Receipt-secret or Clerk changes may also prevent an old build from working; test compatibility before promotion.
+
+S01 preserved pre-auth snapshot `f1390d37dbc1ac78a376135e07fd754835564bb7` on `codex/openarcade-s01-release-batch02`. It is an incomplete frontend base, requiring reviewed mobile embed and applicable frame/focus fixes before any release. S01 alone may assemble and promote that independent frontend candidate. Main now includes the new handlers; its production-target Git builds remain held and must not be treated as isolated write staging. S11 has executed none of these remote migrations.
 
 ## Staging, promotion and recovery
 
@@ -86,7 +96,7 @@ Confirm the plan permits the chosen rollback target (Hobby limits rollback to th
 
 Use existing Vercel runtime logs for API errors; inspect the release deployment, route, status and request ID around the incident. S02/S03 should log safe error codes/request IDs, not authorization headers, payloads, SQL parameters or full exception objects. Clients must show unavailable states when storage/auth fails and preserve pending scores/drafts. Do not invent successful shared counts or saved results. Review 5xx and 429 trends after promotion; no new monitoring platform is required.
 
-Required owner checks: S02 bounds score bodies at 8 KiB on parsed/string paths and uses durable Postgres write limits; S03 bounds comment bodies on both paths and enforces durable account limits. Confirm their merged implementation/tests before declaring these controls active. Browser IDs, origin allowlists and local counters are not durable abuse prevention. Public scores are client-reported; signed receipts and limits do not prove gameplay or make rankings cheat-proof.
+Merged owner controls: S02 bounds score JSON at 8 KiB on parsed/string paths and uses durable Postgres IP/account write limits. S03 bounds feedback JSON at 2,048 UTF-8 bytes on both paths and limits account comments to 5/minute and 50/24-hour window. Deployed enforcement still requires confirmed target migrations and live checks. Anonymous votes and play counts retain the previous browser-ID behavior; do not claim those are account-verified or protected by the score/comment budgets. Browser IDs, origin allowlists and local counters are not durable abuse prevention. Public scores are client-reported; signed receipts and limits do not prove gameplay or make rankings cheat-proof.
 
 S02 distinguishes private pre-login results from explicitly named public guest entries. Check that an unclaimed pending account result stays out of public boards until authenticated claim, while the guest flow makes its chosen public name/score visible by explicit action. A canceled sign-in must preserve the pending result without publishing it. Do not treat every anonymous result as consent to a public guest listing.
 
@@ -101,7 +111,18 @@ RETURNING id, game_id, removed_at;
 -- If the wrong row/no row changed, issue ROLLBACK instead.
 ```
 
-Replace `123` with the reviewed exact ID. Coordinate score removal with S02's merged moderation SQL, including run/epoch invalidation so retries cannot resurrect the score. Do not guess score table names or delete all scores for a game. Record moderator/time/reason/record ID privately. Verify public reads omit the hidden record and unrelated records remain. Restoring content requires the same exact-record review; do not blanket-clear removal timestamps. Account deletion and database retention are separate from hiding public content.
+Replace `123` with the reviewed exact ID. For a score, inspect `run_id,game_id,rule_version,actor,removed_at` in `arcade_score_rows` for the exact reviewed run UUID, then use the merged operator function inside an explicit transaction:
+
+```sql
+BEGIN;
+SELECT arcade_score_set_removed('REVIEWED-RUN-UUID'::uuid, true);
+-- Inspect the boolean result and exact record before issuing COMMIT separately.
+-- On an unexpected/missing record, issue ROLLBACK.
+```
+
+The placeholder deliberately fails until replaced with a valid reviewed UUID. The function takes the board lock and increments its epoch so caches refresh; retained receipt markers prevent replay insertion. For a mistaken human removal, the same function with `false` restores it after review. AI restoration returns false: let a legitimate new run qualify rather than creating an unchecked eleventh row. Do not directly delete score rows/receipt markers or reset a whole game. Record moderator/time/reason/record ID privately, then verify public reads omit the hidden record and unrelated records remain. Account deletion and database retention are separate from hiding public content.
+
+After a confirmed target/migration, an authorized operator can run `SELECT arcade_score_cleanup();` during a maintenance check to remove expired limiter buckets and clear expired unclaimed private payload/claim hashes. This is an explicit operation, not a scheduled job added by S11. Pending claims expire after seven days. The function retains minimal run UUID/fingerprint/outcome markers for global idempotency, so total marker count grows with unique runs. Track row counts/database capacity without exporting user data; do not promise bounded total storage or deletion of public personal bests at claim expiry.
 
 ## Public data notice and repository audit
 
