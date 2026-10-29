@@ -1,0 +1,17 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "globalDependencies": ["vercel.json", ".env", ".env.*"],
+  "tasks": {
+    "build": {
+      "tags": ["ci"],
+      "env": ["VITE_*"],
+      "outputs": ["dist/**"]
+    },
+    "test:ci": {
+      "tags": ["ci", "ci:os:ubuntu"],
+      "dependsOn": ["build"],
+      "env": ["VITE_*"],
+      "outputs": []
+    }
+  }
+}

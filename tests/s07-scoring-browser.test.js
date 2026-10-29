@@ -1,3 +1,4 @@
+import {testBrowser} from '../scripts/browser-executable.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync,mkdtempSync,readFileSync,rmSync,cpSync,writeFileSync} from 'node:fs';
@@ -6,8 +7,7 @@ import {join} from 'node:path';
 import {spawn} from 'node:child_process';
 import {createServer} from 'vite';
 
-const candidates=process.platform==='win32'?['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe']:['/usr/bin/chromium','/usr/bin/chromium-browser','/usr/bin/google-chrome'];
-const executable=candidates.find(existsSync), sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const executable=testBrowser, sleep=ms=>new Promise(r=>setTimeout(r,ms));
 
 test('feature scoring lifecycle in a real browser',{skip:!executable,timeout:150000},async()=>{
  const root=mkdtempSync(join(tmpdir(),'s07-browser-source-')),profile=mkdtempSync(join(tmpdir(),'s07-browser-profile-'));

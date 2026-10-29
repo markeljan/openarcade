@@ -1,3 +1,4 @@
+import {testBrowser} from '../scripts/browser-executable.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync,mkdtempSync,readFileSync,rmSync,writeFileSync,mkdirSync} from 'node:fs';
@@ -6,8 +7,7 @@ import {join} from 'node:path';
 import {spawn} from 'node:child_process';
 import {createServer} from 'vite';
 
-const candidates=process.platform==='win32'?['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe']:['/usr/bin/chromium','/usr/bin/chromium-browser','/usr/bin/google-chrome'];
-const executable=candidates.find(existsSync),sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const executable=testBrowser,sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const page=`<!doctype html><meta charset="utf-8"><style>body{margin:0;background:#10151c}canvas{display:block;width:320px;height:720px}</style><canvas id="game"></canvas><script type="module">
 const modules=await Promise.all(Array.from({length:10},(_,i)=>import('/src/feature-games'+(i+21)+'.js')));
 let now=0,seq=0,pending=new Map(),game,records=[];

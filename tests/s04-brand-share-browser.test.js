@@ -1,3 +1,4 @@
+import {testBrowser} from '../scripts/browser-executable.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync,mkdtempSync,readFileSync,rmSync,cpSync,copyFileSync} from 'node:fs';
@@ -8,7 +9,7 @@ import {createServer as createPortServer} from 'node:net';
 import {createServer} from 'vite';
 import {fileURLToPath} from 'node:url';
 
-const executable=(process.platform==='win32'?['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe']:['/usr/bin/chromium','/usr/bin/chromium-browser','/usr/bin/google-chrome']).find(existsSync);
+const executable=testBrowser;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 test('brand, sharing and feedback controls preserve player behavior',{skip:!executable,timeout:150000},async()=>{
  const probe=createPortServer();await new Promise(r=>probe.listen(0,'127.0.0.1',r));const port=probe.address().port;await new Promise(r=>probe.close(r));

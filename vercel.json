@@ -1,5 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "ci": {
+    "bootstrapping": {
+      "installCommand": "npm ci",
+      "installEnv": {}
+    }
+  },
   "cleanUrls": true,
   "headers": [
     {"source":"/((?!embed/).*)","headers":[
