@@ -35,7 +35,7 @@ export function createCommentComposer({input, button, status, auth, getCommentDr
     status.textContent = '';
     render();
     try {
-      await submit(id, raw.trim());
+      await submit(id, raw);
       if (disposed) return;
       clearCommentDraft(id, raw);
       if (generation === view && gameId === id && input.value === raw) input.value = '';

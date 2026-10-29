@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createCommentComposer} from '../src/ui/comment-composer.js';
+import {createEngagementClient, createCommentDraftStore} from '../src/engagement.js';
 
 function fixture(initial='signed-in') {
   let listener, state={status:initial}, handler, resolve, reject;
@@ -14,11 +15,31 @@ test('signed out drafts survive sign-in and game changes without automatic posti
  const f=fixture('signed-out');f.composer.setGame('a');f.type('  hello  ');await f.composer.submit();assert.equal(f.signIns(),1);assert.deepEqual(f.calls,[]);f.auth('signed-in');assert.equal(f.input.value,'  hello  ');f.composer.setGame('b');f.type('other');f.composer.setGame('a');assert.equal(f.input.value,'  hello  ');assert.equal(f.button.textContent,'Post');f.composer.dispose();
 });
 test('acknowledgement clears only the submitted unchanged draft',async()=>{
- const f=fixture();f.composer.setGame('a');f.type(' first ');const p=f.composer.submit();assert.deepEqual(f.calls,[['a','first']]);f.type('new text');f.resolve();await p;assert.equal(f.input.value,'new text');assert.equal(f.drafts.get('a'),'new text');const q=f.composer.submit();f.resolve();await q;assert.equal(f.input.value,'');assert.equal(f.drafts.has('a'),false);
+ const f=fixture();f.composer.setGame('a');f.type(' first ');const p=f.composer.submit();assert.deepEqual(f.calls,[['a',' first ']]);f.type('new text');f.resolve();await p;assert.equal(f.input.value,'new text');assert.equal(f.drafts.get('a'),'new text');const q=f.composer.submit();f.resolve();await q;assert.equal(f.input.value,'');assert.equal(f.drafts.has('a'),false);
 });
 test('late acknowledgement and error do not mutate a different game view',async()=>{
  const f=fixture();f.composer.setGame('a');f.type('old');const p=f.composer.submit();f.composer.setGame('b');f.type('new');f.resolve();await p;assert.equal(f.input.value,'new');assert.equal(f.drafts.has('a'),false);assert.equal(f.button.disabled,false);f.composer.setGame('a');f.type('again');const q=f.composer.submit();f.composer.setGame('b');f.reject({status:503});await q;assert.equal(f.status.textContent,'');assert.equal(f.input.value,'new');assert.equal(f.drafts.get('a'),'again');
 });
 test('authentication and errors leave drafts editable and provide useful status',async()=>{
  const f=fixture('loading');f.composer.setGame('a');f.type('draft');assert.equal(f.button.disabled,true);f.auth('unavailable');assert.equal(f.input.value,'draft');f.auth('signed-in');for(const [code,pattern] of [[401,/Sign-in required/],[503,/unavailable/],[429,/later/],[500,/Could not post/]]){const p=f.composer.submit();f.reject({code});await p;assert.match(f.status.textContent,pattern);assert.equal(f.input.value,'draft')}f.composer.dispose();
+});
+
+
+test('real engagement client preserves raw drafts across failures and reload, then clears only matching acknowledgements', async()=>{
+ const values=new Map();
+ const storage={getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value),removeItem:key=>values.delete(key)};
+ const state={status:'signed-in',user:{id:'one'}};
+ const auth={getState:()=>state,subscribe(fn){fn(state);return ()=>{}}};
+ let tokenMode='fail', apiMode='fail', requests=[], resolveResponse;
+ function mount(){
+  const store=createCommentDraftStore({storage:()=>storage});
+  const client=createEngagementClient({drafts:store,storage:()=>storage,randomUUID:()=> '12345678-1234-4123-8123-123456789abc',getAuthState:()=>state,getToken:async()=>{if(tokenMode==='fail')throw Error('token');return 'token'},fetch:async(_url,options)=>{requests.push(JSON.parse(options.body));if(apiMode==='fail')return {ok:false,status:503,json:async()=>({error:'offline'})};if(apiMode==='pending')return new Promise(resolve=>{resolveResponse=resolve});return {ok:true,json:async()=>({comments:[]})}}});
+  let handler;const input={value:'',addEventListener(_type,fn){handler=fn},removeEventListener(){handler=null}},button={},status={};
+  const composer=createCommentComposer({input,button,status,auth,getCommentDraft:id=>store.get(id),saveCommentDraft:(id,raw)=>store.save(id,raw),clearCommentDraft:(id,raw)=>store.clear(id,raw),submit:(id,raw)=>client.addComment(id,raw),onSignIn:()=>{}});
+  composer.setGame('snake');return {composer,input,type(value){input.value=value;handler()}};
+ }
+ let f=mount();f.type('  draft text  ');await f.composer.submit();assert.equal(requests.length,0);f.composer.dispose();
+ f=mount();assert.equal(f.input.value,'  draft text  ');tokenMode='ok';await f.composer.submit();assert.equal(requests.at(-1).text,'draft text');f.composer.dispose();
+ f=mount();assert.equal(f.input.value,'  draft text  ');apiMode='ok';await f.composer.submit();assert.equal(f.input.value,'');f.composer.dispose();f=mount();assert.equal(f.input.value,'');
+ f.type('  original  ');apiMode='pending';const pending=f.composer.submit();while(!resolveResponse)await Promise.resolve();assert.equal(requests.at(-1).text,'original');f.type('  newer  ');resolveResponse({ok:true,json:async()=>({comments:[]})});await pending;assert.equal(f.input.value,'  newer  ');f.composer.dispose();f=mount();assert.equal(f.input.value,'  newer  ');f.composer.dispose();
 });
