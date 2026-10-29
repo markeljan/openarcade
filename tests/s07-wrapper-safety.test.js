@@ -65,3 +65,21 @@ for (const action of ['restart','pause','destroy']) {
     } finally {h.cleanup();}
   });
 }
+
+for (const [factory,id] of [[createFeatureGame6,'gridiron-rush'],
+  [createFeatureGame8,'grave-garden'],[createFeatureGame10,'frog-convoy']]) {
+  for(const action of ['destroy','pause','restart']) test(`${id}: result timeout can ${action} the wrapper safely`,()=>{
+    let h;
+    h=createHarness(factory,id,{interactive:true,onAttract(){h.game[action]();}});
+    try {
+      for(let i=0;i<120000&&!h.attract.length;i++)h.step(1,1000/30);
+      assert.equal(h.attract.length,1,'real result timeout must return to AI');
+      assert.equal(h.results.length,1,'completed human run reports once');
+      assert.equal(h.pendingFrames,action==='restart'?1:0,'callback must leave only its own frame');
+      if(action==='destroy')assert.equal(h.handlers.size,0);
+      if(action==='pause'){
+        h.game.resume();h.step(2);assert.equal(h.pendingFrames,1);
+      }
+    } finally {h.cleanup();}
+  });
+}
