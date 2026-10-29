@@ -21,9 +21,11 @@ test('native share starts synchronously with the selected title and playable URL
   const { control, statuses } = setup({ share(data) { calls.push(data); return pending.promise; } });
   const result = control.share();
   assert.deepEqual(calls, [{ title: 'Snake', url }]);
+  assert.deepEqual(statuses.at(-1), { message: 'Share or copy this game link:', url });
   pending.resolve();
   await result;
   assert.equal(statuses.at(-1).message, 'Share opened.');
+  assert.equal(statuses.at(-1).url, url);
 });
 
 test('unsupported native sharing copies the link; cancellation does not copy', async () => {
@@ -37,6 +39,7 @@ test('unsupported native sharing copies the link; cancellation does not copy', a
   await second.control.share();
   assert.deepEqual(copied, [url]);
   assert.equal(second.statuses.at(-1).message, 'Sharing cancelled.');
+  assert.equal(second.statuses.at(-1).url, url);
 });
 
 test('native failure falls back to clipboard, and unavailable or rejected clipboard exposes the URL', async () => {

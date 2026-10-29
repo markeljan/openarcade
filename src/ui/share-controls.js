@@ -17,17 +17,18 @@ export function createShareControls({ navigator: nav = globalThis.navigator, onS
     const token = ++revision;
     const active = () => !disposed && token === revision;
     const report = (message, url = '') => { if (active()) onStatus({ message, url }); };
+    report('Share or copy this game link:', current.url);
 
     if (typeof nav?.share === 'function') {
       try {
         // No asynchronous work precedes this call, preserving transient activation.
         await nav.share({ title: current.game.name, url: current.url });
-        report('Share opened.');
+        report('Share opened.', current.url);
         return;
       } catch (error) {
         if (!active()) return;
         if (error?.name === 'AbortError') {
-          report('Sharing cancelled.');
+          report('Sharing cancelled.', current.url);
           return;
         }
       }
