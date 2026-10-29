@@ -4,13 +4,13 @@ Updated 2026-10-29. S01 alone merges and releases. This execution record superse
 
 ## Integrated source
 
-PRs **#1–#36 and #38 are merged** in the public [markeljan/openarcade](https://github.com/markeljan/openarcade) repository. The tested implementation baseline is `0d9789a5236bfb7eb9256da1267628bbf7f76577`, the squash of source `7cfa81162ed74a53e85b561ebc51b70cdcf4b8e6`. Main subsequently reached `63dc4ecb7d8dfd2e6b75345265d6a2a9fdb95e95` through operations-only PR #38.
+PRs **#1–#40 are merged** in the public [markeljan/openarcade](https://github.com/markeljan/openarcade) repository. The tested game implementation baseline is `0d9789a5236bfb7eb9256da1267628bbf7f76577`, the squash of source `7cfa81162ed74a53e85b561ebc51b70cdcf4b8e6`. Main subsequently reached `2455170dd61932b8a0f7ca13a6270f557701f7ff` with the separately tested CI contribution, then `24e0567119430b3ee6315e63b722d424d529c0a9` with the narrow score-client cookie correction. Intervening PRs #38/#39 update operations and the launch record.
 
 All **112 games** have explicit versioned numeric rules and paired human/AI terminal and provenance evidence: S06 32; S07–S10 20 each. The final registry joins exactly 112 unique catalog IDs. Scores are never inferred from canvas text. Scores API/schema, private pending results, account claims, explicit guest names, qualifying AI retention, Clerk comment protection, canonical routes, standalone embeds, branding, repository links and all actual-game social images are merged.
 
-Final `npm test`: **3,388 pass, 0 fail, 1 gated database skip**. `npm run build` passed. The skipped database test was separately run against confirmed isolated Neon: **10 pass, 0 fail, 0 skipped**, including 24 concurrent AI submissions, top-10 pruning, private concurrent claims, expiry, moderation epochs and atomic limits. The large lazy Clerk chunk warning is nonblocking.
+Full game implementation `npm test`: **3,388 pass, 0 fail, 1 gated database skip**. `npm run build` passed. The skipped database test separately passed against confirmed isolated Neon: **10 pass, 0 fail, 0 skipped**, including 24 concurrent AI submissions, top-10 pruning, private concurrent claims, expiry, moderation epochs and atomic limits. After the last narrow cookie correction, S01 reran **27 focused client/API/server-auth tests, all pass**; no new full-suite or hosted recovery claim is made for that correction. The large lazy Clerk chunk warning is nonblocking.
 
-A newer direct user request prepares Vercel CI. Its owner works on `codex/vercel-ci` in the original checkout. Vercel's setup reports CI unavailable for public repositories; its initial hosted invocation resolved no jobs. PR #37 therefore retains an upgraded GitHub Actions fallback using the same task graph. These changes are independent of the source results above and remain under separate validation. S01 reviews the package/lock change serially.
+A newer direct user request prepares Vercel CI. Its owner contributed `codex/vercel-ci` from the original checkout. Vercel's setup reports CI unavailable for public repositories; its initial invocation resolved no jobs. Merged PR #37 therefore retains an upgraded GitHub Actions fallback using the same task graph. Its exact reviewed head `801069937c455881d874e60fe275704b24bb2b58` passes both the full local graph and actual Ubuntu run [40937927986](https://github.com/markeljan/openarcade/actions/runs/40937927986): 3,388 pass, 0 fail, one isolated-DB gate, build pass. The test task is uncached and requires a built embed plus pinned Chromium startup. Package/lock changes merged serially; no repository visibility or hosting-plan change.
 
 ## Session registry
 
@@ -19,8 +19,8 @@ All thread IDs are local. S01 uses the managed worktree `C:\Users\Marke\.codex\w
 | Session | Thread ID | Delivery | Ownership / prerequisite | Status |
 | --- | --- | --- | --- | --- |
 | S01 | `01a18389-4776-7462-9275-82f39882367e` | `codex/openarcade-s01-closeout`; PRs #4, #15, #36 | Plans/contracts/tracker, review, integration, release; reviewed worker PRs | All game batches merged; final provider checks/record |
-| S02 | `01a18389-c482-7852-a76a-6225d4d05bef` | PRs #1, #22, #35 | Scores client/API/store/schema; S03 identity, S05 catalog | Merged and closed |
-| S03 | `01a18389-ef60-7932-adde-d5867563c3b2` | PRs #3, #14 | Browser/server auth, comments/schema; S11 environment | Code merged; existing-app hosted verification active |
+| S02 | `01a18389-c482-7852-a76a-6225d4d05bef` | PRs #1, #22, #35, #40 | Scores client/API/store/schema; S03 identity, S05 catalog | Merged; final cookie policy focused checks pass |
+| S03 | `01a18389-ef60-7932-adde-d5867563c3b2` | PRs #3, #14 | Browser/server auth, comments/schema; S11 environment | Code merged; bounded provider pass ended, positive login/recovery unverified |
 | S04 | `01a1838a-2876-7d22-b7bf-9984bd68e9fc` | PRs #5, #16, #33 | main.js/style.css/player UI; S02/S03/S05 hooks | Merged and closed |
 | S05 | `01a1838a-8bea-7a00-8503-0c87d4d017bf` | PRs #6, #11, #28, #32, #34 | Catalog/loader, routes/build/metadata, embed; S04/S02 hooks | Merged and closed |
 | S06 | `01a1838b-0110-7081-b8bb-378f0582e2c2` | PRs #2, #8, #27, #29, #30 | Four legacy modules/32 games; S02 contract, Snake first | All 32 merged and closed |
@@ -37,7 +37,7 @@ Two duplicate S11-labelled chats (`01a183a5-08c8-7ca0-b891-fab7c75390ec`, `01a18
 
 S02 contract #1 and S03 identity #3 preceded consumers. S04 branding #5 and S05 catalog #6 merged independently. Snake #8 was the first real-game slice. S02 API/store #22 and S03 browser/comments #14 fed final UI #33, guest/embed #34 and denied-storage fix #35. Game shards merged independently; shared S07/S08 module changes were reconciled serially. PR #36 corrects catalog/test parity without changing gameplay.
 
-Only S03 added launch runtime dependencies, through serialized exact Clerk backend/browser versions. No Next.js migration, LLM dependency, duplicate database service or new deployment pipeline was introduced for the launch. The newer user-requested Vercel CI migration is a separately reviewed development dependency window.
+Only S03 added launch runtime dependencies, through serialized exact Clerk backend/browser versions. No Next.js migration, LLM dependency or duplicate database service was introduced. The newer user-requested CI contribution added exact Turbo/Playwright development dependencies in its separately reviewed window; the existing Git deployment workflow and release hold remain.
 
 Frozen contracts are in [CONTRACTS.md](CONTRACTS.md): fresh factory-bound result callbacks, actor/context/run/version provenance, abandon before release/destructor, private pending human results, per-game/version AI top 10, exact acknowledgement, Clerk-required comment writes, canonical `/games/:id`, isolated `/embed/:id`, actual-game image paths. Scores are client-reported, never cheat-proof.
 
@@ -58,10 +58,10 @@ Frozen contracts are in [CONTRACTS.md](CONTRACTS.md): fresh factory-bound result
 | --- | --- |
 | All 112 scored games | Complete paired contracts/test links and final card/registry check pass. Some terminal fixtures shorten play or initialize near the terminal; not 112 full human playthroughs. |
 | AI ranking, claims and persistence | Actual isolated Neon 10/10; mocks alone were not accepted. Hosted browser-to-API identity/recovery verification still required. |
-| Clerk comments/account recovery | RSA/auth, draft/queue and actual Chromium storage checks pass; fresh Preview two-user/reload/expired-session behavior still required. |
-| Routes/embed/cards | 112 real-game PNGs plus homepage; local gallery/iframe/HTTP/responsive checks documented at earlier revisions; final asset/contract check passes. Hosted sampling partial, with explicit timeouts. |
+| Clerk comments/account recovery | RSA/auth, draft/queue and actual Chromium storage checks pass. Fresh protected Preview API reads returned 200; spoofed identity/malformed bearer returned 401, oversized UTF-8 413 and overlong comments 400, with no unauthorized content stored. Two Development test users exist; neither completed sign-in and no authorized comment was posted. A manual result reappeared after reload but UI reported memory-only storage and recovery unavailable. Positive hosted identity/recovery remains unverified. |
+| Routes/embed/cards | 112 real-game PNGs plus homepage; local gallery/iframe/HTTP/responsive checks documented at earlier revisions; final asset/contract check passes. Fresh 9e8ea1 Preview serves Snake canonical HTML 200, embed 200, PNG 200 and unknown-game 404 with expected headers; broad hosted sampling remains partial. |
 | X clients | No actual X-client evidence. Image/link and standalone-embed fallbacks exist; X playback is unverified. |
-| Production release | Production schema/config, tested production-configured build, same-build promotion, public auth/persistence/card/embed/log checks and final rollback record remain required. |
+| Production release | Deferred at session closeout: production schema/config, tested production-configured build, same-build promotion, public auth/persistence/card/embed/log checks and final rollback record. Current live deployment stays held. |
 
 Known held-live rollback candidate is `dpl_HRKB1bNxonyQ81UyXR1icN9DPCWS` (`6f27b944`). Command template: `vercel rollback <known-good-deployment> --scope w3gpt`, after verifying project/aliases. SQL is additive and rollback does not undo data. After authenticated comments ship, use an authenticated known-good handler or disable writes: the older handler permits anonymous posting and ignores moderation markers.
 
