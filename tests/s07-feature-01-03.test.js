@@ -1,0 +1,30 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {machineHunt,meatLad} from '../src/feature-games.js';
+import {soccer,race} from '../src/feature-games2.js';
+import {surfers,wordfall} from '../src/feature-games3.js';
+
+for (const [name, make] of [
+ ['machine-hunt',finish=>machineHunt({}, {finish})],
+ ['meat-lad',finish=>meatLad({}, {finish,fixture:{lives:1,deaths:4,player:{y:900}}})],
+ ['turbo-arena',finish=>soccer({},undefined,{finish})],
+ ['jelly-dash',finish=>race({}, {finish})],
+ ['side-surfers',finish=>surfers({}, {finish})],
+ ['word-fall',finish=>wordfall({}, {finish})],
+]) for (const auto of [false,true]) test(`${name} reports one ${auto?'AI':'human'} terminal result`,()=>{
+ const original=Math.random;let seed=name==='machine-hunt'&&auto?71:42;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/2**32);
+ try {const results=[],game=make(result=>results.push(result));if(name==='machine-hunt')game.input('ArrowUp',true);let mode=auto&&name!=='machine-hunt';for(let i=0;i<60*(name==='side-surfers'?900:220)&&!results.length;i++){if(name==='machine-hunt'&&auto&&game.snapshot().hero.hp<=1.5){mode=true;game.input('ArrowUp',false)}game.update(1/60,mode);}assert.equal(results.length,1,`${name} did not end`);assert.ok(Number.isInteger(results[0].score)&&results[0].score>=0);assert.ok(results[0].result);for(let i=0;i<600;i++)game.update(1/60,auto);assert.equal(results.length,1);} finally {Math.random=original}
+});
+import {createHarness} from './s07-harness.js';
+import {createFeatureGame} from '../src/feature-games.js';
+import {createFeatureGame2} from '../src/feature-games2.js';
+import {createFeatureGame3} from '../src/feature-games3.js';
+for(const [factory,id] of [[createFeatureGame,'machine-hunt'],[createFeatureGame,'meat-lad'],[createFeatureGame2,'turbo-arena'],[createFeatureGame2,'jelly-dash'],[createFeatureGame3,'side-surfers'],[createFeatureGame3,'word-fall']]) test(`${id} wrapper resets actors and owns one frame`,()=>{const h=createHarness(factory,id);try{h.step(90);h.game.setInteractive(true);assert.equal(h.canvas.tabIndex,0);h.game.beginRun({interactive:false,context:'watch-player'});assert.equal(h.canvas.tabIndex,-1);h.step(20);assert.equal(h.pendingFrames,1);h.game.pause();assert.equal(h.pendingFrames,0);h.game.resume();assert.equal(h.pendingFrames,1);h.game.destroy();assert.equal(h.pendingFrames,0);assert.doesNotThrow(()=>h.game.restart());}finally{h.cleanup()}});
+test('synchronous result restart leaves one frame and a fresh human run',()=>{let h;h=createHarness(createFeatureGame3,'word-fall',{interactive:true,onResult(){h.game.restart()}});try{for(let i=0;i<18000&&!h.results.length;i++)h.step();assert.equal(h.results.length,1);assert.equal(h.results[0].actor,'human');assert.equal(h.pendingFrames,1);h.step(2);assert.equal(h.pendingFrames,1);h.game.pause();assert.equal(h.pendingFrames,0)}finally{h.cleanup()}});
+test('AI match completions create fresh runs and retain one animation frame',()=>{const h=createHarness(createFeatureGame2,'turbo-arena',{context:'watch-player'});try{for(let i=0;i<60*600&&h.results.length<2;i++)h.step();assert.ok(h.results.length>=2);assert.notEqual(h.results[0].runId,h.results[1].runId);assert.equal(h.results[0].actor,'ai');assert.equal(h.results[0].context,'watch-player');assert.equal(h.pendingFrames,1);assert.equal(h.writes.length,0)}finally{h.cleanup()}});
+test('Machine Hunt fresh AI factory reports a real fatal mortar hit',()=>{const h=createHarness(createFeatureGame,'machine-hunt',{context:'watch-player',initialState:{hero:{hp:1},reticles:[{x:160,y:550,time:0}]}},{seed:71});try{h.step(1);assert.equal(h.results.length,1);assert.equal(h.results[0].actor,'ai');assert.equal(h.results[0].context,'watch-player');assert.ok(h.results[0].score>=0);assert.equal(h.writes.length,0);assert.equal(h.pendingFrames,1)}finally{h.cleanup()}});
+
+test('Machine Hunt holds the AI terminal frame before beginning a fresh run',()=>{const h=createHarness(createFeatureGame,'machine-hunt',{context:'watch-player',initialState:{hero:{hp:1},reticles:[{x:160,y:550,time:0}]}},{seed:71});try{h.step();assert.equal(h.results.length,1);h.step(60);assert.equal(h.results.length,1);assert.ok(h.labels.includes('HUNT ENDED'));assert.equal(h.pendingFrames,1);for(let i=0;i<120&&h.results.length<2;i++)h.step();assert.equal(h.results.length,2);assert.notEqual(h.results[0].runId,h.results[1].runId);assert.equal(h.pendingFrames,1)}finally{h.cleanup()}});
+for(const [factory,id] of [[createFeatureGame2,'turbo-arena'],[createFeatureGame3,'word-fall']]) test(`${id} ignores Enter while paused on a result`,()=>{const h=createHarness(factory,id,{interactive:true});try{for(let i=0;i<60*300&&!h.results.length;i++)h.step();assert.equal(h.results.length,1);h.game.pause();h.press('Enter');assert.equal(h.pendingFrames,0);h.game.resume();h.step(2);assert.equal(h.results.length,1);assert.ok(h.labels.includes(id==='turbo-arena'?'MATCH OVER':'GAME OVER'));assert.equal(h.pendingFrames,1)}finally{h.cleanup()}});
+test('Jelly Dash AI completes its verdict before reporting and starting a fresh race',()=>{const h=createHarness(createFeatureGame2,'jelly-dash',{context:'watch-player'});try{let eliminated=false,advanced=false;for(let i=0;i<60*300&&!h.results.length;i++){h.step();const s=h.game.snapshot();if(s.player?.eliminated&&!eliminated){eliminated=true;assert.equal(h.results.length,0)}if(eliminated&&s.phase==='OVER')advanced=true}assert.ok(eliminated);assert.ok(advanced);assert.equal(h.results.length,1);assert.equal(h.results[0].actor,'ai');assert.equal(h.pendingFrames,1)}finally{h.cleanup()}});
+test('Jelly Dash saves local best before a result callback can restart',()=>{let h,observed;h=createHarness(createFeatureGame2,'jelly-dash',{interactive:true,onResult(record){observed=h.storage.getItem('miniarcade:best:jelly-dash');assert.equal(Number(observed),record.score);h.game.restart()}});try{for(let i=0;i<60*200&&!h.results.length;i++)h.step();assert.equal(h.results.length,1);assert.notEqual(observed,null);assert.equal(h.storage.getItem('miniarcade:best:jelly-dash'),observed);assert.equal(h.pendingFrames,1)}finally{h.cleanup()}});
