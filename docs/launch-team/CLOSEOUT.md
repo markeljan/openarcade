@@ -1,0 +1,121 @@
+# OPENARCADE S01 integration and release record
+
+Recorded 2026-10-29. S01 coordinated the 12 launch owners, reviewed and merged their implementation, and retained sole production release authority. The original planning directory was copied from the original checkout and published in bootstrap PR #4 without discarding unrelated work.
+
+## Delivered source and coverage
+
+The game implementation at `0d9789a5236bfb7eb9256da1267628bbf7f76577` contains the tested tree from `7cfa81162ed74a53e85b561ebc51b70cdcf4b8e6`. PRs #38/#39 update operations/launch documentation. The separately reviewed and fully tested CI contribution #37 merged at `2455170dd61932b8a0f7ca13a6270f557701f7ff`; the narrow score-client cookie correction #40 then merged at `24e0567119430b3ee6315e63b722d424d529c0a9`. Main remains held away from production domains until configuration and deployed checks are ready.
+
+All 112 catalog IDs have complete matching versioned rules and explicit human/AI evidence. Authoritative joined artifacts are `src/scores/rules/s06.js` through `s10.js` and `src/scores/coverage/s06.js` through `s10.js`. S06 covers 32 legacy games; each S07–S10 shard covers 20. `node scripts/s12-coverage.mjs --revision=7cfa81162ed74a53e85b561ebc51b70cdcf4b8e6` reports 112 catalog/112 complete paired contracts, no missing/extra social images and no unsupported scoring or registry problems. Each referenced test exists; the coverage command itself does not execute those tests.
+
+Implemented product behavior includes fresh run/actor provenance; private human results persisted before login; exact acknowledged claims; truthful memory-storage fallback and manual recovery; explicit four-letter guest names; atomic per-game/version AI top-10 retention with stable server names; Clerk-required new comments with historical anonymous comments retained; canonical `/games/:id`, legacy links and isolated `/embed/:id`; genuine unknown-route 404s; actual-game social cards; touch/input/restart/pause/audio/cleanup preservation and public repository links. Public scores remain client-reported, not verified gameplay.
+
+## Validation and limits
+
+| Check | Result | Limit |
+| --- | --- | --- |
+| Final full source suite | 3,389 total; 3,388 pass, 0 fail, 1 isolated-DB gate; 171.9 seconds | This run predates the separately requested CI migration. |
+| Final production build | Pass, 12.8 seconds | Lazy Clerk bundle warning remains; no unrelated bundler rewrite. |
+| Real isolated Neon | 10 pass, 0 fail, 0 skipped | Confirmed isolated branch only; not a production write test. |
+| Final cookie correction #40 | 27 focused client/API/server-auth tests pass, including the new request-policy regression | Full CI above predates this two-line correction; no subsequent hosted recovery/redeployment cycle. |
+| Registry/cards | 112/112 complete paired score definitions and actual-game assets | Not 112 full manual human playthroughs. |
+| Storage/UI/security | Real Chromium IndexedDB checks and focused UI tests; RSA auth verification; final full suite | Real hosted Clerk identity/recovery still tracked separately below. |
+| Local game/embed smoke | S12 documented 112 gallery/112 iframe canvases, 227 HTTP responses, five emulated responsive sizes and lifecycle checks | Earlier documented revisions; emulation is not physical-device or full gameplay proof. |
+| Hosted sample | Protected sample at 803e1ff: 17 game HTML/image headers passed; 3 more HTML passed with image timeouts; frog-convoy timed out | 92 HTML and 95 images unverified in that sample; no hosted byte-hash/decode claim. |
+| Social source capture | 112 real-game 1200×630 PNGs plus homepage; provenance/hashes in capture manifest | Capture baseline 574f811; representative independent visual review and full owner contact sheets. |
+| External X clients | Unverified | Standalone embed and image/link fallback exist. No X desktop/mobile playback claim or unauthorized public post. |
+
+The final full run initially found two real integration mismatches: Midnight Pursuit catalog instructions missed its Enter restart text, and a ramp mechanics fixture drove the scored wrapper beyond its enforced first bust. PR #36 aligns instructions and tests the shared direct factory. The distinct first-bust scored regression remains. Independent Terra review reproduced the ramp with a scored callback before the first bust. No gameplay source was changed by this correction.
+
+Real Neon verification exercised 24 concurrent AI submissions and canonical top-10 pruning, stable retry names and immutable receipts, equal cutoff rejection without leaderboard rows, negative/fractional ascending ranking, private pending results, concurrent claims with exactly one account owner, personal best below cutoff, expiration cleanup, moderation epochs, atomic limits across independent stores and transactional rollback. Unique test data was cleaned by the fixture; no production credentials or broad cleanup were used.
+
+Some game terminal tests intentionally use shortened or near-terminal state fixtures. These establish source-state numeric callbacks and actor transitions; they do not prove every game's difficulty or a full manual playthrough. See `s08-handoff.md`, `../s10-scoring-coverage.md` and `S12-*.md` for per-owner evidence and timeouts. Cosmetic polish and broad acceptance bounds are not claims of anti-cheat or proven score maxima.
+
+## Provider and release record
+
+Verified target: Vercel team `w3gpt` (`team_1emr0hddOspykkPdmXrV5RRx`), project `openarcade` (`prj_OMjMAkAONyAnZ6NIjWNzq0pWcZFD`), Vite/Node 24/iad1. Canonical URL [https://openarcade.io](https://openarcade.io). Public repository [markeljan/openarcade](https://github.com/markeljan/openarcade).
+
+**Live deployment remains** `dpl_HRKB1bNxonyQ81UyXR1icN9DPCWS`, URL `openarcade-mismxdob1-w3gpt.vercel.app`, SHA `6f27b944f627411f4a87ac91f8a53df938726ea0`, independently read back on 2026-10-29. The release hold keeps newer READY main builds off live domains. New launch consumers have not been promoted. Standard Protection remains on previews/generated URLs.
+
+Isolated staging is [the stable Preview](https://openarcade-git-codex-openarcade-s01-staging-w3gpt.vercel.app), branch `codex/openarcade-s01-staging`. Fresh source `9e8ea1df2114abbdb50f815fc56b3d88595a5572`, deployment `dpl_98JXuStwGTh7odiTQ4af5nkX5Nb8`, generated URL `https://openarcade-cjihz453k-w3gpt.vercel.app`, independently READY-verified. Its source tree equals reviewed main before the operations-only correction. This build consumes the exact branch-specific environment and score-write switch.
+
+The existing Neon project is `orange-cherry-09292655` / openarcade-feedback. Production remains `br-little-tooth-b8oi36rl` / `ep-wild-haze-b87hcogv`. The schema-only isolated child is `br-plain-salad-b8amuvnr` / openarcade-launch-preview, endpoint `ep-old-shadow-b87sxbm8`, database neondb. No production data was copied. Only the exact staging Git branch is overridden; other Preview targets may still share production.
+
+The reviewed migrations were applied and reapplied only on that isolated child, in this order:
+
+| Artifact | SHA-256 |
+| --- | --- |
+| `db/feedback-schema.sql` | `1a20a04b7388fd667174a90ed4f9b6539c4f9e3a12111b0de5df4f1371069fa3` |
+| `db/comments-auth-schema.sql` | `bfbca0211bab8ba648db1679b1e75ac9df3ab0af52ffcd7f09a32063b35ace72` |
+| `db/score-schema.sql` | `60dcafb3f015739c8efa46b62ada39c67b7ea957dcd290e62116a467017f0e43` |
+
+S11 confirmed nine expected tables, four additive columns and five score functions; the three baseline feedback tables initially had zero rows. Both bundle runs completed 29 statements; provenance bundle hash `67f2c4dd998246ad6b2753bb575556358b3f535460a8108cd415bc0d3d7f91f0`. S01 then ran the real Neon checks. The ignored credential handoff was removed. No production SQL was applied.
+
+Existing Clerk app `app_3LKZoytv9iDRK8jv2tFu1lC4E7S` was reused. Preview Development instance `ins_3LKZp2SDQOr2RHtoM9Dq34xYVnv` is separate from production instance `ins_3LNe1QtYHxHPzD0xi1sAv33T3vm`. Production domain openarcade.io has all five additive Clerk CNAMEs verified and `https://clerk.openarcade.io/.well-known/jwks.json` returns HTTP 200 with one key. No paid upgrade or duplicate app was created. Synthetic Development identities use Clerk's supported test-address mode; they must not be called production login proof.
+
+Names configured, values intentionally omitted: `DATABASE_URL`, `VITE_SITE_ORIGIN`, `VITE_CLERK_PUBLISHABLE_KEY`, `CLERK_JWT_KEY`, `CLERK_ISSUER`, `CLERK_AUTHORIZED_PARTIES`, `SCORE_RECEIPT_SECRET`, `SCORE_ALLOWED_ORIGINS`, `SCORE_WRITES_ENABLED`. Production/global Preview writes remain false; only confirmed isolated staging uses true. Preview Clerk/origin/database overrides are scoped to that exact branch. Production Clerk bindings, production migration and public authenticated checks remain pending.
+
+## Work deferred before a full production-launch claim
+
+1. Complete positive isolated Preview identity/comment/score-recovery checks. Real API negatives are established: anonymous reads 200; spoofed identity/malformed bearer 401; oversized UTF-8 413; overlong comments 400; no unauthorized content stored. A completed anonymous manual Snake result reappeared after reload, but the UI reported memory-only storage and “Recovery code unavailable.” Neither synthetic user completed sign-in and no authorized comment was posted. The score client used `credentials: 'omit'`, which drops same-origin Vercel Protection cookies while CLI/connector reads can succeed; source correction #40 now uses `same-origin` for GET/POST and retains explicit Clerk bearer/server-origin enforcement. Its 12 client plus 15 API/server-auth checks pass. No fresh protected browser revalidation followed; production being public does not establish untested recovery.
+2. Bind the matching existing production Clerk instance to Production and verify the actual production Neon target before applying the same additive schema. Preserve existing feedback and credentials.
+3. Build with production configuration under the domain hold, verify it, and promote the same build. Enable production score writes only with a fresh tested build and deliberate release decision.
+4. Verify public comment authentication, score recovery across login, persistence/deduplication, canonical cards/embed, logs and actual deployed SHA. Record a compatible authenticated known-good rollback.
+5. Keep X playback explicitly unverified unless real external-client evidence is obtained; image/link fallback remains available.
+
+Known held-live rollback candidate: `dpl_HRKB1bNxonyQ81UyXR1icN9DPCWS`. Command template `vercel rollback <known-good-deployment> --scope w3gpt`, after confirming project and aliases. Rollback does not revert SQL. The old handler permits anonymous comments and ignores moderation markers; after the new policy is released, prefer an authenticated known-good build or disable writes instead of silently reopening them.
+
+## Session disposition and follow-up
+
+All substantial S02–S12 source work is merged and the bounded implementation/provider passes have ended. S02's final narrow correction #40 is merged with focused checks; S11's readiness record #38 is merged and its worktree is clean. S03's actual negative-API and incomplete positive-login observations are recorded above; no new production action is included in this closure. Two clearly labeled Development test users were created in supported Clerk Test mode using private passwords, with no real email or production user created. No launch worker created a recurring automation; no user worktree was deleted. Parent-created branch-only `codex/openarcade-s01-release-batch02` at f1390d3 is an incomplete pre-auth recovery snapshot, not a release candidate. The staging branch is intentionally separate from production. Duplicate audit sessions made no source/config changes.
+
+S01's fresh protected-connector probes on deployment `dpl_98JXuStwGTh7odiTQ4af5nkX5Nb8` confirmed `/api/scores?gameId=snake&filter=players` application 200 with version-1 numeric board metadata; `/games/snake` 200 with canonical openarcade.io URL and real-game image; `/embed/snake` 200 with the configured self/X/Twitter frame ancestors; `/games/not-a-real-game` 404; and `/social/games/snake.png` 200, image/png, 47,078 bytes by Content-Length. These are HTTP/header/HTML observations, not image-byte hash verification, full hosted gameplay or X playback.
+
+A newer direct human request contributed PR #37, preparing Vercel CI and upgrading superseded check setup. Its original-checkout work was preserved and merged. After human-approved CLI access, Vercel accepted an enablement flag, but its setup UI reports that CI is unavailable for public repositories and the initial invocation resolved `no_jobs_resolved`. Hosted Vercel CI is therefore unavailable for this public repository. PR #37 retains the working GitHub Actions fallback using the same task graph; no visibility or plan change was made. The independent cache review led to `cache: false` for test:ci so local Windows/macOS cache results cannot replace an Ubuntu run. The final reviewed head `801069937c455881d874e60fe275704b24bb2b58` passed the full local graph and actual Ubuntu run [40937927986](https://github.com/markeljan/openarcade/actions/runs/40937927986): 3,388 pass, 0 fail, one gated isolated-Postgres skip; build and pinned browser startup passed. S01 independently verified the hosted success and merged it at `2455170dd61932b8a0f7ca13a6270f557701f7ff`.
+
+## PR ledger
+
+The following records are generated from GitHub PR metadata. Merge commits are authoritative readiness artifacts; PR bodies retain exact owned files, prerequisites, validation and limitations.
+
+| PR | Branch / reviewed head | State / merge commit |
+| --- | --- | --- |
+| [#1 OPENARCADE S02: score run contract and rollout schemas](https://github.com/markeljan/openarcade/pull/1) | `codex/openarcade-s02-score-contract` / `ebd924b40876efbe03a438cbaf565715c4fc85cf` | MERGED; `6f27b944f627411f4a87ac91f8a53df938726ea0` |
+| [#2 OPENARCADE S06: inventory 32 legacy scoring boundaries](https://github.com/markeljan/openarcade/pull/2) | `codex/openarcade-s06-legacy-scoring` / `68b411fb5f3edfc1019b0c11ffb836b5c687f5b3` | MERGED; `4d56067db560a2607af1386dfc3844c5b9432c5e` |
+| [#3 S03: add shared Clerk session identity verification](https://github.com/markeljan/openarcade/pull/3) | `codex/openarcade-s03-identity` / `409e170445e5dbb59b83ed5778a2296644777f4b` | MERGED; `1558d2926a39ce16736fc817f4b92c7de76b3636` |
+| [#4 OPENARCADE S01: publish launch plan, ownership and release tracker](https://github.com/markeljan/openarcade/pull/4) | `codex/openarcade-s01-bootstrap` / `de323e18ae89521d6446b19e1e49ef267385f0f2` | MERGED; `ff906838443174b59c3cf396e8a5a8687cd9d4ad` |
+| [#5 OPENARCADE S04 — GitHub link, game sharing and feedback help](https://github.com/markeljan/openarcade/pull/5) | `codex/openarcade-s04-brand-share` / `d9046a5ccb8b2389c6e8a1673c48cc144054fca0` | MERGED; `666009e51811c0680cb2bbb20478b4ba76dc02cf` |
+| [#6 OPENARCADE S05: canonical game pages and social metadata baseline](https://github.com/markeljan/openarcade/pull/6) | `codex/openarcade-s05-social-embeds` / `73c4e5db951bf6ad4edecc4673a0ee20cab4e12d` | MERGED; `f33268dd9b544eca6b6b5b74b8e7102eca07a407` |
+| [#7 OPENARCADE S12: actual gameplay social cards for all 112 games](https://github.com/markeljan/openarcade/pull/7) | `codex/openarcade-s12-captures` / `74d9849a589626bd8de300fda44bbf6d08961119` | MERGED; `e2221d16dfe5180a1374732ff4f93689011d9538` |
+| [#8 OPENARCADE S06: score fresh human and AI Snake runs](https://github.com/markeljan/openarcade/pull/8) | `codex/openarcade-s06-snake` / `c65cf93c71238899a24d54b7199ffafb87c31273` | MERGED; `8874a4284e50e609ef9a4878768255f260bfcd00` |
+| [#9 OPENARCADE S10: score feature games 31–33](https://github.com/markeljan/openarcade/pull/9) | `codex/openarcade-s10-feature-scoring` / `1cd39f616c81c1af531b66cadecc81677320f400` | MERGED; `3ad561dcddcbf4cfa06e58230386250a0a043d1e` |
+| [#10 OPENARCADE S09: scored rounds for feature modules 21–23](https://github.com/markeljan/openarcade/pull/10) | `codex/openarcade-s09-feature-21-23` / `c6d8c1ed102262adc16c14aa404cd8f57534e81c` | MERGED; `803e1ff9831c1ac4e373b6d99f33006d257a35cb` |
+| [#11 OPENARCADE S05: dedicated playable embed shell](https://github.com/markeljan/openarcade/pull/11) | `codex/openarcade-s05-playable-embeds` / `02136853861279bb6cea47e41a95ccbee88281e6` | MERGED; `acf4e7dacfbbd519fad3f7255ead509c9069c9d0` |
+| [#12 OPENARCADE S11: launch runbook, environment baseline and read-only checks](https://github.com/markeljan/openarcade/pull/12) | `codex/openarcade-s11-launch-ops` / `2bf783c3b5109dc8547b66b357bdbf384479bfbc` | MERGED; `2c4b12ed1ddcfd3f62e4ba67fb8674cd60c2365a` |
+| [#13 OPENARCADE S09: scored rounds for feature modules 24–26](https://github.com/markeljan/openarcade/pull/13) | `codex/openarcade-s09-feature-24-26` / `212e665c67b18ce5a103c90b43ed4d0516e54c01` | MERGED; `f1390d37dbc1ac78a376135e07fd754835564bb7` |
+| [#14 S03: protect comments and add Clerk browser authentication](https://github.com/markeljan/openarcade/pull/14) | `codex/openarcade-s03-comments` / `e118be5f5d93677cd0b136b1098e8aa8323466cb` | MERGED; `ba1155a908db41d1f9d5c45c237e627146bbaca3` |
+| [#15 OPENARCADE S01: record reviewed foundations and release hold](https://github.com/markeljan/openarcade/pull/15) | `codex/openarcade-s01-integration` / `143af6b2f76b24473c253e6121f33fba021a1d3c` | MERGED; `d8ae126309495acd6e016232717e84b21846eeb9` |
+| [#16 OPENARCADE S04 — Connect canonical routes to the player](https://github.com/markeljan/openarcade/pull/16) | `codex/openarcade-s04-player-ui` / `431fe36af5084be9d25d45ab013240b9fff358f7` | MERGED; `ada27671bfdc480d583dc9de0f58c689abb02542` |
+| [#17 OPENARCADE S09: scored rounds for feature modules 27–30 and 20-game coverage](https://github.com/markeljan/openarcade/pull/17) | `codex/openarcade-s09-feature-27-30` / `2da79aea4440d063227b2957c7f3567dbe8161ce` | MERGED; `fdbd15340a449ac4db2a0c302555408463926eb4` |
+| [#18 OPENARCADE S08: score feature modules 11–13](https://github.com/markeljan/openarcade/pull/18) | `codex/openarcade-s08-feature-11-13` / `b92ecff9450b94e81041bac88012e4f07d657499` | MERGED; `90ddc477824f6a8546271df9da075a651fa2ac91` |
+| [#19 OPENARCADE S10: score feature games 34–36](https://github.com/markeljan/openarcade/pull/19) | `codex/openarcade-s10-scoring34-36` / `cd29944192bae539766c17a3451d818b0775f6b7` | MERGED; `05352842e5cc254b73699023c268f3f250f10424` |
+| [#20 OPENARCADE S08: score feature modules 14–16](https://github.com/markeljan/openarcade/pull/20) | `codex/openarcade-s08-feature-14-16` / `2aaa7dc3b75d1bf3986824f00d2fa7db2456d172` | MERGED; `d90737b93a9e6b35a83a5612789c013a1784aac7` |
+| [#21 OPENARCADE S07: score feature modules 1–3](https://github.com/markeljan/openarcade/pull/21) | `codex/openarcade-s07-feature-01-03` / `aafabd876bf40ecb8fc8d7163c3a5ac9b07c4263` | MERGED; `bfd90e77bb9dde6791c1645f1add8123b227b918` |
+| [#22 OPENARCADE S02: score API, private receipts and atomic leaderboards](https://github.com/markeljan/openarcade/pull/22) | `codex/openarcade-s02-score-api` / `0f672953a89dfca422eb62a00debee631411d173` | MERGED; `8356b167c926f02e7802f54c822f397f85309124` |
+| [#23 OPENARCADE S12: repeatable launch verification and capture safeguards](https://github.com/markeljan/openarcade/pull/23) | `codex/openarcade-s12-verification` / `874a3655336c41d2f0b298adb4e86971ce376832` | MERGED; `32d9b5331414fdfcb33772085e37a6528d52bd7a` |
+| [#24 OPENARCADE S08: complete scoring for feature modules 17–20](https://github.com/markeljan/openarcade/pull/24) | `codex/openarcade-s08-feature-17-20` / `a0537d494ed7f579c41a47650933762ab19f1a40` | MERGED; `3c732b3610f13a3a28f853050200f73b3a2dd5c8` |
+| [#25 OPENARCADE S10: finish feature scoring 37–40 and 20-game coverage](https://github.com/markeljan/openarcade/pull/25) | `codex/openarcade-s10-scoring37-40` / `3117fc3040700e2e8b04981374e797a11844a3ba` | MERGED; `b46898090f06d60c295a217de8d7946c8572bad8` |
+| [#26 OPENARCADE S07: score feature modules 4–6](https://github.com/markeljan/openarcade/pull/26) | `codex/openarcade-s07-feature-04-06` / `57a048dc70db8afd1ab478f8ffcc31461c1edec2` | MERGED; `d4bb26f20d353272ee1a110d486eecd76d788abb` |
+| [#27 OPENARCADE S06: complete scoring for six classics](https://github.com/markeljan/openarcade/pull/27) | `codex/openarcade-s06-classics` / `81d098c60cbbefc6c7c11229a28e6c45014aee91` | MERGED; `8aed65fdcd362b8d468f14e5efbf487ec8310a7b` |
+| [#28 OPENARCADE S05: keep iframe controls visible and release unfocused input](https://github.com/markeljan/openarcade/pull/28) | `codex/openarcade-s05-embed-fit` / `4deb47c095db3ed4324d19c5e50831c941c143dc` | MERGED; `e886b2baffee68ed989d65d206d99e97e97c3239` |
+| [#29 OPENARCADE S06: score fifteen more-games with explicit runs](https://github.com/markeljan/openarcade/pull/29) | `codex/openarcade-s06-more` / `c9e3512374933bf59109b624dcaf8033f5b28cb2` | MERGED; `49dc0f4d9e174f99a8a0f08fdc0de812c83b7c34` |
+| [#30 OPENARCADE S06: score eleven extras and finish 32-game manifest](https://github.com/markeljan/openarcade/pull/30) | `codex/openarcade-s06-extras` / `0b61de3d598992ad1ae54936a235f1c16b27fee3` | MERGED; `06b34cac4cabdf9ea4423ee0336c66b0f46c7608` |
+| [#31 OPENARCADE S07: complete feature scoring 7–10 and 20-game coverage](https://github.com/markeljan/openarcade/pull/31) | `codex/openarcade-s07-feature-07-10` / `1e62a270b33d81dd99ee6590b62fbdb906e75dc3` | MERGED; `9216d7b217149a324a175dc23fb68db143881004` |
+| [#32 OPENARCADE S04 — Fence browser assertions across reloads](https://github.com/markeljan/openarcade/pull/32) | `codex/openarcade-s04-browser-reload` / `9cd63ffe0eb8a9c617d96519b3824d86b8734eaa` | MERGED; `20a422b0cc954cc89bd23c0f2ebaf78c062c7aa2` |
+| [#33 OPENARCADE S04 — Integrate auth, comments and persistent score UI](https://github.com/markeljan/openarcade/pull/33) | `codex/openarcade-s04-ui-foundation` / `83534a87c597314fd7154cecdd53554293451be2` | MERGED; `063906f91fa59a48f83cfbffdb768b665fd5b9fb` |
+| [#34 OPENARCADE S05: guest embed scores and private recovery](https://github.com/markeljan/openarcade/pull/34) | `codex/openarcade-s05-guest-scores` / `35cfbe9b2260340f33bd3c8548924e6d739c4b6a` | MERGED; `e31771db49534f6594d9f2697c8e66392a82ca35` |
+| [#35 OPENARCADE S02: preserve startup when IndexedDB access is denied](https://github.com/markeljan/openarcade/pull/35) | `codex/openarcade-s02-storage-denial` / `bc3f5546ef918fd4d7a3b47d762f371cb3f9f457` | MERGED; `657f13883234bcef18422c7246ed1defe7979659` |
+| [#36 OPENARCADE S01: align Pursuit metadata and final mechanics checks](https://github.com/markeljan/openarcade/pull/36) | `codex/openarcade-s01-final-check` / `7cfa81162ed74a53e85b561ebc51b70cdcf4b8e6` | MERGED; `0d9789a5236bfb7eb9256da1267628bbf7f76577` |
+| [#37 Prepare Vercel CI task graph with public-repository fallback](https://github.com/markeljan/openarcade/pull/37) | `codex/vercel-ci` / `801069937c455881d874e60fe275704b24bb2b58` | MERGED; `2455170dd61932b8a0f7ca13a6270f557701f7ff` |
+| [#38 OPENARCADE S11: record isolated Preview readiness](https://github.com/markeljan/openarcade/pull/38) | `codex/openarcade-s11-readiness-record` / `81eb26836a1f8123509b18680779e918ae056785` | MERGED; `63dc4ecb7d8dfd2e6b75345265d6a2a9fdb95e95` |
+| [#39 OPENARCADE S01: record 112-game integration and release gates](https://github.com/markeljan/openarcade/pull/39) | `codex/openarcade-s01-closeout` / `f2918749e25994ff5d52ea1d273921cdfb0ba8f2` | MERGED; `1abfddc6065a1ac681a212fd838b7b43aaecba99` |
+| [#40 OPENARCADE S02: retain same-origin Preview protection cookies](https://github.com/markeljan/openarcade/pull/40) | `codex/openarcade-s02-same-origin-credentials` / `af1a05e5f27719b5cc910bbdb06c522d5b50961b` | MERGED; `24e0567119430b3ee6315e63b722d424d529c0a9` |

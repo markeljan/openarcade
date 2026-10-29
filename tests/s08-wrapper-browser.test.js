@@ -1,3 +1,4 @@
+import {testBrowser} from '../scripts/browser-executable.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync,mkdtempSync,readFileSync,rmSync} from 'node:fs';
@@ -6,7 +7,7 @@ import {join} from 'node:path';
 import {spawn} from 'node:child_process';
 import {createServer} from 'vite';
 
-const browser=(process.platform==='win32'?['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe']:['/usr/bin/chromium','/usr/bin/chromium-browser','/usr/bin/google-chrome']).find(existsSync);
+const browser=testBrowser;
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 test('representative scored wrappers run on browser canvas',{skip:!browser,timeout:120000},async()=>{
  const server=await createServer({configFile:false,plugins:[{name:'s08-blank',configureServer(server){server.middlewares.use('/__s08',(_req,res)=>{res.setHeader('Content-Type','text/html');res.end('<!doctype html><html><body></body></html>')})}}],server:{host:'127.0.0.1',port:0,hmr:false},logLevel:'silent'});await server.listen();

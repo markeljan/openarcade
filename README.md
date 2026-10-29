@@ -6,7 +6,7 @@ Play at [openarcade.io](https://openarcade.io/). The public source repository is
 
 ## Run locally
 
-Install Node.js 20.19+ or 22.12+ and npm, then:
+Install Node.js 24 and npm, then:
 
 ```sh
 npm ci
@@ -46,6 +46,8 @@ See the [catalog comparison](docs/CATALOG-COMPARISON.md) for game-by-game limita
 When you open a game, use the feed controls or swipe to watch more games, then press Play to take control. Games are ranked by upvotes; explicit play starts contribute to the play count. Votes and comments are shared through the feedback API, with one anonymous vote per browser and game. See [feedback setup](docs/FEEDBACK.md) for database configuration and local development, and [data and feedback](docs/PRIVACY.md) for storage and public-content information.
 
 ## Operations
+
+The build and complete test suite share a Vercel CI-ready task graph in `turbo.json`. GitHub Actions runs it while Vercel CI's beta excludes public repositories. Run `npm run ci` locally to use the same graph; it installs pinned Chromium and runs browser fixtures serially against the built app and local Vite servers. See [CI setup and troubleshooting](docs/CI.md).
 
 See the [deployment and recovery runbook](docs/OPERATIONS.md) for environment names, isolated preview data, additive migrations, moderation and release checks. `.env.example` contains placeholders; keep real values in ignored local files or the provider's environment settings. Vite dev/preview serves the frontend only; use `vercel dev` with an isolated Development database for API testing.
 
