@@ -1,0 +1,726 @@
+{
+  "session": "OPENARCADE S08",
+  "schemaVersion": 1,
+  "generatedFrom": [
+    "src/scores/rules/s08.js",
+    "src/scores/coverage/s08.js"
+  ],
+  "entries": [
+    {
+      "schemaVersion": 1,
+      "gameId": "tower-panic",
+      "source": "src/feature-games11.js",
+      "metric": "Crew recruitment, floor, extraction and deflection points in 120 active seconds",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "passed",
+        "evidence": "tests/s08-wrapper-browser.test.js: real 120-second human and watch-AI terminals, result/Enter and lifecycle"
+      },
+      "human": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature11-13-scoring.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature11-13-scoring.test.js"
+        ]
+      },
+      "limitations": "Natural timed factory boundaries and targeted event fixtures; browser coverage is representative.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 100000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 120100
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "burrow-boss",
+      "source": "src/feature-games11.js",
+      "metric": "Cave hunt award points through the 900-second hunt and six-second ending",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "900 active seconds of hunt followed by the six-second native ending",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature11-13-scoring.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "900 active seconds of hunt followed by the six-second native ending",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature11-13-scoring.test.js"
+        ]
+      },
+      "limitations": "Natural timed factory boundaries and targeted event fixtures; browser coverage is representative.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 1000000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 906100
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "idol-escape",
+      "source": "src/feature-games12.js",
+      "metric": "Successful chamber distance in 120 active seconds; failed chambers add zero",
+      "units": "meters",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature11-13-scoring.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature11-13-scoring.test.js"
+        ]
+      },
+      "limitations": "Natural timed factory boundaries and targeted event fixtures; browser coverage is representative.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 100000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 120100
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "robot-register",
+      "source": "src/feature-games12.js",
+      "metric": "Register flag and stage points in 120 active seconds",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature11-13-scoring.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature11-13-scoring.test.js"
+        ]
+      },
+      "limitations": "Natural timed factory boundaries and targeted event fixtures; browser coverage is representative.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 100000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 120100
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "castle-crasher",
+      "source": "src/feature-games13.js",
+      "metric": "Fire, impact, breach and chapter points in 120 active seconds",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature11-13-scoring.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature11-13-scoring.test.js"
+        ]
+      },
+      "limitations": "Natural timed factory boundaries and targeted event fixtures; browser coverage is representative.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 100000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 120100
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "hotel-haunt",
+      "source": "src/feature-games13.js",
+      "metric": "Ghost, first room light and cleared floor points in 120 active seconds",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature11-13-scoring.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature11-13-scoring.test.js"
+        ]
+      },
+      "limitations": "Natural timed factory boundaries and targeted event fixtures; browser coverage is representative.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 1000000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 120100
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "kaiju-control",
+      "source": "src/feature-games14.js",
+      "metric": "Evacuation, dispatch, defense and district points in 120 active seconds",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature14-16-terminal.test.js",
+          "tests/s08-feature14-16-lifecycle.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature14-16-terminal.test.js",
+          "tests/s08-feature14-16-lifecycle.test.js"
+        ]
+      },
+      "limitations": "Natural timed factory boundaries and targeted event fixtures; browser coverage is representative.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 100000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 120100
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "moonshine-valley",
+      "source": "src/feature-games14.js",
+      "metric": "Farm, combat and dawn points in 120 active seconds",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature14-16-terminal.test.js",
+          "tests/s08-feature14-16-lifecycle.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature14-16-terminal.test.js",
+          "tests/s08-feature14-16-lifecycle.test.js"
+        ]
+      },
+      "limitations": "Natural timed factory boundaries and targeted event fixtures; browser coverage is representative.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 100000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 120100
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "dungeon-relay",
+      "source": "src/feature-games15.js",
+      "metric": "Relay award points in 120 active seconds; knockdowns are nonfatal",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature14-16-terminal.test.js",
+          "tests/s08-feature14-16-lifecycle.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature14-16-terminal.test.js",
+          "tests/s08-feature14-16-lifecycle.test.js"
+        ]
+      },
+      "limitations": "Natural timed factory boundaries and targeted event fixtures; browser coverage is representative.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 1000000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 120100
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "gravity-claw",
+      "source": "src/feature-games15.js",
+      "metric": "Claw award points before health depletion",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "limited",
+        "evidence": "tests/s08-wrapper-browser.test.js: real canvas preview/manual transitions, held key, pause/resume, restart and destroy; terminal not exercised"
+      },
+      "human": {
+        "terminal": "health depleted by the actual lethal collision before recovery",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature14-16-terminal.test.js",
+          "tests/s08-feature14-16-lifecycle.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "health depleted by the actual lethal collision before recovery",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature14-16-terminal.test.js",
+          "tests/s08-feature14-16-lifecycle.test.js"
+        ]
+      },
+      "limitations": "Natural timed factory boundaries and targeted event fixtures; browser coverage is representative.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 1000000000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 86400000
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "ricochet-foundry",
+      "source": "src/feature-games16.js",
+      "metric": "Charge processing and installed part points in 120 active seconds",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature14-16-terminal.test.js",
+          "tests/s08-feature14-16-lifecycle.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature14-16-terminal.test.js",
+          "tests/s08-feature14-16-lifecycle.test.js"
+        ]
+      },
+      "limitations": "Natural timed factory boundaries and targeted event fixtures; browser coverage is representative.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 100000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 120100
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "lantern-line",
+      "source": "src/feature-games16.js",
+      "metric": "Lantern, chain, scrub and purge points in 120 active seconds",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature14-16-terminal.test.js",
+          "tests/s08-feature14-16-lifecycle.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "120 active simulation seconds, with the final event tally captured before result freeze",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature14-16-terminal.test.js",
+          "tests/s08-feature14-16-lifecycle.test.js"
+        ]
+      },
+      "limitations": "Natural timed factory boundaries and targeted event fixtures; browser coverage is representative.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 100000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 120100
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "ashen-rage",
+      "source": "src/feature-games17.js",
+      "metric": "Rival knockout points plus finish bonus at race completion",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "900-second race expires after awarding the 500-point finish bonus",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "900-second race expires after awarding the 500-point finish bonus",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "limitations": "Near-terminal state fixtures and shortened clocks exercise successful terminal actions and finale awards; these are not complete manual playthroughs.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 1000000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 900100
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "star-roller",
+      "source": "src/feature-games17.js",
+      "metric": "Pickup, sweeper and finale points at time limit or star completion",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "limited",
+        "evidence": "tests/s08-wrapper-browser.test.js: real canvas preview/manual transitions, held key, pause/resume, restart and destroy; terminal not exercised"
+      },
+      "human": {
+        "terminal": "300 seconds or size 85, followed by the full reward-bearing finale",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "300 seconds or size 85, followed by the full reward-bearing finale",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "limitations": "Near-terminal state fixtures and shortened clocks exercise successful terminal actions and finale awards; these are not complete manual playthroughs.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 1000000000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 307500
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "dragon-lock",
+      "source": "src/feature-games18.js",
+      "metric": "Flight session award points after the gate finale",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "720-second flight and seven-second gate finale, after its 410-point bonus",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "720-second flight and seven-second gate finale, after its 410-point bonus",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "limitations": "Near-terminal state fixtures and shortened clocks exercise successful terminal actions and finale awards; these are not complete manual playthroughs.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 10000000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 727100
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "cursed-fist",
+      "source": "src/feature-games18.js",
+      "metric": "Normal foe and boss defeat points after the final encounter",
+      "units": "defeat points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "630-second encounter and seven-second finale",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "630-second encounter and seven-second finale",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "limitations": "Near-terminal state fixtures and shortened clocks exercise successful terminal actions and finale awards; these are not complete manual playthroughs.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 100000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 637100
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "coral-courier",
+      "source": "src/feature-games19.js",
+      "metric": "Reef rescue, transplant, companion and biome points through first full restoration",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "first successful full reef restoration, cycles becomes one",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "first successful full reef restoration, cycles becomes one",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "limitations": "Near-terminal state fixtures and shortened clocks exercise successful terminal actions and finale awards; these are not complete manual playthroughs.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 1000000000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 86400000
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "beacon-bay",
+      "source": "src/feature-games19.js",
+      "metric": "Safe docking points through the first eight saved ships",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "eighth safely docked ship, after the docking award",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "eighth safely docked ship, after the docking award",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "limitations": "Near-terminal state fixtures and shortened clocks exercise successful terminal actions and finale awards; these are not complete manual playthroughs.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 800,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 86400000
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "railway-rush",
+      "source": "src/feature-games20.js",
+      "metric": "Matching cargo points through the eighth train delivery",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "limited",
+        "evidence": "tests/s08-wrapper-browser.test.js: real canvas preview/manual transitions, held key, pause/resume, restart and destroy; terminal not exercised"
+      },
+      "human": {
+        "terminal": "eighth successful train delivery, after matching cargo awards",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "eighth successful train delivery, after matching cargo awards",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "limitations": "Near-terminal state fixtures and shortened clocks exercise successful terminal actions and finale awards; these are not complete manual playthroughs.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 1000000000,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 86400000
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "gameId": "pottery-house",
+      "source": "src/feature-games20.js",
+      "metric": "Displayed pottery quality points through the third gallery piece",
+      "units": "points",
+      "order": "desc",
+      "ruleVersion": 1,
+      "status": "complete",
+      "browser": {
+        "status": "not-run"
+      },
+      "human": {
+        "terminal": "third fired pot displayed on the gallery shelf, after quality awards",
+        "provenance": "fresh human factory; actor-bound callback; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "ai": {
+        "terminal": "third fired pot displayed on the gallery shelf, after quality awards",
+        "provenance": "fresh AI factory; same event awards and terminal rules; no human best writes; client-reported",
+        "tests": [
+          "tests/s08-feature17-20-lifecycle.test.js"
+        ]
+      },
+      "limitations": "Near-terminal state fixtures and shortened clocks exercise successful terminal actions and finale awards; these are not complete manual playthroughs.",
+      "bounds": {
+        "minScore": 0,
+        "maxScore": 1200,
+        "integer": true,
+        "minDurationMs": 0,
+        "maxDurationMs": 86400000
+      }
+    }
+  ]
+}
