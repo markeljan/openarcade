@@ -201,7 +201,7 @@ export const featureRegistry = [
         "name": "Midnight Pursuit",
         "category": "RACING",
         "description": "Weave through traffic and change cars at garages.",
-        "controls": "Left / right steer · Up accelerate · Down brake · Space / X handbrake · drive into garage to swap",
+        "controls": "Left / right steer · Up accelerate · Down brake · Space / X handbrake · drive into garage to swap · Enter restart after bust",
         "accent": "#f18ab2",
         "icon": "◆"
       }
