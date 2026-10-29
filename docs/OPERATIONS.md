@@ -1,6 +1,6 @@
 # OpenArcade launch operations (S11)
 
-S01 alone merges and releases production. S11 prepares existing project configuration and records evidence; S02 owns scores/schema, S03 identity/comments, S04 UI, and S05 routing/headers. Keep Vite, Vercel Functions, the existing Neon database and Vercel Analytics. [Vercel CI](CI.md) runs the build and tests; it does not deploy, promote releases, or run database migrations.
+S01 alone merges and releases production. S11 prepares existing project configuration and records evidence; S02 owns scores/schema, S03 identity/comments, S04 UI, and S05 routing/headers. Keep Vite, Vercel Functions, the existing Neon database and Vercel Analytics. [CI](CI.md) runs the build and tests through Turborepo, using GitHub Actions while Vercel CI excludes public repositories; it does not deploy, promote releases, or run database migrations.
 
 ## Verified targets and release record
 

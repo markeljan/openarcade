@@ -9,6 +9,7 @@
     },
     "test:ci": {
       "tags": ["ci", "ci:os:ubuntu"],
+      "cache": false,
       "dependsOn": ["build"],
       "env": ["VITE_*"],
       "outputs": []

@@ -47,7 +47,7 @@ When you open a game, use the feed controls or swipe to watch more games, then p
 
 ## Operations
 
-Vercel CI runs the build and complete test suite from `turbo.json`. Run `npm run ci` locally to use the same task graph; it installs pinned Chromium and runs browser fixtures serially against the built app and local Vite servers. See [CI setup and troubleshooting](docs/CI.md).
+The build and complete test suite share a Vercel CI-ready task graph in `turbo.json`. GitHub Actions runs it while Vercel CI's beta excludes public repositories. Run `npm run ci` locally to use the same graph; it installs pinned Chromium and runs browser fixtures serially against the built app and local Vite servers. See [CI setup and troubleshooting](docs/CI.md).
 
 See the [deployment and recovery runbook](docs/OPERATIONS.md) for environment names, isolated preview data, additive migrations, moderation and release checks. `.env.example` contains placeholders; keep real values in ignored local files or the provider's environment settings. Vite dev/preview serves the frontend only; use `vercel dev` with an isolated Development database for API testing.
 
