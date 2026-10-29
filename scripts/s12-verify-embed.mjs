@@ -39,14 +39,23 @@ try {
   if(state.title!=='Snake'||state.sound!=='false')throw Error(JSON.stringify(state));
   await run(`${frame}.querySelector('#start').click()`);await until(`${frame}.querySelector('.status').textContent==='Playing'`,'start');
   await run(`${frame}.querySelector('#pause').click()`);await until(`${frame}.querySelector('.status').textContent==='Paused'`,'pause');
+  await sleep(100);const pausedDraw=await run("document.querySelector('#s12-frame').contentWindow.__s12draw");await sleep(200);
+  if(await run("document.querySelector('#s12-frame').contentWindow.__s12draw")!==pausedDraw)throw Error('Embed drew while paused');
   await run(`${frame}.querySelector('#restart').click()`);await until(`${frame}.querySelector('.status').textContent==='Playing'`,'restart');
-  const link=await run(`${frame}.querySelector('a').href`);if(!new URL(link).pathname.endsWith('/games/snake'))throw Error('Wrong canonical link');
+  await until(`document.querySelector('#s12-frame').contentWindow.__s12draw>${pausedDraw}`,'restart resumed drawing');
+  const link=await run(`${frame}.querySelector('a').href`);if(link!==new URL('/games/snake',parsed.origin).href)throw Error('Wrong canonical link');
+  const attrs=await run(`({target:${frame}.querySelector('a').target,rel:${frame}.querySelector('a').rel})`);
+  if(attrs.target!=='_blank'||!attrs.rel.split(' ').includes('noopener')||!attrs.rel.split(' ').includes('noreferrer'))throw Error('Unsafe fallback link attributes');
   return {...state,link};
  });
  for (const [width,height] of [[320,568],[390,844],[512,512],[720,720],[844,390]]) await check(`mobile iframe ${width}x${height}`,async()=>{
   await call('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:true});await call('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:2});await iframe('machine-hunt');
   await run(`${frame}.querySelector('#start').click()`);
-  const metrics=await run(`(()=>{const f=document.querySelector('#s12-frame'),d=f.contentDocument,fr=f.getBoundingClientRect();return [...d.querySelectorAll('.touch button, .actions button')].map(e=>{const r=e.getBoundingClientRect(),x=r.x+fr.x+r.width/2,y=r.y+fr.y+r.height/2;return {label:e.getAttribute('aria-label')||e.textContent,key:e.dataset.key||null,disabled:e.disabled,x:r.x+fr.x,y:r.y+fr.y,w:r.width,h:r.height,hit:x>=0&&x<innerWidth&&y>=0&&y<innerHeight&&d.elementFromPoint(r.x+r.width/2,r.y+r.height/2)===e}})})()`);
+  const measure=`(()=>{const f=document.querySelector('#s12-frame'),d=f.contentDocument,fr=f.getBoundingClientRect();return [...d.querySelectorAll('.touch button, .actions button')].map(e=>{const r=e.getBoundingClientRect(),x=r.x+fr.x+r.width/2,y=r.y+fr.y+r.height/2;return {label:e.getAttribute('aria-label')||e.textContent,key:e.dataset.key||null,disabled:e.disabled,x:r.x+fr.x,y:r.y+fr.y,w:r.width,h:r.height,hit:x>=0&&x<innerWidth&&y>=0&&y<innerHeight&&d.elementFromPoint(r.x+r.width/2,r.y+r.height/2)===e}})})()`;
+  await until(`(${measure}).length>=9 && (${measure}).every(b=>b.x>=0&&b.y>=0&&b.x+b.w<=${width}&&b.y+b.h<=${height}&&b.w>=44&&b.h>=44&&b.hit)`,'settled control layout');
+  const metrics=await run(measure);
+  if(!['ArrowUp','ArrowLeft','ArrowDown','ArrowRight',' '].every(key=>metrics.some(b=>b.key===key&&!b.disabled)))throw Error('Required controls absent or disabled');
+  if(!await run(`['start','restart','pause','sound'].every(id=>${frame}.querySelector('#'+id)) && ${frame}.querySelector('#start').disabled && !${frame}.querySelector('#restart').disabled && !${frame}.querySelector('#pause').disabled`))throw Error('Action control state mismatch');
   const bad=metrics.filter(b=>b.x<0||b.y<0||b.x+b.w>width||b.y+b.h>height||b.w<44||b.h<44||!b.hit);if(bad.length)throw Error('Controls outside viewport, too small or not hit-testable: '+JSON.stringify(bad));
   await run(`window.__keys=[];${frame}.querySelector('canvas').addEventListener('keydown',e=>window.__keys.push('down:'+e.key));${frame}.querySelector('canvas').addEventListener('keyup',e=>window.__keys.push('up:'+e.key))`);
   const b=metrics.find(x=>x.key==='ArrowUp');if(!b||b.disabled)throw Error('Up control unavailable');
@@ -54,8 +63,14 @@ try {
   await until("window.__keys.includes('down:ArrowUp')",'held touch');
   await run("document.querySelector('#s12-frame').contentWindow.dispatchEvent(new Event('blur'))");
   await until("window.__keys.includes('up:ArrowUp')",'blur release');
-  await until(`${frame}.querySelector('.status').textContent==='Paused'`,'blur pause');
-  await call('Input.dispatchTouchEvent',{type:'touchCancel',touchPoints:[]});return {metrics};
+  await sleep(100);const frozen=await run("document.querySelector('#s12-frame').contentWindow.__s12draw");await sleep(200);
+  if(await run("document.querySelector('#s12-frame').contentWindow.__s12draw")!==frozen)throw Error('Embed drew after synthetic blur');
+  await call('Input.dispatchTouchEvent',{type:'touchCancel',touchPoints:[]});
+  await run("document.querySelector('#s12-frame').contentWindow.dispatchEvent(new Event('focus'));window.__keys=[]");
+  await until(`document.querySelector('#s12-frame').contentWindow.__s12draw>${frozen}`,'focus resumes drawing');
+  await call('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:b.x+b.w/2,y:b.y+b.h/2}]});await until("window.__keys.includes('down:ArrowUp')",'second held touch');
+  await call('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await until("window.__keys.includes('up:ArrowUp')",'touch end release');
+  return {metrics, syntheticBlur:true};
  });
  report.browserErrors=browser.errors;report.blockedRequests=browser.blocked.length;
 }catch(e){report.fatal=String(e.stack||e)}finally{try{await browser.close()}catch(e){report.cleanupError=String(e)}}
