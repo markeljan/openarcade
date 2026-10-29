@@ -1,0 +1,73 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {existsSync,mkdtempSync,readFileSync,rmSync,cpSync,writeFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {spawn} from 'node:child_process';
+import {createServer} from 'vite';
+
+const candidates=process.platform==='win32'?['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe']:['/usr/bin/chromium','/usr/bin/chromium-browser','/usr/bin/google-chrome'];
+const executable=candidates.find(existsSync), sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+test('feature scoring lifecycle in a real browser',{skip:!executable,timeout:150000},async()=>{
+ const root=mkdtempSync(join(tmpdir(),'s07-browser-source-')),profile=mkdtempSync(join(tmpdir(),'s07-browser-profile-'));
+ cpSync(join(process.cwd(),'src'),join(root,'src'),{recursive:true});
+ writeFileSync(join(root,'index.html'),`<!doctype html><canvas id="game" width="320" height="720" style="width:320px;height:720px"></canvas><script type="module">
+ import {createFeatureGame3} from '/src/feature-games3.js';
+ import {createFeatureGame7} from '/src/feature-games7.js';
+ import {createFeatureGame4} from '/src/feature-games4.js';
+ import {createFeatureGame10} from '/src/feature-games10.js';
+ let seed=42,now=0,seq=0,frames=new Map(); Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);
+ window.requestAnimationFrame=fn=>{let id=++seq;frames.set(id,fn);return id};window.cancelAnimationFrame=id=>frames.delete(id);
+ const c=document.querySelector('canvas'), original=CanvasRenderingContext2D.prototype.fillText;
+ window.labels=[];window.player=null;const fillRect=CanvasRenderingContext2D.prototype.fillRect;CanvasRenderingContext2D.prototype.fillRect=function(x,y,w,h){if(this.fillStyle==='#41b4ae'&&w===10&&h===13)player={x:Math.round((x-24)/26),y:Math.round((y-109)/26)};return fillRect.call(this,x,y,w,h)};CanvasRenderingContext2D.prototype.fillText=function(s,...args){labels.push(String(s));return original.call(this,s,...args)};
+ window.records=[];window.attract=0;window.game=null;
+ window.start=(id)=>{game?.destroy();localStorage.clear();records=[];attract=0;seed=42;now=0;game=({'side-surfers':createFeatureGame3,'ghost-shift':createFeatureGame7,'rune-swarm':createFeatureGame4,'pico-cap':createFeatureGame10}[id])(c,id,{onResult:r=>records.push(r),onAttract:()=>attract++})};
+ window.step=(n=1)=>{for(let i=0;i<n;i++){labels=[];now+=50;const pending=[...frames.values()];frames.clear();for(const fn of pending)fn(now)}return labels};
+ window.pending=()=>frames.size;
+ window.driveGhost=()=>{const map=['###########','#.........#','#..###....#','#..#......#','#..#..##..#','#.........#','#####D#####','#.........#','#.##...##.#','#....#....#','#.##...##.#','#.........#','###D#######','#.........#','#..###....#','#......##.#','#.##......#','#.........#','###########'];
+ const targets=[[8,4],[1,5],[9,8],[1,10],[9,13],[9,15],[9,17]];let stage=0;
+ for(let i=0;i<14000&&records.length===0;i++){const hud=labels.find(x=>x.startsWith('SIGILS '));if(!hud||!player){step();continue}const m=/SIGILS (\\d)\\/2 CASES (\\d) RELAYS (\\d)\\/2/.exec(hud);if(!m)throw Error(hud);const sig=+m[1],bag=+m[2],relay=+m[3];stage=sig<2?sig:relay<2?2+relay:bag<2?4+bag:6;const target=targets[stage];const q=[[player.x,player.y,[]]],seen=new Set();let key;while(q.length){const [x,y,path]=q.shift(),k=x+','+y;if(seen.has(k))continue;seen.add(k);if(x===target[0]&&y===target[1]){key=path[0];break}for(const [dx,dy,name] of [[0,-1,'ArrowUp'],[1,0,'ArrowRight'],[0,1,'ArrowDown'],[-1,0,'ArrowLeft']]){const nx=x+dx,ny=y+dy;if(ny<0||ny>=19||nx<0||nx>=11||map[ny][nx]==='#'||map[ny][nx]==='D'&&(ny===6?sig<2:relay<2))continue;q.push([nx,ny,[...path,name]])}}for(const name of ['ArrowUp','ArrowRight','ArrowDown','ArrowLeft'])c.dispatchEvent(new KeyboardEvent(name===key?'keydown':'keyup',{key:name}));c.dispatchEvent(new KeyboardEvent('keydown',{key:' '}));step(4)}return records.length};window.ready=true;
+ </script>`);
+ const server=await createServer({root,configFile:false,server:{host:'127.0.0.1',port:0,hmr:false},logLevel:'silent'});await server.listen();
+ const proc=spawn(executable,['--headless=new','--disable-gpu','--no-sandbox','--remote-debugging-port=0',`--user-data-dir=${profile}`,'about:blank'],{stdio:'ignore'});let ws;
+ try{
+  let port;for(let i=0;i<100;i++){try{port=Number(readFileSync(join(profile,'DevToolsActivePort'),'utf8').split('\n')[0]);break}catch{await sleep(50)}}assert.ok(port);
+  const targets=await(await fetch(`http://127.0.0.1:${port}/json`)).json();ws=new WebSocket(targets.find(t=>t.type==='page').webSocketDebuggerUrl);await new Promise((resolve,reject)=>{ws.onopen=resolve;ws.onerror=reject});
+  let seq=0;const pending=new Map(),errors=[];ws.onmessage=e=>{const v=JSON.parse(e.data);if(v.method==='Runtime.exceptionThrown')errors.push(v.params.exceptionDetails.text);if(v.id&&pending.has(v.id)){const q=pending.get(v.id);pending.delete(v.id);v.error?q.reject(v.error):q.resolve(v.result)}};
+  const send=(method,params={})=>new Promise((resolve,reject)=>{const id=++seq;pending.set(id,{resolve,reject});ws.send(JSON.stringify({id,method,params}))});
+  const evaluate=async expression=>{const r=await send('Runtime.evaluate',{expression,returnByValue:true});if(r.exceptionDetails)throw Error(r.exceptionDetails.exception?.description||r.exceptionDetails.text);return r.result.value};
+  await send('Runtime.enable');await send('Page.enable');await send('Page.navigate',{url:`http://127.0.0.1:${server.resolvedUrls.local[0].split(':').pop()}`});
+  for(let i=0;i<200&&!await evaluate('!!window.ready');i++)await sleep(25);assert.equal(await evaluate('!!window.ready'),true);
+  await evaluate("start('side-surfers');step(2000);true");
+  assert.equal(await evaluate('records.every(r=>r.submissionEligible===false)'),true,'preview results are ineligible');
+  assert.equal(await evaluate('localStorage.length'),0,'preview must not persist a best');
+  await evaluate('game.setInteractive(true);game.restart();step(1);true');
+  await evaluate("for(let i=0;i<18000&&!labels.includes('GAME OVER');i++)step();true");
+  assert.equal(await evaluate("labels.includes('GAME OVER')"),true,'manual run reaches terminal');
+  assert.equal(await evaluate('records.filter(r=>r.submissionEligible).length'),1,'manual terminal reports once');
+  assert.equal(await evaluate("Number(localStorage.getItem('miniarcade:best:side-surfers'))===records.find(r=>r.submissionEligible).score"),true,'manual best matches reported score');
+  assert.equal(await evaluate("records.find(r=>r.submissionEligible).actor"),'human');
+  const resultCount=await evaluate('records.length');await evaluate('step(300);true');assert.equal(await evaluate('records.length'),resultCount);
+  await evaluate('game.pause();true');assert.equal(await evaluate('pending()'),0);await evaluate('game.resume();game.restart();step();true');
+  assert.equal(await evaluate("labels.includes('GAME OVER')"),false);await evaluate('game.destroy();true');assert.equal(await evaluate('pending()'),0);
+  await evaluate("start('ghost-shift');step(2500);true");assert.equal(await evaluate('records.every(r=>r.submissionEligible===false)'),true,'ghost preview results are ineligible');
+  await evaluate('game.setInteractive(true);game.restart();records=[];step();true');assert.ok(await evaluate('driveGhost()')>0,'manual ghost deposit reports');assert.equal(await evaluate('records.filter(r=>r.submissionEligible).length'),1);await evaluate('game.pause();true');assert.equal(await evaluate('pending()'),0);await evaluate('game.resume();game.restart();step();game.destroy();true');assert.equal(await evaluate('pending()'),0);
+  await evaluate("start('rune-swarm');for(let i=0;i<30000&&!records.length;i++)step();true");
+  assert.ok(await evaluate('records.length')>0,'rune AI reaches terminal');
+  assert.equal(await evaluate('records[0].submissionEligible'),false);assert.equal(await evaluate('localStorage.length'),0);
+  await evaluate('game.setInteractive(true);records=[];step();true');
+  await evaluate("for(let i=0;i<30000&&!records.length;i++)step();true");
+  assert.equal(await evaluate('records.length'),1,'rune human terminal reports once');
+  assert.equal(await evaluate('records[0].actor'),'human');
+  assert.equal(await evaluate("Number(localStorage.getItem('miniarcade:best:rune-swarm'))===records[0].score"),true);
+  assert.equal(await evaluate("labels.includes('RUN OVER')"),true);await evaluate('game.restart();step();true');
+  assert.equal(await evaluate("labels.includes('RUN OVER')"),false);await evaluate('game.destroy();true');assert.equal(await evaluate('pending()'),0);
+  await evaluate("start('pico-cap');for(let i=0;i<10000&&!records.length;i++)step();true");
+  assert.ok(await evaluate('records.length')>0,'pico AI restores first glade');assert.equal(await evaluate('records[0].submissionEligible'),false);
+  assert.equal(await evaluate('localStorage.length'),0);await evaluate('game.setInteractive(true);step();true');
+  assert.equal(await evaluate("labels.some(s=>/^GLADE 1\\b.*RUN 0/.test(s))"),true,'pico takeover starts fresh');
+  await evaluate('game.destroy();true');assert.equal(await evaluate('pending()'),0);
+  assert.deepEqual(errors,[]);
+ }finally{ws?.close();proc.kill();await server.close();await sleep(200);try{rmSync(profile,{recursive:true,force:true});rmSync(root,{recursive:true,force:true})}catch{}}
+});

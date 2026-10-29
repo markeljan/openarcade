@@ -12,11 +12,11 @@ test('defeated gnawers return at their assigned guard post after ten seconds',()
  for(let i=0;i<700;i++){g.update(1/60,false);const e=g.snapshot().gnawers.find(v=>v.homeX===home.x&&v.homeY===home.y);if(e.dead===0){revived=e;break}}
  assert.ok(revived);assert.deepEqual({x:revived.x,y:revived.y},home);
 });
-test('gallery restart and takeover retain the current preview glade',async t=>{
+test('gallery restart and takeover start a fresh glade',async t=>{
  const names=['window','ResizeObserver','requestAnimationFrame','cancelAnimationFrame'],old=Object.fromEntries(names.map(k=>[k,globalThis[k]]));t.after(()=>Object.assign(globalThis,old));
  let next,now=0,labels=[];globalThis.window={devicePixelRatio:1};globalThis.ResizeObserver=class{observe(){}disconnect(){}};globalThis.requestAnimationFrame=f=>(next=f,1);globalThis.cancelAnimationFrame=()=>{};
  const noop=()=>{},ctx=new Proxy({fillText(s){labels.push(s)}},{get:(o,k)=>o[k]??noop,set:(o,k,v)=>(o[k]=v,true)}),canvas={getContext:()=>ctx,getBoundingClientRect:()=>({width:320,height:720}),setAttribute:noop,addEventListener:noop,removeEventListener:noop};
  const {createFeatureGame10}=await import('../src/feature-games10.js');const g=createFeatureGame10(canvas,'pico-cap');let found=false;
  for(let i=0;i<5000;i++){labels=[];next(now+=1000/30);if(labels.some(s=>/^GLADE 2\b/.test(s))){found=true;break}}assert.ok(found);
- g.restart();g.setInteractive(true);labels=[];next(now+=1000/30);assert.ok(labels.some(s=>/^GLADE 2\b.*RUN 0/.test(s)));g.destroy();
+ g.restart();g.setInteractive(true);labels=[];next(now+=1000/30);assert.ok(labels.some(s=>/^GLADE 1\b.*RUN 0/.test(s)));g.destroy();
 });
