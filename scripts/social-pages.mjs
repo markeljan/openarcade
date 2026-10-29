@@ -23,7 +23,7 @@ export function readImageManifest(root) {
   return manifest;
 }
 
-export function socialMetadata(game,{origin,manifest={games:{}},playerEnabled=false}={}) {
+export function socialMetadata(game,{origin,manifest={games:{}},playerEnabled=false,embedPage=false}={}) {
   origin=siteOrigin(origin);
   const title=game?`${game.name} — OpenArcade`:SITE_TITLE;
   const description=game?`${game.description} Play ${game.name} free on OpenArcade.`:SITE_DESCRIPTION;
@@ -31,7 +31,7 @@ export function socialMetadata(game,{origin,manifest={games:{}},playerEnabled=fa
   const imageAlt=image.alt??(game?`${game.name} gameplay on OpenArcade`:FALLBACK_IMAGE.alt);
   const imageUrl=new URL(image.path,origin);
   if(image.version)imageUrl.searchParams.set('v',image.version);
-  const canonical=gameUrl(game?.id,origin).href;
+  const canonical=(game&&embedPage?embedUrl(game.id,origin):gameUrl(game?.id,origin)).href;
   const tags=[
     `<title>${escapeHtml(title)}</title>`,
     `<meta name="description" content="${escapeHtml(description)}">`,
@@ -65,7 +65,7 @@ export function socialPagesPlugin(options={}) {
         const entry=match[1]==='embed'?'embed.html':'index.html';
         if(!existsSync(resolve(config.root,entry)))return next();
         let html=readFileSync(resolve(config.root,entry),'utf8');
-        html=withMetadata(html,game,metadataOptions);
+        html=withMetadata(html,game,{...metadataOptions,embedPage:match[1]==='embed'});
         html=await server.transformIndexHtml(req.url,html);
         res.setHeader('Content-Type','text/html; charset=utf-8');res.end(html);
       }catch(error){next(error)}
@@ -84,7 +84,7 @@ export function socialPagesPlugin(options={}) {
       for(const game of gameCatalog) this.emitFile({type:'asset',fileName:`games/${game.id}.html`,source:withMetadata(template,game,metadataOptions)});
       const embed=bundle['embed.html'];
       if(options.playerEnabled&&!embed)throw new Error('Player Cards require the dedicated embed entry');
-      if(embed)for(const game of gameCatalog)this.emitFile({type:'asset',fileName:`embed/${game.id}.html`,source:withMetadata(String(embed.source),game,{...metadataOptions,playerEnabled:false})});
+      if(embed)for(const game of gameCatalog)this.emitFile({type:'asset',fileName:`embed/${game.id}.html`,source:withMetadata(String(embed.source),game,{...metadataOptions,embedPage:true})});
       this.emitFile({type:'asset',fileName:'404.html',source:notFoundHtml()});
       this.emitFile({type:'asset',fileName:'sitemap.xml',source:`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${[null,...gameCatalog].map(game=>`<url><loc>${escapeHtml(gameUrl(game?.id,siteOrigin(options.origin)).href)}</loc></url>`).join('')}</urlset>`});
     },

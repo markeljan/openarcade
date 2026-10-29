@@ -5,7 +5,7 @@ import {games} from '../src/games.js';
 import {moreGames} from '../src/more-games.js';
 import {extraGames} from '../src/extra-games.js';
 import {featureRegistry} from '../src/feature-registry.js';
-import {gameUrl,embedUrl,gameIdFromLocation,siteOrigin} from '../src/social/urls.js';
+import {gameUrl,embedUrl,shareUrl,gameIdFromLocation,siteOrigin} from '../src/social/urls.js';
 
 test('all 112 catalog entries retain metadata and resolve the existing lazy factories',async()=>{
   const source=[...featureRegistry.flatMap(entry=>entry.games),...games,...moreGames,...extraGames];
@@ -31,4 +31,10 @@ test('canonical helpers preserve legacy links and safely encode IDs',()=>{
   assert.equal(gameIdFromLocation('https://example.com/games/%E0%A4%A'),null);
   assert.equal(siteOrigin('https://example.com/'),'https://example.com');
   for(const value of ['http://example.com','https://user@example.com','https://example.com/path','https://example.com/?x=1'])assert.throws(()=>siteOrigin(value));
+});
+
+test('sharing opens the standalone player by default with a full-site fallback',()=>{
+  assert.equal(shareUrl('snake','https://example.com').href,'https://example.com/embed/snake');
+  assert.equal(shareUrl('snake','https://example.com',false).href,'https://example.com/games/snake');
+  assert.equal(shareUrl(null,'https://example.com').href,'https://example.com/');
 });

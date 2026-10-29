@@ -36,7 +36,7 @@ export function createShareControls({ navigator: nav = globalThis.navigator, onS
     try {
       if (typeof nav?.clipboard?.writeText !== 'function') throw new Error('Clipboard unavailable');
       await nav.clipboard.writeText(current.url);
-      report('Link copied.');
+      report('Link copied.', current.url);
     } catch {
       report('Copy this link manually:', current.url);
     }

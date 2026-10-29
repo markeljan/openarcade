@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createShareControls } from '../src/ui/share-controls.js';
 
 const game = { id: 'snake', name: 'Snake' };
-const url = 'https://example.test/?game=snake';
+const url = 'https://example.test/embed/snake';
 function setup(nav) {
   const statuses = [];
   const control = createShareControls({ navigator: nav, onStatus: value => statuses.push(value) });
@@ -16,7 +16,7 @@ function deferred() {
   return { promise, resolve, reject };
 }
 
-test('native share starts synchronously with the selected title and canonical URL', async () => {
+test('native share starts synchronously with the selected title and playable URL', async () => {
   const pending = deferred(), calls = [];
   const { control, statuses } = setup({ share(data) { calls.push(data); return pending.promise; } });
   const result = control.share();
@@ -32,6 +32,7 @@ test('unsupported native sharing copies the link; cancellation does not copy', a
   await first.control.share();
   assert.deepEqual(copied, [url]);
   assert.equal(first.statuses.at(-1).message, 'Link copied.');
+  assert.equal(first.statuses.at(-1).url, url);
   const second = setup({ share: () => Promise.reject({ name: 'AbortError' }), clipboard: { writeText: text => copied.push(text) } });
   await second.control.share();
   assert.deepEqual(copied, [url]);

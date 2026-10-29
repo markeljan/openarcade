@@ -17,8 +17,10 @@ Vite emits homepage metadata, 112 `games/<id>.html` pages, a sitemap and useful 
 Environment variable names (public build settings, no secrets):
 
 - `VITE_SITE_ORIGIN`: exact HTTPS production origin, no path/query. Default is `https://openarcade.io`, verified by S11 from the project domain list; override before release if the canonical domain changes.
-- `VITE_X_PLAYER_ENABLED`: `true` opts into Player Card metadata on game pages. Default is an ordinary large image card. A build with this enabled requires the dedicated embed entry.
+- `VITE_X_PLAYER_ENABLED`: Player Card metadata is enabled by default on game and embed pages; `false` selects the image-card fallback. Production explicitly sets `true`. A build with this enabled requires the dedicated embed entry.
 - `VITE_EMBEDS_ENABLED`: `false` disables playable shell and Player Card advertising; full-site links and image cards remain available.
+
+Sharing defaults to `/embed/:id`, which opens the standalone playable shell and advertises its own Player Card. `/games/:id` also points X to that same player, so full-site game links remain shareable. The homepage keeps its image card. When embeds are disabled (or a custom game has no generated embed route), sharing uses the full-site game link. Clipboard copying also exposes the selected URL for manual copying. X's own cache and viewer client still determine when an existing post refreshes and whether it displays an inline player; metadata and standalone browser verification do not prove that external behavior.
 
 S12 supplies `public/social/manifest.json`: `{version:1,games:{id:{path,width,height,alt,version}}}`. Game paths are `/social/games/<id>.png`; `version` is a safe content hash/revision and appears as `?v=` in the absolute image URL. Referenced files must exist at build time. Until a capture lands, pages use the actual branded `/social/site-card-v1.png` fallback; they never advertise nonexistent gameplay images. `scripts/create-site-card.py` recreates that card with Pillow as an optional authoring tool, not a runtime/build dependency.
 

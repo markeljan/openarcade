@@ -12,6 +12,9 @@ export function gameUrl(id,origin=browserOrigin()) {
 export function embedUrl(id,origin=browserOrigin()) {
   return new URL(`/embed/${encodeURIComponent(id)}`,origin);
 }
+export function shareUrl(id,origin=browserOrigin(),embedsEnabled=true) {
+  return id&&embedsEnabled?embedUrl(id,origin):gameUrl(id,origin);
+}
 export function gameIdFromLocation(value) {
   const url=value instanceof URL?value:new URL(value?.href ?? String(value),DEFAULT_SITE_ORIGIN);
   const match=/^\/(?:games|embed)\/([^/]+)\/?$/.exec(url.pathname);
