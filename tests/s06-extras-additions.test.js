@@ -1,4 +1,12 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {additionFactories} from '../src/extra-additions.js';
+test('Puzzle AI reports on its solving move without charging another movement interval',()=>{
+ const original=Math.random;Math.random=()=>0;
+ try{const results=[],game=additionFactories.puzzle({finish:result=>results.push(result)});
+  game.update(.18,true);game.update(.18,true);assert.equal(results.length,0);
+  game.update(.18,true);assert.deepEqual(results,[{score:540,result:'SOLVED'}]);
+  game.update(.18,true);assert.equal(results.length,1);
+ }finally{Math.random=original}
+});
 for(const id of ['catch','target','bubbles','runner','racer','platform','invaders','puzzle'])for(const auto of [false,true])test(`${id} ${auto?'AI':'manual'} completion freezes once`,()=>{
  const old=Math.random;let seed=42;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);if(id==='puzzle'&&!auto)Math.random=()=>0;try{const results=[],game=additionFactories[id]({finish:r=>results.push(r)});if(id==='platform'&&!auto)game.input('ArrowRight',true);if(id==='invaders'&&!auto){game.input(' ',true);game.input('ArrowLeft',true);for(let j=0;j<25;j++)game.update(1/30,false);game.input('ArrowLeft',false);for(let col=0;col<8;col++){for(let j=0;j<90;j++)game.update(1/30,false);game.input('ArrowRight',true);for(let j=0;j<7;j++)game.update(1/30,false);game.input('ArrowRight',false)}}
  if(id==='puzzle'&&!auto){for(let i=0;i<120;i++)game.update(1/60,false);for(let i=0;i<3;i++)game.input('ArrowDown',true)}
