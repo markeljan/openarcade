@@ -1,3 +1,4 @@
+import {testBrowser} from '../scripts/browser-executable.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
@@ -6,9 +7,7 @@ import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { createServer } from 'vite';
 
-const executable = (process.platform === 'win32'
-  ? ['C:/Program Files/Google/Chrome/Application/chrome.exe', 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe']
-  : ['/usr/bin/chromium', '/usr/bin/chromium-browser', '/usr/bin/google-chrome']).find(existsSync);
+const executable = testBrowser;
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 // This verifies actual browser top-layer/focus behavior with a synthetic mount

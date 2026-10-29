@@ -1,3 +1,4 @@
+import {testBrowser} from '../scripts/browser-executable.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync,mkdtempSync,readFileSync,rmSync,cpSync,copyFileSync,writeFileSync,mkdirSync} from 'node:fs';
@@ -7,8 +8,7 @@ import {spawn} from 'node:child_process';
 import {createServer as createPortServer} from 'node:net';
 import {createServer} from 'vite';
 
-const browserCandidates=process.platform==='win32'?['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe']:['/usr/bin/chromium','/usr/bin/chromium-browser','/usr/bin/google-chrome'];
-const executable=browserCandidates.find(existsSync),sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const executable=testBrowser,sleep=ms=>new Promise(r=>setTimeout(r,ms));
 test('integrated player preserves drafts, score state and modal lifecycle',{skip:!executable,timeout:150000},async()=>{
  const probe=createPortServer();await new Promise(resolve=>probe.listen(0,'127.0.0.1',resolve));const port=probe.address().port;await new Promise(resolve=>probe.close(resolve));const sourceRoot=mkdtempSync(join(tmpdir(),'takeover-source-'));cpSync(join(process.cwd(),'src'),join(sourceRoot,'src'),{recursive:true});copyFileSync(join(process.cwd(),'index.html'),join(sourceRoot,'index.html'));writeFileSync(join(sourceRoot,'index.html'),readFileSync(join(sourceRoot,'index.html'),'utf8').replace('<script type="module" src="/src/analytics.js"></script>',''));mkdirSync(join(sourceRoot,'src/custom/games'),{recursive:true});writeFileSync(join(sourceRoot,'src/custom/games/minimal.js'),"export const metadata={id:'minimal-example',name:'Minimal Example'};export function create(){return {update(){},draw(c){c.fillRect(0,0,320,720)}}}");writeFileSync(join(sourceRoot,'src/game-loader.js'), `export async function loadGameFactory(game){return(canvas,id,opts)=>{if(canvas.id==='play-canvas')window.fixture={id,opts};return {beginRun(){},setInteractive(){},restart(){},getSessionState(){return 'playing'},pause(){if(canvas.id==='play-canvas')window.pauses.push('pause')},resume(){if(canvas.id==='play-canvas')window.pauses.push('resume')},destroy(){}}}}`);
 writeFileSync(join(sourceRoot,'src/auth.js'), `let state={status:'signed-out',user:null};const listeners=new Set();window.setAuth=s=>{state=s==='signed-in'?{status:s,user:{id:'u',displayName:'<Player>'}}:{status:s,user:null};for(const f of listeners)f(state)};export const auth={getState:()=>state,subscribe(f){listeners.add(f);f(state);return()=>listeners.delete(f)},getToken:async()=>state.status==='signed-in'?'token':null,signIn:async()=>{window.directSignIns=(window.directSignIns||0)+1},signOut:async()=>window.setAuth('signed-out'),mountSignIn:async host=>{window.authMounts=(window.authMounts||0)+1;host.textContent='Synthetic sign in';return()=>{}}};`);

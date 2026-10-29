@@ -1,3 +1,4 @@
+import {testBrowser} from '../scripts/browser-executable.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync,mkdtempSync,readFileSync,rmSync} from 'node:fs';
@@ -6,7 +7,7 @@ import {join} from 'node:path';
 import {spawn} from 'node:child_process';
 import {createServer as createPortServer} from 'node:net';
 import {preview} from 'vite';
-const browser = (process.platform === 'win32' ? ['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'] : ['/usr/bin/chromium','/usr/bin/chromium-browser','/usr/bin/google-chrome']).find(existsSync);
+const browser = testBrowser;
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 test('built embed loads a game and provides accessible player controls', {skip: !browser || !existsSync('dist/embed/snake.html'), timeout: 60000}, async () => {
  const probe = createPortServer(); await new Promise(resolve => probe.listen(0,'127.0.0.1',resolve)); const port=probe.address().port; await new Promise(resolve=>probe.close(resolve));

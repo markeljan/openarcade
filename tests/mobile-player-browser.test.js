@@ -1,3 +1,4 @@
+import {testBrowser} from '../scripts/browser-executable.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync,mkdtempSync,readFileSync,rmSync,cpSync,copyFileSync,writeFileSync} from 'node:fs';
@@ -8,8 +9,7 @@ import {createServer as createPortServer} from 'node:net';
 import {createServer} from 'vite';
 import {fileURLToPath} from 'node:url';
 
-const browserCandidates=process.platform==='win32'?['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe']:['/usr/bin/chromium','/usr/bin/chromium-browser','/usr/bin/google-chrome'];
-const executable=browserCandidates.find(existsSync),sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const executable=testBrowser,sleep=ms=>new Promise(r=>setTimeout(r,ms));
 test('mobile player keeps a large viewport and reachable touch controls',{skip:!executable,timeout:150000},async()=>{
  const probe=createPortServer();await new Promise(resolve=>probe.listen(0,'127.0.0.1',resolve));const port=probe.address().port;await new Promise(resolve=>probe.close(resolve));const sourceRoot=mkdtempSync(join(tmpdir(),'jelly-source-'));cpSync(join(process.cwd(),'src'),join(sourceRoot,'src'),{recursive:true});copyFileSync(join(process.cwd(),'index.html'),join(sourceRoot,'index.html'));writeFileSync(join(sourceRoot,'src/auth.js'),"export const auth={getState:()=>({status:'signed-in',user:{id:'s04-fixture',displayName:'Fixture Player'}}),getToken:async()=>'fixture-token',subscribe(fn){fn(this.getState());return()=>{}},signIn:async()=>{},signOut:async()=>{},mountSignIn:async()=>()=>{}};");const server=await createServer({root:sourceRoot,configFile:false,resolve:{alias:{'@clerk/clerk-js':fileURLToPath(import.meta.resolve('@clerk/clerk-js'))}},server:{host:'127.0.0.1',port,strictPort:true,hmr:false},logLevel:'silent'});await server.listen();const profile=mkdtempSync(join(tmpdir(),'jelly-ui-test-'));
  const proc=spawn(executable,['--headless=new','--disable-gpu','--no-sandbox','--remote-debugging-port=0',`--user-data-dir=${profile}`,'about:blank'],{stdio:'ignore'});let ws;
