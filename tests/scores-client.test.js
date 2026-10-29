@@ -6,6 +6,24 @@ const run=(id,actor='human')=>({schemaVersion:1,runId:id,gameId:'g',score:10,rul
 const reply=data=>({ok:true,json:async()=>data});
 const deferred=()=>{let resolve;const promise=new Promise(r=>resolve=r);return {promise,resolve}};
 const setup=(fetch,getToken=async()=>null)=>{const queue=createPendingQueue({indexedDB:null});return {queue,client:createScoreClient({queue,fetch,getToken,makeNonce:()=> 'nonce'})}};
+
+test('public reads and score writes retain same-origin protection cookies and explicit bearer auth', async () => {
+  const requests = [], queue = createPendingQueue({indexedDB: null});
+  const client = createScoreClient({queue, getToken: async () => 'verified', makeNonce: () => 'private', fetch: async (url, options) => {
+    requests.push({url, options});
+    if (options.credentials !== 'same-origin') return {ok: false, status: 401, json: async () => ({error: 'protection-cookie-required'})};
+    if (options.method !== 'POST') return reply({entries: [], ruleVersion: 1, epoch: 1, threshold: null});
+    const body = JSON.parse(options.body);
+    return reply({runId: body.runId ?? body.run.runId, ...(body.action === 'pending' ? {claimToken: 'private'} : {status: 'accepted'})});
+  }});
+  assert.deepEqual((await client.leaderboard('g', {includePersonalBest: false})).entries, []);
+  await client.enqueue(run('a'));
+  assert.equal((await client.submit('a')).status, 'saved');
+  assert.deepEqual(requests.map(({options}) => options.credentials), ['same-origin', 'same-origin', 'same-origin']);
+  assert.equal(requests[0].options.headers.Authorization, undefined);
+  assert.equal(requests[1].options.headers.Authorization, undefined);
+  assert.equal(requests[2].options.headers.Authorization, 'Bearer verified');
+});
 test('enqueue commits before sign-in and memory is not redirect safe',async()=>{let observed;const {queue,client}=setup(async(_,o)=>{observed=await queue.get('a');return reply({runId:'a',claimToken:'secret'})});const state=await client.enqueue(run('a'));assert.equal(state.redirectSafe,false);assert.equal((await client.prepareSignIn('a')).redirectSafe,false);assert.equal(observed.claimNonce,'nonce')});
 test('lost receipt response retries same nonce, and new client recovers queue',async()=>{const calls=[];let fail=true;const fetch=async(_,o)=>{const body=JSON.parse(o.body);calls.push(body);if(fail){fail=false;throw Error('offline')}return reply({runId:'a',claimToken:'secret'})};const {queue,client}=setup(fetch);await client.enqueue(run('a'));assert.equal((await client.submit('a')).status,'retry');const next=createScoreClient({queue,fetch,makeNonce:()=> 'different'});assert.equal((await next.submit('a')).status,'queued-auth');assert.deepEqual(calls.map(c=>c.claimNonce),['nonce','nonce']);assert.ok(await queue.get('a'))});
 test('cancelled authentication and invalid acknowledgement preserve run',async()=>{const {queue,client}=setup(async(_,o)=>reply(JSON.parse(o.body).action==='pending'?{runId:'a',claimToken:'secret'}:{runId:'wrong'}));await client.enqueue(run('a'));await client.prepareSignIn('a');assert.equal((await client.claim('a')).status,'queued-auth');assert.ok(await queue.get('a'));const c=createScoreClient({queue,fetch:async()=>reply({runId:'wrong'}),getToken:async()=> 'token'});assert.equal((await c.claim('a')).status,'retry');assert.ok(await queue.get('a'))});

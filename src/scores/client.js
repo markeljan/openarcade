@@ -28,7 +28,7 @@ export function createScoreClient({fetch: request = globalThis.fetch?.bind(globa
     if (abandoned.has(runId)) throw Error('run-abandoned');
     if (authenticated && !token) throw authFailure();
     if (!request) throw Error('network-unavailable');
-    const {response, data} = await requestJson(endpoint, {method: 'POST', credentials: 'omit', headers: {'Content-Type': 'application/json', ...(token ? {Authorization: 'Bearer ' + token} : {})}, body: JSON.stringify(body)});
+    const {response, data} = await requestJson(endpoint, {method: 'POST', credentials: 'same-origin', headers: {'Content-Type': 'application/json', ...(token ? {Authorization: 'Bearer ' + token} : {})}, body: JSON.stringify(body)});
     if (abandoned.has(runId)) throw Error('run-abandoned');
     if (!response.ok) throw Object.assign(Error(data.error || 'scores-unavailable'), {status: response.status});
     if (data.runId !== (body.runId ?? body.run?.runId)) throw Error('invalid-acknowledgment');
@@ -48,7 +48,7 @@ export function createScoreClient({fetch: request = globalThis.fetch?.bind(globa
     let token = null;
     if (includePersonalBest) { try { token = await getToken(); } catch {} }
     const url = endpoint + '?gameId=' + encodeURIComponent(gameId) + '&filter=' + encodeURIComponent(filter);
-    const {response, data: board} = await requestJson(url, {credentials: 'omit', headers: token ? {Authorization: 'Bearer ' + token} : {}});
+    const {response, data: board} = await requestJson(url, {credentials: 'same-origin', headers: token ? {Authorization: 'Bearer ' + token} : {}});
     if (!response.ok) throw Object.assign(Error(board.error || 'scores-unavailable'), {status: response.status});
     if (filter === 'ai') {
       // Hints support UI only. Atomic qualification remains in Postgres because
