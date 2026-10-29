@@ -76,7 +76,7 @@ async function processStillQueue(){
  for(const i of keep){const instance=previews.get(i);if(instance){instance.resume();cards[i].card.dataset.preview='playing'}}
  let instance=previews.get(index);
  if(!instance){
-  try{instance=await instantiateIfCurrent(create(cards[index].canvas,games[index],{interactive:false}),()=>stillPainting===token&&rankedVisible().includes(index)&&!dialog.open&&!pageHidden);
+  try{instance=await instantiateIfCurrent(create(cards[index].canvas,games[index],{interactive:false,context:'gallery-preview'}),()=>stillPainting===token&&rankedVisible().includes(index)&&!dialog.open&&!pageHidden);
    if(!instance){if(stillPainting===token){stillPainting=null;updatePreviews()}return}previews.set(index,instance);
   }catch(error){if(stillPainting===token){console.error('Preview failed to load',error);previewErrors.add(index);cards[index].card.dataset.preview='error';stillPainting=null;updatePreviews()}return}
  }
@@ -130,13 +130,14 @@ async function openGame(index, updateUrl=true){
   setEdgeVelocity(0);const request=++playerRequest;feedView++;commentsPanel.classList.remove('open');commentsToggle.setAttribute('aria-expanded','false');releaseTouchKeys();player?.destroy();player=null;select(index,false);const game=games[index],controls=typeof game.controls==='string'?game.controls:'';if(updateUrl)history.pushState(null,'',gameUrl(game.id));shareControls.setSelection(game,gameUrl(game.id).href);document.querySelector('#feedback-info').open=false;configureTouch(game);refreshEngagement(game.id);updateFeedPosition();enableTouch(false);document.querySelector('#feed-play').disabled=true;document.querySelector('#play-title').textContent=game.name.toUpperCase();document.querySelector('#play-subtitle').textContent=game.description??'';document.querySelector('#instructions').textContent=controls;document.querySelector('#feed-instructions').textContent=controls||'Use the game controls to play.';document.querySelector('#play-foot').textContent=controls.toUpperCase();overlay.hidden=false;dialog.dataset.mode='loading';playing=false;hasStarted=false;document.querySelector('#auto').textContent='WATCH AI';document.querySelector('#start').disabled=true;document.querySelector('#auto').disabled=true;if(!dialog.open)dialog.showModal();updatePreviews();
   try{
     let instance;
-    instance=await instantiateIfCurrent(create(playCanvas,game,{interactive:false,audioEnabled:true,onAttract:()=>{if(player===instance&&playing)watch(false)}}),()=>request===playerRequest&&dialog.open);
+    instance=await instantiateIfCurrent(create(playCanvas,game,{interactive:false,context:'watch-player',audioEnabled:true,onAttract:()=>{if(player===instance&&playing)watch(false)}}),()=>request===playerRequest&&dialog.open);
     if(!instance)return;
     player=instance;if(pageHidden)player.pause();overlay.hidden=true;dialog.dataset.mode='watching';hasStarted=true;enableTouch(true);document.querySelector('#start').disabled=false;document.querySelector('#auto').disabled=false;document.querySelector('#auto').textContent='TAKE OVER';document.querySelector('#feed-play').disabled=false;document.querySelector('#feed-play').textContent='▶ PLAY';
   }catch(error){if(request!==playerRequest||!dialog.open)return;console.error('Game failed to load',error);dialog.dataset.mode='error';document.querySelector('#instructions').textContent='Unable to load this game. Close and try again.'}
 }
-function start(){if(!player||playing)return;const id=games[selected].id;activity.mutate(id,()=>recordPlay(id)).catch(()=>{});const fresh=!hasStarted||dialog.dataset.mode==='watching';playing=true;overlay.hidden=true;dialog.dataset.mode='playing';document.querySelector('#feed-play').disabled=true;document.querySelector('#feed-play').textContent='PLAYING';enableTouch(true);if(fresh) player.restart();hasStarted=true;player.setInteractive(true);document.querySelector('#auto').textContent='WATCH AI';playCanvas.focus();}
-function watch(resetRun=true){if(!player)return;if(playing&&resetRun)player.restart();playing=false;hasStarted=true;overlay.hidden=true;dialog.dataset.mode='watching';document.querySelector('#feed-play').disabled=false;document.querySelector('#feed-play').textContent='▶ PLAY';enableTouch(true);player.setInteractive(false);document.querySelector('#auto').textContent='TAKE OVER';}
+function beginPlayerRun(interactive){if(!player)return;if(typeof player.beginRun==='function')player.beginRun({interactive,context:interactive?'manual-player':'watch-player'});else{player.setInteractive(interactive);player.restart()}}
+function start(){if(!player||playing)return;const id=games[selected].id;activity.mutate(id,()=>recordPlay(id)).catch(()=>{});const fresh=!hasStarted||dialog.dataset.mode==='watching';playing=true;overlay.hidden=true;dialog.dataset.mode='playing';document.querySelector('#feed-play').disabled=true;document.querySelector('#feed-play').textContent='PLAYING';enableTouch(true);if(fresh)beginPlayerRun(true);else player.setInteractive(true);hasStarted=true;document.querySelector('#auto').textContent='WATCH AI';playCanvas.focus();}
+function watch(resetRun=true){if(!player)return;if(playing&&resetRun)beginPlayerRun(false);else player.setInteractive(false);playing=false;hasStarted=true;overlay.hidden=true;dialog.dataset.mode='watching';document.querySelector('#feed-play').disabled=false;document.querySelector('#feed-play').textContent='▶ PLAY';enableTouch(true);document.querySelector('#auto').textContent='TAKE OVER';}
 const touchControls=document.querySelector('.touch-controls');
 function releaseTouchKeys(){for(const button of touchControls.querySelectorAll('[data-key]'))sendTouch(button,'keyup')}
 function sendTouch(button,type){playCanvas.dispatchEvent(new KeyboardEvent(type,{key:button.dataset.key,bubbles:true,cancelable:true}))}
@@ -165,7 +166,7 @@ function explicitPlay(){if(!player||playing)return;unlockSound();start()}
 document.querySelector('#start').addEventListener('click',explicitPlay);document.querySelector('#feed-play').addEventListener('click',explicitPlay);
 document.querySelector('#share').addEventListener('click',()=>{releaseTouchKeys();shareControls.share()});
 document.querySelector('#share-link').addEventListener('focus',e=>e.target.select());
-document.querySelector('#restart').addEventListener('click',()=>{player?.restart();if(playing)playCanvas.focus()});
+document.querySelector('#restart').addEventListener('click',()=>{beginPlayerRun(playing);if(playing)playCanvas.focus()});
 document.querySelector('#auto').addEventListener('click',()=>{unlockSound();if(playing||!overlay.hidden)watch();else explicitPlay()});
 function closePlayer(){if(dialog.open){releaseTouchKeys();closingPlayer=true;dialog.close()}}
 document.querySelector('#close').addEventListener('click',closePlayer);
