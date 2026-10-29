@@ -4,6 +4,8 @@ S01 alone merges and releases production. S11 prepares existing project configur
 
 ## Verified targets and release record
 
+**2026-10-29 production update:** the finalized source was deployed and promoted; production Clerk bindings and additive database migrations are complete. See the current [production release record](launch-team/CLOSEOUT.md#production-release--2026-10-29-2248-utc) for exact deployment/rollback IDs, preserved data totals, hosted checks and the remaining production browser verification. Older readiness observations below are historical.
+
 On 2026-10-28, `gh repo view markeljan/openarcade --json url,visibility,defaultBranchRef` returned public visibility and default branch `main`. Canonical repository: <https://github.com/markeljan/openarcade>. `package.json`'s `private` flag controls npm publication, not repository access.
 
 Verified existing deployment target: Vercel team `w3gpt` / `team_1emr0hddOspykkPdmXrV5RRx`, project `openarcade` / `prj_OMjMAkAONyAnZ6NIjWNzq0pWcZFD`, Vite with Node `24.x`. The project domain list confirms verified canonical `https://openarcade.io`; `www.openarcade.io` and `openarcade.vercel.app` redirect there with 308. The simplified project summary's alias list omitted this custom domain; use the domain endpoint as evidence.
