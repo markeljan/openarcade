@@ -18,6 +18,7 @@ test('built embed loads a game and provides accessible player controls', {skip: 
   await send('Page.enable');await send('Runtime.enable');await send('Page.navigate',{url:`http://127.0.0.1:${port}/embed/snake`});
   for(let i=0;i<400;i++){if(await evaluate("document.querySelector('#start') && !document.querySelector('#start').disabled"))break;await sleep(25)}
   assert.equal(await evaluate("document.querySelector('h1')?.textContent"),'Snake'); assert.equal(await evaluate("document.querySelector('#sound').getAttribute('aria-pressed')"),'false');
+  assert.equal(await evaluate("(()=>{let r=document.querySelector('canvas').getBoundingClientRect();return Math.abs(r.width/r.height-320/240)<.01})()"),true);
   for(const saved of ['on','off']){
     await evaluate(`localStorage.setItem('miniarcade-sound',${JSON.stringify(saved)});document.querySelector('#sound').click()`);
     assert.equal(await evaluate("document.querySelector('#sound').getAttribute('aria-pressed')"),'true');
@@ -28,6 +29,10 @@ test('built embed loads a game and provides accessible player controls', {skip: 
   }
   await evaluate("document.querySelector('#start').click()"); assert.equal(await evaluate("document.activeElement===document.querySelector('canvas')"),true); await evaluate("document.querySelector('#pause').click()"); assert.equal(await evaluate("document.querySelector('#pause').textContent"),'Resume');
   await evaluate("document.querySelector('#restart').click()"); assert.equal(await evaluate("document.querySelector('#pause').textContent"),'Pause'); assert.equal(await evaluate("document.querySelector('a').rel"),'noopener noreferrer'); assert.equal(await evaluate("document.querySelector('.gallery')===null"),true); assert.equal(await evaluate("performance.getEntriesByType('resource').some(e => e.name.includes('/main-') && e.name.endsWith('.js'))"),false);
+  await evaluate("window.dispatchEvent(new Event('blur'));window.pausedImage=document.querySelector('canvas').toDataURL();true");
+  await sleep(200);
+  assert.equal(await evaluate("document.querySelector('canvas').toDataURL()===window.pausedImage"),true,'blur pauses the runtime and releases held keys');
+  await evaluate("window.dispatchEvent(new Event('focus'))");
   const missing=await fetch(`http://127.0.0.1:${port}/embed/no-such-game`); assert.equal(missing.status,404); assert.match(await missing.text(),/Game not found/);
   await send('Emulation.setTouchEmulationEnabled',{enabled:true}); await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true}); await send('Page.navigate',{url:`http://127.0.0.1:${port}/embed/machine-hunt`});
   for(let i=0;i<400;i++){if(await evaluate("document.querySelector('#start') && !document.querySelector('#start').disabled"))break;await sleep(25)}
@@ -39,10 +44,20 @@ test('built embed loads a game and provides accessible player controls', {skip: 
   for(let i=0;i<400;i++){if(await evaluate("document.querySelector('iframe')?.contentDocument?.querySelector('#start') && !document.querySelector('iframe').contentDocument.querySelector('#start').disabled"))break;await sleep(25)}
   assert.equal(await evaluate("document.querySelector('iframe').contentDocument.querySelector('h1').textContent"),'Machine Hunt');
   assert.equal(await evaluate("(()=>{let d=document.querySelector('iframe').contentDocument,r=d.querySelector('canvas').getBoundingClientRect();return Math.abs(r.width/r.height-320/720)<.01})()"),true);
-  await evaluate("(()=>{let d=document.querySelector('iframe').contentDocument;d.querySelector('#start').click();window.frameKeys=[];d.querySelector('canvas').addEventListener('keyup',e=>window.frameKeys.push(e.key))})()");
+  await evaluate("(()=>{let d=document.querySelector('iframe').contentDocument;d.querySelector('#start').click();window.frameKeys=[];d.querySelector('canvas').addEventListener('keydown',e=>window.frameKeys.push('down:'+e.key));d.querySelector('canvas').addEventListener('keyup',e=>window.frameKeys.push(e.key))})()");
+  const frameControls=await evaluate("(()=>{let f=document.querySelector('iframe'),d=f.contentDocument;return [...d.querySelectorAll('button')].map(b=>{let r=b.getBoundingClientRect();return {id:b.id||b.dataset.key,x:r.x,y:r.y,w:r.width,h:r.height,frameHeight:f.clientHeight,frameWidth:f.clientWidth}})})()");
+  for(const control of frameControls)assert.ok(control.x>=0&&control.y>=0&&control.x+control.w<=control.frameWidth&&control.y+control.h<=control.frameHeight,JSON.stringify(control));
   const pos=await evaluate("(()=>{let f=document.querySelector('iframe'),r=f.contentDocument.querySelector('[data-key=ArrowUp]').getBoundingClientRect(),a=f.getBoundingClientRect();return {x:a.left+r.left+r.width/2,y:a.top+r.top+r.height/2,w:r.width,h:r.height}})()"); assert.ok(pos.w>=44&&pos.h>=44);
-  await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:pos.x,y:pos.y}]}); await send('Input.dispatchTouchEvent',{type:'touchCancel',touchPoints:[]}); assert.equal(await evaluate("window.frameKeys.includes('ArrowUp')"),true);
+  await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:pos.x,y:pos.y}]});
+  assert.equal(await evaluate("window.frameKeys.includes('down:ArrowUp')"),true,'touch must reach the control before cancellation');
+  await send('Input.dispatchTouchEvent',{type:'touchCancel',touchPoints:[]}); assert.equal(await evaluate("window.frameKeys.includes('ArrowUp')"),true);
   await evaluate("document.querySelector('iframe').contentDocument.querySelector('#pause').click()"); assert.equal(await evaluate("document.querySelector('iframe').contentDocument.querySelector('#pause').textContent"),'Resume');
+  for(const [width,height] of [[320,568],[512,512],[720,720],[844,390]]){
+    await evaluate(`document.querySelector('iframe').style.width='${width}px';document.querySelector('iframe').style.height='${height}px'`);
+    await sleep(80);
+    const bounds=await evaluate("(()=>{let f=document.querySelector('iframe'),d=f.contentDocument;return [...d.querySelectorAll('button')].map(b=>{let r=b.getBoundingClientRect();return {id:b.id||b.dataset.key,x:r.x,y:r.y,w:r.width,h:r.height,frameHeight:f.clientHeight,frameWidth:f.clientWidth}})})()");
+    for(const control of bounds)assert.ok(control.w>=44&&control.h>=44&&control.x>=0&&control.y>=0&&control.x+control.w<=control.frameWidth+.1&&control.y+control.h<=control.frameHeight+.1,JSON.stringify(control));
+  }
   await send('Page.addScriptToEvaluateOnNewDocument',{source:"Object.defineProperty(window,'localStorage',{configurable:true,get(){throw new DOMException('Storage denied','SecurityError')}});"});
   await send('Page.navigate',{url:`http://127.0.0.1:${port}/embed/machine-hunt`});
   for(let i=0;i<400;i++){if(await evaluate("document.querySelector('#start') && !document.querySelector('#start').disabled"))break;await sleep(25)}
