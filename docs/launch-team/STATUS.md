@@ -4,13 +4,13 @@ Updated 2026-10-29. S01 alone merges and releases. This execution record superse
 
 ## Integrated source
 
-PRs **#1–#36 are merged** in the public [markeljan/openarcade](https://github.com/markeljan/openarcade) repository. Current reviewed main is `0d9789a5236bfb7eb9256da1267628bbf7f76577`, the squash of tested source `7cfa81162ed74a53e85b561ebc51b70cdcf4b8e6`.
+PRs **#1–#36 and #38 are merged** in the public [markeljan/openarcade](https://github.com/markeljan/openarcade) repository. The tested implementation baseline is `0d9789a5236bfb7eb9256da1267628bbf7f76577`, the squash of source `7cfa81162ed74a53e85b561ebc51b70cdcf4b8e6`. Main subsequently reached `63dc4ecb7d8dfd2e6b75345265d6a2a9fdb95e95` through operations-only PR #38.
 
 All **112 games** have explicit versioned numeric rules and paired human/AI terminal and provenance evidence: S06 32; S07–S10 20 each. The final registry joins exactly 112 unique catalog IDs. Scores are never inferred from canvas text. Scores API/schema, private pending results, account claims, explicit guest names, qualifying AI retention, Clerk comment protection, canonical routes, standalone embeds, branding, repository links and all actual-game social images are merged.
 
 Final `npm test`: **3,388 pass, 0 fail, 1 gated database skip**. `npm run build` passed. The skipped database test was separately run against confirmed isolated Neon: **10 pass, 0 fail, 0 skipped**, including 24 concurrent AI submissions, top-10 pruning, private concurrent claims, expiry, moderation epochs and atomic limits. The large lazy Clerk chunk warning is nonblocking.
 
-A newer direct user request migrates the existing GitHub Actions check to Vercel CI. Its owner works on `codex/vercel-ci` in the original checkout. Its changes are independent of these source results and are not yet represented here as merged or provider-enabled. S01 will review the package/lock change serially.
+A newer direct user request prepares Vercel CI. Its owner works on `codex/vercel-ci` in the original checkout. Vercel's setup reports CI unavailable for public repositories; its initial hosted invocation resolved no jobs. PR #37 therefore retains an upgraded GitHub Actions fallback using the same task graph. These changes are independent of the source results above and remain under separate validation. S01 reviews the package/lock change serially.
 
 ## Session registry
 
@@ -46,7 +46,7 @@ Frozen contracts are in [CONTRACTS.md](CONTRACTS.md): fresh factory-bound result
 - Verified Vercel team `w3gpt` / `team_1emr0hddOspykkPdmXrV5RRx`, project `openarcade` / `prj_OMjMAkAONyAnZ6NIjWNzq0pWcZFD`, Vite, Node 24, iad1.
 - **Live production remains** [openarcade.io](https://openarcade.io) at `dpl_HRKB1bNxonyQ81UyXR1icN9DPCWS`, SHA `6f27b944f627411f4a87ac91f8a53df938726ea0`, independently read back on 2026-10-29. Launch consumers have not been promoted. www/default aliases redirect to the canonical origin.
 - `autoAssignCustomDomains=false` holds domains while newer main builds finish; behavior independently verified. Standard Protection retains authentication on previews/generated URLs.
-- Stable staging branch `codex/openarcade-s01-staging`: [isolated Preview](https://openarcade-git-codex-openarcade-s01-staging-w3gpt.vercel.app). Source `9e8ea1df2114abbdb50f815fc56b3d88595a5572` has the same tree as reviewed main and rebuilds after branch-scoped test-write configuration. Exact READY deployment/SHA must be read back before browser writes.
+- Stable staging branch `codex/openarcade-s01-staging`: [isolated Preview](https://openarcade-git-codex-openarcade-s01-staging-w3gpt.vercel.app). Source `9e8ea1df2114abbdb50f815fc56b3d88595a5572` has the tested source tree and rebuilds after branch-scoped test-write configuration. S01 and S11 independently read back READY deployment `dpl_98JXuStwGTh7odiTQ4af5nkX5Nb8` before S03's isolated browser write checks.
 - Existing Neon project `openarcade-feedback` / `orange-cherry-09292655`; production `br-little-tooth-b8oi36rl`, endpoint `ep-wild-haze-b87hcogv`. Isolated schema-only child `openarcade-launch-preview` / `br-plain-salad-b8amuvnr`, endpoint `ep-old-shadow-b87sxbm8`, database `neondb`. No production data copied. Only the exact staging branch has the isolated override; other previews may share production and must not receive test writes.
 - On that isolated branch only, S11 applied and reapplied baseline feedback, additive comments, then score schema; confirmed nine expected tables, four additive columns and five score functions. S01's real Neon checks passed. Ignored credential handoff removed. No production SQL applied.
 - Existing Clerk app `app_3LKZoytv9iDRK8jv2tFu1lC4E7S` retained. Preview uses Development instance `ins_3LKZp2SDQOr2RHtoM9Dq34xYVnv`; production instance `ins_3LNe1QtYHxHPzD0xi1sAv33T3vm` uses openarcade.io. Five additive CNAMEs/TLS/JWKS verified. Production env binding and public authenticated flows remain release gates.
@@ -65,4 +65,4 @@ Frozen contracts are in [CONTRACTS.md](CONTRACTS.md): fresh factory-bound result
 
 Known held-live rollback candidate is `dpl_HRKB1bNxonyQ81UyXR1icN9DPCWS` (`6f27b944`). Command template: `vercel rollback <known-good-deployment> --scope w3gpt`, after verifying project/aliases. SQL is additive and rollback does not undo data. After authenticated comments ship, use an authenticated known-good handler or disable writes: the older handler permits anonymous posting and ignores moderation markers.
 
-See [CLOSEOUT.md](CLOSEOUT.md) for the PR/evidence ledger, and [operations](../OPERATIONS.md) for procedures. This current tracker supersedes older initial-access observations until the S11 correction merges.
+See [CLOSEOUT.md](CLOSEOUT.md) for the PR/evidence ledger, and [operations](../OPERATIONS.md) for procedures. S11's correction is merged in PR #38; the current dated records supersede the preserved initial-access observations.

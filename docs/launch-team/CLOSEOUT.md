@@ -68,7 +68,7 @@ Known held-live rollback candidate: `dpl_HRKB1bNxonyQ81UyXR1icN9DPCWS`. Command 
 
 All substantial S02/S04–S10/S12 source work is merged and their implementation sessions are closed. S03/S11 are finishing the bounded provider pass. No launch worker created a recurring automation; no user worktree was deleted. Parent-created branch-only `codex/openarcade-s01-release-batch02` at f1390d3 is an incomplete pre-auth recovery snapshot, not a release candidate. The staging branch is intentionally separate from production. Duplicate audit sessions made no source/config changes.
 
-A newer direct human request owns PR #37, replacing superseded GitHub Actions with Vercel CI. The original checkout belongs to that active owner and is preserved. Provider enablement was confirmed after human-approved CLI access, but an initial `no_jobs_resolved` invocation is not a passing suite. Root task resolution and platform-safe caching must be verified before workflow removal merges. Existing full-suite results above do not establish that new runner.
+A newer direct human request owns PR #37, preparing Vercel CI and upgrading superseded check setup. The original checkout belongs to that active owner and is preserved. After human-approved CLI access, Vercel accepted an enablement flag, but its setup UI reports that CI is unavailable for public repositories and the initial invocation resolved `no_jobs_resolved`. Hosted Vercel CI is therefore unavailable for this public repository. PR #37 retains a working GitHub Actions fallback using the same task graph; no visibility or plan change is authorized or needed. Platform-safe caching and actual fallback execution remain under validation. Existing full-suite results above do not establish that new runner.
 
 ## PR ledger
 
