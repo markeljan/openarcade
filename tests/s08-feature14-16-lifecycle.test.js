@@ -21,7 +21,7 @@ function harness(make,id,options={}){
  globalThis.requestAnimationFrame=fn=>{const handle=++serial;queue.set(handle,fn);return handle};globalThis.cancelAnimationFrame=handle=>queue.delete(handle);
  const ctx=new Proxy({},{get:()=>noop,set:()=>true}),canvas={getContext:()=>ctx,getBoundingClientRect:()=>({width:320,height:720}),setAttribute:noop,addEventListener:(k,v)=>listeners.set(k,v),removeEventListener:k=>listeners.delete(k)};
  const player=make(canvas,id,{...options,onResult:r=>results.push(r)});
- const step=(count=1)=>{for(let i=0;i<count;i++){now+=50;const pending=[...queue.values()];queue.clear();for(const fn of pending)fn(now)}};
+ const step=(count=1,delta=50)=>{for(let i=0;i<count;i++){now+=delta;const pending=[...queue.values()];queue.clear();for(const fn of pending)fn(now)}};
  return {player,results,canvas,listeners,queue,step,key(k,down=true){listeners.get(down?'keydown':'keyup')?.({key:k,isTrusted:true,preventDefault:noop})},get writes(){return writes},get disconnected(){return disconnected},close(){player.destroy();Math.random=random;Object.assign(globalThis,saved)}};
 }
 const entries=[[14,'kaiju-control'],[14,'moonshine-valley'],[15,'dungeon-relay'],[15,'gravity-claw'],[16,'ricochet-foundry'],[16,'lantern-line']];
@@ -56,4 +56,9 @@ for(const [number,id] of entries)test(`${id} fresh takeover, restart, pause, Ent
 for(const [number,id] of entries)test(`${id} gallery run is AI, ineligible and silent`,async()=>{
  const mod=await moduleFixture(number);mod.probes.length=0;mod.audioCalls.length=0;const h=harness(mod[`createFeatureGame${number}`],id,{paused:true});
  try{assert.equal(h.queue.size,0);h.player.resume();if(id==='gravity-claw')mod.probes.at(-1).defeat();for(let i=0;i<2500&&!h.results.length;i++)h.step();assert.equal(h.results.length,1);assert.equal(h.results[0].actor,'ai');assert.equal(h.results[0].context,'gallery-preview');assert.equal(h.results[0].submissionEligible,false);assert.equal(h.writes,0)}finally{h.close()}
+});
+
+for(const [number,id] of entries.filter(([,id])=>id!=='gravity-claw'))for(const interactive of [true,false])test(`${id} ${interactive?'human':'AI'} clips its fractional final frame to 120 active seconds`,async()=>{
+ const mod=await moduleFixture(number),h=harness(mod[`createFeatureGame${number}`],id,{interactive});
+ try{for(let i=0;i<8000&&!h.results.length;i++)h.step(1,17);assert.equal(h.results.length,1);assert.equal(h.results[0].durationMs,120000);assert.equal(h.results[0].actor,interactive?'human':'ai')}finally{h.close()}
 });

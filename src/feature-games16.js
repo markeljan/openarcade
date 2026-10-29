@@ -86,9 +86,9 @@ export function createFeatureGame16(canvas,id,options={}){
  const kd=e=>key(e,true),ku=e=>key(e,false);canvas.addEventListener('keydown',kd);canvas.addEventListener('keyup',ku);canvas.addEventListener('blur',release);
  function tick(t,epoch){
   if(disposed||paused||epoch!==frameEpoch)return;if(!interactive&&last&&t-last<32){schedule();return}
-  const dt=last?Math.min((t-last)/1000,.05):0;last=t;
+  let dt=last?Math.min((t-last)/1000,.05):0;last=t;
   if(result){resultTime+=dt;if(!interactive&&resultTime>=(id==='gravity-claw'?2:.8))beginRun()}
-  else{reports.advance(dt);game.update(dt,!interactive)}
+  else{dt=Math.min(dt,game.remainingRunTime?.()??dt);reports.advance(dt);game.update(dt,!interactive)}
   if(disposed||paused||epoch!==frameEpoch)return;
   ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#10151c';ctx.fillRect(0,0,canvas.width,canvas.height);const scale=Math.min(canvas.width/W,canvas.height/H);ctx.setTransform(scale,0,0,scale,(canvas.width-W*scale)/2,(canvas.height-H*scale)/2);game.draw(ctx);
   if(disposed||paused||epoch!==frameEpoch)return;
@@ -106,7 +106,7 @@ export function createFeatureGame16(canvas,id,options={}){
 function timedRun(game,finish,getScore){
  if(typeof finish!=='function')return game;
  let elapsed=0,complete=false;
- return {...game,input(k,down){if(!complete||!down)game.input?.(k,down)},update(dt,auto){
+ return {...game,remainingRunTime(){return Math.max(0,120-elapsed)},input(k,down){if(!complete||!down)game.input?.(k,down)},update(dt,auto){
   if(complete)return;
   const active=Math.min(120-elapsed,Math.max(0,Math.min(Number.isFinite(dt)?dt:0,.05)));
   game.update(active,auto);elapsed+=active;
