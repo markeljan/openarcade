@@ -1,4 +1,8 @@
-export function createPendingQueue({indexedDB=globalThis.indexedDB,now=Date.now,ttlMs=7*86400000}={}) {
+function browserIndexedDB() {
+  try { return globalThis.indexedDB; } catch { return undefined; }
+}
+
+export function createPendingQueue({indexedDB=browserIndexedDB(),now=Date.now,ttlMs=7*86400000}={}) {
   let db, mode='persistent', chain=Promise.resolve();
   const memory=new Map(), clone=v=>v==null?v:structuredClone(v);
   const fallback=()=>{mode='memory';db?.close();db=null};
