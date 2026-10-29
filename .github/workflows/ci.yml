@@ -1,0 +1,53 @@
+name: Test and build
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    # Avoid the rolling ubuntu-latest -> 26.04 migration for browser fixtures.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Select packaged Chrome for browser fixtures
+        run: |
+          test -x /usr/bin/google-chrome
+          /usr/bin/google-chrome --version
+          # Fixtures prefer this absolute path. Preserve the runner's Chromium,
+          # then use its packaged Chrome; this change exists only in this job.
+          if test -e /usr/bin/chromium; then
+            sudo mv /usr/bin/chromium /usr/bin/chromium.runner-original
+          fi
+          sudo ln -s /usr/bin/google-chrome /usr/bin/chromium
+      - name: Browser startup diagnostics
+        run: |
+          for browser in /usr/bin/chromium /usr/bin/chromium-browser /usr/bin/google-chrome; do
+            if test -x "$browser"; then
+              "$browser" --version
+              timeout 20s "$browser" --headless=new --disable-gpu --no-sandbox --dump-dom about:blank
+              exit 0
+            fi
+          done
+          echo "No supported browser found on runner."
+          exit 1
+      # Browser fixtures launch real Chromium processes with bounded startup waits.
+      # Serialize files on the shared runner; retain every test and assertion.
+      - run: npm test -- --test-concurrency=1
+      - run: npm run build
