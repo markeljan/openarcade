@@ -3,7 +3,7 @@
  * onOpenChange with its other pause reasons and releases held inputs on open.
  * mountSignIn resolves when its UI mounts; only auth state confirms sign-in.
  */
-export function mountPlayerAuth(parentNativeDialog, { auth, onOpenChange = () => {}, prepare }) {
+export function mountPlayerAuth(parentNativeDialog, { auth, onOpenChange = () => {}, prepare, standalone = false }) {
   const doc = parentNativeDialog.ownerDocument;
   let disposed = false, current = null;
 
@@ -81,7 +81,7 @@ export function mountPlayerAuth(parentNativeDialog, { auth, onOpenChange = () =>
   function close() { closeSession(current); }
 
   function open() {
-    if (disposed || current || !parentNativeDialog.open || auth.getState().status === 'signed-in') return;
+    if (disposed || current || (!standalone && !parentNativeDialog.open) || auth.getState().status === 'signed-in') return;
     // Each open owns a distinct dialog and host, including while a provider mount
     // is pending. Old native close events and async cleanups cannot close a reopen.
     const dialog = doc.createElement('dialog');

@@ -6,13 +6,14 @@ import {join} from 'node:path';
 import {spawn} from 'node:child_process';
 import {createServer as createPortServer} from 'node:net';
 import {createServer} from 'vite';
+import {fileURLToPath} from 'node:url';
 
 const executable=(process.platform==='win32'?['C:/Program Files/Google/Chrome/Application/chrome.exe','C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe']:['/usr/bin/chromium','/usr/bin/chromium-browser','/usr/bin/google-chrome']).find(existsSync);
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 test('brand, sharing and feedback controls preserve player behavior',{skip:!executable,timeout:150000},async()=>{
  const probe=createPortServer();await new Promise(r=>probe.listen(0,'127.0.0.1',r));const port=probe.address().port;await new Promise(r=>probe.close(r));
  const root=mkdtempSync(join(tmpdir(),'s04-source-')),profile=mkdtempSync(join(tmpdir(),'s04-browser-'));cpSync(join(process.cwd(),'src'),join(root,'src'),{recursive:true});copyFileSync(join(process.cwd(),'index.html'),join(root,'index.html'));
- const server=await createServer({root,configFile:false,server:{host:'127.0.0.1',port,strictPort:true,hmr:false},logLevel:'silent'});await server.listen();
+ const server=await createServer({root,configFile:false,resolve:{alias:{'@clerk/clerk-js':fileURLToPath(import.meta.resolve('@clerk/clerk-js'))}},server:{host:'127.0.0.1',port,strictPort:true,hmr:false},logLevel:'silent'});await server.listen();
  const proc=spawn(executable,['--headless=new','--disable-gpu','--no-sandbox','--remote-debugging-port=0',`--user-data-dir=${profile}`,'about:blank'],{stdio:'ignore'});let ws;
  try{
   let browserPort;for(let i=0;i<100;i++){try{browserPort=Number(readFileSync(join(profile,'DevToolsActivePort'),'utf8').split('\n')[0]);break}catch{await sleep(50)}}assert.ok(browserPort);

@@ -171,3 +171,16 @@ test('declined preparation closes; rejected or late preparation cannot escape cl
   failed.controller.open(); await tick(); assert.equal(failed.parts().retry.hidden, false); assert.equal(failed.mounts.length, 0);
   failed.parts().retry.click(); await tick(); assert.equal(failed.mounts.length, 1); failed.controller.dispose();
 });
+
+test('standalone header auth still prepares runs while the player is closed', async () => {
+  const ready = deferred();
+  const env = setup(async () => () => {}, { standalone: true, prepare: () => ready.promise });
+  env.parent.open = false;
+  env.controller.open();
+  assert.equal(env.dialog().open, true);
+  assert.equal(env.mounts.length, 0);
+  ready.resolve(true); await tick(); await tick();
+  assert.equal(env.mounts.length, 1);
+  env.controller.close();
+  assert.equal(env.parent.open, false);
+});
