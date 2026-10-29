@@ -121,7 +121,7 @@ export function createGame(canvas, id, options = {}) {
     });
   }
   fresh();
-  let frame, last = 0, paused = !!options.paused;
+  let frame = null, frameEpoch = 0, last = 0, paused = !!options.paused;
   reports?.setPaused(paused);
   canvas.tabIndex = interactive ? 0 : -1;
   canvas.setAttribute('aria-label', `${games.find(g => g.id === id).name} game`);
@@ -135,11 +135,61 @@ export function createGame(canvas, id, options = {}) {
   const clearKeys=()=>['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','w','a','s','d'].forEach(k=>game.input?.(k,false));
   canvas.addEventListener('blur',clearKeys);
   canvas.addEventListener('keydown',keydown);canvas.addEventListener('keyup',keyup);canvas.addEventListener('pointerdown',pointer);canvas.addEventListener('pointermove',move);
-  function schedule(){if(!disposed && !paused && frame == null)frame=requestAnimationFrame(tick);}
-  function tick(t){frame=null;if(disposed || paused)return;if(!interactive&&last&&t-last<1000/30-1){schedule();return;}const dt=last?Math.min((t-last)/1000,.04):0;last=t;if(!result){reports?.advance(dt);game.update(dt,!interactive);if(aiFinished && !disposed && !paused)fresh();}if(disposed || paused)return;ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#18211d';ctx.fillRect(0,0,canvas.width,canvas.height);const scale=Math.min(canvas.width/W,canvas.height/H),x=(canvas.width-W*scale)/2,y=(canvas.height-H*scale)/2;ctx.fillStyle='#26342c';for(let i=0;i<28;i++){const sx=((i*83+17)%320)/320*canvas.width,sy=((i*137+19)%480)/480*canvas.height;ctx.fillRect(sx,sy,Math.max(1,scale),Math.max(1,scale));}ctx.setTransform(scale,0,0,scale,x,y);ctx.fillStyle='#18211d';ctx.fillRect(0,0,W,H);game.draw(ctx);if(result){rect(ctx,54,79,212,78,'#11151dee',5);label(ctx,result.message,160,103,'#fff4df',16,'center');label(ctx,`SCORE ${result.score}   BEST ${best}`,160,122,'#e6d49b',10,'center');label(ctx,'RESTART TO PLAY AGAIN',160,140,'#b7c5c5',9,'center');}schedule();}
+  // A canceled callback can still arrive. Only its own ticket may consume the slot.
+  function invalidateFrame(){
+    frameEpoch++;
+    const pending = frame;
+    frame = null;
+    if(pending)cancelAnimationFrame(pending.id);
+  }
+  function schedule(){
+    if(disposed || paused || frame !== null)return;
+    const ticket = {epoch:frameEpoch, id:null};
+    frame = ticket;
+    ticket.id = requestAnimationFrame(t=>tick(t,ticket));
+  }
+  function tick(t,ticket){
+    if(disposed || paused || ticket.epoch !== frameEpoch || frame !== ticket)return;
+    frame = null;
+    const epoch = ticket.epoch;
+    if(!interactive&&last&&t-last<1000/30-1){schedule();return;}
+    const dt=last?Math.min((t-last)/1000,.04):0;last=t;
+    if(!result){
+      if(aiFinished)fresh();
+      if(disposed || paused || epoch !== frameEpoch)return;
+      reports?.advance(dt);
+      game.update(dt,!interactive);
+      if(disposed || paused || epoch !== frameEpoch)return;
+      if(aiFinished)fresh();
+    }
+    if(disposed || paused || epoch !== frameEpoch)return;
+    ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#18211d';ctx.fillRect(0,0,canvas.width,canvas.height);const scale=Math.min(canvas.width/W,canvas.height/H),x=(canvas.width-W*scale)/2,y=(canvas.height-H*scale)/2;ctx.fillStyle='#26342c';for(let i=0;i<28;i++){const sx=((i*83+17)%320)/320*canvas.width,sy=((i*137+19)%480)/480*canvas.height;ctx.fillRect(sx,sy,Math.max(1,scale),Math.max(1,scale));}ctx.setTransform(scale,0,0,scale,x,y);ctx.fillStyle='#18211d';ctx.fillRect(0,0,W,H);game.draw(ctx);
+    if(disposed || paused || epoch !== frameEpoch)return;
+    if(result){rect(ctx,54,79,212,78,'#11151dee',5);label(ctx,result.message,160,103,'#fff4df',16,'center');label(ctx,`SCORE ${result.score}   BEST ${best}`,160,122,'#e6d49b',10,'center');label(ctx,'RESTART TO PLAY AGAIN',160,140,'#b7c5c5',9,'center');}
+    schedule();
+  }
   schedule();
-  return { beginRun({interactive:value, context:nextContext}){if(disposed)return;reports?.abandon();generation++;clearKeys();interactive=!!value;context=nextContext ?? (interactive?'manual-player':'gallery-preview');result=null;fresh();canvas.tabIndex=interactive?0:-1;}, restart(){if(disposed)return;reports?.abandon();generation++;clearKeys();result=null;fresh();}, setInteractive(value){if(disposed)return;const changed=interactive!==!!value;if(changed && reports){reports.abandon();generation++;}clearKeys();interactive=!!value;if(reports && changed){context=context==='embed'?'embed':(interactive?'manual-player':'watch-player');result=null;fresh();}else if(!interactive&&result){result=null;fresh();}canvas.tabIndex=interactive?0:-1;}, pause(){if(disposed)return;reports?.setPaused(true);clearKeys();if(!paused){paused=true;cancelAnimationFrame(frame);frame=null;last=0;}}, resume(){if(paused && !disposed){reports?.setPaused(false);paused=false;last=0;schedule();}}, resize, destroy(){if(disposed)return;disposed=true;generation++;reports?.destroy();clearKeys();game?.destroy?.();cancelAnimationFrame(frame);observer?.disconnect();canvas.removeEventListener('blur',clearKeys);canvas.removeEventListener('keydown',keydown);canvas.removeEventListener('keyup',keyup);canvas.removeEventListener('pointerdown',pointer);canvas.removeEventListener('pointermove',move);} };
+  return {
+    beginRun({interactive:value, context:nextContext}){
+      if(disposed)return;
+      invalidateFrame();reports?.abandon();generation++;clearKeys();interactive=!!value;context=nextContext ?? (interactive?'manual-player':'gallery-preview');result=null;fresh();canvas.tabIndex=interactive?0:-1;schedule();
+    },
+    restart(){
+      if(disposed)return;
+      invalidateFrame();reports?.abandon();generation++;clearKeys();result=null;fresh();schedule();
+    },
+    setInteractive(value){
+      if(disposed)return;
+      invalidateFrame();const changed=interactive!==!!value;if(changed && reports){reports.abandon();generation++;}clearKeys();interactive=!!value;if(reports && changed){context=context==='embed'?'embed':(interactive?'manual-player':'watch-player');result=null;fresh();}else if(!interactive&&result){result=null;fresh();}canvas.tabIndex=interactive?0:-1;schedule();
+    },
+    pause(){
+      if(disposed)return;
+      invalidateFrame();reports?.setPaused(true);paused=true;last=0;clearKeys();
+    },
+    resume(){if(paused && !disposed){reports?.setPaused(false);paused=false;last=0;schedule();}}, resize,
+    destroy(){
+      if(disposed)return;
+      invalidateFrame();disposed=true;generation++;reports?.destroy();clearKeys();game?.destroy?.();observer?.disconnect();canvas.removeEventListener('blur',clearKeys);canvas.removeEventListener('keydown',keydown);canvas.removeEventListener('keyup',keyup);canvas.removeEventListener('pointerdown',pointer);canvas.removeEventListener('pointermove',move);
+    }
+  };
 }
-
-
-
