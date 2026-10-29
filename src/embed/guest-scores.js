@@ -55,11 +55,14 @@ export function createEmbedScores({scores, gameId, document: doc = globalThis.do
       if(!active(token,id)) return {success:false,message:'Score submission unavailable.'};
       if(recovery?.schemaVersion!==1 || recovery.runId!==id || typeof recovery.claimToken!=='string' || !recovery.claimToken || !recovery.expiresAt) throw new Error('unavailable');
       const code=JSON.stringify(recovery);
+      // Keep a selectable fallback even when the browser reports a successful
+      // copy: embedded browsers and clipboard managers can discard that write.
+      secret.value=code; secret.hidden=false; secretWarning.hidden=false;
       try { if(!nav?.clipboard?.writeText) throw new Error('unavailable'); await nav.clipboard.writeText(code); }
       catch { if(!active(token,id)) return {success:false,message:'Score submission unavailable.'}; secret.value=code; secret.hidden=false; secretWarning.hidden=false; secret.focus(); secret.select(); status.textContent='Copy the private recovery code shown below.'; return {success:true}; }
       if(!active(token,id)) return {success:false,message:'Score submission unavailable.'};
       warning.hidden=true;
-      status.textContent='Private recovery code copied. Open OpenArcade, sign in, and use Recover a score.';
+      status.textContent='Private recovery code copied. If pasting fails, copy the code below. Open OpenArcade, sign in, and use Recover a score.';
       return {success:true};
     } catch {
       if(active(token,id)) status.textContent='Score submission unavailable. Please retry.';

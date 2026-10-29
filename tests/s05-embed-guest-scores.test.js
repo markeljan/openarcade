@@ -20,12 +20,22 @@ test('guest requires exact acknowledgement and retries same UUID and metadata',a
  x.form.dispatch('submit');await flush();assert.equal(submitCalls,2);assert.equal(calls.length,1);assert.deepEqual(calls[0][1],{guestName:'ABCD',attribution:'x'});assert.match(x.status.textContent,/saved/i);
 });
 
-test('private option exposes code only after explicit copy and clipboard failure',async()=>{
+test('private option exposes code after explicit copy when clipboard fails',async()=>{
  const recovery={schemaVersion:1,runId:id,claimToken:'private-test-value',expiresAt:'2030-01-01'};
  const calls=[];const x=setup({enqueue:async(...args)=>(calls.push(args),{status:'pending',durability:'persistent'}),submit:async runId=>({status:'queued-auth',runId}),getRecovery:async()=>recovery});
  x.ui.show(record());assert.equal(calls.length,0);assert.equal(x.secret.hidden,true);x.button.dispatch('click');x.button.dispatch('click');await flush();
  assert.equal(calls.length,1);assert.equal(calls[0][1],undefined);assert.equal(x.secret.hidden,false);assert.equal(x.secret.selected,true);assert.match(x.secretWarning.textContent,/anyone holding/i);assert.ok(!x.status.textContent.includes(recovery.claimToken));assert.equal(x.form.hidden,true);
  x.ui.hide();assert.equal(x.secret.value,'');
+});
+
+test('reported clipboard success still leaves a selectable recovery fallback',async()=>{
+ const recovery={schemaVersion:1,runId:id,claimToken:'private-test-value',expiresAt:'2030-01-01'};
+ let copied;
+ const x=setup({enqueue:async()=>({status:'pending',durability:'persistent'}),submit:async runId=>({status:'queued-auth',runId}),getRecovery:async()=>recovery},{clipboard:{writeText:async value=>{copied=value;}}});
+ x.ui.show(record());assert.equal(x.secret.hidden,true);x.button.dispatch('click');await flush();
+ assert.deepEqual(JSON.parse(copied),recovery);assert.equal(x.secret.hidden,false);assert.equal(x.secret.value,copied);assert.equal(x.secretWarning.hidden,false);
+ assert.match(x.status.textContent,/If pasting fails/);assert.ok(!x.status.textContent.includes(recovery.claimToken));
+ x.ui.show(record(id2));assert.equal(x.secret.value,'');assert.equal(x.secret.hidden,true);assert.equal(x.secretWarning.hidden,true);
 });
 
 test('stale completion does not mutate newer run, and invalid runs are hidden',async()=>{
