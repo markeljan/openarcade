@@ -1,6 +1,6 @@
 {
   "session": "OPENARCADE S06",
-  "status": "Snake implemented; 31 games remain at audited proposal",
+  "status": "6/32 games instrumented and covered by focused terminal tests; browser/API limitations are explicit per row",
   "gameCount": 32,
   "games": [
     {
@@ -10,17 +10,15 @@
       "units": "food",
       "order": "desc",
       "version": 1,
-      "boundary": "wall/self collision; board full",
+      "boundary": "wall/self collision or full board",
       "localBestKey": "tiny-arcade.best.snake",
-      "humanTerminalEvidence": "Natural wall collision in tests/s06-classics-snake.test.js; positive food score persisted under existing key; immutable human record",
-      "aiTerminalEvidence": "Two natural seeded AI collision completions with distinct run IDs in tests/s06-classics-snake.test.js; no human local-best writes",
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-classics-snake.test.js and tests/s06-classics-callback-pause.test.js; terminal is wall/self collision or full board",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-classics-snake.test.js and tests/s06-classics-callback-pause.test.js",
       "focusedTests": [
         "tests/s06-classics-snake.test.js",
-        "tests/classic-best.test.js",
-        "tests/classic-terminal.test.js",
-        "tests/s06-registry.test.js"
+        "tests/s06-classics-callback-pause.test.js"
       ],
-      "browserStatus": "Local actual-wrapper harness: AI preview rendering, fresh manual takeover and wall-loss result/callback observed. API/database not tested.",
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
       "status": "implemented"
     },
     {
@@ -30,13 +28,16 @@
       "units": "bricks",
       "order": "desc",
       "version": 1,
-      "boundary": "ball below field; all 36 bricks destroyed",
+      "boundary": "lost ball or 36-brick board clear",
       "localBestKey": "tiny-arcade.best.breakout",
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; AI resets without callback",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-classics-remaining.test.js and tests/s06-classics-callback-pause.test.js; terminal is lost ball or 36-brick board clear",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-classics-remaining.test.js and tests/s06-classics-callback-pause.test.js",
+      "focusedTests": [
+        "tests/s06-classics-remaining.test.js",
+        "tests/s06-classics-callback-pause.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "pong",
@@ -45,13 +46,16 @@
       "units": "returns",
       "order": "desc",
       "version": 1,
-      "boundary": "ball exits either side; point won/lost",
+      "boundary": "ball exits either side; score counts paddle returns",
       "localBestKey": "tiny-arcade.best.pong",
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; AI resets without callback",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-classics-remaining.test.js and tests/s06-classics-callback-pause.test.js; terminal is ball exits either side; score counts paddle returns",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-classics-remaining.test.js and tests/s06-classics-callback-pause.test.js",
+      "focusedTests": [
+        "tests/s06-classics-remaining.test.js",
+        "tests/s06-classics-callback-pause.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "orbit",
@@ -62,11 +66,14 @@
       "version": 1,
       "boundary": "enemy collision",
       "localBestKey": "tiny-arcade.best.orbit",
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; AI resets without callback",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-classics-remaining.test.js and tests/s06-classics-callback-pause.test.js; terminal is enemy collision",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-classics-remaining.test.js and tests/s06-classics-callback-pause.test.js",
+      "focusedTests": [
+        "tests/s06-classics-remaining.test.js",
+        "tests/s06-classics-callback-pause.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "flappy",
@@ -75,13 +82,16 @@
       "units": "pipes",
       "order": "desc",
       "version": 1,
-      "boundary": "bird boundary or pipe collision",
+      "boundary": "boundary/pipe collision; score counts recycled pipes",
       "localBestKey": "tiny-arcade.best.flappy",
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; AI resets without callback",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-classics-remaining.test.js and tests/s06-classics-callback-pause.test.js; terminal is boundary/pipe collision; score counts recycled pipes",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-classics-remaining.test.js and tests/s06-classics-callback-pause.test.js",
+      "focusedTests": [
+        "tests/s06-classics-remaining.test.js",
+        "tests/s06-classics-callback-pause.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "dodge",
@@ -90,13 +100,16 @@
       "units": "drops",
       "order": "desc",
       "version": 1,
-      "boundary": "drop collision",
+      "boundary": "drop collision; score counts recycled drops",
       "localBestKey": "tiny-arcade.best.dodge",
-      "humanTerminalEvidence": "source audited; callback not yet instrumented",
-      "aiTerminalEvidence": "source audited; AI resets without callback",
-      "focusedTests": [],
-      "browserStatus": "not run",
-      "status": "inventory"
+      "humanTerminalEvidence": "Actual human completion tested via tests/s06-classics-remaining.test.js and tests/s06-classics-callback-pause.test.js; terminal is drop collision; score counts recycled drops",
+      "aiTerminalEvidence": "Same scoring and terminal rules; callback before replacement; tested via tests/s06-classics-remaining.test.js and tests/s06-classics-callback-pause.test.js",
+      "focusedTests": [
+        "tests/s06-classics-remaining.test.js",
+        "tests/s06-classics-callback-pause.test.js"
+      ],
+      "browserStatus": "Actual local wrapper construction checked for this ID; representative wrapper rendering and result checks recorded separately; terminal coverage is deterministic Node evidence.",
+      "status": "implemented"
     },
     {
       "id": "star-defender",
@@ -488,5 +501,6 @@
       "browserStatus": "not run",
       "status": "inventory"
     }
-  ]
+  ],
+  "boundsPolicy": "Native finite score limits where derivable; MAX_SAFE_INTEGER is numeric precision for otherwise unbounded native counters and active durations, not a gameplay or anti-cheat claim. Timed round duration bounds allow final-frame tolerance."
 }
