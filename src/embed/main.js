@@ -38,17 +38,12 @@ if (!game || import.meta.env.VITE_EMBEDS_ENABLED === 'false') {
   const release = () => touch.querySelectorAll('[data-key]').forEach(button => send(button, 'keyup'));
   const updateTouch = () => touch.querySelectorAll('button').forEach(button => { button.disabled = !playing || paused; });
   updateTouch();
-  // A fresh embed starts muted even if the gallery has a saved sound preference.
-  function setEmbedSound(value) {
-    let savedSound; try { savedSound = localStorage.getItem('miniarcade-sound'); } catch {}
-    setSoundEnabled(value);
-    try { if (savedSound === null) localStorage.removeItem('miniarcade-sound'); else if (savedSound !== undefined) localStorage.setItem('miniarcade-sound', savedSound); } catch {}
-  }
-  setEmbedSound(false);
-  sound.addEventListener('click', () => { setEmbedSound(!getSoundEnabled()); const on = getSoundEnabled(); sound.textContent = on ? 'Sound on' : 'Sound off'; sound.setAttribute('aria-pressed', String(on)); if (on) unlockSound(); });
+  function refreshSound() { const on = getSoundEnabled(); sound.textContent = on ? 'Sound on' : 'Sound off'; sound.setAttribute('aria-pressed', String(on)); }
+  refreshSound();
+  sound.addEventListener('click', () => { setSoundEnabled(!getSoundEnabled()); refreshSound(); });
   const beginRun = () => { scoreOptions.hide(); if (typeof player.beginRun === 'function') player.beginRun({interactive:true, context:'embed'}); else { player.restart(); player.setInteractive(true); } };
   start.addEventListener('click', () => { if (!player || playing) return; beginRun(); playing = true; paused = false; player.resume(); start.disabled = true; pause.disabled = false; status.textContent = 'Playing'; updateTouch(); canvas.focus(); unlockSound(); });
-  restart.addEventListener('click', () => { if (!player) return; release(); beginRun(); playing = true; paused = false; player.resume(); start.disabled = true; pause.disabled = false; pause.textContent = 'Pause'; status.textContent = 'Playing'; updateTouch(); canvas.focus(); });
+  restart.addEventListener('click', () => { if (!player) return; release(); beginRun(); playing = true; paused = false; player.resume(); start.disabled = true; pause.disabled = false; pause.textContent = 'Pause'; status.textContent = 'Playing'; updateTouch(); canvas.focus(); unlockSound(); });
   pause.addEventListener('click', () => { if (!player || !playing) return; paused = !paused; release(); if (paused) player.pause(); else { player.resume(); canvas.focus(); } pause.textContent = paused ? 'Resume' : 'Pause'; status.textContent = paused ? 'Paused' : 'Playing'; updateTouch(); });
   touch.addEventListener('pointerdown', e => { const button = e.target.closest('[data-key]'); if (!button || button.disabled) return; e.preventDefault(); button.setPointerCapture(e.pointerId); send(button, 'keydown'); });
   for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) touch.addEventListener(type, e => { const button = e.target.closest('[data-key]'); if (button) send(button, 'keyup'); });

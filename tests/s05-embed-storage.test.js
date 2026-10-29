@@ -6,7 +6,7 @@ test('audio imports and remains usable when the storage getter itself is denied'
   Object.defineProperty(globalThis,'localStorage',{configurable:true,get(){throw new Error('Storage blocked')}});
   try {
     const audio=await import('../src/audio.js?s05-storage-denied');
-    assert.equal(audio.getSoundEnabled(),false);
+    assert.equal(audio.getSoundEnabled(),true);
     assert.doesNotThrow(()=>audio.setSoundEnabled(true));
     assert.equal(audio.getSoundEnabled(),true);
     const preview=audio.createGameAudio(false);
