@@ -94,7 +94,7 @@ test('built embed loads a game and provides accessible player controls', {skip: 
   assert.equal(await evaluate("document.querySelector('.embed-guest-form button').disabled"),false);
   await evaluate("document.querySelector('.embed-guest-form').requestSubmit()");
   await waitFor("document.querySelector('.embed-guest-form button').textContent==='Score saved'",'guest retry must acknowledge the exact run');
-  assert.equal(await evaluate("window.__scoreRequests.length===2 && window.__scoreRequests[0].runId===window.__scoreRequests[1].runId && window.__scoreRequests.every(r=>r.action==='guest'&&r.guestName==='ABCD'&&r.attribution==='x'&&r.actor==='human'&&r.context==='embed'&&r.credentials==='omit'&&!r.hasAuthorization)"),true);
+  assert.equal(await evaluate("window.__scoreRequests.length===2 && window.__scoreRequests[0].runId===window.__scoreRequests[1].runId && window.__scoreRequests.every(r=>r.action==='guest'&&r.guestName==='ABCD'&&r.attribution==='x'&&r.actor==='human'&&r.context==='embed'&&r.credentials==='same-origin'&&!r.hasAuthorization)"),true,'guest retries retain preview protection cookies without bearer authorization');
   await evaluate("document.querySelector('#restart').click()");
   await waitFor("!document.querySelector('.embed-scores').hidden",'fresh human result must expose new score choices');
   await evaluate("[...document.querySelectorAll('.embed-scores button')].find(b=>b.textContent==='Copy recovery code').click()");
