@@ -1,7 +1,7 @@
 import {testBrowser} from '../scripts/browser-executable.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {existsSync,mkdtempSync,readFileSync,rmSync,cpSync,writeFileSync} from 'node:fs';
+import {existsSync,mkdtempSync,readFileSync,rmSync,cpSync,writeFileSync,symlinkSync,realpathSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {spawn} from 'node:child_process';
@@ -9,9 +9,11 @@ import {createServer} from 'vite';
 
 const executable=testBrowser, sleep=ms=>new Promise(r=>setTimeout(r,ms));
 
-test('feature scoring lifecycle in a real browser',{skip:!executable,timeout:150000},async()=>{
- const root=mkdtempSync(join(tmpdir(),'s07-browser-source-')),profile=mkdtempSync(join(tmpdir(),'s07-browser-profile-'));
- cpSync(join(process.cwd(),'src'),join(root,'src'),{recursive:true});
+for(const symlinked of [false,true])test(`feature scoring lifecycle in a real browser${symlinked?' with a symlinked fixture root':''}`,{skip:!executable,timeout:150000},async()=>{
+ const fixture=mkdtempSync(join(tmpdir(),'s07-browser-source-')),profile=mkdtempSync(join(tmpdir(),'s07-browser-profile-'));
+ const sourceRoot=join(fixture,'source'),root=symlinked?join(fixture,'linked'):sourceRoot;
+ cpSync(join(process.cwd(),'src'),join(sourceRoot,'src'),{recursive:true});
+ if(symlinked)symlinkSync(sourceRoot,root,'junction');
  writeFileSync(join(root,'index.html'),`<!doctype html><canvas id="game" width="320" height="720" style="width:320px;height:720px"></canvas><script type="module">
  import {createFeatureGame3} from '/src/feature-games3.js';
  import {createFeatureGame7} from '/src/feature-games7.js';
@@ -29,7 +31,8 @@ test('feature scoring lifecycle in a real browser',{skip:!executable,timeout:150
  const targets=[[8,4],[1,5],[9,8],[1,10],[9,13],[9,15],[9,17]];let stage=0;
  for(let i=0;i<14000&&records.length===0;i++){const hud=labels.find(x=>x.startsWith('SIGILS '));if(!hud||!player){step();continue}const m=/SIGILS (\\d)\\/2 CASES (\\d) RELAYS (\\d)\\/2/.exec(hud);if(!m)throw Error(hud);const sig=+m[1],bag=+m[2],relay=+m[3];stage=sig<2?sig:relay<2?2+relay:bag<2?4+bag:6;const target=targets[stage];const q=[[player.x,player.y,[]]],seen=new Set();let key;while(q.length){const [x,y,path]=q.shift(),k=x+','+y;if(seen.has(k))continue;seen.add(k);if(x===target[0]&&y===target[1]){key=path[0];break}for(const [dx,dy,name] of [[0,-1,'ArrowUp'],[1,0,'ArrowRight'],[0,1,'ArrowDown'],[-1,0,'ArrowLeft']]){const nx=x+dx,ny=y+dy;if(ny<0||ny>=19||nx<0||nx>=11||map[ny][nx]==='#'||map[ny][nx]==='D'&&(ny===6?sig<2:relay<2))continue;q.push([nx,ny,[...path,name]])}}for(const name of ['ArrowUp','ArrowRight','ArrowDown','ArrowLeft'])c.dispatchEvent(new KeyboardEvent(name===key?'keydown':'keyup',{key:name}));c.dispatchEvent(new KeyboardEvent('keydown',{key:' '}));step(4)}return records.length};window.ready=true;
  </script>`);
- const server=await createServer({root,configFile:false,server:{host:'127.0.0.1',port:0,hmr:false},logLevel:'silent'});await server.listen();
+ // Keep Vite's inline-module cache root consistent with its realpath-based resolver.
+ const server=await createServer({root:realpathSync(root),configFile:false,server:{host:'127.0.0.1',port:0,hmr:false},logLevel:'silent'});await server.listen();
  const proc=spawn(executable,['--headless=new','--disable-gpu','--no-sandbox','--remote-debugging-port=0',`--user-data-dir=${profile}`,'about:blank'],{stdio:'ignore'});let ws;
  try{
   let port;for(let i=0;i<100;i++){try{port=Number(readFileSync(join(profile,'DevToolsActivePort'),'utf8').split('\n')[0]);break}catch{await sleep(50)}}assert.ok(port);
@@ -69,5 +72,5 @@ test('feature scoring lifecycle in a real browser',{skip:!executable,timeout:150
   assert.equal(await evaluate("labels.some(s=>/^GLADE 1\\b.*RUN 0/.test(s))"),true,'pico takeover starts fresh');
   await evaluate('game.destroy();true');assert.equal(await evaluate('pending()'),0);
   assert.deepEqual(errors,[]);
- }finally{ws?.close();proc.kill();await server.close();await sleep(200);try{rmSync(profile,{recursive:true,force:true});rmSync(root,{recursive:true,force:true})}catch{}}
+ }finally{ws?.close();proc.kill();await server.close();await sleep(200);try{rmSync(profile,{recursive:true,force:true});rmSync(fixture,{recursive:true,force:true})}catch{}}
 });
